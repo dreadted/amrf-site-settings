@@ -10,6 +10,8 @@
  * Domain Path:     /languages
  */
 
+namespace Antropomorf;
+
 if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly
 }
@@ -288,10 +290,18 @@ class AdminPanelSettings
 		echo '<div class="user-role-settings">';
 
 		// Redirect Rules
+		//  value="' . esc_attr($redirect_url) . '" placeholder="' . esc_attr(home_url()) . '" />';
 		echo '<div class="setting-row">';
 		echo '<h4>Login Redirect</h4>';
 		$redirect_url = $settings['login_redirect_url'] ?? $this->default_settings['user_group_settings'][$role]['login_redirect_url'] ?? '';
-		echo '<input type="text" class="regular-text" name="amrf_admin_settings[user_group_settings][' . esc_attr($role) . '][login_redirect_url]" value="' . esc_attr($redirect_url) . '" placeholder="' . esc_attr(home_url()) . '" />';
+		echo '<select name="amrf_admin_settings[user_group_settings][' . esc_attr($role) . '][login_redirect_url]">';
+		echo '<option value="">-- Select Redirect URL --</option>';
+		echo '<option value="/" ' . selected($redirect_url, '/', false) . '>-- Front Page --</option>';
+		foreach ($this->all_menu_items[$role]['menu_items']  as $item) {
+			$page = (strpos($item['slug'], 'php') === false) ? esc_attr('admin.php?page=' . $item['slug']) : esc_attr($item['slug']);
+			echo '<option value="' . $page . '" ' . selected($redirect_url, $page, false) . '>' . esc_html($item['name']) . '</option>';
+		}
+		echo '</select>';
 		echo '<p class="description">URL to redirect this user role to after login.</p>';
 		echo '</div>';
 
@@ -301,8 +311,9 @@ class AdminPanelSettings
 		$default_page = $settings['admin_default_page'] ?? $this->default_settings['user_group_settings'][$role]['admin_default_page'] ?? '';
 		echo '<select name="amrf_admin_settings[user_group_settings][' . esc_attr($role) . '][admin_default_page]">';
 		echo '<option value="">-- Select Default Page --</option>';
-		foreach ($this->all_admin_pages as $page) {
-			echo '<option value="' . esc_attr($page) . '" ' . selected($default_page, $page, false) . '>' . esc_html($page) . '</option>';
+		foreach ($this->all_menu_items[$role]['menu_items']  as $item) {
+			$page = (strpos($item['slug'], 'php') === false) ? esc_attr('admin.php?page=' . $item['slug']) : esc_attr($item['slug']);
+			echo '<option value="' . $page . '" ' . selected($default_page, $page, false) . '>' . esc_html($item['name']) . '</option>';
 		}
 		echo '</select>';
 		echo '<p class="description">Default page this user role sees when accessing /wp-admin/.</p>';
@@ -361,7 +372,7 @@ class AdminPanelSettings
 			if ($role_slug === 'administrator') continue;
 
 			// Create a temporary user with this role to check capabilities
-			$user = new WP_User(0);
+			$user = new \WP_User(0);
 			$user->add_role($role_slug);
 
 			$this->all_menu_items[$role_slug] = [
@@ -497,7 +508,6 @@ class AdminPanelSettings
 		sort($this->all_admin_pages);
 	}
 }
-
 // Initialize the plugin
 if (is_admin()) {
 	new AdminPanelSettings();
@@ -602,13 +612,13 @@ add_action('init', function () {
 				return $redirect_to;
 			}
 
-
 			if (is_array($user->roles)) {
 				foreach ($user->roles as $role) {
-					error_log(sprintf("[login_redirect] user_group_settings: %s", print_r($user_group_settings[$role], true)));
+					// error_log(sprintf("[login_redirect] user_group_settings: %s", print_r($user_group_settings[$role], true)));
 					if (isset($user_group_settings[$role]['login_redirect_url'])) {
-						$redirect = $user_group_settings[$role]['login_redirect_url'];
-						error_log("redirect: " . $redirect);
+						$url =  $user_group_settings[$role]['login_redirect_url'];
+						$redirect = (strpos($url, 'php') === false) ? home_url() : '/wp-admin/' .  $url;
+						error_log("url: " . $url . "redirect: " . $redirect);
 						return $redirect;
 					}
 				}
@@ -623,11 +633,10 @@ add_action('init', function () {
 
 				foreach ($user->roles as $role) {
 					if (isset($user_group_settings[$role]['admin_default_page'])) {
-						$default_page = $user_group_settings[$role]['admin_default_page'];
 
-						if (get_admin_url() === home_url($_SERVER['REQUEST_URI'])) {
+						$default_page = $user_group_settings[$role]['admin_default_page'];
+						if (!empty($default_page) && get_admin_url() === home_url($_SERVER['REQUEST_URI'])) {
 							wp_safe_redirect(admin_url($default_page));
-							// error_log(sprintf("user_group_settings: %s", print_r($user_group_settings[$role], true)));
 							exit;
 						}
 						break;
@@ -643,7 +652,7 @@ add_action('init', function () {
 				$user = wp_get_current_user();
 				$allowed_items = [];
 
-				error_log(sprintf("[admin_menu] user_group_settings: %s", print_r($user_group_settings, true)));
+				// error_log(sprintf("[admin_menu] user_group_settings: %s", print_r($user_group_settings, true)));
 
 				foreach ($user->roles as $role) {
 					if (isset($user_group_settings[$role]['allowed_menu_items'])) {
@@ -692,4 +701,4 @@ function add_custom_page_to_menu()
 	}
 }
 
-register_activation_hook(__FILE__, ['AdminPanelSettings', 'on_plugin_activation']);
+register_activation_hook(__FILE__, ['Antropomorf/AdminPanelSettings', 'on_plugin_activation']);
