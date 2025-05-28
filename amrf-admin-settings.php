@@ -6,7 +6,7 @@
  * Version:     		0.1.0
  * Author:     			Christofer Laurin
  * Author URI:			https://github.com/dreadted/
- * Text Domain:			amrf-admin-settings
+ * Text Domain:			amrf-admin
  * Domain Path:     /languages
  */
 
@@ -21,7 +21,7 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), __NAMESPACE__ . '
 
 function amrf_admin_settings_link($links)
 {
-	$settings_link = '<a href="' . admin_url('options-general.php?page=amrf-admin-settings') . '">' . esc_html__('Settings', 'amrf-admin-settings') . '</a>';
+	$settings_link = '<a href="' . admin_url('options-general.php?page=amrf-admin-settings') . '">' . esc_html__('Settings', 'amrf-admin') . '</a>';
 	array_unshift($links, $settings_link);
 	return $links;
 }
@@ -74,8 +74,8 @@ class AdminPanelSettings
 	public function add_admin_menu()
 	{
 		add_options_page(
-			__('Admin Panel Settings', 'amrf-admin-settings'),
-			__('Admin Panel Settings', 'amrf-admin-settings'),
+			__('Admin Panel Settings', 'amrf-admin'),
+			__('Admin Panel Settings', 'amrf-admin'),
 			'manage_options',
 			'amrf-admin-settings',
 			[$this, 'create_admin_page']
@@ -89,7 +89,7 @@ class AdminPanelSettings
 		$roles = $this->get_editable_roles();
 		unset($roles['administrator']);
 
-		$tabs = ['general' => __('General', 'amrf-admin-settings')];
+		$tabs = ['general' => __('General', 'amrf-admin')];
 		foreach ($roles as $role_slug => $role_info) {
 			$tabs[$role_slug] = $role_info['name'];
 		}
@@ -97,7 +97,7 @@ class AdminPanelSettings
 
 ?>
 		<div class="wrap">
-			<h1><?php _e('Admin Panel Settings', 'amrf-admin-settings'); ?></h1>
+			<h1><?php _e('Admin Panel Settings', 'amrf-admin'); ?></h1>
 			<h2 class="nav-tab-wrapper">
 				<?php foreach ($tabs as $tab => $label) : ?>
 					<a href="<?php echo esc_url(add_query_arg(['page' => 'amrf-admin-settings', 'tab' => $tab], admin_url('options-general.php'))); ?>" class="nav-tab <?php echo $current_tab === $tab ? 'nav-tab-active' : ''; ?>">
@@ -144,85 +144,85 @@ class AdminPanelSettings
 			[$this, 'sanitize']
 		);
 
-       // General Settings Section
-       add_settings_section(
-           'general_settings_section',
-           __('General Settings', 'amrf-admin-settings'),
-           [$this, 'print_general_section_info'],
-           'amrf-admin-settings-general'
-       );
+		// General Settings Section
+		add_settings_section(
+			'general_settings_section',
+			__('General Settings', 'amrf-admin'),
+			[$this, 'print_general_section_info'],
+			'amrf-admin-settings-general'
+		);
 
-       add_settings_field(
-           'add_page_editor_link',
-           __('Add Page Editor Link', 'amrf-admin-settings'),
-           [$this, 'add_page_editor_link_callback'],
-           'amrf-admin-settings-general',
-           'general_settings_section'
-       );
+		add_settings_field(
+			'add_page_editor_link',
+			__('Add Page Editor Link', 'amrf-admin'),
+			[$this, 'add_page_editor_link_callback'],
+			'amrf-admin-settings-general',
+			'general_settings_section'
+		);
 
-       add_settings_field(
-           'minimum_password_length',
-           __('Minimum Password Length', 'amrf-admin-settings'),
-           [$this, 'minimum_password_length_callback'],
-           'amrf-admin-settings-general',
-           'general_settings_section'
-       );
+		add_settings_field(
+			'minimum_password_length',
+			__('Minimum Password Length', 'amrf-admin'),
+			[$this, 'minimum_password_length_callback'],
+			'amrf-admin-settings-general',
+			'general_settings_section'
+		);
 
-       add_settings_field(
-           'prevent_password_change',
-           __('Prevent Non-Admins from Changing Passwords', 'amrf-admin-settings'),
-           [$this, 'prevent_password_change_callback'],
-           'amrf-admin-settings-general',
-           'general_settings_section'
-       );
+		add_settings_field(
+			'prevent_password_change',
+			__('Prevent Non-Admins from Changing Passwords', 'amrf-admin'),
+			[$this, 'prevent_password_change_callback'],
+			'amrf-admin-settings-general',
+			'general_settings_section'
+		);
 
-       add_settings_field(
-           'hide_application_passwords',
-           __('Hide Application Passwords for Non-Admins', 'amrf-admin-settings'),
-           [$this, 'hide_application_passwords_callback'],
-           'amrf-admin-settings-general',
-           'general_settings_section'
-       );
+		add_settings_field(
+			'hide_application_passwords',
+			__('Hide Application Passwords for Non-Admins', 'amrf-admin'),
+			[$this, 'hide_application_passwords_callback'],
+			'amrf-admin-settings-general',
+			'general_settings_section'
+		);
 
-       add_settings_field(
-           'remove_admin_bar_items',
-           __('Remove Admin Bar Items for Non-Admins', 'amrf-admin-settings'),
-           [$this, 'remove_admin_bar_items_callback'],
-           'amrf-admin-settings-general',
-           'general_settings_section'
-       );
+		add_settings_field(
+			'remove_admin_bar_items',
+			__('Remove Admin Bar Items for Non-Admins', 'amrf-admin'),
+			[$this, 'remove_admin_bar_items_callback'],
+			'amrf-admin-settings-general',
+			'general_settings_section'
+		);
 
-       add_settings_field(
-           'remove_dashboard_widgets',
-           __('Remove Default Dashboard Widgets', 'amrf-admin-settings'),
-           [$this, 'remove_dashboard_widgets_callback'],
-           'amrf-admin-settings-general',
-           'general_settings_section'
-       );
+		add_settings_field(
+			'remove_dashboard_widgets',
+			__('Remove Default Dashboard Widgets', 'amrf-admin'),
+			[$this, 'remove_dashboard_widgets_callback'],
+			'amrf-admin-settings-general',
+			'general_settings_section'
+		);
 
-       // User Role Settings Sections and Fields
-       $roles = $this->get_editable_roles();
-       foreach ($roles as $role_slug => $role_info) {
-           if ('administrator' === $role_slug) {
-               continue;
-           }
+		// User Role Settings Sections and Fields
+		$roles = $this->get_editable_roles();
+		foreach ($roles as $role_slug => $role_info) {
+			if ('administrator' === $role_slug) {
+				continue;
+			}
 
-           add_settings_section(
-               'user_role_section_' . $role_slug,
-               sprintf(__('%s Settings', 'amrf-admin-settings'), $role_info['name']),
-               [$this, 'print_user_role_section_info'],
-               'amrf-admin-settings-' . $role_slug
-           );
+			add_settings_section(
+				'user_role_section_' . $role_slug,
+				sprintf(__('%s Settings', 'amrf-admin'), $role_info['name']),
+				[$this, 'print_user_role_section_info'],
+				'amrf-admin-settings-' . $role_slug
+			);
 
-           add_settings_field(
-               'user_role_' . $role_slug . '_settings',
-               sprintf(__('%s Settings', 'amrf-admin-settings'), $role_info['name']),
-               [$this, 'user_role_settings_callback'],
-               'amrf-admin-settings-' . $role_slug,
-               'user_role_section_' . $role_slug,
-               ['role' => $role_slug]
-           );
-       }
+			add_settings_field(
+				'user_role_' . $role_slug . '_settings',
+				sprintf(__('%s Settings', 'amrf-admin'), $role_info['name']),
+				[$this, 'user_role_settings_callback'],
+				'amrf-admin-settings-' . $role_slug,
+				'user_role_section_' . $role_slug,
+				['role' => $role_slug]
+			);
+		}
 	}
 
 	public function sanitize($input)
@@ -285,12 +285,12 @@ class AdminPanelSettings
 
 	public function print_general_section_info()
 	{
-		echo '<p>' . esc_html__('Configure general admin panel settings.', 'amrf-admin-settings') . '</p>';
+		echo '<p>' . esc_html__('Configure general admin panel settings.', 'amrf-admin') . '</p>';
 	}
 
 	public function print_user_role_section_info()
 	{
-		echo '<p>' . esc_html__('Configure settings for each user role.', 'amrf-admin-settings') . '</p>';
+		echo '<p>' . esc_html__('Configure settings for each user role.', 'amrf-admin') . '</p>';
 	}
 
 	private function render_checkbox_setting(string $key, string $description)
@@ -300,39 +300,39 @@ class AdminPanelSettings
 		echo '<input type="checkbox" id="' . $key . '" name="amrf_admin_settings[' . $key . ']" value="1" ' . checked(1, $checked, false) . ' />';
 		echo '<span class="slider round"></span>';
 		echo '</label>';
-		echo '<p class="description">' . esc_html__($description, 'amrf-admin-settings') . '</p>';
+		echo '<p class="description">' . esc_html__($description, 'amrf-admin') . '</p>';
 	}
 
 	public function add_page_editor_link_callback()
 	{
-		$this->render_checkbox_setting('add_page_editor_link',  __('Adds a link to the page editor in the admin menu.'));
+		$this->render_checkbox_setting('add_page_editor_link',  __('Adds a link to the front page editor in the admin menu.'));
 	}
 
 	public function minimum_password_length_callback()
 	{
 		$value = isset($this->options['minimum_password_length']) ? $this->options['minimum_password_length'] : $this->default_settings['minimum_password_length'];
 		echo '<input type="number" id="minimum_password_length" name="amrf_admin_settings[minimum_password_length]" value="' . esc_attr($value) . '" min="8" />';
-		echo '<p class="description">' . esc_html__('Minimum required characters for user passwords.', 'amrf-admin-settings') . '</p>';
+		echo '<p class="description">' . esc_html__('Minimum required characters for user passwords.', 'amrf-admin') . '</p>';
 	}
 
 	public function prevent_password_change_callback()
 	{
-		$this->render_checkbox_setting('prevent_password_change', __('Prevents non-admin users from changing their passwords.', 'amrf-admin-settings'));
+		$this->render_checkbox_setting('prevent_password_change', __('Prevents non-admin users from changing their passwords.', 'amrf-admin'));
 	}
 
 	public function hide_application_passwords_callback()
 	{
-		$this->render_checkbox_setting('hide_application_passwords', __('Hides application passwords section for non-admin users.', 'amrf-admin-settings'));
+		$this->render_checkbox_setting('hide_application_passwords', __('Hides application passwords section for non-admin users.', 'amrf-admin'));
 	}
 
 	public function remove_admin_bar_items_callback()
 	{
-		$this->render_checkbox_setting('remove_admin_bar_items', __('Removes comments and new content links from admin bar for non-admins.', 'amrf-admin-settings'));
+		$this->render_checkbox_setting('remove_admin_bar_items', __('Removes comments and new content links from admin bar for non-admins.', 'amrf-admin'));
 	}
 
 	public function remove_dashboard_widgets_callback()
 	{
-		$this->render_checkbox_setting('remove_dashboard_widgets', __('Removes default dashboard widgets (Activity, Quick Draft, etc.).', 'amrf-admin-settings'));
+		$this->render_checkbox_setting('remove_dashboard_widgets', __('Removes default dashboard widgets (Activity, Quick Draft, etc.).', 'amrf-admin'));
 	}
 
 	public function user_role_settings_callback($args)
@@ -347,14 +347,14 @@ class AdminPanelSettings
 		echo '<h4>Login Redirect</h4>';
 		$redirect_url = $settings['login_redirect_url'] ?? $this->default_settings['user_group_settings'][$role]['login_redirect_url'] ?? '';
 		echo '<select name="amrf_admin_settings[user_group_settings][' . esc_attr($role) . '][login_redirect_url]">';
-		echo '<option value="">-- ' . esc_html__('Select Redirect URL', 'amrf-admin-settings') . ' --</option>';
-		echo '<option value="/" ' . selected($redirect_url, '/', false) . '>-- ' . esc_html__('Front Page', 'amrf-admin-settings') . ' --</option>';
+		echo '<option value="">-- ' . esc_html__('Select Redirect URL', 'amrf-admin') . ' --</option>';
+		echo '<option value="/" ' . selected($redirect_url, '/', false) . '>-- ' . esc_html__('Front Page', 'amrf-admin') . ' --</option>';
 		foreach ($this->all_menu_items[$role]['menu_items']  as $item) {
 			$page = (strpos($item['slug'], 'php') === false) ? esc_attr('admin.php?page=' . $item['slug']) : esc_attr($item['slug']);
 			echo '<option value="' . $page . '" ' . selected($redirect_url, $page, false) . '>' . esc_html($item['name']) . '</option>';
 		}
 		echo '</select>';
-		echo '<p class="description">' . esc_html__('URL to redirect this user role to after login.', 'amrf-admin-settings') . '</p>';
+		echo '<p class="description">' . esc_html__('URL to redirect this user role to after login.', 'amrf-admin') . '</p>';
 		echo '</div>';
 
 		// Admin Default Page
@@ -366,13 +366,13 @@ class AdminPanelSettings
 			return in_array($item['slug'], $allowed_items);
 		});
 		echo '<select name="amrf_admin_settings[user_group_settings][' . esc_attr($role) . '][admin_default_page]">';
-		echo '<option value="">-- ' . esc_html__('Select Default Page', 'amrf-admin-settings') . ' --</option>';
+		echo '<option value="">-- ' . esc_html__('Select Default Page', 'amrf-admin') . ' --</option>';
 		foreach ($filtered_menu_items as $item) {
 			$page = (strpos($item['slug'], 'php') === false) ? esc_attr('admin.php?page=' . $item['slug']) : esc_attr($item['slug']);
 			echo '<option value="' . $page . '" ' . selected($default_page, $page, false) . '>' . esc_html($item['name']) . '</option>';
 		}
 		echo '</select>';
-		echo '<p class="description">' . esc_html__('Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below).', 'amrf-admin-settings') . '</p>';
+		echo '<p class="description">' . esc_html__('Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below).', 'amrf-admin') . '</p>';
 		echo '</div>';
 
 		// Allowed Menu Items
@@ -391,11 +391,11 @@ class AdminPanelSettings
 				echo '</div>';
 			}
 		} else {
-			echo '<p>' . esc_html__('No menu items available for this role based on its capabilities.', 'amrf-admin-settings') . '</p>';
+			echo '<p>' . esc_html__('No menu items available for this role based on its capabilities.', 'amrf-admin') . '</p>';
 		}
 
 		echo '</div>';
-		echo '<p class="description">' . esc_html__('Select which admin menu items should be visible to this user role.', 'amrf-admin-settings') . '</p>';
+		echo '<p class="description">' . esc_html__('Select which admin menu items should be visible to this user role.', 'amrf-admin') . '</p>';
 		echo '</div>';
 
 		echo '</div>';
@@ -509,7 +509,7 @@ class AdminPanelSettings
 			'fluent_forms' => 'Fluent Forms',
 			'support-tickets' => 'Support Tickets',
 			'umami-analytics' => 'Umami Analytics',
-			'#builder_active' => __('Page Builder', 'amrf-admin-settings')
+			'#builder_active' => __('Page Builder', 'amrf-admin')
 		];
 
 		foreach ($common_items as $slug => $name) {
@@ -599,7 +599,7 @@ add_action('init', function () {
 				$errors->add(
 					'pass',
 					sprintf(
-						__('ERROR: Password must be at least %d characters long.', 'amrf-admin-settings'),
+						__('ERROR: Password must be at least %d characters long.', 'amrf-admin'),
 						$minimum_password_length
 					)
 				);
@@ -610,7 +610,7 @@ add_action('init', function () {
 		add_action('password_reset', function ($user, $new_pass) use ($minimum_password_length) {
 			if (strlen($new_pass) < $minimum_password_length) {
 				wp_die(sprintf(
-					__('ERROR: Password must be at least %d characters long.', 'amrf-admin-settings'),
+					__('ERROR: Password must be at least %d characters long.', 'amrf-admin'),
 					$minimum_password_length
 				));
 			}
@@ -743,7 +743,7 @@ function add_custom_page_to_menu()
 		$url = home_url('/#builder_active');
 		add_menu_page(
 			'themify-editor',
-			__('Page Editor', 'amrf-admin-settings'),
+			__('Page Editor', 'amrf-admin'),
 			'edit_posts',
 			$url,
 			'',
