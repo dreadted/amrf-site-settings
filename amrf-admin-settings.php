@@ -18,7 +18,6 @@ if (!defined('ABSPATH')) {
 
 // Add the settings link to the Plugins page
 add_filter('plugin_action_links_' . plugin_basename(__FILE__), __NAMESPACE__ . '\\amrf_admin_settings_link');
-
 function amrf_admin_settings_link($links)
 {
 	$settings_link = '<a href="' . admin_url('options-general.php?page=amrf-admin-settings') . '">' . esc_html__('Settings', 'amrf-admin') . '</a>';
@@ -26,12 +25,14 @@ function amrf_admin_settings_link($links)
 	return $links;
 }
 
+/* AdminPanelSettings
+------------------------------------------------------------ */
 class AdminPanelSettings
 {
 	private $options;
 	private $default_settings;
 	private $all_menu_items = [];
-	private $all_admin_pages = [];
+	private $tabs = [];
 
 	public function __construct()
 	{
@@ -67,7 +68,6 @@ class AdminPanelSettings
 		add_action('admin_menu', [$this, 'add_admin_menu']);
 		add_action('admin_init', [$this, 'page_init']);
 		add_action('admin_menu', [$this, 'scan_admin_menu_items']);
-		add_action('admin_menu', [$this, 'scan_admin_pages']);
 		add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
 	}
 
@@ -89,23 +89,26 @@ class AdminPanelSettings
 		$roles = $this->get_editable_roles();
 		unset($roles['administrator']);
 
-		$tabs = ['general' => __('General', 'amrf-admin')];
+		// $tabs = ['general' => __('General', 'amrf-admin')];
+		$this->tabs = ['general' => __('General', 'amrf-admin')];
 		foreach ($roles as $role_slug => $role_info) {
-			$tabs[$role_slug] = $role_info['name'];
+			$this->tabs[$role_slug] = $role_info['name'];
 		}
-		$current_tab = isset($_GET['tab'], $tabs[$_GET['tab']]) ? $_GET['tab'] : 'general';
+		$current_tab = isset($_GET['tab'], $this->tabs[$_GET['tab']]) ? $_GET['tab'] : 'general';
+		error_log('create - current tab:' . $current_tab);
 
 ?>
 		<div class="wrap">
 			<h1><?php _e('Admin Panel Settings', 'amrf-admin'); ?></h1>
 			<h2 class="nav-tab-wrapper">
-				<?php foreach ($tabs as $tab => $label) : ?>
+				<?php foreach ($this->tabs as $tab => $label) : ?>
 					<a href="<?php echo esc_url(add_query_arg(['page' => 'amrf-admin-settings', 'tab' => $tab], admin_url('options-general.php'))); ?>" class="nav-tab <?php echo $current_tab === $tab ? 'nav-tab-active' : ''; ?>">
 						<?php echo esc_html($label); ?>
 					</a>
 				<?php endforeach; ?>
 			</h2>
 			<form method="post" action="options.php">
+				<input type="hidden" name="current_tab" value="<?php echo esc_attr($current_tab); ?>">
 				<?php
 				settings_fields('amrf_admin_settings_group');
 				do_settings_sections('amrf-admin-settings-' . $current_tab);
@@ -225,61 +228,49 @@ class AdminPanelSettings
 		}
 	}
 
+	// Sanitize general settings
 	public function sanitize($input)
 	{
-		$current = get_option('amrf_admin_settings', []);
+		$current = get_option('amrf_admin_settings', $this->default_settings);
+		$current_tab = $_POST['current_tab'] ?? 'general';
 
-		// General settings
-		if (isset($input['add_page_editor_link'])) {
-			$current['add_page_editor_link'] = true;
-		} else {
-			$current['add_page_editor_link'] = false;
-		}
-		if (isset($input['minimum_password_length'])) {
-			$current['minimum_password_length'] = absint($input['minimum_password_length']);
-		}
-		if (isset($input['prevent_password_change'])) {
-			$current['prevent_password_change'] = true;
-		} else {
-			$current['prevent_password_change'] = false;
-		}
-		if (isset($input['hide_application_passwords'])) {
-			$current['hide_application_passwords'] = true;
-		} else {
-			$current['hide_application_passwords'] = false;
-		}
-		if (isset($input['remove_admin_bar_items'])) {
-			$current['remove_admin_bar_items'] = true;
-		} else {
-			$current['remove_admin_bar_items'] = false;
-		}
-		if (isset($input['remove_dashboard_widgets'])) {
-			$current['remove_dashboard_widgets'] = true;
-		} else {
-			$current['remove_dashboard_widgets'] = false;
-		}
+		error_log('sanitize current tab:' . $current_tab . PHP_EOL . 'BEFORE:' . PHP_EOL . print_r($current, true));
 
-		// User role settings
-		if (!empty($input['user_group_settings']) && is_array($input['user_group_settings'])) {
-			foreach ($input['user_group_settings'] as $role => $settings) {
-				if (!isset($current['user_group_settings'][$role])) {
-					$current['user_group_settings'][$role] = [];
+		if ($current_tab === 'general') {
+			// Process only general settings
+			$current['add_page_editor_link'] = isset($input['add_page_editor_link']);
+			$current['minimum_password_length'] = absint($input['minimum_password_length'] ?? $this->default_settings['minimum_password_length']);
+			$current['prevent_password_change'] = isset($input['prevent_password_change']);
+			$current['hide_application_passwords'] = isset($input['hide_application_passwords']);
+			$current['remove_admin_bar_items'] = isset($input['remove_admin_bar_items']);
+			$current['remove_dashboard_widgets'] = isset($input['remove_dashboard_widgets']);
+		} elseif (array_key_exists($current_tab, $this->get_editable_roles())) {
+			$role = $current_tab;
+
+			// Initialize role settings if they don't exist
+			if (!isset($current['user_group_settings'][$role])) {
+				$current['user_group_settings'][$role] = $this->default_settings['user_group_settings'][$role] ?? [];
+			}
+
+			// Only process settings for the current role
+			if (!empty($input['user_group_settings'][$role])) {
+				$role_settings = $input['user_group_settings'][$role];
+				error_log('role settings:' . PHP_EOL . print_r($role_settings, true));
+
+				if (isset($role_settings['login_redirect_url'])) {
+					$current['user_group_settings'][$role]['login_redirect_url'] = esc_url_raw($role_settings['login_redirect_url']);
 				}
-				if (isset($settings['login_redirect_url'])) {
-					$current['user_group_settings'][$role]['login_redirect_url'] = esc_url_raw($settings['login_redirect_url']);
+
+				if (isset($role_settings['admin_default_page'])) {
+					$current['user_group_settings'][$role]['admin_default_page'] = sanitize_text_field($role_settings['admin_default_page']);
 				}
-				if (isset($settings['admin_default_page'])) {
-					$current['user_group_settings'][$role]['admin_default_page'] = sanitize_text_field($settings['admin_default_page']);
-				}
-				if (!empty($settings['allowed_menu_items']) && is_array($settings['allowed_menu_items'])) {
-					$current['user_group_settings'][$role]['allowed_menu_items'] = [];
-					foreach ($settings['allowed_menu_items'] as $item) {
-						$current['user_group_settings'][$role]['allowed_menu_items'][] = sanitize_text_field($item);
-					}
+
+				if (!empty($role_settings['allowed_menu_items']) && is_array($role_settings['allowed_menu_items'])) {
+					$current['user_group_settings'][$role]['allowed_menu_items'] = array_map('sanitize_text_field', $role_settings['allowed_menu_items']);
 				}
 			}
 		}
-
+		error_log('sanitize AFTER:' . PHP_EOL . print_r($current, true));
 		return $current;
 	}
 
@@ -536,32 +527,6 @@ class AdminPanelSettings
 				return strcmp($a['name'], $b['name']);
 			});
 		}
-	}
-
-	public function scan_admin_pages()
-	{
-		global $menu, $submenu;
-
-		$this->all_admin_pages = ['profile.php'];
-
-		// Get all top level menu pages
-		foreach ($menu as $item) {
-			if (!empty($item[2])) {
-				$this->all_admin_pages[] = $item[2];
-			}
-		}
-
-		// Get all submenu pages
-		foreach ($submenu as $items) {
-			foreach ($items as $item) {
-				if (!empty($item[2])) {
-					$this->all_admin_pages[] = $item[2];
-				}
-			}
-		}
-
-		$this->all_admin_pages = array_unique($this->all_admin_pages);
-		sort($this->all_admin_pages);
 	}
 }
 // Initialize the plugin
