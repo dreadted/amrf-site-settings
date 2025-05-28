@@ -101,3 +101,7 @@ input:checked + .slider:before {
   border: 1px solid #ddd;
   border-radius: 4px;
 }
+
+th:has(+ td > div.user-role-settings) {
+  display: none;
+}
