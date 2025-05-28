@@ -1,0 +1,155 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Admin Panel Settings 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/amrf-admin\n"
+"POT-Creation-Date: 2025-05-28T12:32:11+00:00\n"
+"PO-Revision-Date: 2025-05-28 15:31+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+"X-Domain: amrf-admin\n"
+
+#. Plugin Name of the plugin
+#: amrf-admin-settings.php amrf-admin-settings.php:93
+#: amrf-admin-settings.php:94 amrf-admin-settings.php:122
+msgid "Admin Panel Settings"
+msgstr "Inställningar för Adminpanelen"
+
+#. Description of the plugin
+#: amrf-admin-settings.php
+msgid "Customize admin panel settings for different user roles."
+msgstr "Ange panelinställningar för respektive användarroll."
+
+#. Author of the plugin
+#: amrf-admin-settings.php
+msgid "Christofer Laurin"
+msgstr ""
+
+#. Author URI of the plugin
+#: amrf-admin-settings.php
+msgid "https://github.com/dreadted/"
+msgstr ""
+
+#: amrf-admin-settings.php:29
+msgid "Settings"
+msgstr "Inställningar"
+
+#: amrf-admin-settings.php:113
+msgid "General"
+msgstr "Allmänna"
+
+#: amrf-admin-settings.php:190
+msgid "General Settings"
+msgstr "Allmänna inställningar"
+
+#: amrf-admin-settings.php:197
+msgid "Add Page Editor Link"
+msgstr "Lägg till \"Redigera sida\" i menyn"
+
+#: amrf-admin-settings.php:205
+msgid "Minimum Password Length"
+msgstr "Minsta tillåtna längd på lösenord"
+
+#: amrf-admin-settings.php:213
+msgid "Prevent Non-Admins from Changing Passwords"
+msgstr "Förhindra icke-administratörer att byta lösenord"
+
+#: amrf-admin-settings.php:221
+msgid "Hide Application Passwords for Non-Admins"
+msgstr "Dölj applikationslösenord för icke-administratörer"
+
+#: amrf-admin-settings.php:229
+msgid "Remove Admin Bar Items for Non-Admins"
+msgstr "Ta bort länkar från administrationsfältet för icke-administratörer"
+
+#: amrf-admin-settings.php:237
+msgid "Remove Default Dashboard Widgets"
+msgstr "Ta bort standardwidgetar från adminpanelen"
+
+#. translators: %s is the user role name
+#: amrf-admin-settings.php:253 amrf-admin-settings.php:260
+#, php-format
+msgid "%s Settings"
+msgstr "Inställningar för %s"
+
+#: amrf-admin-settings.php:323
+msgid "Configure general admin panel settings."
+msgstr "Ange allmänna inställningar för adminpanelen."
+
+#: amrf-admin-settings.php:372
+msgid "Minimum required characters for user passwords."
+msgstr "Minsta antal tillåtna tecken för användarnas lösenord."
+
+#: amrf-admin-settings.php:382
+msgid "Prevents non-admin users from changing their passwords."
+msgstr "Förhindrar icke-administratörer att byta lösenord."
+
+#: amrf-admin-settings.php:392
+msgid "Hides application passwords section for non-admin users."
+msgstr "Döljer applikationslösenord för icke-administratörer."
+
+#: amrf-admin-settings.php:402
+msgid "Removes comments and new content links from admin bar for non-admins."
+msgstr "Tar bort länkar till kommentarer och nytt innehåll från administrationsfältet för icke-administratörer."
+
+#: amrf-admin-settings.php:412
+msgid "Removes default dashboard widgets (Activity, Quick Draft, etc.)."
+msgstr "Tar bort standardwidgetar (Aktivitet, Snabbutkast etc.)"
+
+#: amrf-admin-settings.php:433
+msgid "Select Redirect URL"
+msgstr "Välj URL som ska visas efter inloggning"
+
+#: amrf-admin-settings.php:434
+msgid "Front Page"
+msgstr "Startsida"
+
+#: amrf-admin-settings.php:440
+msgid "URL to redirect this user role to after login."
+msgstr "URL som visas för den här användarrollen efter inloggning."
+
+#: amrf-admin-settings.php:452
+msgid "Select Default Page"
+msgstr "Välj standardsida"
+
+#: amrf-admin-settings.php:458
+msgid "Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below)."
+msgstr "Den sida som visas när den här användarrollen besöker /wp-admin/ (måste finnas med bland tillåtna menyalternativ nedan)."
+
+#: amrf-admin-settings.php:477
+msgid "No menu items available for this role based on its capabilities."
+msgstr "Inga menyalternativ tillgängliga baserat på den här användarrollens åtkomsträttigheter."
+
+#: amrf-admin-settings.php:481
+msgid "Select which admin menu items should be visible to this user role."
+msgstr "Välj vilka menyalternativ som ska visas i administratörsmenyn för den här användarrollen."
+
+#: amrf-admin-settings.php:630
+msgid "Page Builder"
+msgstr "Sidbyggare"
+
+#. translators: %d is the number indicating minimum password length
+#: amrf-admin-settings.php:695 amrf-admin-settings.php:707
+#, php-format
+msgid "ERROR: Password must be at least %d characters long."
+msgstr "FEL: Lösenordet måste vara minst %d tecken långt."
+
+#: amrf-admin-settings.php:844
+msgid "Page Editor"
+msgstr "Redigera sida"
+
+#: amrf-admin-settings.php:430
+msgid "Login Redirect"
+msgstr "Vidarebefordring efter inloggning"
+
+#: amrf-admin-settings.php:445
+msgid "Default Admin Page"
+msgstr "Standardsida för admin"
+
+#: amrf-admin-settings.php:463
+msgid "Allowed Menu Items"
+msgstr "Tillåtna menyalternativ"

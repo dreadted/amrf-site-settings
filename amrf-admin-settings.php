@@ -3,7 +3,7 @@
 /** 
  * Plugin Name:     Admin Panel Settings
  * Description:     Customize admin panel settings for different user roles.
- * Version:     		0.1.0
+ * Version:     		1.0.0
  * Author:     			Christofer Laurin
  * Author URI:			https://github.com/dreadted/
  * Text Domain:			amrf-admin
@@ -49,7 +49,7 @@ class AdminPanelSettings
 	{
 
 		// Load plugin text domain
-		load_plugin_textdomain('amrf-admin-settings', false, dirname(plugin_basename(__FILE__)) . '/languages');
+		load_plugin_textdomain('amrf-admin', false, dirname(plugin_basename(__FILE__)) . '/languages');
 
 		$this->default_settings = [
 			'add_page_editor_link' => true,
@@ -110,13 +110,12 @@ class AdminPanelSettings
 		$roles = $this->get_editable_roles();
 		unset($roles['administrator']);
 
-		// $tabs = ['general' => __('General', 'amrf-admin')];
 		$this->tabs = ['general' => __('General', 'amrf-admin')];
 		foreach ($roles as $role_slug => $role_info) {
-			$this->tabs[$role_slug] = $role_info['name'];
+			// Make role name translatable using WordPress core translations
+			$this->tabs[$role_slug] = translate_user_role($role_info['name']);
 		}
 		$current_tab = isset($_GET['tab'], $this->tabs[$_GET['tab']]) ? $_GET['tab'] : 'general';
-		error_log('create - current tab:' . $current_tab);
 
 ?>
 		<div class="wrap">
@@ -250,14 +249,15 @@ class AdminPanelSettings
 
 			add_settings_section(
 				'user_role_section_' . $role_slug,
-				sprintf(__('%s Settings', 'amrf-admin'), $role_info['name']),
+				//  translators: %s is the user role name
+				sprintf(__('%s Settings', 'amrf-admin'), translate_user_role($role_info['name'])),
 				[$this, 'print_user_role_section_info'],
 				'amrf-admin-settings-' . $role_slug
 			);
 
 			add_settings_field(
 				'user_role_' . $role_slug . '_settings',
-				sprintf(__('%s Settings', 'amrf-admin'), $role_info['name']),
+				sprintf(__('%s Settings', 'amrf-admin'), translate_user_role($role_info['name'])),
 				[$this, 'user_role_settings_callback'],
 				'amrf-admin-settings-' . $role_slug,
 				'user_role_section_' . $role_slug,
@@ -276,8 +276,6 @@ class AdminPanelSettings
 	{
 		$current = get_option('amrf_admin_settings', $this->default_settings);
 		$current_tab = $_POST['current_tab'] ?? 'general';
-
-		error_log('sanitize current tab:' . $current_tab . PHP_EOL . 'BEFORE:' . PHP_EOL . print_r($current, true));
 
 		if ($current_tab === 'general') {
 			// Process only general settings
@@ -298,7 +296,6 @@ class AdminPanelSettings
 			// Only process settings for the current role
 			if (!empty($input['user_group_settings'][$role])) {
 				$role_settings = $input['user_group_settings'][$role];
-				error_log('role settings:' . PHP_EOL . print_r($role_settings, true));
 
 				if (isset($role_settings['login_redirect_url'])) {
 					$current['user_group_settings'][$role]['login_redirect_url'] = esc_url_raw($role_settings['login_redirect_url']);
@@ -313,7 +310,6 @@ class AdminPanelSettings
 				}
 			}
 		}
-		error_log('sanitize AFTER:' . PHP_EOL . print_r($current, true));
 		return $current;
 	}
 
@@ -431,7 +427,7 @@ class AdminPanelSettings
 
 		// Redirect Rules
 		echo '<div class="setting-row">';
-		echo '<h4>Login Redirect</h4>';
+		echo '<h4>' . esc_html__('Login Redirect', 'amrf-admin') . '</h4>';
 		$redirect_url = $settings['login_redirect_url'] ?? $this->default_settings['user_group_settings'][$role]['login_redirect_url'] ?? '';
 		echo '<select name="amrf_admin_settings[user_group_settings][' . esc_attr($role) . '][login_redirect_url]">';
 		echo '<option value="">-- ' . esc_html__('Select Redirect URL', 'amrf-admin') . ' --</option>';
@@ -446,7 +442,7 @@ class AdminPanelSettings
 
 		// Admin Default Page
 		echo '<div class="setting-row">';
-		echo '<h4>Default Admin Page</h4>';
+		echo '<h4>' . esc_html__('Default Admin Page', 'amrf-admin') . '</h4>';
 		$default_page = $settings['admin_default_page'] ?? $this->default_settings['user_group_settings'][$role]['admin_default_page'] ?? '';
 		$allowed_items = $settings['allowed_menu_items'] ?? $this->default_settings['user_group_settings'][$role]['allowed_menu_items'] ?? [];
 		$filtered_menu_items = array_filter($this->all_menu_items[$role]['menu_items'], function ($item) use ($allowed_items) {
@@ -464,7 +460,7 @@ class AdminPanelSettings
 
 		// Allowed Menu Items
 		echo '<div class="setting-row">';
-		echo '<h4>Allowed Menu Items</h4>';
+		echo '<h4>' . esc_html__('Allowed Menu Items', 'amrf-admin') . '</h4>';
 		$allowed_items = $settings['allowed_menu_items'] ?? $this->default_settings['user_group_settings'][$role]['allowed_menu_items'] ?? [];
 
 		echo '<div class="menu-items-container">';
@@ -540,6 +536,16 @@ class AdminPanelSettings
 				'menu_items' => []
 			];
 
+			// Initialize the role's menu items array if not already set
+			if (!isset($this->all_menu_items[$role_slug])) {
+				$this->all_menu_items[$role_slug] = [
+					'menu_items' => []
+				];
+			}
+
+			// Track added menu slugs to prevent duplicates
+			$added_menu_slugs = [];
+
 			foreach ($menu as $item) {
 				// Skip separators and empty items
 				if (empty($item[2])) continue;
@@ -551,16 +557,20 @@ class AdminPanelSettings
 					$menu_name = wp_strip_all_tags($item[0]);
 
 					if ($item[2] === 'edit-comments.php') {
-						$menu_name = 'Comments';
+						$menu_name = __('Comments');
 					} else {
 						// Optionally clean other menu items here
 						$menu_name = trim($menu_name);
 					}
 
-					$this->all_menu_items[$role_slug]['menu_items'][] = [
-						'name' => $menu_name,
-						'slug' => $item[2]
-					];
+					// Only add if not already added
+					if (!in_array($item[2], $added_menu_slugs)) {
+						$this->all_menu_items[$role_slug]['menu_items'][] = [
+							'name' => $menu_name,
+							'slug' => $item[2]
+						];
+						$added_menu_slugs[] = $item[2];
+					}
 				}
 			}
 
@@ -598,11 +608,14 @@ class AdminPanelSettings
 							}
 						}
 
-						// Add the submenu item
-						$this->all_menu_items[$role_slug]['menu_items'][] = [
-							'name' => $submenu_name,
-							'slug' => $item[2]
-						];
+						// Add the submenu item if not already added
+						if (!in_array($item[2], $added_menu_slugs)) {
+							$this->all_menu_items[$role_slug]['menu_items'][] = [
+								'name' => $submenu_name,
+								'slug' => $item[2]
+							];
+							$added_menu_slugs[] = $item[2];
+						}
 					}
 				}
 			}
@@ -678,6 +691,7 @@ add_action('init', function () {
 				$errors->add(
 					'pass',
 					sprintf(
+						//  translators: %d is the number indicating minimum password length
 						__('ERROR: Password must be at least %d characters long.', 'amrf-admin'),
 						$minimum_password_length
 					)
@@ -689,6 +703,7 @@ add_action('init', function () {
 		add_action('password_reset', function ($user, $new_pass) use ($minimum_password_length) {
 			if (strlen($new_pass) < $minimum_password_length) {
 				wp_die(sprintf(
+					//  translators: %d is the number indicating minimum password length
 					__('ERROR: Password must be at least %d characters long.', 'amrf-admin'),
 					$minimum_password_length
 				));
