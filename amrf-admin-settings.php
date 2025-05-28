@@ -85,13 +85,30 @@ class AdminPanelSettings
 	public function create_admin_page()
 	{
 		$this->options = get_option('amrf_admin_settings', $this->default_settings);
+
+		$roles = $this->get_editable_roles();
+		unset($roles['administrator']);
+
+		$tabs = ['general' => __('General', 'amrf-admin-settings')];
+		foreach ($roles as $role_slug => $role_info) {
+			$tabs[$role_slug] = $role_info['name'];
+		}
+		$current_tab = isset($_GET['tab'], $tabs[$_GET['tab']]) ? $_GET['tab'] : 'general';
+
 ?>
 		<div class="wrap">
 			<h1><?php _e('Admin Panel Settings', 'amrf-admin-settings'); ?></h1>
+			<h2 class="nav-tab-wrapper">
+				<?php foreach ($tabs as $tab => $label) : ?>
+					<a href="<?php echo esc_url(add_query_arg(['page' => 'amrf-admin-settings', 'tab' => $tab], admin_url('options-general.php'))); ?>" class="nav-tab <?php echo $current_tab === $tab ? 'nav-tab-active' : ''; ?>">
+						<?php echo esc_html($label); ?>
+					</a>
+				<?php endforeach; ?>
+			</h2>
 			<form method="post" action="options.php">
 				<?php
 				settings_fields('amrf_admin_settings_group');
-				do_settings_sections('amrf-admin-settings');
+				do_settings_sections('amrf-admin-settings-' . $current_tab);
 				submit_button();
 				?>
 			</form>
@@ -127,121 +144,143 @@ class AdminPanelSettings
 			[$this, 'sanitize']
 		);
 
-		// General Settings Section
-		add_settings_section(
-			'general_settings_section',
-			__('General Settings', 'amrf-admin-settings'),
-			[$this, 'print_general_section_info'],
-			'amrf-admin-settings'
-		);
+       // General Settings Section
+       add_settings_section(
+           'general_settings_section',
+           __('General Settings', 'amrf-admin-settings'),
+           [$this, 'print_general_section_info'],
+           'amrf-admin-settings-general'
+       );
 
-		add_settings_field(
-			'add_page_editor_link',
-			__('Add Page Editor Link', 'amrf-admin-settings'),
-			[$this, 'add_page_editor_link_callback'],
-			'amrf-admin-settings',
-			'general_settings_section'
-		);
+       add_settings_field(
+           'add_page_editor_link',
+           __('Add Page Editor Link', 'amrf-admin-settings'),
+           [$this, 'add_page_editor_link_callback'],
+           'amrf-admin-settings-general',
+           'general_settings_section'
+       );
 
-		add_settings_field(
-			'minimum_password_length',
-			__('Minimum Password Length', 'amrf-admin-settings'),
-			[$this, 'minimum_password_length_callback'],
-			'amrf-admin-settings',
-			'general_settings_section'
-		);
+       add_settings_field(
+           'minimum_password_length',
+           __('Minimum Password Length', 'amrf-admin-settings'),
+           [$this, 'minimum_password_length_callback'],
+           'amrf-admin-settings-general',
+           'general_settings_section'
+       );
 
-		add_settings_field(
-			'prevent_password_change',
-			__('Prevent Non-Admins from Changing Passwords', 'amrf-admin-settings'),
-			[$this, 'prevent_password_change_callback'],
-			'amrf-admin-settings',
-			'general_settings_section'
-		);
+       add_settings_field(
+           'prevent_password_change',
+           __('Prevent Non-Admins from Changing Passwords', 'amrf-admin-settings'),
+           [$this, 'prevent_password_change_callback'],
+           'amrf-admin-settings-general',
+           'general_settings_section'
+       );
 
-		add_settings_field(
-			'hide_application_passwords',
-			__('Hide Application Passwords for Non-Admins', 'amrf-admin-settings'),
-			[$this, 'hide_application_passwords_callback'],
-			'amrf-admin-settings',
-			'general_settings_section'
-		);
+       add_settings_field(
+           'hide_application_passwords',
+           __('Hide Application Passwords for Non-Admins', 'amrf-admin-settings'),
+           [$this, 'hide_application_passwords_callback'],
+           'amrf-admin-settings-general',
+           'general_settings_section'
+       );
 
-		add_settings_field(
-			'remove_admin_bar_items',
-			__('Remove Admin Bar Items for Non-Admins', 'amrf-admin-settings'),
-			[$this, 'remove_admin_bar_items_callback'],
-			'amrf-admin-settings',
-			'general_settings_section'
-		);
+       add_settings_field(
+           'remove_admin_bar_items',
+           __('Remove Admin Bar Items for Non-Admins', 'amrf-admin-settings'),
+           [$this, 'remove_admin_bar_items_callback'],
+           'amrf-admin-settings-general',
+           'general_settings_section'
+       );
 
-		add_settings_field(
-			'remove_dashboard_widgets',
-			__('Remove Default Dashboard Widgets', 'amrf-admin-settings'),
-			[$this, 'remove_dashboard_widgets_callback'],
-			'amrf-admin-settings',
-			'general_settings_section'
-		);
+       add_settings_field(
+           'remove_dashboard_widgets',
+           __('Remove Default Dashboard Widgets', 'amrf-admin-settings'),
+           [$this, 'remove_dashboard_widgets_callback'],
+           'amrf-admin-settings-general',
+           'general_settings_section'
+       );
 
-		// User Role Settings Section
-		add_settings_section(
-			'user_role_settings_section',
-			__('User Role Settings', 'amrf-admin-settings'),
-			[$this, 'print_user_role_section_info'],
-			'amrf-admin-settings'
-		);
+       // User Role Settings Sections and Fields
+       $roles = $this->get_editable_roles();
+       foreach ($roles as $role_slug => $role_info) {
+           if ('administrator' === $role_slug) {
+               continue;
+           }
 
-		// Dynamically add fields for each user role
-		$roles = $this->get_editable_roles();
-		foreach ($roles as $role_slug => $role_info) {
-			if ($role_slug === 'administrator') continue;
+           add_settings_section(
+               'user_role_section_' . $role_slug,
+               sprintf(__('%s Settings', 'amrf-admin-settings'), $role_info['name']),
+               [$this, 'print_user_role_section_info'],
+               'amrf-admin-settings-' . $role_slug
+           );
 
-			add_settings_field(
-				'user_role_' . $role_slug . '_settings',
-				ucfirst($role_slug) . ' Settings',
-				[$this, 'user_role_settings_callback'],
-				'amrf-admin-settings',
-				'user_role_settings_section',
-				['role' => $role_slug]
-			);
-		}
+           add_settings_field(
+               'user_role_' . $role_slug . '_settings',
+               sprintf(__('%s Settings', 'amrf-admin-settings'), $role_info['name']),
+               [$this, 'user_role_settings_callback'],
+               'amrf-admin-settings-' . $role_slug,
+               'user_role_section_' . $role_slug,
+               ['role' => $role_slug]
+           );
+       }
 	}
 
 	public function sanitize($input)
 	{
-		$sanitized_input = [];
+		$current = get_option('amrf_admin_settings', []);
 
 		// General settings
-		$sanitized_input['add_page_editor_link'] = isset($input['add_page_editor_link']);
-		$sanitized_input['minimum_password_length'] = absint($input['minimum_password_length']);
-		$sanitized_input['prevent_password_change'] = isset($input['prevent_password_change']);
-		$sanitized_input['hide_application_passwords'] = isset($input['hide_application_passwords']);
-		$sanitized_input['remove_admin_bar_items'] = isset($input['remove_admin_bar_items']);
-		$sanitized_input['remove_dashboard_widgets'] = isset($input['remove_dashboard_widgets']);
+		if (isset($input['add_page_editor_link'])) {
+			$current['add_page_editor_link'] = true;
+		} else {
+			$current['add_page_editor_link'] = false;
+		}
+		if (isset($input['minimum_password_length'])) {
+			$current['minimum_password_length'] = absint($input['minimum_password_length']);
+		}
+		if (isset($input['prevent_password_change'])) {
+			$current['prevent_password_change'] = true;
+		} else {
+			$current['prevent_password_change'] = false;
+		}
+		if (isset($input['hide_application_passwords'])) {
+			$current['hide_application_passwords'] = true;
+		} else {
+			$current['hide_application_passwords'] = false;
+		}
+		if (isset($input['remove_admin_bar_items'])) {
+			$current['remove_admin_bar_items'] = true;
+		} else {
+			$current['remove_admin_bar_items'] = false;
+		}
+		if (isset($input['remove_dashboard_widgets'])) {
+			$current['remove_dashboard_widgets'] = true;
+		} else {
+			$current['remove_dashboard_widgets'] = false;
+		}
 
 		// User role settings
-		if (!empty($input['user_group_settings'])) {
-			$sanitized_input['user_group_settings'] = [];
-
+		if (!empty($input['user_group_settings']) && is_array($input['user_group_settings'])) {
 			foreach ($input['user_group_settings'] as $role => $settings) {
+				if (!isset($current['user_group_settings'][$role])) {
+					$current['user_group_settings'][$role] = [];
+				}
 				if (isset($settings['login_redirect_url'])) {
-					$sanitized_input['user_group_settings'][$role]['login_redirect_url'] = esc_url_raw($settings['login_redirect_url']);
+					$current['user_group_settings'][$role]['login_redirect_url'] = esc_url_raw($settings['login_redirect_url']);
 				}
-
 				if (isset($settings['admin_default_page'])) {
-					$sanitized_input['user_group_settings'][$role]['admin_default_page'] = sanitize_text_field($settings['admin_default_page']);
+					$current['user_group_settings'][$role]['admin_default_page'] = sanitize_text_field($settings['admin_default_page']);
 				}
-
-				if (!empty($settings['allowed_menu_items'])) {
-					$sanitized_input['user_group_settings'][$role]['allowed_menu_items'] = [];
+				if (!empty($settings['allowed_menu_items']) && is_array($settings['allowed_menu_items'])) {
+					$current['user_group_settings'][$role]['allowed_menu_items'] = [];
 					foreach ($settings['allowed_menu_items'] as $item) {
-						$sanitized_input['user_group_settings'][$role]['allowed_menu_items'][] = sanitize_text_field($item);
+						$current['user_group_settings'][$role]['allowed_menu_items'][] = sanitize_text_field($item);
 					}
 				}
 			}
 		}
 
-		return $sanitized_input;
+		return $current;
 	}
 
 	public function print_general_section_info()
