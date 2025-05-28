@@ -714,4 +714,4 @@ function add_custom_page_to_menu()
 	}
 }
 
-register_activation_hook(__FILE__, ['Antropomorf\AdminPanelSettings', 'on_plugin_activation']);
+register_activation_hook(__FILE__, [__NAMESPACE__ . '\\AdminPanelSettings', 'on_plugin_activation']);
