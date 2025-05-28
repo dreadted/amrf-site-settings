@@ -16,8 +16,14 @@ if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly
 }
 
-// Add the settings link to the Plugins page
 add_filter('plugin_action_links_' . plugin_basename(__FILE__), __NAMESPACE__ . '\\amrf_admin_settings_link');
+
+/**
+ * Add the 'Settings' link to the plugin action links on the Plugins page.
+ *
+ * @param array $links Existing action links for the plugin.
+ * @return array Modified action links including the 'Settings' link.
+ */
 function amrf_admin_settings_link($links)
 {
 	$settings_link = '<a href="' . admin_url('options-general.php?page=amrf-admin-settings') . '">' . esc_html__('Settings', 'amrf-admin') . '</a>';
@@ -34,6 +40,11 @@ class AdminPanelSettings
 	private $all_menu_items = [];
 	private $tabs = [];
 
+	/**
+	 * Constructor. Initializes plugin text domain, default settings, and registers WordPress hooks.
+	 *
+	 * @return void
+	 */
 	public function __construct()
 	{
 
@@ -71,6 +82,11 @@ class AdminPanelSettings
 		add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
 	}
 
+	/**
+	 * Register the settings page under the 'Settings' menu in the admin dashboard.
+	 *
+	 * @return void
+	 */
 	public function add_admin_menu()
 	{
 		add_options_page(
@@ -82,6 +98,11 @@ class AdminPanelSettings
 		);
 	}
 
+	/**
+	 * Render the main settings page, including tabs for each role and form fields.
+	 *
+	 * @return void
+	 */
 	public function create_admin_page()
 	{
 		$this->options = get_option('amrf_admin_settings', $this->default_settings);
@@ -119,6 +140,11 @@ class AdminPanelSettings
 <?php
 	}
 
+	/**
+	 * Ensure default settings exist during plugin activation.
+	 *
+	 * @return void
+	 */
 	public static function on_plugin_activation()
 	{
 		$current_settings = get_option('amrf_admin_settings', []);
@@ -127,6 +153,13 @@ class AdminPanelSettings
 		update_option('amrf_admin_settings', $merged_settings);
 	}
 
+	/**
+	 * Recursively merge default settings into the current settings array for missing keys.
+	 *
+	 * @param array $default Default settings to use as a base.
+	 * @param array $current Current settings to merge defaults into.
+	 * @return array Merged settings array.
+	 */
 	private static function recursive_merge_missing(array $default, array $current): array
 	{
 		foreach ($default as $key => $value) {
@@ -139,6 +172,11 @@ class AdminPanelSettings
 		return $current;
 	}
 
+	/**
+	 * Register settings sections, fields, and callbacks for the plugin settings page.
+	 *
+	 * @return void
+	 */
 	public function page_init()
 	{
 		register_setting(
@@ -228,7 +266,12 @@ class AdminPanelSettings
 		}
 	}
 
-	// Sanitize general settings
+	/**
+	 * Sanitize settings input before saving to the database.
+	 *
+	 * @param array $input Raw input values from settings form.
+	 * @return array Sanitized settings array.
+	 */
 	public function sanitize($input)
 	{
 		$current = get_option('amrf_admin_settings', $this->default_settings);
@@ -274,16 +317,33 @@ class AdminPanelSettings
 		return $current;
 	}
 
+	/**
+	 * Print the description for the general settings section.
+	 *
+	 * @return void
+	 */
 	public function print_general_section_info()
 	{
 		echo '<p>' . esc_html__('Configure general admin panel settings.', 'amrf-admin') . '</p>';
 	}
 
+	/**
+	 * Section callback for user role settings; no description output is needed.
+	 *
+	 * @return void
+	 */
 	public function print_user_role_section_info()
 	{
 		// no output
 	}
 
+	/**
+	 * Render a checkbox input with a slider style and description.
+	 *
+	 * @param string $key         Setting key used for the input name and id.
+	 * @param string $description Description text displayed next to the checkbox.
+	 * @return void
+	 */
 	private function render_checkbox_setting(string $key, string $description)
 	{
 		$checked = isset($this->options[$key]) ? $this->options[$key] : $this->default_settings[$key];
@@ -294,11 +354,21 @@ class AdminPanelSettings
 		echo '<p class="description">' . esc_html__($description, 'amrf-admin') . '</p>';
 	}
 
+	/**
+	 * Callback to render the 'Add Page Editor Link' setting field.
+	 *
+	 * @return void
+	 */
 	public function add_page_editor_link_callback()
 	{
 		$this->render_checkbox_setting('add_page_editor_link',  __('Adds a link to the front page editor in the admin menu.'));
 	}
 
+	/**
+	 * Callback to render the 'Minimum Password Length' setting field.
+	 *
+	 * @return void
+	 */
 	public function minimum_password_length_callback()
 	{
 		$value = isset($this->options['minimum_password_length']) ? $this->options['minimum_password_length'] : $this->default_settings['minimum_password_length'];
@@ -306,26 +376,52 @@ class AdminPanelSettings
 		echo '<p class="description">' . esc_html__('Minimum required characters for user passwords.', 'amrf-admin') . '</p>';
 	}
 
+	/**
+	 * Callback to render the 'Prevent Non-Admins from Changing Passwords' setting field.
+	 *
+	 * @return void
+	 */
 	public function prevent_password_change_callback()
 	{
 		$this->render_checkbox_setting('prevent_password_change', __('Prevents non-admin users from changing their passwords.', 'amrf-admin'));
 	}
 
+	/**
+	 * Callback to render the 'Hide Application Passwords for Non-Admins' setting field.
+	 *
+	 * @return void
+	 */
 	public function hide_application_passwords_callback()
 	{
 		$this->render_checkbox_setting('hide_application_passwords', __('Hides application passwords section for non-admin users.', 'amrf-admin'));
 	}
 
+	/**
+	 * Callback to render the 'Remove Admin Bar Items for Non-Admins' setting field.
+	 *
+	 * @return void
+	 */
 	public function remove_admin_bar_items_callback()
 	{
 		$this->render_checkbox_setting('remove_admin_bar_items', __('Removes comments and new content links from admin bar for non-admins.', 'amrf-admin'));
 	}
 
+	/**
+	 * Callback to render the 'Remove Default Dashboard Widgets' setting field.
+	 *
+	 * @return void
+	 */
 	public function remove_dashboard_widgets_callback()
 	{
 		$this->render_checkbox_setting('remove_dashboard_widgets', __('Removes default dashboard widgets (Activity, Quick Draft, etc.).', 'amrf-admin'));
 	}
 
+	/**
+	 * Callback to render the settings fields for a specific user role tab.
+	 *
+	 * @param array $args Array containing callback arguments, expects 'role' key with role slug.
+	 * @return void
+	 */
 	public function user_role_settings_callback($args)
 	{
 		$role = $args['role'];
@@ -392,6 +488,12 @@ class AdminPanelSettings
 		echo '</div>';
 	}
 
+	/**
+	 * Enqueue admin-specific CSS and JS for the settings page.
+	 *
+	 * @param string $hook The current admin page hook suffix.
+	 * @return void
+	 */
 	public function enqueue_admin_scripts($hook)
 	{
 		if ('settings_page_amrf-admin-settings' !== $hook) {
@@ -402,12 +504,24 @@ class AdminPanelSettings
 		wp_enqueue_script('amrf-admin-settings', plugins_url('amrf-admin-settings.js', __FILE__), ['jquery'], false, true);
 	}
 
+	/**
+	 * Retrieve a list of editable user roles filtered by capabilities.
+	 *
+	 * @return array List of roles as key/value pairs.
+	 */
 	private function get_editable_roles()
 	{
 		$roles = wp_roles()->roles;
 		return apply_filters('editable_roles', $roles);
 	}
 
+	/**
+	 * Scan the admin menu and submenu items for each role based on capabilities.
+	 *
+	 * Populates $this->all_menu_items with accessible menu items per role.
+	 *
+	 * @return void
+	 */
 	public function scan_admin_menu_items()
 	{
 		global $menu, $submenu;
@@ -699,7 +813,11 @@ add_action('init', function () {
 	}
 });
 
-// Original function for adding page editor link
+/**
+ * Add a 'Page Editor' top-level admin menu item linking to the front page editor.
+ *
+ * @return void
+ */
 function add_custom_page_to_menu()
 {
 	$front_page_id = get_option('page_on_front');
@@ -718,4 +836,5 @@ function add_custom_page_to_menu()
 	}
 }
 
+// Register activation hook
 register_activation_hook(__FILE__, [__NAMESPACE__ . '\\AdminPanelSettings', 'on_plugin_activation']);
