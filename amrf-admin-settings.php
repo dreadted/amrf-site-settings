@@ -290,7 +290,7 @@ class AdminPanelSettings
 
 	public function print_user_role_section_info()
 	{
-		echo '<p>' . esc_html__('Configure settings for each user role.', 'amrf-admin') . '</p>';
+		// no output
 	}
 
 	private function render_checkbox_setting(string $key, string $description)
