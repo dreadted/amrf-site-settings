@@ -16,6 +16,16 @@ if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly
 }
 
+// Add the settings link to the Plugins page
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), __NAMESPACE__ . '\\amrf_admin_settings_link');
+
+function amrf_admin_settings_link($links)
+{
+	$settings_link = '<a href="' . admin_url('options-general.php?page=amrf-admin-settings') . '">' . esc_html__('Settings', 'amrf-admin-settings') . '</a>';
+	array_unshift($links, $settings_link);
+	return $links;
+}
+
 class AdminPanelSettings
 {
 	private $options;
@@ -77,7 +87,7 @@ class AdminPanelSettings
 		$this->options = get_option('amrf_admin_settings', $this->default_settings);
 ?>
 		<div class="wrap">
-			<h1><?php echo esc_html(__('Admin Panel Settings', 'amrf-admin-settings')); ?></h1>
+			<h1><?php _e('Admin Panel Settings', 'amrf-admin-settings'); ?></h1>
 			<form method="post" action="options.php">
 				<?php
 				settings_fields('amrf_admin_settings_group');
@@ -312,14 +322,18 @@ class AdminPanelSettings
 		echo '<div class="setting-row">';
 		echo '<h4>Default Admin Page</h4>';
 		$default_page = $settings['admin_default_page'] ?? $this->default_settings['user_group_settings'][$role]['admin_default_page'] ?? '';
+		$allowed_items = $settings['allowed_menu_items'] ?? $this->default_settings['user_group_settings'][$role]['allowed_menu_items'] ?? [];
+		$filtered_menu_items = array_filter($this->all_menu_items[$role]['menu_items'], function ($item) use ($allowed_items) {
+			return in_array($item['slug'], $allowed_items);
+		});
 		echo '<select name="amrf_admin_settings[user_group_settings][' . esc_attr($role) . '][admin_default_page]">';
 		echo '<option value="">-- ' . esc_html__('Select Default Page', 'amrf-admin-settings') . ' --</option>';
-		foreach ($this->all_menu_items[$role]['menu_items']  as $item) {
+		foreach ($filtered_menu_items as $item) {
 			$page = (strpos($item['slug'], 'php') === false) ? esc_attr('admin.php?page=' . $item['slug']) : esc_attr($item['slug']);
 			echo '<option value="' . $page . '" ' . selected($default_page, $page, false) . '>' . esc_html($item['name']) . '</option>';
 		}
 		echo '</select>';
-		echo '<p class="description">' . esc_html__('Default page this user role sees when accessing /wp-admin/.', 'amrf-admin-settings') . '</p>';
+		echo '<p class="description">' . esc_html__('Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below).', 'amrf-admin-settings') . '</p>';
 		echo '</div>';
 
 		// Allowed Menu Items
@@ -700,4 +714,4 @@ function add_custom_page_to_menu()
 	}
 }
 
-register_activation_hook(__FILE__, ['Antropomorf/AdminPanelSettings', 'on_plugin_activation']);
+register_activation_hook(__FILE__, ['Antropomorf\AdminPanelSettings', 'on_plugin_activation']);
