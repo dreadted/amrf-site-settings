@@ -421,14 +421,25 @@ class AdminPanelSettings
 	public function user_role_settings_callback($args)
 	{
 		$role = $args['role'];
-		$settings = isset($this->options['user_group_settings'][$role]) ? $this->options['user_group_settings'][$role] : ($this->default_settings['user_group_settings'][$role] ?? []);
+		// Get the default group settings for the current role
+		$default_group_settings = $this->default_settings['user_group_settings'][$role] ?? [];
+
+		// Get the current group settings, or use an empty array if none exists
+		$group_settings = $this->options['user_group_settings'][$role] ?? [];
+
+		// Merge current group settings with defaults (current overrides default)
+		$settings = array_merge($default_group_settings, $group_settings);
+
+		// Now, safely access settings with empty fallbacks
+		$redirect_url = $settings['login_redirect_url'] ?? '';
+		$default_page = $settings['admin_default_page'] ?? '';
+		$allowed_items = $settings['allowed_menu_items'] ?? [];
 
 		echo '<div class="user-role-settings">';
 
 		// Redirect Rules
 		echo '<div class="setting-row">';
 		echo '<h4>' . esc_html__('Login Redirect', 'amrf-admin') . '</h4>';
-		$redirect_url = $settings['login_redirect_url'] ?? $this->default_settings['user_group_settings'][$role]['login_redirect_url'] ?? '';
 		echo '<select name="amrf_admin_settings[user_group_settings][' . esc_attr($role) . '][login_redirect_url]">';
 		echo '<option value="">-- ' . esc_html__('Select Redirect URL', 'amrf-admin') . ' --</option>';
 		echo '<option value="/" ' . selected($redirect_url, '/', false) . '>-- ' . esc_html__('Front Page', 'amrf-admin') . ' --</option>';
@@ -443,8 +454,6 @@ class AdminPanelSettings
 		// Admin Default Page
 		echo '<div class="setting-row">';
 		echo '<h4>' . esc_html__('Default Admin Page', 'amrf-admin') . '</h4>';
-		$default_page = $settings['admin_default_page'] ?? $this->default_settings['user_group_settings'][$role]['admin_default_page'] ?? '';
-		$allowed_items = $settings['allowed_menu_items'] ?? $this->default_settings['user_group_settings'][$role]['allowed_menu_items'] ?? [];
 		$filtered_menu_items = array_filter($this->all_menu_items[$role]['menu_items'], function ($item) use ($allowed_items) {
 			return in_array($item['slug'], $allowed_items);
 		});
@@ -461,8 +470,6 @@ class AdminPanelSettings
 		// Allowed Menu Items
 		echo '<div class="setting-row">';
 		echo '<h4>' . esc_html__('Allowed Menu Items', 'amrf-admin') . '</h4>';
-		$allowed_items = $settings['allowed_menu_items'] ?? $this->default_settings['user_group_settings'][$role]['allowed_menu_items'] ?? [];
-
 		echo '<div class="menu-items-container">';
 
 		if (!empty($this->all_menu_items[$role]['menu_items'])) {
