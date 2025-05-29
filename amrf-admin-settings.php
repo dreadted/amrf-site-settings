@@ -72,6 +72,8 @@ class AdminPanelSettings
 						'umami-analytics',
 						'upload.php',
 					],
+					'rank_math_all_caps' => false,
+					'site_menus_cap' => false,
 				],
 			]
 		];
@@ -308,6 +310,10 @@ class AdminPanelSettings
 				if (!empty($role_settings['allowed_menu_items']) && is_array($role_settings['allowed_menu_items'])) {
 					$current['user_group_settings'][$role]['allowed_menu_items'] = array_map('sanitize_text_field', $role_settings['allowed_menu_items']);
 				}
+
+				$current['user_group_settings'][$role]['rank_math_all_caps'] = isset($role_settings['rank_math_all_caps']);
+
+				$current['user_group_settings'][$role]['site_menus_cap'] = isset($role_settings['site_menus_cap']);
 			}
 		}
 		return $current;
@@ -340,11 +346,28 @@ class AdminPanelSettings
 	 * @param string $description Description text displayed next to the checkbox.
 	 * @return void
 	 */
-	private function render_checkbox_setting(string $key, string $description)
+	private function render_checkbox_setting(string $key, string $description, array $path = [])
 	{
-		$checked = isset($this->options[$key]) ? $this->options[$key] : $this->default_settings[$key];
+		// Build the full option path
+		$option_path = $this->options;
+		$default_path = $this->default_settings;
+
+		foreach ($path as $segment) {
+			$option_path = $option_path[$segment] ?? null;
+			$default_path = $default_path[$segment] ?? null;
+		}
+
+		$checked = isset($option_path[$key]) ? $option_path[$key] : ($default_path[$key] ?? false);
+
+		// Build the name attribute
+		$name = 'amrf_admin_settings';
+		foreach ($path as $segment) {
+			$name .= '[' . esc_attr($segment) . ']';
+		}
+		$name .= '[' . esc_attr($key) . ']';
+
 		echo '<label class="switch">';
-		echo '<input type="checkbox" id="' . $key . '" name="amrf_admin_settings[' . $key . ']" value="1" ' . checked(1, $checked, false) . ' />';
+		echo '<input type="checkbox" id="' . esc_attr($key) . '" name="' . $name . '" value="1" ' . checked(1, $checked, false) . ' />';
 		echo '<span class="slider round"></span>';
 		echo '</label>';
 		echo '<p class="description">' . esc_html__($description, 'amrf-admin') . '</p>';
@@ -465,6 +488,26 @@ class AdminPanelSettings
 		}
 		echo '</select>';
 		echo '<p class="description">' . esc_html__('Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below).', 'amrf-admin') . '</p>';
+		echo '</div>';
+
+		// Rank Math Capabilities (single toggle)
+		echo '<div class="setting-row">';
+		echo '<h4>' . esc_html__('Rank Math Access', 'amrf-admin') . '</h4>';
+		$this->render_checkbox_setting(
+			'rank_math_all_caps',
+			__('When enabled, this role will have access to all Rank Math features.', 'amrf-admin'),
+			['user_group_settings', $role]
+		);
+		echo '</div>';
+
+		// Site Menus Capability
+		echo '<div class="setting-row">';
+		echo '<h4>' . esc_html__('Site Menus Access', 'amrf-admin') . '</h4>';
+		$this->render_checkbox_setting(
+			'site_menus_cap',
+			__('Enable to allow this user role to access and edit site menus.', 'amrf-admin'),
+			['user_group_settings', $role]
+		);
 		echo '</div>';
 
 		// Allowed Menu Items
@@ -630,11 +673,12 @@ class AdminPanelSettings
 
 		// Add some common items that might not be visible currently
 		$common_items = [
-			'rank-math' => 'Rank Math',
+			'#builder_active' => __('Page Builder', 'amrf-admin'),
 			'fluent_forms' => 'Fluent Forms',
+			'nav-menus.php' => __('Menus'),
+			'rank-math' => 'Rank Math',
 			'support-tickets' => 'Support Tickets',
 			'umami-analytics' => 'Umami Analytics',
-			'#builder_active' => __('Page Builder', 'amrf-admin')
 		];
 
 		foreach ($common_items as $slug => $name) {
@@ -669,7 +713,19 @@ if (is_admin()) {
 	new AdminPanelSettings();
 }
 
-// Implement the actual functionality based on settings
+/**
+ * Registers initialization actions for the admin settings
+ * 
+ * This function hooks into WordPress's 'init' action to set up admin-specific functionality.
+ * It retrieves plugin settings and conditionally registers additional actions based on
+ * configuration options, such as adding page editor links and removing dashboard widgets.
+ * 
+ * @since 1.0.0
+ * @uses get_option() To retrieve plugin settings
+ * @uses add_action() To register additional WordPress hooks
+ * @uses empty() To check if specific settings are configured
+ * @return void
+ */
 add_action('init', function () {
 	$settings = get_option('amrf_admin_settings', []);
 
@@ -802,6 +858,61 @@ add_action('init', function () {
 						wp_safe_redirect(admin_url($admin_default_page));
 						exit;
 					}
+				}
+
+				// Rank Math Access
+				$rank_math_enabled =  get_user_setting($user, $user_group_settings, 'rank_math_all_caps') ?? false;
+				error_log('rank_math_enabled:' . $rank_math_enabled);
+				$rank_math_caps = [
+					'rank_math_site_analysis',
+					'rank_math_onpage_analysis',
+					'rank_math_onpage_general',
+					'rank_math_onpage_snippet',
+					'rank_math_onpage_social',
+					'rank_math_titles',
+					'rank_math_general',
+					'rank_math_sitemap',
+					'rank_math_404_monitor',
+					'rank_math_link_builder',
+					'rank_math_redirections',
+					'rank_math_role_manager',
+					'rank_math_analytics',
+					'rank_math_onpage_advanced',
+					'rank_math_content_ai',
+					'rank_math_admin_bar',
+				];
+
+				if ($rank_math_enabled) {
+
+					// Activate Role Manager
+					$modules = get_option('rank_math_modules', []);
+					if (!in_array('role-manager', $modules, true)) {
+						$modules[] = 'role-manager';
+						update_option('rank_math_modules', $modules);
+					}
+
+					// Add capabilities
+					foreach ($rank_math_caps as $cap) {
+						$user->add_cap($cap);
+						error_log('Adding ' . $cap . ' for ' . $user->user_login);
+					}
+				} else {
+					// Remove capabilities
+					foreach ($rank_math_caps as $cap) {
+						$user->remove_cap($cap);
+						error_log('Removing ' . $cap . ' for ' . $user->user_login);
+					}
+				}
+
+				// Site Menus Access
+				$site_menus_enabled = get_user_setting($user, $user_group_settings, 'site_menus_cap') ?? false;
+				error_log('site_menus_enabled:' . $site_menus_enabled);
+				if ($site_menus_enabled) {
+					$user->add_cap('edit_theme_options');
+					error_log('Adding site menus for ' . $user->user_login);
+				} else {
+					$user->remove_cap('edit_theme_options');
+					error_log('Removing site menus for ' . $user->user_login);
 				}
 			}
 		});
