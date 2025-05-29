@@ -656,6 +656,7 @@ class AdminPanelSettings
 		}
 	}
 }
+
 // Initialize the plugin
 if (is_admin()) {
 	new AdminPanelSettings();
@@ -751,61 +752,61 @@ add_action('init', function () {
 		});
 	}
 
-	// User role specific settings
+	// Handle role specific settings
 	if (!empty($settings['user_group_settings'])) {
 		$user_group_settings = $settings['user_group_settings'];
 
 
-		// Login redirect logic
-		add_filter('login_redirect', function ($redirect_to, $request, $user) use ($user_group_settings) {
-			if (is_wp_error($user) || !isset($user->roles)) {
-				return $redirect_to;
-			}
-
-			if (is_array($user->roles)) {
-				foreach ($user->roles as $role) {
-					if (isset($user_group_settings[$role]['login_redirect_url'])) {
-						$url =  $user_group_settings[$role]['login_redirect_url'];
-						$redirect = (strpos($url, 'php') === false) ? home_url() : '/wp-admin/' .  $url;
-						return $redirect;
-					}
+		// Helper function for user settings
+		function get_user_setting($user, $user_group_settings, $setting_key)
+		{
+			foreach ($user->roles as $role) {
+				if (isset($user_group_settings[$role][$setting_key])) {
+					return $user_group_settings[$role][$setting_key];
 				}
 			}
-			return $redirect_to;
-		}, 10, 3);
+			return null;
+		}
 
-		// Admin default page redirect
+
+		// Login redirect URL and Admin default page
+		add_filter('auth_cookie', function ($cookie, $user_id, $expiration, $scheme, $token) {
+			set_transient('user_' . $user_id . '_logging_in', true, 60);
+			return $cookie;
+		}, 10, 5);
+
 		add_action('admin_init', function () use ($user_group_settings) {
 			if (!current_user_can('administrator')) {
 				$user = wp_get_current_user();
+				$transient_key = 'user_' . $user->ID . '_logging_in';
+				$is_logging_in = get_transient($transient_key);
 
-				foreach ($user->roles as $role) {
-					if (isset($user_group_settings[$role]['admin_default_page'])) {
-
-						$default_page = $user_group_settings[$role]['admin_default_page'];
-						if (!empty($default_page) && get_admin_url() === home_url($_SERVER['REQUEST_URI'])) {
-							wp_safe_redirect(admin_url($default_page));
-							exit;
-						}
-						break;
+				if ($is_logging_in) {
+					delete_transient($transient_key);
+					$login_redirect_url = get_user_setting($user, $user_group_settings, 'login_redirect_url');
+					if ($login_redirect_url) {
+						$redirect = (strpos($login_redirect_url, '.php') === false) ? home_url($login_redirect_url) : admin_url($login_redirect_url);
+						wp_safe_redirect($redirect);
+						exit;
+					}
+				} else {
+					$admin_default_page = get_user_setting($user, $user_group_settings, 'admin_default_page');
+					if ($admin_default_page && get_admin_url() === home_url($_SERVER['REQUEST_URI'])) {
+						wp_safe_redirect(admin_url($admin_default_page));
+						exit;
 					}
 				}
 			}
 		});
+
 
 		// Menu item filtering
 		add_action('admin_menu', function () use ($user_group_settings) {
 			if (!current_user_can('administrator')) {
 				global $menu;
 				$user = wp_get_current_user();
-				$allowed_items = [];
 
-				foreach ($user->roles as $role) {
-					if (isset($user_group_settings[$role]['allowed_menu_items'])) {
-						$allowed_items = $user_group_settings[$role]['allowed_menu_items'];
-						break;
-					}
-				}
+				$allowed_items = get_user_setting($user, $user_group_settings, 'allowed_menu_items') ?? [];
 
 				foreach ($menu as $key => $item) {
 					$menu_slug = $item[2];
