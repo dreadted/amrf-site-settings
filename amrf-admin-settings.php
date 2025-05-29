@@ -758,14 +758,14 @@ add_action('init', function () {
 
 
 		// Helper function for user settings
-		function get_user_setting($user, $user_group_settings, $setting_key)
+		function get_user_setting($user, $user_group_settings, $setting_key, $default = null)
 		{
 			foreach ($user->roles as $role) {
 				if (isset($user_group_settings[$role][$setting_key])) {
 					return $user_group_settings[$role][$setting_key];
 				}
 			}
-			return null;
+			return $default;
 		}
 
 
@@ -803,25 +803,50 @@ add_action('init', function () {
 		// Menu item filtering
 		add_action('admin_menu', function () use ($user_group_settings) {
 			if (!current_user_can('administrator')) {
-				global $menu;
+				global $menu, $submenu;
 				$user = wp_get_current_user();
+				$allowed_items = get_user_setting($user, $user_group_settings, 'allowed_menu_items');
+				$icons_to_preserve = []; // Store parent icons for promoted items
 
-				$allowed_items = get_user_setting($user, $user_group_settings, 'allowed_menu_items') ?? [];
-
+				// First pass: collect parent icons before removing menu items
 				foreach ($menu as $key => $item) {
 					$menu_slug = $item[2];
-					$is_allowed = false;
-
-					// Check each allowed item to see if it appears in the menu slug
-					foreach ($allowed_items as $allowed_item) {
-						if (strpos($menu_slug, $allowed_item) !== false) {
-							$is_allowed = true;
-							break;
+					// Check if this menu item has allowed subitems
+					if (isset($submenu[$menu_slug])) {
+						foreach ($submenu[$menu_slug] as $subitem) {
+							if (in_array($subitem[2], $allowed_items)) {
+								// Store parent icon for this allowed subitem
+								$icons_to_preserve[$subitem[2]] = $item[6] ?? 'dashicons-dashboard';
+							}
 						}
 					}
+				}
 
-					if (!$is_allowed) {
+				// Second pass: remove all menu items that aren't explicitly allowed
+				foreach ($menu as $key => $item) {
+					$menu_slug = $item[2];
+					if (!in_array($menu_slug, $allowed_items)) {
 						unset($menu[$key]);
+					}
+				}
+
+				// Third pass: promote allowed submenu items
+				foreach ($submenu as $parent_slug => $subitems) {
+					foreach ($subitems as $subitem) {
+						$subitem_slug = $subitem[2];
+						// If subitem is allowed but parent isn't, promote it
+						if (in_array($subitem_slug, $allowed_items) && !in_array($parent_slug, $allowed_items)) {
+							$icon = $icons_to_preserve[$subitem_slug] ?? 'dashicons-dashboard';
+							// Add as new top-level menu item
+							add_menu_page(
+								$subitem[0], // Page title
+								$subitem[0], // Menu title
+								$user->roles[0], // Capability (use the first role)
+								$subitem_slug,
+								'',
+								$icon
+							);
+						}
 					}
 				}
 			}
