@@ -16,7 +16,80 @@ if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly
 }
 
-add_filter('plugin_action_links_' . plugin_basename(__FILE__), __NAMESPACE__ . '\\amrf_admin_settings_link');
+/**
+ * Get the full version string, including the plugin version and a hash of the file.
+ * 
+ * @param string $file_path Path to the file whose hash is to be included.
+ * @return string Combined version string including the plugin version and file hash.
+ */
+function get_version($file_path = null)
+{
+	$version = get_plugin_info('Version');
+	$hash = $file_path ? get_file_hash($file_path) : '';
+	return $version . $hash;
+}
+
+/**
+ * Retrieve specific plugin information based on a given parameter.
+ *
+ * @param string $parameter The parameter to retrieve from the plugin header (e.g., 'Version').
+ * @return string|null The corresponding value from the plugin header, or null if not found.
+ */
+function get_plugin_info(string $parameter)
+{
+	$file_content = file_get_contents(__FILE__);
+	$pattern = '/' . $parameter . ':\s+(\d+\.\d+\.\d+|\w+)/';
+	if (preg_match($pattern, $file_content, $matches))
+		return $matches[1];
+}
+
+/**
+ * Get an abbreviated hash of the file content.
+ *
+ * @param string $file_path Path to the file to hash.
+ * @return string|null A substring of the MD5 hash of the file, or null if the file doesn't exist.
+ */
+function get_file_hash($file_path)
+{
+	if (file_exists($file_path)) {
+		$file_hash = hash_file('md5', $file_path);
+		return "-" . substr($file_hash, 0, 6);
+	}
+}
+
+/**
+ * Display the plugin version in the footer of the admin settings page.
+ *
+ * This function checks if the current screen is the plugin's settings page and,
+ * if so, outputs the plugin version in the footer.
+ *
+ * @return void
+ */
+function a_show_version_in_footer()
+{
+	// Check if we are on your plugin's settings page by checking the current screen
+	$screen = get_current_screen();
+	error_log($screen->id);
+	if ($screen && $screen->id === 'settings_page_amrf-admin-settings') { // Replace with your menu slug
+		echo '<div style=" font-size:12px; text-align:right; color:#666;">';
+		echo 'v' . get_version(__FILE__);
+		echo '</div>';
+	}
+}
+// add_action('in_admin_footer', __NAMESPACE__ . '\\show_version_in_footer');
+
+function show_version_in_footer($footer_text)
+{
+	// Check if we are on your plugin's settings page by checking the current screen
+	$screen = get_current_screen();
+	error_log($screen->id);
+	if ($screen && $screen->id === 'settings_page_amrf-admin-settings') {
+		$version_text = '<strong>Admin Panel Settings</strong> v' . get_version(__FILE__);
+		return $version_text;
+	}
+	return $footer_text;
+}
+add_filter('admin_footer_text', __NAMESPACE__ . '\\show_version_in_footer');
 
 /**
  * Add the 'Settings' link to the plugin action links on the Plugins page.
@@ -30,6 +103,7 @@ function amrf_admin_settings_link($links)
 	array_unshift($links, $settings_link);
 	return $links;
 }
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), __NAMESPACE__ . '\\amrf_admin_settings_link');
 
 /* AdminPanelSettings
 ------------------------------------------------------------ */
@@ -107,6 +181,7 @@ class AdminPanelSettings
 	 */
 	public function create_admin_page()
 	{
+		$this->scan_admin_menu_items();
 		$this->options = get_option('amrf_admin_settings', $this->default_settings);
 
 		$roles = $this->get_editable_roles();
@@ -562,6 +637,29 @@ class AdminPanelSettings
 	}
 
 	/**
+	 * Get the plain menu name, stripping counters and HTML.
+	 *
+	 * @param string $menu_title
+	 * @return string
+	 */
+	private function get_clean_menu_name($menu_title)
+	{
+		// Remove all <span>...</span> and their contents (including nested spans)
+		$clean = preg_replace('/<span\b[^>]*>.*?<\/span>/si', '', $menu_title);
+
+		// Remove any other HTML tags just in case
+		$clean = wp_strip_all_tags($clean);
+
+		// Decode HTML entities
+		$clean = html_entity_decode($clean, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+		// Trim whitespace
+		$clean = trim($clean);
+
+		return $clean;
+	}
+
+	/**
 	 * Scan the admin menu and submenu items for each role based on capabilities.
 	 *
 	 * Populates $this->all_menu_items with accessible menu items per role.
@@ -595,25 +693,19 @@ class AdminPanelSettings
 
 			// Track added menu slugs to prevent duplicates
 			$added_menu_slugs = [];
+			$parent_names = [];
 
 			foreach ($menu as $item) {
 				// Skip separators and empty items
 				if (empty($item[2])) continue;
 				if (strpos($item[2], 'separator') !== false) continue;
 
-				// Check if user has capability to access this menu item
-				if (user_can($user, $item[1])) {
-					// Clean up the menu name (might contain HTML)
-					$menu_name = wp_strip_all_tags($item[0]);
+				// Check user capability
+				if (true || user_can($user, $item[1])) {
+					$menu_name = $this->get_clean_menu_name($item[0]);
+					$parent_names[$item[2]] = $menu_name;
 
-					if ($item[2] === 'edit-comments.php') {
-						$menu_name = __('Comments');
-					} else {
-						// Optionally clean other menu items here
-						$menu_name = trim($menu_name);
-					}
-
-					// Only add if not already added
+					// Add menu item if not already added
 					if (!in_array($item[2], $added_menu_slugs)) {
 						$this->all_menu_items[$role_slug]['menu_items'][] = [
 							'name' => $menu_name,
@@ -624,6 +716,7 @@ class AdminPanelSettings
 				}
 			}
 
+
 			// Also check submenu items
 			foreach ($submenu as $parent_slug => $items) {
 				foreach ($items as $item) {
@@ -631,10 +724,20 @@ class AdminPanelSettings
 					if (empty($item[2])) continue;
 					if (strpos($item[2], 'separator') !== false) continue;
 
+					// Only process core WordPress submenu items (those ending with .php)
+					if (strpos($item[2], '.php') === false) continue;
+
 					// Check if user has capability to access this submenu item
-					if (user_can($user, $item[1])) {
-						// Clean up the submenu name (might contain HTML)
-						$submenu_name = wp_strip_all_tags($item[0]);
+					if (true || user_can($user, $item[1])) {
+						$submenu_name = $this->get_clean_menu_name($item[0]);
+						$parent_name = isset($parent_names[$parent_slug]) ? $parent_names[$parent_slug] : '';
+
+						// Combine parent and submenu names
+						if ($parent_name) {
+							$full_name = $parent_name . ' / ' . $submenu_name;
+						} else {
+							$full_name = $submenu_name;
+						}
 
 						// Check if we already have this parent in our list
 						$parent_exists = false;
@@ -646,11 +749,11 @@ class AdminPanelSettings
 						}
 
 						if (!$parent_exists) {
-							// Add parent if not already there
+							// Add parent if not already there (only if it's a core item)
 							foreach ($menu as $top_item) {
-								if (!empty($top_item[2]) && $top_item[2] === $parent_slug) {
+								if (!empty($top_item[2]) && $top_item[2] === $parent_slug && strpos($top_item[2], '.php') !== false) {
 									$this->all_menu_items[$role_slug]['menu_items'][] = [
-										'name' => wp_strip_all_tags($top_item[0]),
+										'name' => $this->get_clean_menu_name($top_item[0]),
 										'slug' => $top_item[2]
 									];
 									break;
@@ -661,40 +764,12 @@ class AdminPanelSettings
 						// Add the submenu item if not already added
 						if (!in_array($item[2], $added_menu_slugs)) {
 							$this->all_menu_items[$role_slug]['menu_items'][] = [
-								'name' => $submenu_name,
+								'name' => $full_name,
 								'slug' => $item[2]
 							];
 							$added_menu_slugs[] = $item[2];
 						}
 					}
-				}
-			}
-		}
-
-		// Add some common items that might not be visible currently
-		$common_items = [
-			'#builder_active' => __('Page Builder', 'amrf-admin'),
-			'fluent_forms' => 'Fluent Forms',
-			'nav-menus.php' => __('Menus'),
-			'rank-math' => 'Rank Math',
-			'support-tickets' => 'Support Tickets',
-			'umami-analytics' => 'Umami Analytics',
-		];
-
-		foreach ($common_items as $slug => $name) {
-			foreach ($this->all_menu_items as $role_slug => $role_data) {
-				$exists = false;
-				foreach ($role_data['menu_items'] as $item) {
-					if ($item['slug'] === $slug) {
-						$exists = true;
-						break;
-					}
-				}
-				if (!$exists) {
-					$this->all_menu_items[$role_slug]['menu_items'][] = [
-						'name' => $name,
-						'slug' => $slug
-					];
 				}
 			}
 		}
