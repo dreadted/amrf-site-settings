@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name:     Admin Panel Settings
  * Description:     Customize admin panel settings for different user roles.
