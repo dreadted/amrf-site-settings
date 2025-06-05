@@ -6,6 +6,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+use Antropomorf\Utilities\MenuScanner;
+
 class Manager
 {
     private array $roles;
@@ -195,7 +197,12 @@ class Manager
 
     public function userRoleSettingsCallback(array $args): void
     {
+        // Rescan menu items and admin pages each time the settings page renders
+        $this->menuItems  = MenuScanner::scanMenuItems($this->roles);
+        $this->adminPages = MenuScanner::scanAdminPages();
+
         $role = $args['role'];
+
         $settings = Repository::getSettings()['user_group_settings'][$role] ?? Repository::getDefaultSettings()['user_group_settings'][$role] ?? [];
         echo '<div class="user-role-settings">';
         echo '<div class="setting-row"><h4>' . esc_html__('Login Redirect', AMRF_ADMIN_TEXT_DOMAIN) . '</h4>';
