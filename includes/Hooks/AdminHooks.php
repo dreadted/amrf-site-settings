@@ -17,7 +17,7 @@ class AdminHooks
     public static function register(): void
     {
         register_activation_hook(AMRF_ADMIN_PLUGIN_FILE, [Repository::class, 'activate']);
-        add_action('admin_init', [self::class, 'init']);
+        add_action('plugins_loaded', [self::class, 'init']);
     }
 
     public static function init(): void
@@ -31,7 +31,9 @@ class AdminHooks
             $menuManager->getMenuItems(),
             $menuManager->getAdminPages()
         );
+
         $renderer = new SettingsRenderer();
+
         new SettingsPage($settingsManager, $renderer);
     }
 }

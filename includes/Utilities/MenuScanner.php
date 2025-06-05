@@ -12,6 +12,7 @@ class MenuScanner
     {
         global $menu, $submenu;
 
+
         $all = [];
         foreach ($roles as $slug => $info) {
             if ($slug === 'administrator') {
@@ -20,26 +21,28 @@ class MenuScanner
             $user = new \WP_User(0);
             $user->add_role($slug);
             $all[$slug] = ['menu_items' => []];
+
             foreach ($menu as $item) {
+                // Skip separators and empty items
                 if (empty($item[2]) || strpos($item[2], 'separator') !== false) {
                     continue;
                 }
-                if (user_can($user, $item[1])) {
-                    $name = wp_strip_all_tags($item[0]);
-                    if ($item[2] === 'edit-comments.php') {
-                        $name = 'Comments';
-                    }
-                    $all[$slug]['menu_items'][] = ['name' => trim($name), 'slug' => $item[2]];
+                $name = wp_strip_all_tags($item[0]);
+                if ($item[2] === 'edit-comments.php') {
+                    $name = 'Comments';
                 }
+                $all[$slug]['menu_items'][] = ['name' => trim($name), 'slug' => $item[2]];
             }
             foreach ($submenu as $parent => $items) {
                 foreach ($items as $item) {
+                    // Skip separators and empty items
                     if (empty($item[2]) || strpos($item[2], 'separator') !== false) {
                         continue;
                     }
-                    if (! user_can($user, $item[1])) {
-                        continue;
-                    }
+
+                    // Only process core WordPress submenu items (those ending with .php)
+                    if (strpos($item[2], '.php') === false) continue;
+
                     $subname = wp_strip_all_tags($item[0]);
                     $exists = false;
                     foreach ($all[$slug]['menu_items'] as $existing) {
@@ -84,6 +87,8 @@ class MenuScanner
         foreach ($all as $role => $data) {
             usort($all[$role]['menu_items'], fn($a, $b) => strcmp($a['name'], $b['name']));
         }
+
+        // error_log('all:' . print_r($all, true));
         return $all;
     }
 
