@@ -72,7 +72,6 @@ class MenuScanner
 			usort($all[$role]['menu_items'], fn($a, $b) => strcmp($a['name'], $b['name']));
 		}
 
-		// error_log('all:' . print_r($all, true));
 		return $all;
 	}
 
