@@ -33,6 +33,8 @@ class Repository
                         'umami-analytics',
                         'upload.php',
                     ],
+                    'rank_math_all_caps' => false,
+                    'site_menus_cap' => false,
                 ],
             ],
         ];
