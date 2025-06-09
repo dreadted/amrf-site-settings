@@ -12,13 +12,11 @@ class Manager
 {
     private array $roles;
     private array $menuItems;
-    private array $adminPages;
 
-    public function __construct(array $roles, array $menuItems, array $adminPages)
+    public function __construct(array $roles, array $menuItems)
     {
         $this->roles = $roles;
         $this->menuItems = $menuItems;
-        $this->adminPages = $adminPages;
     }
 
     public function init(): void
@@ -99,35 +97,60 @@ class Manager
         }
     }
 
+    /**
+     * Sanitize settings input before saving to the database.
+     *
+     * @param array $input Raw input values from settings form.
+     * @return array Sanitized settings array.
+     */
     public function sanitize($input): array
     {
         $current = get_option(Repository::OPTION_NAME, []);
-        $current['add_page_editor_link'] = ! empty($input['add_page_editor_link']);
-        if (isset($input['minimum_password_length'])) {
-            $current['minimum_password_length'] = absint($input['minimum_password_length']);
-        }
-        $current['prevent_password_change'] = ! empty($input['prevent_password_change']);
-        $current['hide_application_passwords'] = ! empty($input['hide_application_passwords']);
-        $current['remove_admin_bar_items'] = ! empty($input['remove_admin_bar_items']);
-        $current['remove_dashboard_widgets'] = ! empty($input['remove_dashboard_widgets']);
+        $current_tab = $_POST['current_tab'] ?? 'general';
 
-        if (! empty($input['user_group_settings']) && is_array($input['user_group_settings'])) {
-            foreach ($input['user_group_settings'] as $role => $settings) {
-                if (! isset($current['user_group_settings'][$role])) {
-                    $current['user_group_settings'][$role] = [];
+        // error_log('current tab:' .  $current_tab);
+
+        if ($current_tab === 'general') {
+            // Process only general settings
+
+            $current['add_page_editor_link'] = ! empty($input['add_page_editor_link']);
+            if (isset($input['minimum_password_length'])) {
+                $current['minimum_password_length'] = absint($input['minimum_password_length']);
+            }
+            $current['prevent_password_change'] = ! empty($input['prevent_password_change']);
+            $current['hide_application_passwords'] = ! empty($input['hide_application_passwords']);
+            $current['remove_admin_bar_items'] = ! empty($input['remove_admin_bar_items']);
+            $current['remove_dashboard_widgets'] = ! empty($input['remove_dashboard_widgets']);
+        } elseif (array_key_exists($current_tab, $this->roles)) {
+
+            $role = $current_tab;
+
+            // Initialize role settings if they don't exist
+            if (!isset($current['user_group_settings'][$role])) {
+                $current['user_group_settings'][$role] = $this->default_settings['user_group_settings'][$role] ?? [];
+            }
+
+            // Only process settings for the current role
+            if (!empty($input['user_group_settings'][$role])) {
+                $role_settings = $input['user_group_settings'][$role];
+
+                error_log('role settings: ' . print_r($role_settings, true));
+
+                if (isset($role_settings['login_redirect_url'])) {
+                    $current['user_group_settings'][$role]['login_redirect_url'] = esc_url_raw($role_settings['login_redirect_url']);
                 }
-                if (isset($settings['login_redirect_url'])) {
-                    $current['user_group_settings'][$role]['login_redirect_url'] = esc_url_raw($settings['login_redirect_url']);
+
+                if (isset($role_settings['admin_default_page'])) {
+                    $current['user_group_settings'][$role]['admin_default_page'] = sanitize_text_field($role_settings['admin_default_page']);
                 }
-                if (isset($settings['admin_default_page'])) {
-                    $current['user_group_settings'][$role]['admin_default_page'] = sanitize_text_field($settings['admin_default_page']);
-                }
-                if (! empty($settings['allowed_menu_items']) && is_array($settings['allowed_menu_items'])) {
-                    $current['user_group_settings'][$role]['allowed_menu_items'] = array_map(
-                        'sanitize_text_field',
-                        $settings['allowed_menu_items']
-                    );
-                }
+
+                if (!empty($role_settings['allowed_menu_items']) && is_array($role_settings['allowed_menu_items'])) {
+                    $current['user_group_settings'][$role]['allowed_menu_items'] = array_map('sanitize_text_field', $role_settings['allowed_menu_items']);
+                } else $current['user_group_settings'][$role]['allowed_menu_items'] = [];
+
+                $current['user_group_settings'][$role]['rank_math_all_caps'] = isset($role_settings['rank_math_all_caps']);
+
+                $current['user_group_settings'][$role]['site_menus_cap'] = isset($role_settings['site_menus_cap']);
             }
         }
         return $current;
@@ -199,7 +222,7 @@ class Manager
     {
         // Rescan menu items and admin pages each time the settings page renders
         $this->menuItems  = MenuScanner::scanMenuItems($this->roles);
-        $this->adminPages = MenuScanner::scanAdminPages();
+        // $this->adminPages = MenuScanner::scanAdminPages();
 
         $role = $args['role'];
 

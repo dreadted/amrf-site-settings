@@ -18,74 +18,61 @@ class MenuScanner
 			if ($slug === 'administrator') {
 				continue;
 			}
-			$user = new \WP_User(0);
-			$user->add_role($slug);
 			$all[$slug] = ['menu_items' => []];
 
-			foreach ($menu as $item) {
-				// Skip separators and empty items
-				if (empty($item[2]) || strpos($item[2], 'separator') !== false) {
-					continue;
-				}
-				$name = self::get_clean_menu_name($item[0]);
-				$all[$slug]['menu_items'][] = ['name' => trim($name), 'slug' => $item[2]];
-			}
-			foreach ($submenu as $parent => $items) {
-				foreach ($items as $item) {
+			if (!is_null($menu) && is_array($menu)) {
+				foreach ($menu as $item) {
 					// Skip separators and empty items
 					if (empty($item[2]) || strpos($item[2], 'separator') !== false) {
 						continue;
 					}
-
-					// Only process core WordPress submenu items (those ending with .php)
-					if (strpos($item[2], '.php') === false) continue;
-
-					$subname = self::get_clean_menu_name($item[0]);
-					$exists = false;
-					foreach ($all[$slug]['menu_items'] as $existing) {
-						if ($existing['slug'] === $parent) {
-							$exists = true;
-							break;
-						}
+					$name = self::getCleanMenuName($item[0]);
+					if (!self::slugExists($all[$slug]['menu_items'], $item[2])) {
+						$all[$slug]['menu_items'][] = ['name' => trim($name), 'slug' => $item[2]];
 					}
-					if (! $exists) {
-						foreach ($menu as $top) {
-							if (! empty($top[2]) && $top[2] === $parent) {
-								$all[$slug]['menu_items'][] = ['name' => self::get_clean_menu_name($top[0]), 'slug' => $top[2]];
+				}
+			}
+
+			if (!is_null($submenu) && is_array($submenu)) {
+				foreach ($submenu as $parent => $items) {
+					foreach ($items as $item) {
+						// Skip separators and empty items
+						if (empty($item[2]) || strpos($item[2], 'separator') !== false) {
+							continue;
+						}
+
+						// Only process core WordPress submenu items (those ending with .php)
+						if (strpos($item[2], '.php') === false) continue;
+
+						$subname = self::getCleanMenuName($item[0]);
+						$exists = false;
+						foreach ($all[$slug]['menu_items'] as $existing) {
+							if ($existing['slug'] === $parent) {
+								$exists = true;
 								break;
 							}
 						}
+						if (! $exists) {
+							foreach ($menu as $top) {
+								if (! empty($top[2]) && $top[2] === $parent) {
+									$all[$slug]['menu_items'][] = ['name' => self::getCleanMenuName($top[0]), 'slug' => $top[2]];
+									break;
+								}
+							}
+						}
+						if (!self::slugExists($all[$slug]['menu_items'], $item[2])) {
+							$all[$slug]['menu_items'][] = ['name' => $subname, 'slug' => $item[2]];
+						}
 					}
-					$all[$slug]['menu_items'][] = ['name' => $subname, 'slug' => $item[2]];
 				}
 			}
 		}
-		$common = [
-			'rank-math' => 'Rank Math',
-			'fluent_forms' => 'Fluent Forms',
-			'support-tickets' => 'Support Tickets',
-			'umami-analytics' => 'Umami Analytics',
-			'#builder_active' => __('Page Builder', AMRF_ADMIN_TEXT_DOMAIN),
-		];
-		foreach ($common as $slug => $name) {
-			foreach ($all as $role => $data) {
-				$found = false;
-				foreach ($data['menu_items'] as $item) {
-					if ($item['slug'] === $slug) {
-						$found = true;
-						break;
-					}
-				}
-				if (! $found) {
-					$all[$role]['menu_items'][] = ['name' => $name, 'slug' => $slug];
-				}
-			}
-		}
+
 		foreach ($all as $role => $data) {
 			usort($all[$role]['menu_items'], fn($a, $b) => strcmp($a['name'], $b['name']));
 		}
 
-		error_log('all:' . print_r($all, true));
+		// error_log('all:' . print_r($all, true));
 		return $all;
 	}
 
@@ -111,7 +98,7 @@ class MenuScanner
 		return $pages;
 	}
 
-	private static function get_clean_menu_name($menu_title)
+	private static function getCleanMenuName($menu_title)
 	{
 		// Remove all <span>...</span> and their contents (including nested spans)
 		$clean = preg_replace('/<span\b[^>]*>.*?<\/span>/si', '', $menu_title);
@@ -126,5 +113,15 @@ class MenuScanner
 		$clean = trim($clean);
 
 		return $clean;
+	}
+
+	private static function slugExists(array $menuItems, string $slug): bool
+	{
+		foreach ($menuItems as $item) {
+			if ($item['slug'] === $slug) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
