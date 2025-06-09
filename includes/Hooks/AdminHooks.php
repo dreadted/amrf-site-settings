@@ -28,8 +28,7 @@ class AdminHooks
 
         $settingsManager = new SettingsManager(
             $roles,
-            $menuManager->getMenuItems(),
-            $menuManager->getAdminPages()
+            $menuManager->getMenuItems()
         );
 
         $renderer = new SettingsRenderer();

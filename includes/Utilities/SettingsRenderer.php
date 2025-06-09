@@ -34,6 +34,7 @@ class SettingsRenderer
         }
         echo '</h2>';
         echo '<form method="post" action="options.php">';
+        echo '<input type="hidden" name="current_tab" value="' . esc_attr($current_tab) . '">';
         settings_fields('amrf_admin_settings_group');
         do_settings_sections('amrf-admin-settings-' . $current_tab);
         submit_button();
