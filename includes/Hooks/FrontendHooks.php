@@ -31,39 +31,8 @@ class FrontendHooks
 
         // Password length enforcement
         if (!empty($settings['minimum_password_length'])) {
-            $min = absint($settings['minimum_password_length']);
-            add_action(
-                'user_profile_update_errors',
-                function ($errors, $update, $user) use ($min) {
-                    if (!empty($_POST['pass1']) && strlen($_POST['pass1']) < $min) {
-                        $errors->add(
-                            'pass',
-                            sprintf(
-                                //  translators: %d is the number indicating minimum password length
-                                __('ERROR: Password must be at least %d characters long.', AMRF_ADMIN_TEXT_DOMAIN),
-                                $min
-                            )
-                        );
-                    }
-                    return $errors;
-                },
-                10,
-                3
-            );
-            add_action(
-                'password_reset',
-                function ($user, $new_pass) use ($min) {
-                    if (strlen($new_pass) < $min) {
-                        wp_die(sprintf(
-                            //  translators: %d is the number indicating minimum password length
-                            __('ERROR: Password must be at least %d characters long.', AMRF_ADMIN_TEXT_DOMAIN),
-                            $min
-                        ));
-                    }
-                },
-                10,
-                2
-            );
+            add_action('user_profile_update_errors', [self::class, 'enforcePasswordLengthOnProfileUpdate'], 10, 3);
+            add_action('password_reset', [self::class, 'enforcePasswordLengthOnReset'], 10, 2);
         }
 
         // Prevent password changes for non-admins if enabled
@@ -175,6 +144,56 @@ class FrontendHooks
         remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal');
         remove_meta_box('dashboard_primary', 'dashboard', 'side');
         remove_meta_box('dashboard_secondary', 'dashboard', 'side');
+    }
+
+    public static function enforcePasswordLengthOnProfileUpdate(
+        \WP_Error $errors,
+        bool $update,
+        $user
+    ): \WP_Error {
+        if (current_user_can('administrator')) {
+            return $errors;
+        }
+
+        $settings = Repository::getSettings();
+        if (!empty($settings['minimum_password_length'])) {
+            $min = absint($settings['minimum_password_length']);
+
+            if (!empty($_POST['pass1']) && strlen($_POST['pass1']) < $min) {
+                $errors->add(
+                    'pass',
+                    sprintf(
+                        //  translators: %d is the number indicating minimum password length
+                        __('ERROR: Password must be at least %d characters long.', AMRF_ADMIN_TEXT_DOMAIN),
+                        $min
+                    )
+                );
+            }
+        }
+
+        return $errors;
+    }
+
+    public static function enforcePasswordLengthOnReset(
+        $user,
+        string $new_pass
+    ): void {
+        if (current_user_can('administrator')) {
+            return;
+        }
+
+        $settings = Repository::getSettings();
+        if (!empty($settings['minimum_password_length'])) {
+            $min = absint($settings['minimum_password_length']);
+
+            if (strlen($new_pass) < $min) {
+                wp_die(sprintf(
+                    //  translators: %d is the number indicating minimum password length
+                    __('ERROR: Password must be at least %d characters long.', AMRF_ADMIN_TEXT_DOMAIN),
+                    $min
+                ));
+            }
+        }
     }
 
     public static function filterShowPasswordFields($show, $profile_user)
