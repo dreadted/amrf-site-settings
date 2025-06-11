@@ -21,7 +21,7 @@ class Repository
             'remove_dashboard_widgets' => true,
             'user_group_settings' => [
                 'editor' => [
-                    'login_redirect_url' => home_url(),
+                    'login_redirect_url' => '/',
                     'admin_default_page' => 'profile.php',
                     'allowed_menu_items' => [
                         '#builder_active',
