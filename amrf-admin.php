@@ -48,20 +48,3 @@ use Antropomorf\Hooks\FrontendHooks;
 AdminHooks::register();
 FrontendHooks::register();
 
-/**
- * Add the 'Settings' link to the plugin action links on the Plugins page.
- *
- * @param array $links Existing action links for the plugin.
- * @return array Modified action links including the 'Settings' link.
- */
-function amrf_admin_settings_link($links)
-{
-    $settings_link = '<a href="' . admin_url('options-general.php?page=amrf-admin-settings') . '">' . esc_html__('Settings', 'amrf-admin') . '</a>';
-    array_unshift($links, $settings_link);
-    return $links;
-}
-
-add_filter(
-    'plugin_action_links_' . plugin_basename(__FILE__),
-    __NAMESPACE__ . '\amrf_admin_settings_link'
-);

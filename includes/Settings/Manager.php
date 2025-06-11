@@ -132,7 +132,7 @@ class Manager
 			if (!empty($input['user_group_settings'][$role])) {
 				$role_settings = $input['user_group_settings'][$role];
 
-				error_log('role settings: ' . print_r($role_settings, true));
+				// error_log('role settings: ' . print_r($role_settings, true));
 
 				if (isset($role_settings['login_redirect_url'])) {
 					$current['user_group_settings'][$role]['login_redirect_url'] = esc_url_raw($role_settings['login_redirect_url']);

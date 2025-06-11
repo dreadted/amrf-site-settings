@@ -12,13 +12,14 @@ class MenuScanner
 	{
 		global $menu, $submenu;
 
-
 		$all = [];
-		foreach ($roles as $slug => $info) {
-			if ($slug === 'administrator') {
+
+		foreach ($roles as $role_slug => $info) {
+			if ($role_slug === 'administrator') {
 				continue;
 			}
-			$all[$slug] = ['menu_items' => []];
+
+			$all[$role_slug] = ['menu_items' => []];
 
 			if (!is_null($menu) && is_array($menu)) {
 				foreach ($menu as $item) {
@@ -27,8 +28,8 @@ class MenuScanner
 						continue;
 					}
 					$name = self::getCleanMenuName($item[0]);
-					if (!self::slugExists($all[$slug]['menu_items'], $item[2])) {
-						$all[$slug]['menu_items'][] = ['name' => trim($name), 'slug' => $item[2]];
+					if (!self::slugExists($all[$role_slug]['menu_items'], $item[2])) {
+						$all[$role_slug]['menu_items'][] = ['name' => trim($name), 'slug' => $item[2]];
 					}
 				}
 			}
@@ -44,24 +45,38 @@ class MenuScanner
 						// Only process core WordPress submenu items (those ending with .php)
 						if (strpos($item[2], '.php') === false) continue;
 
-						$subname = self::getCleanMenuName($item[0]);
+							$subname = self::getCleanMenuName($item[0]);
+							// Prefix submenu item name with its parent menu name
+							$parent_name = '';
+							foreach ($menu as $top) {
+								if (! empty($top[2]) && $top[2] === $parent) {
+									$parent_name = self::getCleanMenuName($top[0]);
+									break;
+								}
+							}
+							if ($parent_name !== '') {
+								$subname = $parent_name . ' / ' . $subname;
+							}
+
 						$exists = false;
-						foreach ($all[$slug]['menu_items'] as $existing) {
+						foreach ($all[$role_slug]['menu_items'] as $existing) {
 							if ($existing['slug'] === $parent) {
 								$exists = true;
 								break;
 							}
 						}
+
 						if (! $exists) {
 							foreach ($menu as $top) {
 								if (! empty($top[2]) && $top[2] === $parent) {
-									$all[$slug]['menu_items'][] = ['name' => self::getCleanMenuName($top[0]), 'slug' => $top[2]];
+									$all[$role_slug]['menu_items'][] = ['name' => self::getCleanMenuName($top[0]), 'slug' => $top[2]];
 									break;
 								}
 							}
 						}
-						if (!self::slugExists($all[$slug]['menu_items'], $item[2])) {
-							$all[$slug]['menu_items'][] = ['name' => $subname, 'slug' => $item[2]];
+
+						if (!self::slugExists($all[$role_slug]['menu_items'], $item[2])) {
+							$all[$role_slug]['menu_items'][] = ['name' => $subname, 'slug' => $item[2]];
 						}
 					}
 				}
