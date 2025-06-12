@@ -6,8 +6,21 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
+/**
+ * Class MenuScanner
+ *
+ * Scans registered WordPress admin menus and submenus to collect menu item metadata.
+ *
+ * @package Antropomorf\Utilities
+ */
 class MenuScanner
 {
+	/**
+	 * Scan WordPress admin menus and submenus for the given roles.
+	 *
+	 * @param array $roles List of roles to include in the scan.
+	 * @return array Menu items organized by role.
+	 */
 	public static function scanMenuItems(array $roles): array
 	{
 		global $menu, $submenu;
@@ -90,6 +103,11 @@ class MenuScanner
 		return $all;
 	}
 
+	/**
+	 * Retrieve a list of all admin page slugs from menus and submenus.
+	 *
+	 * @return array List of admin page slugs.
+	 */
 	public static function scanAdminPages(): array
 	{
 		global $menu, $submenu;
@@ -112,6 +130,12 @@ class MenuScanner
 		return $pages;
 	}
 
+	/**
+	 * Strip HTML tags and span elements from a menu title.
+	 *
+	 * @param string $menu_title Raw menu title HTML.
+	 * @return string Cleaned menu title text.
+	 */
 	private static function getCleanMenuName($menu_title)
 	{
 		// Remove all <span>...</span> and their contents (including nested spans)
@@ -129,6 +153,13 @@ class MenuScanner
 		return $clean;
 	}
 
+	/**
+	 * Check if a slug already exists in the collected menu items.
+	 *
+	 * @param array  $menuItems List of menu item arrays with 'slug' keys.
+	 * @param string $slug      Slug to check for existence.
+	 * @return bool True if slug exists, false otherwise.
+	 */
 	private static function slugExists(array $menuItems, string $slug): bool
 	{
 		foreach ($menuItems as $item) {

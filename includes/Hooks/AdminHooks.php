@@ -13,8 +13,20 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Class AdminHooks
+ *
+ * Sets up activation hook and admin-specific WordPress hooks for menu and settings integration.
+ *
+ * @package Antropomorf\Hooks
+ */
 class AdminHooks
 {
+    /**
+     * Register activation hook and add WordPress action/filter hooks for admin.
+     *
+     * @return void
+     */
     public static function register(): void
     {
         register_activation_hook( AMRF_ADMIN_PLUGIN_FILE, [ Repository::class, 'activate' ] );
@@ -29,6 +41,11 @@ class AdminHooks
         );
     }
 
+    /**
+     * Initialize admin hooks: scan menus, setup settings manager and renderers.
+     *
+     * @return void
+     */
     public static function init(): void
     {
         $roles = wp_roles()->roles;
@@ -45,6 +62,12 @@ class AdminHooks
         new SettingsPage($settingsManager, $renderer);
     }
 
+    /**
+     * Add a Settings link on the Plugins page for this plugin.
+     *
+     * @param array $links Existing action links.
+     * @return array Modified action links including settings.
+     */
     public static function settings_link( array $links ): array
     {
         $settings_url = admin_url( 'options-general.php?page=amrf-admin-settings' );
@@ -59,6 +82,12 @@ class AdminHooks
         return $links;
     }
 
+    /**
+     * Show plugin version in the WordPress admin footer on the settings page.
+     *
+     * @param string $footer_text Original footer text.
+     * @return string Footer text with version appended for this plugin.
+     */
     public static function show_version_in_footer( string $footer_text ): string
     {
         $screen = get_current_screen();

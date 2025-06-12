@@ -8,13 +8,30 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Class FrontendHooks
+ *
+ * Sets up frontend and admin_init hooks to apply role-based settings on pages and dashboards.
+ *
+ * @package Antropomorf\Hooks
+ */
 class FrontendHooks
 {
+    /**
+     * Register frontend hook to initialize role-based settings on init.
+     *
+     * @return void
+     */
     public static function register(): void
     {
         add_action('init', [self::class, 'init']);
     }
 
+    /**
+     * Initialize frontend hooks based on saved settings.
+     *
+     * @return void
+     */
     public static function init(): void
     {
         $settings = Repository::getSettings();
@@ -118,6 +135,11 @@ class FrontendHooks
         }
     }
 
+    /**
+     * Add a custom front page editor link to the admin menu for non-admin users.
+     *
+     * @return void
+     */
     public static function addCustomPageToMenu(): void
     {
         $front = get_option('page_on_front');
@@ -136,6 +158,11 @@ class FrontendHooks
         }
     }
 
+    /**
+     * Remove default dashboard widgets for non-admin users.
+     *
+     * @return void
+     */
     public static function removeDashboardWidgets(): void
     {
         remove_meta_box('dashboard_activity', 'dashboard', 'normal');
@@ -146,6 +173,14 @@ class FrontendHooks
         remove_meta_box('dashboard_secondary', 'dashboard', 'side');
     }
 
+    /**
+     * Enforce minimum password length on profile update for non-admins.
+     *
+     * @param \WP_Error $errors Validation errors object.
+     * @param bool      $update Whether this is an existing user being updated.
+     * @param mixed     $user   WP_User object or user ID.
+     * @return \WP_Error Modified errors object after validation.
+     */
     public static function enforcePasswordLengthOnProfileUpdate(
         \WP_Error $errors,
         bool $update,
@@ -174,6 +209,13 @@ class FrontendHooks
         return $errors;
     }
 
+    /**
+     * Enforce minimum password length on password reset for non-admins.
+     *
+     * @param mixed  $user     WP_User object or user ID.
+     * @param string $new_pass The new password being set.
+     * @return void
+     */
     public static function enforcePasswordLengthOnReset(
         $user,
         string $new_pass
@@ -196,17 +238,36 @@ class FrontendHooks
         }
     }
 
+    /**
+     * Filter display of password fields in profile for non-admin users.
+     *
+     * @param bool      $show         Whether to show password fields.
+     * @param \WP_User $profile_user The user object for the profile being edited.
+     * @return bool False for non-admins, original value for admins.
+     */
     public static function filterShowPasswordFields($show, $profile_user)
     {
         return in_array('administrator', $profile_user->roles, true) ? $show : false;
     }
 
+    /**
+     * Filter the ability to reset password for non-admin users.
+     *
+     * @param bool $allow   Whether password reset is allowed.
+     * @param int  $user_id ID of the user.
+     * @return bool False for non-admins, original value for admins.
+     */
     public static function filterAllowPasswordReset($allow, $user_id)
     {
         $user = get_userdata($user_id);
         return in_array('administrator', $user->roles, true) ? $allow : false;
     }
 
+    /**
+     * Hide application passwords functionality for non-admin users.
+     *
+     * @return void
+     */
     public static function hideApplicationPasswords(): void
     {
         if (!current_user_can('administrator')) {
@@ -216,6 +277,11 @@ class FrontendHooks
         }
     }
 
+    /**
+     * Remove comments and new-content menus from the admin bar for non-admin users.
+     *
+     * @return void
+     */
     public static function removeAdminBarItems(): void
     {
         if (!current_user_can('administrator')) {
@@ -225,6 +291,15 @@ class FrontendHooks
         }
     }
 
+    /**
+     * Retrieve a specific user-group setting for a user or return default.
+     *
+     * @param mixed $user               WP_User object or user ID.
+     * @param array $user_group_settings All user-group settings.
+     * @param string $key               Setting key to retrieve.
+     * @param mixed $default            Default value if setting not found.
+     * @return mixed Value of the setting or default.
+     */
     private static function getUserSetting($user, $user_group_settings, $key, $default = null)
     {
         foreach ($user->roles as $role) {
@@ -235,6 +310,12 @@ class FrontendHooks
         return $default;
     }
 
+    /**
+     * Get list of capabilities corresponding to a specific settings key.
+     *
+     * @param string $key Capability key identifier.
+     * @return array List of capability slugs.
+     */
     private static function getCapabilities(string $key): array
     {
         $capabilities =  [
@@ -262,6 +343,14 @@ class FrontendHooks
         return $capabilities[$key] ?? [];
     }
 
+    /**
+     * Grant or revoke capabilities for a user based on user-group settings.
+     *
+     * @param mixed  $user               WP_User object or user ID.
+     * @param array  $user_group_settings All user-group settings.
+     * @param string $key                Capability settings key.
+     * @return void
+     */
     private static function setCapabilities($user, array $user_group_settings, string $key): void
     {
         $enabled =  self::getUserSetting($user, $user_group_settings, $key) ?? false;

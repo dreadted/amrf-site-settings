@@ -1,3 +1,18 @@
+/*
+ * amrf-admin-settings.css
+ * Styles for the AMRF Admin Panel Settings plugin:
+ *   - Custom toggle switches
+ *   - User role settings layout
+ *   - Menu items checkbox lists
+ */
+
+/*
+   Custom Toggle Switch Styles
+
+   Provides the look and feel for on/off toggles in the settings panel.
+   Includes track, knob transition, checked/focus states, and rounded variation.
+   ---------------------------------------------------------------------- */
+
 /* Switch styles */
 .switch {
   position: relative;
@@ -54,7 +69,12 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-/* User role settings */
+/*
+   User Role Settings Layout
+
+   Wraps each role's settings panel with background, padding, border, and spacing.
+   ---------------------------------------------------------------------- */
+
 .user-role-settings {
   background: #fff;
   padding: 20px;
@@ -62,18 +82,33 @@ input:checked + .slider:before {
   margin-bottom: 20px;
 }
 
+/*
+   Individual Setting Row
+
+   Separates fields within a role panel with spacing and bottom border.
+   ---------------------------------------------------------------------- */
 .setting-row {
   margin-bottom: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid #f0f0f0;
 }
 
+/*
+   Last Setting Row
+
+   Removes bottom border and spacing for the last setting in a panel.
+   ---------------------------------------------------------------------- */
 .setting-row:last-child {
   border-bottom: none;
   margin-bottom: 0;
   padding-bottom: 0;
 }
 
+/*
+   Inline Code Label for Menu Item Checkboxes
+
+   Styles the <code> inside menu item labels to show slugs or identifiers.
+   ---------------------------------------------------------------------- */
 .menu-item-checkbox label code {
   font-size: 0.8em;
   color: #666;
@@ -83,6 +118,11 @@ input:checked + .slider:before {
   border-radius: 3px;
 }
 
+/*
+   Menu Item Checkbox Container
+
+   Styles each checkbox wrapper in the menu items list.
+   ---------------------------------------------------------------------- */
 .menu-item-checkbox {
   margin: 8px 0;
   padding: 5px;
@@ -93,6 +133,11 @@ input:checked + .slider:before {
   border-bottom: none;
 }
 
+/*
+   Menu Items Scrollable Container
+
+   Wraps the checkbox list with max-height and scroll, background, padding, and border.
+   ---------------------------------------------------------------------- */
 .menu-items-container {
   max-height: 300px;
   overflow-y: auto;
@@ -102,6 +147,11 @@ input:checked + .slider:before {
   border-radius: 4px;
 }
 
+/*
+   Hide Table Header for User Role Columns
+
+   Hides the <th> when the adjacent <td> contains a role settings panel.
+   ---------------------------------------------------------------------- */
 th:has(+ td > div.user-role-settings) {
   display: none;
 }
