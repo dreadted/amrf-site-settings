@@ -3,7 +3,7 @@
 /**
  * Plugin Name:     Admin Panel Settings
  * Description:     Customize admin panel settings for different user roles.
- * Version:         0.1.0
+ * Version:         0.2.0
  * Author:          Christofer Laurin
  * Author URI:      https://github.com/dreadted/
  * Text Domain:     amrf-admin
@@ -47,4 +47,3 @@ use Antropomorf\Hooks\FrontendHooks;
 
 AdminHooks::register();
 FrontendHooks::register();
-
