@@ -20,66 +20,66 @@ class Manager
 	private array $roles;
 	private array $menuItems;
 
-		/**
-		 * Manager constructor.
-		 *
-		 * @param array $roles     List of user roles.
-		 * @param array $menuItems Menu items indexed by role.
-		 */
-		public function __construct(array $roles, array $menuItems)
-		{
-			$this->roles = $roles;
-			$this->menuItems = $menuItems;
-		}
+	/**
+	 * Manager constructor.
+	 *
+	 * @param array $roles     List of user roles.
+	 * @param array $menuItems Menu items indexed by role.
+	 */
+	public function __construct(array $roles, array $menuItems)
+	{
+		$this->roles = $roles;
+		$this->menuItems = $menuItems;
+	}
 
-		/**
-		 * Initialize settings: register settings and add settings sections/fields.
-		 *
-		 * @return void
-		 */
-		public function init(): void
-		{
-			register_setting(
+	/**
+	 * Initialize settings: register settings and add settings sections/fields.
+	 *
+	 * @return void
+	 */
+	public function init(): void
+	{
+		register_setting(
 			'amrf_admin_settings_group',
 			Repository::OPTION_NAME,
 			[$this, 'sanitize']
-			);
+		);
 
-			add_settings_section(
+		add_settings_section(
 			'general_settings_section',
 			__('General Settings', AMRF_ADMIN_TEXT_DOMAIN),
 			[$this, 'printGeneralSectionInfo'],
 			'amrf-admin-settings-general'
-			);
-			add_settings_field(
+		);
+		add_settings_field(
 			'add_page_editor_link',
 			__('Add Page Editor Link', AMRF_ADMIN_TEXT_DOMAIN),
 			[$this, 'addPageEditorLinkCallback'],
 			'amrf-admin-settings-general',
 			'general_settings_section'
-			);
-			add_settings_field(
+		);
+		add_settings_field(
 			'minimum_password_length',
 			__('Minimum Password Length', AMRF_ADMIN_TEXT_DOMAIN),
 			[$this, 'minimumPasswordLengthCallback'],
 			'amrf-admin-settings-general',
 			'general_settings_section'
-			);
-			add_settings_field(
+		);
+		add_settings_field(
 			'prevent_password_change',
 			__('Prevent Non-Admins from Changing Passwords', AMRF_ADMIN_TEXT_DOMAIN),
 			[$this, 'preventPasswordChangeCallback'],
 			'amrf-admin-settings-general',
 			'general_settings_section'
-			);
-			add_settings_field(
+		);
+		add_settings_field(
 			'hide_application_passwords',
 			__('Hide Application Passwords for Non-Admins', AMRF_ADMIN_TEXT_DOMAIN),
 			[$this, 'hideApplicationPasswordsCallback'],
 			'amrf-admin-settings-general',
 			'general_settings_section'
-			);
-			add_settings_field(
+		);
+		add_settings_field(
 			'remove_admin_bar_items',
 			__('Remove Admin Bar Items for Non-Admins', AMRF_ADMIN_TEXT_DOMAIN),
 			[$this, 'removeAdminBarItemsCallback'],
@@ -94,7 +94,7 @@ class Manager
 			'general_settings_section'
 		);
 
-			foreach ($this->roles as $slug => $info) {
+		foreach ($this->roles as $slug => $info) {
 			if ($slug === 'administrator') {
 				continue;
 			}
@@ -150,8 +150,6 @@ class Manager
 			if (!empty($input['user_group_settings'][$role])) {
 				$role_settings = $input['user_group_settings'][$role];
 
-				// error_log('role settings: ' . print_r($role_settings, true));
-
 				if (isset($role_settings['login_redirect_url'])) {
 					$current['user_group_settings'][$role]['login_redirect_url'] = esc_url_raw($role_settings['login_redirect_url']);
 				}
@@ -172,45 +170,45 @@ class Manager
 		return $current;
 	}
 
-		/**
-		 * Output introductory text for the general settings section.
-		 *
-		 * @return void
-		 */
-		public function printGeneralSectionInfo(): void
-		{
-			echo '<p>' . esc_html__('Configure general admin panel settings.', AMRF_ADMIN_TEXT_DOMAIN) . '</p>';
-		}
+	/**
+	 * Output introductory text for the general settings section.
+	 *
+	 * @return void
+	 */
+	public function printGeneralSectionInfo(): void
+	{
+		echo '<p>' . esc_html__('Configure general admin panel settings.', AMRF_ADMIN_TEXT_DOMAIN) . '</p>';
+	}
 
-		/**
-		 * Output introductory text for a user role settings section.
-		 *
-		 * @return void
-		 */
-		public function printUserRoleSectionInfo(): void
-		{
-			echo '<p>' . esc_html__('Configure settings for each user role.', AMRF_ADMIN_TEXT_DOMAIN) . '</p>';
-		}
+	/**
+	 * Output introductory text for a user role settings section.
+	 *
+	 * @return void
+	 */
+	public function printUserRoleSectionInfo(): void
+	{
+		echo '<p>' . esc_html__('Configure settings for each user role.', AMRF_ADMIN_TEXT_DOMAIN) . '</p>';
+	}
 
 
 
-		/**
-		 * Callback to render the 'Add Page Editor Link' checkbox.
-		 *
-		 * @return void
-		 */
-		public function addPageEditorLinkCallback(): void
-		{
-			$this->renderCheckbox('add_page_editor_link', 'Adds a link to the front page editor in the admin menu.');
-		}
+	/**
+	 * Callback to render the 'Add Page Editor Link' checkbox.
+	 *
+	 * @return void
+	 */
+	public function addPageEditorLinkCallback(): void
+	{
+		$this->renderCheckbox('add_page_editor_link', 'Adds a link to the front page editor in the admin menu.');
+	}
 
-		/**
-		 * Callback to render the minimum password length field.
-		 *
-		 * @return void
-		 */
-		public function minimumPasswordLengthCallback(): void
-		{
+	/**
+	 * Callback to render the minimum password length field.
+	 *
+	 * @return void
+	 */
+	public function minimumPasswordLengthCallback(): void
+	{
 		$settings = Repository::getSettings();
 		$defaults = Repository::getDefaultSettings();
 		$value = $settings['minimum_password_length'] ?? $defaults['minimum_password_length'];
@@ -222,54 +220,54 @@ class Manager
 		);
 	}
 
-		/**
-		 * Callback to render the 'Prevent Non-Admins from Changing Passwords' checkbox.
-		 *
-		 * @return void
-		 */
-		public function preventPasswordChangeCallback(): void
-		{
-			$this->renderCheckbox('prevent_password_change', 'Prevents non-admin users from changing their passwords.');
-		}
+	/**
+	 * Callback to render the 'Prevent Non-Admins from Changing Passwords' checkbox.
+	 *
+	 * @return void
+	 */
+	public function preventPasswordChangeCallback(): void
+	{
+		$this->renderCheckbox('prevent_password_change', 'Prevents non-admin users from changing their passwords.');
+	}
 
-		/**
-		 * Callback to render the 'Hide Application Passwords' checkbox.
-		 *
-		 * @return void
-		 */
-		public function hideApplicationPasswordsCallback(): void
-		{
-			$this->renderCheckbox('hide_application_passwords', 'Hides application passwords section for non-admin users.');
-		}
+	/**
+	 * Callback to render the 'Hide Application Passwords' checkbox.
+	 *
+	 * @return void
+	 */
+	public function hideApplicationPasswordsCallback(): void
+	{
+		$this->renderCheckbox('hide_application_passwords', 'Hides application passwords section for non-admin users.');
+	}
 
-		/**
-		 * Callback to render the 'Remove Admin Bar Items' checkbox.
-		 *
-		 * @return void
-		 */
-		public function removeAdminBarItemsCallback(): void
-		{
-			$this->renderCheckbox('remove_admin_bar_items', 'Removes comments and new content links from admin bar for non-admins.');
-		}
+	/**
+	 * Callback to render the 'Remove Admin Bar Items' checkbox.
+	 *
+	 * @return void
+	 */
+	public function removeAdminBarItemsCallback(): void
+	{
+		$this->renderCheckbox('remove_admin_bar_items', 'Removes comments and new content links from admin bar for non-admins.');
+	}
 
-		/**
-		 * Callback to render the 'Remove Dashboard Widgets' checkbox.
-		 *
-		 * @return void
-		 */
-		public function removeDashboardWidgetsCallback(): void
-		{
-			$this->renderCheckbox('remove_dashboard_widgets', 'Removes default dashboard widgets (Activity, Quick Draft, etc.).');
-		}
+	/**
+	 * Callback to render the 'Remove Dashboard Widgets' checkbox.
+	 *
+	 * @return void
+	 */
+	public function removeDashboardWidgetsCallback(): void
+	{
+		$this->renderCheckbox('remove_dashboard_widgets', 'Removes default dashboard widgets (Activity, Quick Draft, etc.).');
+	}
 
-		/**
-		 * Callback to render settings fields for a specific user role.
-		 *
-		 * @param array $args Arguments containing 'role' key for the user role slug.
-		 * @return void
-		 */
-		public function userRoleSettingsCallback(array $args): void
-		{
+	/**
+	 * Callback to render settings fields for a specific user role.
+	 *
+	 * @param array $args Arguments containing 'role' key for the user role slug.
+	 * @return void
+	 */
+	public function userRoleSettingsCallback(array $args): void
+	{
 		// Rescan menu items and admin pages each time the settings page renders
 		$this->menuItems  = MenuScanner::scanMenuItems($this->roles);
 		// $this->adminPages = MenuScanner::scanAdminPages();
@@ -331,16 +329,16 @@ class Manager
 		echo '</div>';
 	}
 
-		/**
-		 * Render a toggle checkbox input for a setting.
-		 *
-		 * @param string $key         Setting key name.
-		 * @param string $description Description text for the checkbox.
-		 * @param array  $path        Optional path segments for nested settings.
-		 * @return void
-		 */
-		private function renderCheckbox(string $key, string $description, array $path = []): void
-		{
+	/**
+	 * Render a toggle checkbox input for a setting.
+	 *
+	 * @param string $key         Setting key name.
+	 * @param string $description Description text for the checkbox.
+	 * @param array  $path        Optional path segments for nested settings.
+	 * @return void
+	 */
+	private function renderCheckbox(string $key, string $description, array $path = []): void
+	{
 		$settings = Repository::getSettings();
 		$defaults = Repository::getDefaultSettings();
 
@@ -365,16 +363,16 @@ class Manager
 		);
 	}
 
-		/**
-		 * Retrieve a nested value from an array using a path and key.
-		 *
-		 * @param array  $array The source array to search.
-		 * @param array  $path  List of keys defining the nested path.
-		 * @param string $key   The key of the desired value at the path.
-		 * @return mixed|null The value if found, null otherwise.
-		 */
-		private function getNestedValue(array $array, array $path, string $key)
-		{
+	/**
+	 * Retrieve a nested value from an array using a path and key.
+	 *
+	 * @param array  $array The source array to search.
+	 * @param array  $path  List of keys defining the nested path.
+	 * @param string $key   The key of the desired value at the path.
+	 * @return mixed|null The value if found, null otherwise.
+	 */
+	private function getNestedValue(array $array, array $path, string $key)
+	{
 		$current = $array;
 
 		foreach ($path as $segment) {
