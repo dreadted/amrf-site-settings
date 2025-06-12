@@ -8,8 +8,20 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Class SettingsRenderer
+ *
+ * Outputs the HTML for the admin settings UI with tabbed navigation.
+ *
+ * @package Antropomorf\Utilities
+ */
 class SettingsRenderer
 {
+    /**
+     * Render the admin settings page with tabs and form fields.
+     *
+     * @return void
+     */
     public function render(): void
     {
         $roles = wp_roles()->roles;

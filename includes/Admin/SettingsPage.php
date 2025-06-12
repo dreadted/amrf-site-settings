@@ -9,11 +9,24 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Class SettingsPage
+ *
+ * Registers the settings page and enqueues assets for the admin panel settings.
+ *
+ * @package Antropomorf\Admin
+ */
 class SettingsPage
 {
     private $manager;
     private $renderer;
 
+    /**
+     * SettingsPage constructor.
+     *
+     * @param Manager          $manager  Settings manager instance.
+     * @param SettingsRenderer $renderer Renderer for the settings page.
+     */
     public function __construct(Manager $manager, SettingsRenderer $renderer)
     {
         $this->manager = $manager;
@@ -23,6 +36,11 @@ class SettingsPage
         add_action('admin_enqueue_scripts', [$this, 'enqueueAssets']);
     }
 
+    /**
+     * Register the options page under the Settings menu in the admin dashboard.
+     *
+     * @return void
+     */
     public function addAdminMenu()
     {
         add_options_page(
@@ -34,6 +52,12 @@ class SettingsPage
         );
     }
 
+    /**
+     * Enqueue styles and scripts for the admin settings page.
+     *
+     * @param string $hook Current admin page hook suffix.
+     * @return void
+     */
     public function enqueueAssets($hook)
     {
         if ('settings_page_amrf-admin-settings' !== $hook) {
@@ -43,13 +67,6 @@ class SettingsPage
         wp_enqueue_style(
             'amrf-admin-settings',
             AMRF_ADMIN_PLUGIN_URL . 'assets/css/amrf-admin-settings.css'
-        );
-        wp_enqueue_script(
-            'amrf-admin-settings',
-            AMRF_ADMIN_PLUGIN_URL . 'assets/js/amrf-admin-settings.js',
-            ['jquery'],
-            false,
-            true
         );
     }
 }

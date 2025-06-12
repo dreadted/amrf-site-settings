@@ -6,10 +6,22 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Class Repository
+ *
+ * Manages storage, retrieval, and defaulting of plugin settings.
+ *
+ * @package Antropomorf\Settings
+ */
 class Repository
 {
     public const OPTION_NAME = 'amrf_admin_settings';
 
+    /**
+     * Get the default settings for the plugin.
+     *
+     * @return array Default settings array.
+     */
     public static function getDefaultSettings(): array
     {
         return [
@@ -40,6 +52,13 @@ class Repository
         ];
     }
 
+    /**
+     * Recursively merge missing keys from default settings into current settings.
+     *
+     * @param array $default Default settings.
+     * @param array $current Current settings to merge missing defaults into.
+     * @return array Resulting merged settings.
+     */
     public static function recursiveMergeMissing(array $default, array $current): array
     {
         foreach ($default as $key => $value) {
@@ -52,6 +71,11 @@ class Repository
         return $current;
     }
 
+    /**
+     * Activation hook to initialize the plugin settings in the database.
+     *
+     * @return void
+     */
     public static function activate(): void
     {
         $current = get_option(self::OPTION_NAME, []);
@@ -59,11 +83,22 @@ class Repository
         update_option(self::OPTION_NAME, $merged);
     }
 
+    /**
+     * Retrieve current plugin settings or fallback to default settings.
+     *
+     * @return array Plugin settings array.
+     */
     public static function getSettings(): array
     {
         return get_option(self::OPTION_NAME, self::getDefaultSettings());
     }
 
+    /**
+     * Update the plugin settings in the database.
+     *
+     * @param array $settings Settings array to save.
+     * @return void
+     */
     public static function updateSettings(array $settings): void
     {
         update_option(self::OPTION_NAME, $settings);

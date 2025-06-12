@@ -8,6 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Utility methods for retrieving plugin and file versions.
+ *
+ * @package Antropomorf\Utilities
  */
 class VersionHelper
 {
