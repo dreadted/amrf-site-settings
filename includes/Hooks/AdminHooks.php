@@ -29,15 +29,15 @@ class AdminHooks
      */
     public static function register(): void
     {
-        register_activation_hook( AMRF_ADMIN_PLUGIN_FILE, [ Repository::class, 'activate' ] );
-        add_action( 'plugins_loaded', [ self::class, 'init' ] );
+        register_activation_hook(AMRF_ADMIN_PLUGIN_FILE, [Repository::class, 'activate']);
+        add_action('plugins_loaded', [self::class, 'init']);
         add_filter(
-            'plugin_action_links_' . plugin_basename( AMRF_ADMIN_PLUGIN_FILE ),
-            [ self::class, 'settings_link' ]
+            'plugin_action_links_' . plugin_basename(AMRF_ADMIN_PLUGIN_FILE),
+            [self::class, 'getSettingsLink']
         );
         add_filter(
             'admin_footer_text',
-            [ self::class, 'show_version_in_footer' ]
+            [self::class, 'showVersionInFooter']
         );
     }
 
@@ -68,15 +68,15 @@ class AdminHooks
      * @param array $links Existing action links.
      * @return array Modified action links including settings.
      */
-    public static function settings_link( array $links ): array
+    public static function getSettingsLink(array $links): array
     {
-        $settings_url = admin_url( 'options-general.php?page=amrf-admin-settings' );
+        $settings_url = admin_url('options-general.php?page=amrf-admin-settings');
         array_unshift(
             $links,
             sprintf(
                 '<a href="%1$s">%2$s</a>',
-                esc_url( $settings_url ),
-                esc_html__( 'Settings', AMRF_ADMIN_TEXT_DOMAIN )
+                esc_url($settings_url),
+                esc_html__('Settings', AMRF_ADMIN_TEXT_DOMAIN)
             )
         );
         return $links;
@@ -88,15 +88,15 @@ class AdminHooks
      * @param string $footer_text Original footer text.
      * @return string Footer text with version appended for this plugin.
      */
-    public static function show_version_in_footer( string $footer_text ): string
+    public static function showVersionInFooter(string $footer_text): string
     {
         $screen = get_current_screen();
-        if ( $screen && 'settings_page_amrf-admin-settings' === $screen->id ) {
-            $version = VersionHelper::getVersion( AMRF_ADMIN_PLUGIN_FILE );
+        if ($screen && 'settings_page_amrf-admin-settings' === $screen->id) {
+            $version = VersionHelper::getVersion();
             return sprintf(
                 '<strong>%s</strong> v%s',
-                esc_html__( 'Admin Panel Settings', AMRF_ADMIN_TEXT_DOMAIN ),
-                esc_html( $version )
+                esc_html__('Admin Panel Settings', AMRF_ADMIN_TEXT_DOMAIN),
+                esc_html($version)
             );
         }
         return $footer_text;
