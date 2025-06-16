@@ -76,7 +76,7 @@ class AdminHooks
             sprintf(
                 '<a href="%1$s">%2$s</a>',
                 esc_url($settings_url),
-                esc_html__('Settings', AMRF_ADMIN_TEXT_DOMAIN)
+                esc_html__('Settings', 'amrf-admin')
             )
         );
         return $links;
@@ -95,7 +95,7 @@ class AdminHooks
             $version = VersionHelper::getVersion();
             return sprintf(
                 '<strong>%s</strong> v%s',
-                esc_html__('Admin Panel Settings', AMRF_ADMIN_TEXT_DOMAIN),
+                esc_html__('Admin Panel Settings', 'amrf-admin'),
                 esc_html($version)
             );
         }

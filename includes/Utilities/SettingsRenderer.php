@@ -27,14 +27,16 @@ class SettingsRenderer
         $roles = wp_roles()->roles;
         unset($roles['administrator']);
 
-        $tabs = ['general' => __('General', AMRF_ADMIN_TEXT_DOMAIN)];
+        $tabs = ['general' => __('General', 'amrf-admin')];
+
         foreach ($roles as $slug => $info) {
-            $tabs[$slug] = $info['name'];
+            $tabs[$slug] = translate_user_role($info['name']);
         }
+
         $current_tab = isset($_GET['tab'], $tabs[$_GET['tab']]) ? $_GET['tab'] : 'general';
 
         echo '<div class="wrap">';
-        echo '<h1>' . esc_html__('Admin Panel Settings', AMRF_ADMIN_TEXT_DOMAIN) . '</h1>';
+        echo '<h1>' . esc_html__('Admin Panel Settings', 'amrf-admin') . '</h1>';
         echo '<h2 class="nav-tab-wrapper">';
         foreach ($tabs as $tab => $label) {
             printf(

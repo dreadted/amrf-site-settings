@@ -44,8 +44,8 @@ class SettingsPage
     public function addAdminMenu()
     {
         add_options_page(
-            __('Admin Panel Settings', AMRF_ADMIN_TEXT_DOMAIN),
-            __('Admin Panel Settings', AMRF_ADMIN_TEXT_DOMAIN),
+            __('Admin Panel Settings', 'amrf-admin'),
+            __('Admin Panel Settings', 'amrf-admin'),
             'manage_options',
             'amrf-admin-settings',
             [$this->renderer, 'render']

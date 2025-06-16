@@ -156,7 +156,7 @@ class FrontendHooks
 			$url = home_url('/#builder_active');
 			add_menu_page(
 				'themify-editor',
-				__('Page Editor', AMRF_ADMIN_TEXT_DOMAIN),
+				__('Page Editor', 'amrf-admin'),
 				'edit_posts',
 				$url,
 				'',
@@ -207,7 +207,7 @@ class FrontendHooks
 					'pass',
 					sprintf(
 						//  translators: %d is the number indicating minimum password length
-						__('ERROR: Password must be at least %d characters long.', AMRF_ADMIN_TEXT_DOMAIN),
+						__('ERROR: Password must be at least %d characters long.', 'amrf-admin'),
 						$min
 					)
 				);
@@ -239,7 +239,7 @@ class FrontendHooks
 			if (strlen($new_pass) < $min) {
 				wp_die(sprintf(
 					//  translators: %d is the number indicating minimum password length
-					__('ERROR: Password must be at least %d characters long.', AMRF_ADMIN_TEXT_DOMAIN),
+					__('ERROR: Password must be at least %d characters long.', 'amrf-admin'),
 					$min
 				));
 			}

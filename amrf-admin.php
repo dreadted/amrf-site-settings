@@ -17,7 +17,6 @@ if (!defined('ABSPATH')) {
 define('AMRF_ADMIN_PLUGIN_FILE', __FILE__);
 define('AMRF_ADMIN_PLUGIN_DIR', __DIR__);
 define('AMRF_ADMIN_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('AMRF_ADMIN_TEXT_DOMAIN', 'amrf-admin');
 
 spl_autoload_register(function ($class) {
     $prefix = 'Antropomorf\\';
@@ -37,7 +36,7 @@ spl_autoload_register(function ($class) {
 });
 
 load_plugin_textdomain(
-    AMRF_ADMIN_TEXT_DOMAIN,
+    'amrf-admin',
     false,
     dirname(plugin_basename(__FILE__)) . '/languages'
 );
