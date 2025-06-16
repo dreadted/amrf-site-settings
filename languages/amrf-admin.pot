@@ -2,159 +2,164 @@
 # This file is distributed under the same license as the Admin Panel Settings plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Admin Panel Settings 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/amrf-admin\n"
+"Project-Id-Version: Admin Panel Settings 0.2.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/amrf-admin-panel-settings\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-28T13:29:25+00:00\n"
+"POT-Creation-Date: 2025-06-16T09:48:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: amrf-admin\n"
 
 #. Plugin Name of the plugin
-#: amrf-admin-settings.php
-#: amrf-admin-settings.php:93
-#: amrf-admin-settings.php:94
-#: amrf-admin-settings.php:122
+#: amrf-admin.php
+#: includes/Admin/SettingsPage.php:47
+#: includes/Admin/SettingsPage.php:48
+#: includes/Hooks/AdminHooks.php:98
+#: includes/Utilities/SettingsRenderer.php:39
 msgid "Admin Panel Settings"
 msgstr ""
 
 #. Description of the plugin
-#: amrf-admin-settings.php
+#: amrf-admin.php
 msgid "Customize admin panel settings for different user roles."
 msgstr ""
 
-#. Author of the plugin
-#: amrf-admin-settings.php
-msgid "Christofer Laurin"
-msgstr ""
-
-#. Author URI of the plugin
-#: amrf-admin-settings.php
-msgid "https://github.com/dreadted/"
-msgstr ""
-
-#: amrf-admin-settings.php:29
+#: includes/Hooks/AdminHooks.php:79
 msgid "Settings"
 msgstr ""
 
-#: amrf-admin-settings.php:113
-msgid "General"
-msgstr ""
-
-#: amrf-admin-settings.php:190
-msgid "General Settings"
-msgstr ""
-
-#: amrf-admin-settings.php:197
-msgid "Add Page Editor Link"
-msgstr ""
-
-#: amrf-admin-settings.php:205
-msgid "Minimum Password Length"
-msgstr ""
-
-#: amrf-admin-settings.php:213
-msgid "Prevent Non-Admins from Changing Passwords"
-msgstr ""
-
-#: amrf-admin-settings.php:221
-msgid "Hide Application Passwords for Non-Admins"
-msgstr ""
-
-#: amrf-admin-settings.php:229
-msgid "Remove Admin Bar Items for Non-Admins"
-msgstr ""
-
-#: amrf-admin-settings.php:237
-msgid "Remove Default Dashboard Widgets"
-msgstr ""
-
-#. translators: %s is the user role name
-#: amrf-admin-settings.php:253
-#: amrf-admin-settings.php:260
-#, php-format
-msgid "%s Settings"
-msgstr ""
-
-#: amrf-admin-settings.php:323
-msgid "Configure general admin panel settings."
-msgstr ""
-
-#: amrf-admin-settings.php:372
-msgid "Minimum required characters for user passwords."
-msgstr ""
-
-#: amrf-admin-settings.php:382
-msgid "Prevents non-admin users from changing their passwords."
-msgstr ""
-
-#: amrf-admin-settings.php:392
-msgid "Hides application passwords section for non-admin users."
-msgstr ""
-
-#: amrf-admin-settings.php:402
-msgid "Removes comments and new content links from admin bar for non-admins."
-msgstr ""
-
-#: amrf-admin-settings.php:412
-msgid "Removes default dashboard widgets (Activity, Quick Draft, etc.)."
-msgstr ""
-
-#: amrf-admin-settings.php:430
-msgid "Login Redirect"
-msgstr ""
-
-#: amrf-admin-settings.php:433
-msgid "Select Redirect URL"
-msgstr ""
-
-#: amrf-admin-settings.php:434
-msgid "Front Page"
-msgstr ""
-
-#: amrf-admin-settings.php:440
-msgid "URL to redirect this user role to after login."
-msgstr ""
-
-#: amrf-admin-settings.php:445
-msgid "Default Admin Page"
-msgstr ""
-
-#: amrf-admin-settings.php:452
-msgid "Select Default Page"
-msgstr ""
-
-#: amrf-admin-settings.php:458
-msgid "Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below)."
-msgstr ""
-
-#: amrf-admin-settings.php:463
-msgid "Allowed Menu Items"
-msgstr ""
-
-#: amrf-admin-settings.php:477
-msgid "No menu items available for this role based on its capabilities."
-msgstr ""
-
-#: amrf-admin-settings.php:481
-msgid "Select which admin menu items should be visible to this user role."
-msgstr ""
-
-#: amrf-admin-settings.php:630
-msgid "Page Builder"
+#: includes/Hooks/FrontendHooks.php:159
+msgid "Page Editor"
 msgstr ""
 
 #. translators: %d is the number indicating minimum password length
-#: amrf-admin-settings.php:695
-#: amrf-admin-settings.php:707
+#: includes/Hooks/FrontendHooks.php:210
+#: includes/Hooks/FrontendHooks.php:242
 #, php-format
 msgid "ERROR: Password must be at least %d characters long."
 msgstr ""
 
-#: amrf-admin-settings.php:844
-msgid "Page Editor"
+#: includes/Settings/Manager.php:50
+msgid "General Settings"
+msgstr ""
+
+#: includes/Settings/Manager.php:56
+msgid "Add Page Editor Link"
+msgstr ""
+
+#: includes/Settings/Manager.php:63
+msgid "Minimum Password Length"
+msgstr ""
+
+#: includes/Settings/Manager.php:70
+msgid "Prevent Non-Admins from Changing Passwords"
+msgstr ""
+
+#: includes/Settings/Manager.php:77
+msgid "Hide Application Passwords for Non-Admins"
+msgstr ""
+
+#: includes/Settings/Manager.php:84
+msgid "Remove Admin Bar Items for Non-Admins"
+msgstr ""
+
+#: includes/Settings/Manager.php:91
+msgid "Remove Default Dashboard Widgets"
+msgstr ""
+
+#: includes/Settings/Manager.php:103
+#: includes/Settings/Manager.php:109
+#, php-format
+msgid "%s Settings"
+msgstr ""
+
+#: includes/Settings/Manager.php:180
+msgid "Configure general admin panel settings."
+msgstr ""
+
+#: includes/Settings/Manager.php:190
+msgid "Configure settings for each user role."
+msgstr ""
+
+#: includes/Settings/Manager.php:202
+msgid "Adds a link to the front page editor in the admin menu."
+msgstr ""
+
+#: includes/Settings/Manager.php:219
+msgid "Minimum required characters for user passwords."
+msgstr ""
+
+#: includes/Settings/Manager.php:230
+msgid "Prevents non-admin users from changing their passwords."
+msgstr ""
+
+#: includes/Settings/Manager.php:240
+msgid "Hides application passwords section for non-admin users."
+msgstr ""
+
+#: includes/Settings/Manager.php:250
+msgid "Removes comments and new content links from admin bar for non-admins."
+msgstr ""
+
+#: includes/Settings/Manager.php:260
+msgid "Removes default dashboard widgets (Activity, Quick Draft, etc.)."
+msgstr ""
+
+#: includes/Settings/Manager.php:281
+msgid "Login Redirect"
+msgstr ""
+
+#: includes/Settings/Manager.php:284
+msgid "-- Select Redirect URL --"
+msgstr ""
+
+#: includes/Settings/Manager.php:285
+msgid "-- Front Page --"
+msgstr ""
+
+#: includes/Settings/Manager.php:290
+msgid "URL to redirect this user role to after login."
+msgstr ""
+
+#: includes/Settings/Manager.php:293
+msgid "Default Admin Page"
+msgstr ""
+
+#: includes/Settings/Manager.php:298
+msgid "-- Select Default Page --"
+msgstr ""
+
+#: includes/Settings/Manager.php:303
+msgid "Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below)."
+msgstr ""
+
+#: includes/Settings/Manager.php:306
+msgid "Rank Math Access"
+msgstr ""
+
+#: includes/Settings/Manager.php:307
+msgid "When enabled, this role will have access to all Rank Math features."
+msgstr ""
+
+#: includes/Settings/Manager.php:311
+msgid "Site Menus Access"
+msgstr ""
+
+#: includes/Settings/Manager.php:312
+msgid "Enable to allow this user role to access and edit site menus."
+msgstr ""
+
+#: includes/Settings/Manager.php:316
+msgid "Allowed Menu Items"
+msgstr ""
+
+#: includes/Settings/Manager.php:328
+msgid "Select which admin menu items should be visible to this user role."
+msgstr ""
+
+#: includes/Utilities/SettingsRenderer.php:30
+msgid "General"
 msgstr ""
