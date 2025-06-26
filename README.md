@@ -2,20 +2,7 @@
 
 Customize admin panel settings for different user roles.
 
-<img src="https://gist.githubusercontent.com/dreadted/216967826e7a59ab91e8a3a16f6fed3f/raw/plugin_version.svg" alt="Plugin Version">
-<img src="https://gist.githubusercontent.com/dreadted/216967826e7a59ab91e8a3a16f6fed3f/raw/requires_wp.svg" alt="Requires WP">
-<img src="https://gist.githubusercontent.com/dreadted/216967826e7a59ab91e8a3a16f6fed3f/raw/tested_wp.svg" alt="Tested WP">
-
-## Metadata
-
-- **Contributors**: dreadted
-- **Tags**: admin, roles, settings, customization
-- **Requires at least**: 5.0
-- **Tested up to**: 6.8.1
-- **Requires PHP**: 7.0
-- **Stable tag**: 0.2.0
-- **License**: GPLv2 or later
-- **License URI**: https://www.gnu.org/licenses/gpl-2.0.html
+<img src="https://gist.githubusercontent.com/dreadted/216967826e7a59ab91e8a3a16f6fed3f/raw/plugin_version.svg" alt="Plugin Version"> <img src="https://gist.githubusercontent.com/dreadted/216967826e7a59ab91e8a3a16f6fed3f/raw/requires_wp.svg" alt="Requires WP"> <img src="https://gist.githubusercontent.com/dreadted/216967826e7a59ab91e8a3a16f6fed3f/raw/tested_wp.svg" alt="Tested WP"> [![License: GPLv2+](https://img.shields.io/badge/License-GPLv2+-blue.svg?logo=gnu)](https://www.gnu.org/licenses/gpl-2.0.html)
 
 ## Author
 
