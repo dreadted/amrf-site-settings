@@ -29,10 +29,14 @@ jobs:
         id: badges
         run: |
           SHIELDS_URL="https://img.shields.io/badge"
-          PLUGIN_VERSION_BADGE="![Plugin Version]($SHIELDS_URL/Plugin_Version-${{ steps.plugin_data.outputs.plugin_version }}-blue.svg)"
-          REQUIRES_WP_BADGE="![Requires WP]($SHIELDS_URL/Requires_WP-${{ steps.plugin_data.outputs.requires_wp }}-orange.svg)"
-          TESTED_WP_BADGE="![Tested WP]($SHIELDS_URL/Tested_WP-${{ steps.plugin_data.outputs.tested_wp }}-green.svg)"
-          echo "badges_md=$PLUGIN_VERSION_BADGE $REQUIRES_WP_BADGE $TESTED_WP_BADGE" >> $GITHUB_OUTPUT
+          PLUGIN_VERSION_BADGE="$SHIELDS_URL/Plugin_Version-${{ steps.plugin_data.outputs.plugin_version }}-blue.svg"
+          REQUIRES_WP_BADGE="$SHIELDS_URL/Requires_WP-${{ steps.plugin_data.outputs.requires_wp }}-orange.svg"
+          TESTED_WP_BADGE="$SHIELDS_URL/Tested_WP-${{ steps.plugin_data.outputs.tested_wp }}-green.svg"
+
+          echo "PLUGIN_VERSION_BADGE=$PLUGIN_VERSION_BADGE" >> $GITHUB_OUTPUT
+          echo "REQUIRES_WP_BADGE=$REQUIRES_WP_BADGE" >> $GITHUB_OUTPUT
+          echo "TESTED_WP_BADGE=$TESTED_WP_BADGE" >> $GITHUB_OUTPUT
+
           echo "$PLUGIN_VERSION_BADGE $REQUIRES_WP_BADGE $TESTED_WP_BADGE" > badges.md
 
       - name: Update Gist
