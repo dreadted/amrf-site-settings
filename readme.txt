@@ -4,7 +4,7 @@ Tags: admin, roles, settings, customization
 Requires at least: 5.0
 Tested up to: 6.8.1
 Requires PHP: 7.0
-Stable tag: 1.0.0
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,11 +26,11 @@ Yes. Under the plugin settings, you can select which menu items to hide for each
 Use the drag-and-drop interface in the settings page to reorder items as needed.
 
 == Changelog ==
-= 1.0.0 =
+= 0.2.0 =
 * Initial release.
 
 == Upgrade Notice ==
-= 1.0.0 =
+= 0.2.0 =
 Initial release.
 
 == License ==

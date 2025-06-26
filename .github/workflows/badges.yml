@@ -1,0 +1,43 @@
+
+name: Generate Plugin Badges
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Extract plugin data
+        id: plugin_data
+        run: |
+          PLUGIN_VERSION=$(grep -oP "Version: \K[0-9.]+" amrf-admin.php)
+          echo "plugin_version=$PLUGIN_VERSION" >> $GITHUB_OUTPUT
+          
+          REQUIRES_WP=$(grep -oP "Requires at least: \K[0-9.]+" readme.txt)
+          echo "requires_wp=$REQUIRES_WP" >> $GITHUB_OUTPUT
+
+          TESTED_WP=$(grep -oP "Tested up to: \K[0-9.]+" readme.txt)
+          echo "tested_wp=$TESTED_WP" >> $GITHUB_OUTPUT
+
+      - name: Generate badges
+        id: badges
+        run: |
+          SHIELDS_URL="https://img.shields.io/badge"
+          PLUGIN_VERSION_BADGE="![Plugin Version]($SHIELDS_URL/Plugin_Version-${{ steps.plugin_data.outputs.plugin_version }}-blue.svg)"
+          REQUIRES_WP_BADGE="![Requires WP]($SHIELDS_URL/Requires_WP-${{ steps.plugin_data.outputs.requires_wp }}-orange.svg)"
+          TESTED_WP_BADGE="![Tested WP]($SHIELDS_URL/Tested_WP-${{ steps.plugin_data.outputs.tested_wp }}-green.svg)"
+          echo "badges_md=$PLUGIN_VERSION_BADGE $REQUIRES_WP_BADGE $TESTED_WP_BADGE" >> $GITHUB_OUTPUT
+
+      - name: Update Gist
+        uses: exuanbo/actions-gist@v1
+        with:
+          token: ${{ secrets.GIST_SECRET }}
+          gist_id: ${{ secrets.GIST_ID }}
+          file_name: amrf-admin-panel-settings-badges.md
+          content: ${{ steps.badges.outputs.badges_md }}
