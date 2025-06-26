@@ -18,6 +18,11 @@ define('AMRF_ADMIN_PLUGIN_FILE', __FILE__);
 define('AMRF_ADMIN_PLUGIN_DIR', __DIR__);
 define('AMRF_ADMIN_PLUGIN_URL', plugin_dir_url(__FILE__));
 
+/**
+ * Autoloader for plugin classes.
+ *
+ * @param string $class The fully-qualified class name.
+ */
 spl_autoload_register(function ($class) {
     $prefix = 'Antropomorf\\';
     $base_dir = __DIR__ . '/includes/';
