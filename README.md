@@ -2,8 +2,7 @@
 
 Customize admin panel settings for different user roles.
 
-[![Plugin Badges](https://gist.githubusercontent.com/dreadted/${{ secrets.GIST_ID
-}}/raw/amrf-admin-panel-settings-badges.md)](https://gist.github.com/dreadted/${{ secrets.GIST_ID }})
+[![Plugin Badges](https://gist.githubusercontent.com/dreadted/${{ secrets.GIST_ID }}/raw/amrf-admin-panel-settings-badges.md)](https://gist.github.com/dreadted/${{ secrets.GIST_ID }})
 
 ## Metadata
 
