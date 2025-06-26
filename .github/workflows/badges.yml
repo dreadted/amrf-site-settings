@@ -25,24 +25,17 @@ jobs:
           TESTED_WP=$(grep "Tested up to:" readme.txt | sed 's/.*Tested up to:[ 	]*//')
           echo "tested_wp=$TESTED_WP" >> $GITHUB_OUTPUT
 
-      - name: Generate badges
-        id: badges
+      - name: Generate SVG badges
         run: |
           SHIELDS_URL="https://img.shields.io/badge"
-          PLUGIN_VERSION_BADGE="$SHIELDS_URL/Plugin_Version-${{ steps.plugin_data.outputs.plugin_version }}-blue.svg"
-          REQUIRES_WP_BADGE="$SHIELDS_URL/Requires_WP-${{ steps.plugin_data.outputs.requires_wp }}-orange.svg"
-          TESTED_WP_BADGE="$SHIELDS_URL/Tested_WP-${{ steps.plugin_data.outputs.tested_wp }}-green.svg"
+          curl -s "$SHIELDS_URL/Plugin_Version-${{ steps.plugin_data.outputs.plugin_version }}-blue.svg" > plugin_version.svg
+          curl -s "$SHIELDS_URL/Requires_WP-${{ steps.plugin_data.outputs.requires_wp }}-orange.svg?logo=wordpress" > requires_wp.svg
+          curl -s "$SHIELDS_URL/Tested_WP-${{ steps.plugin_data.outputs.tested_wp }}-green.svg?logo=wordpress" > tested_wp.svg
 
-          echo "PLUGIN_VERSION_BADGE=$PLUGIN_VERSION_BADGE" >> $GITHUB_OUTPUT
-          echo "REQUIRES_WP_BADGE=$REQUIRES_WP_BADGE" >> $GITHUB_OUTPUT
-          echo "TESTED_WP_BADGE=$TESTED_WP_BADGE" >> $GITHUB_OUTPUT
-
-          echo "$PLUGIN_VERSION_BADGE $REQUIRES_WP_BADGE $TESTED_WP_BADGE" > badges.md
-
-      - name: Update Gist
-        uses: exuanbo/actions-deploy-gist@v1
-        with:
-          token: ${{ secrets.GIST_SECRET }}
-          gist_id: ${{ secrets.GIST_ID }}
-          file_path: badges.md
-          gist_file_name: amrf-admin-panel-settings-badges.md
+      - name: Update Gist with SVGs
+        env:
+          GIST_SECRET: ${{ secrets.GIST_SECRET }}
+          GIST_ID: ${{ secrets.GIST_ID }}
+        run: |
+          gh auth login --with-token <<< "$GIST_SECRET"
+          gh gist edit "$GIST_ID" plugin_version.svg requires_wp.svg tested_wp.svg
