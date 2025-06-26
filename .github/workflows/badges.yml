@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build:
@@ -15,13 +16,13 @@ jobs:
       - name: Extract plugin data
         id: plugin_data
         run: |
-          PLUGIN_VERSION=$(grep -oP "Version: \K[0-9.]+" amrf-admin.php)
+          PLUGIN_VERSION=$(grep "Version:" amrf-admin.php | sed 's/Version: //')
           echo "plugin_version=$PLUGIN_VERSION" >> $GITHUB_OUTPUT
 
-          REQUIRES_WP=$(grep -oP "Requires at least: \K[0-9.]+" readme.txt)
+          REQUIRES_WP=$(grep "Requires at least:" readme.txt | sed 's/Requires at least: //')
           echo "requires_wp=$REQUIRES_WP" >> $GITHUB_OUTPUT
 
-          TESTED_WP=$(grep -oP "Tested up to: \K[0-9.]+" readme.txt)
+          TESTED_WP=$(grep "Tested up to:" readme.txt | sed 's/Tested up to: //')
           echo "tested_wp=$TESTED_WP" >> $GITHUB_OUTPUT
 
       - name: Generate badges
