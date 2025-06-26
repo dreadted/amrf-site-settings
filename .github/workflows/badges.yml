@@ -32,11 +32,12 @@ jobs:
           REQUIRES_WP_BADGE="![Requires WP]($SHIELDS_URL/Requires_WP-${{ steps.plugin_data.outputs.requires_wp }}-orange.svg)"
           TESTED_WP_BADGE="![Tested WP]($SHIELDS_URL/Tested_WP-${{ steps.plugin_data.outputs.tested_wp }}-green.svg)"
           echo "badges_md=$PLUGIN_VERSION_BADGE $REQUIRES_WP_BADGE $TESTED_WP_BADGE" >> $GITHUB_OUTPUT
+          echo "$PLUGIN_VERSION_BADGE $REQUIRES_WP_BADGE $TESTED_WP_BADGE" > badges.md
 
       - name: Update Gist
-        uses: exuanbo/actions-gist@v1.1.0
+        uses: exuanbo/actions-deploy-gist@v1
         with:
           token: ${{ secrets.GIST_SECRET }}
           gist_id: ${{ secrets.GIST_ID }}
-          file_name: amrf-admin-panel-settings-badges.md
-          content: ${{ steps.badges.outputs.badges_md }}
+          file_path: badges.md
+          gist_file_name: amrf-admin-panel-settings-badges.md
