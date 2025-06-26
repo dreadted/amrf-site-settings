@@ -1,4 +1,3 @@
-
 name: Generate Plugin Badges
 
 on:
@@ -18,7 +17,7 @@ jobs:
         run: |
           PLUGIN_VERSION=$(grep -oP "Version: \K[0-9.]+" amrf-admin.php)
           echo "plugin_version=$PLUGIN_VERSION" >> $GITHUB_OUTPUT
-          
+
           REQUIRES_WP=$(grep -oP "Requires at least: \K[0-9.]+" readme.txt)
           echo "requires_wp=$REQUIRES_WP" >> $GITHUB_OUTPUT
 
@@ -35,7 +34,7 @@ jobs:
           echo "badges_md=$PLUGIN_VERSION_BADGE $REQUIRES_WP_BADGE $TESTED_WP_BADGE" >> $GITHUB_OUTPUT
 
       - name: Update Gist
-        uses: exuanbo/actions-gist@v1
+        uses: exuanbo/actions-gist@v1.1.0
         with:
           token: ${{ secrets.GIST_SECRET }}
           gist_id: ${{ secrets.GIST_ID }}
