@@ -77,7 +77,7 @@ class FrontendHooks
 
 		// Remove admin bar items for non-admins if enabled
 		if (!empty($settings['remove_admin_bar_items'])) {
-			add_action('wp_before_admin_bar_render', [self::class, 'removeAdminBarItems']);
+			add_action('wp_before_admin_bar_render', [self::class, 'removeAdminBarItems'], 999);
 		}
 
 		// Handle role specific settings
@@ -286,7 +286,7 @@ class FrontendHooks
 	}
 
 	/**
-	 * Remove comments and new-content menus from the admin bar for non-admin users.
+	 * Remove all admin bar items except specific allowed ones for non-admin users.
 	 *
 	 * @return void
 	 */
@@ -294,8 +294,32 @@ class FrontendHooks
 	{
 		if (!current_user_can('administrator')) {
 			global $wp_admin_bar;
-			$wp_admin_bar->remove_menu('comments');
-			$wp_admin_bar->remove_menu('new-content');
+
+			$nodes = $wp_admin_bar->get_nodes();
+			if (empty($nodes)) {
+				return;
+			}
+
+			$allowed = [
+				'menu-toggle',
+				'wp-logo',
+				'site-name',
+				'view-site',
+				'edit',
+				'themify_builder',
+				'top-secondary',
+				'my-account',
+				'user-actions',
+				'user-info',
+				'logout'
+			];
+
+			foreach ($nodes as $node) {
+				if (!in_array($node->id, $allowed, true)) {
+					// error_log('Removing admin bar node: ' . $node->id);
+					$wp_admin_bar->remove_node($node->id);
+				}
+			}
 		}
 	}
 
