@@ -123,6 +123,16 @@ class Manager
 	 */
 	public function sanitize($input): array
 	{
+		if (isset($_POST['amrf_reset_defaults'])) {
+			add_settings_error(
+				Repository::OPTION_NAME,
+				'amrf_settings_reset',
+				__('Settings have been reset to defaults.', 'amrf-admin'),
+				'updated'
+			);
+			return Repository::getDefaultSettings();
+		}
+
 		$current = get_option(Repository::OPTION_NAME, []);
 		$current_tab = $_POST['current_tab'] ?? 'general';
 

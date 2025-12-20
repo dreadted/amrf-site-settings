@@ -52,6 +52,7 @@ class SettingsRenderer
         settings_fields('amrf_admin_settings_group');
         do_settings_sections('amrf-admin-settings-' . $current_tab);
         submit_button();
+        submit_button(__('Reset to Defaults', 'amrf-admin'), 'secondary', 'amrf_reset_defaults', false);
         echo '</form>';
         echo '</div>';
     }
