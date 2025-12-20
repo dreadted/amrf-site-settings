@@ -1,0 +1,73 @@
+name: Bump Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "New Version (e.g., 0.2.1)"
+        required: true
+        default: "0.2.1"
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Generate Changelog Content
+        id: changelog
+        run: |
+          # Find the last tag. If none, use the first commit.
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || git rev-list --max-parents=0 HEAD)
+          echo "Collecting commits since: $LAST_TAG"
+
+          # Get commit messages, format as list items, excluding merge commits
+          CHANGES=$(git log $LAST_TAG..HEAD --pretty=format:"- %s" --no-merges)
+
+          if [ -z "$CHANGES" ]; then
+            CHANGES="- Maintenance release."
+          fi
+
+          # Use a delimiter for multi-line output to environment variable
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "CHANGES<<$EOF" >> $GITHUB_ENV
+          echo "$CHANGES" >> $GITHUB_ENV
+          echo "$EOF" >> $GITHUB_ENV
+
+      - name: Update Version Files
+        run: |
+          NEW_VERSION="${{ inputs.version }}"
+
+          # Update amrf-admin.php (Matches "Version: X.X.X" and preserves spacing)
+          sed -i "s/Version:[[:space:]]*[0-9.]*/Version:         $NEW_VERSION/" amrf-admin.php
+
+          # Update readme.txt
+          sed -i "s/Stable tag:[[:space:]]*[0-9.]*/Stable tag: $NEW_VERSION/" readme.txt
+
+          # Update changelog.txt
+          # Create a temporary file with the new entry block
+          echo "" > new_entry.txt
+          echo "$NEW_VERSION" >> new_entry.txt
+          echo "------" >> new_entry.txt
+          echo "$CHANGES" >> new_entry.txt
+
+          # Insert new entry after line 5 (after the header block)
+          sed -i '5r new_entry.txt' changelog.txt
+          rm new_entry.txt
+
+      - name: Commit and Push
+        run: |
+          NEW_VERSION="${{ inputs.version }}"
+          git add amrf-admin.php readme.txt changelog.txt
+          git commit -m "Bump version to $NEW_VERSION"
+          git push

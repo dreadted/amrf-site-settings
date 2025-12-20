@@ -2,7 +2,7 @@
 Contributors: dreadted
 Tags: admin, roles, settings, customization
 Requires at least: 5.0
-Tested up to: 6.8.1
+Tested up to: 6.9
 Requires PHP: 7.0
 Stable tag: 0.2.0
 License: GPLv2 or later

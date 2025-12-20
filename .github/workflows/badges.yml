@@ -27,6 +27,13 @@ jobs:
 
       - name: Generate SVG badges
         run: |
+          echo "plugin_version: ${{ steps.plugin_data.outputs.plugin_version }}"
+          echo "requires_wp: ${{ steps.plugin_data.outputs.requires_wp }}"
+          echo "tested_wp: ${{ steps.plugin_data.outputs.tested_wp }}"
+          if [[ -z "${{ steps.plugin_data.outputs.plugin_version }}" || -z "${{ steps.plugin_data.outputs.requires_wp }}" || -z "${{ steps.plugin_data.outputs.tested_wp }}" ]]; then
+            echo "Missing badge value(s)."
+            exit 1
+          fi
           SHIELDS_URL="https://img.shields.io/badge"
           curl -s "$SHIELDS_URL/Plugin_Version-${{ steps.plugin_data.outputs.plugin_version }}-blue.svg" > plugin_version.svg
           curl -s "$SHIELDS_URL/Requires_WP-${{ steps.plugin_data.outputs.requires_wp }}-orange.svg?logo=wordpress" > requires_wp.svg
@@ -38,4 +45,6 @@ jobs:
           GIST_ID: ${{ secrets.GIST_ID }}
         run: |
           gh auth login --with-token <<< "$GIST_SECRET"
-          gh gist edit "$GIST_ID" plugin_version.svg requires_wp.svg tested_wp.svg
+          gh gist edit "$GIST_ID" plugin_version.svg || gh gist edit "$GIST_ID" --add plugin_version.svg
+          gh gist edit "$GIST_ID" requires_wp.svg || gh gist edit "$GIST_ID" --add requires_wp.svg
+          gh gist edit "$GIST_ID" tested_wp.svg || gh gist edit "$GIST_ID" --add tested_wp.svg
