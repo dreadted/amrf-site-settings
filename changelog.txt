@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 
 0.2.1
 ------
+- fix: hide update nag and filter admin menu items for non-administrators
+- Bump version to 0.2.1
+- fix: update badges workflow, and add bump_version
+- fix: remove admin bar items for non admins
+- feat: add reset to defaults button
+
+0.2.1
+------
 - fix: update badges workflow, and add bump_version
 - fix: remove admin bar items for non admins
 - feat: add reset to defaults button
