@@ -3,7 +3,7 @@
 /**
  * Plugin Name:     Admin Panel Settings
  * Description:     Customize admin panel settings for different user roles.
- * Version:         0.2.1
+ * Version:         0.2.2
  * Author:          Christofer Laurin
  * Author URI:      https://github.com/dreadted/
  * Text Domain:     amrf-admin
