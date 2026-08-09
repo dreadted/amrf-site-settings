@@ -86,6 +86,10 @@ class FrontendHooks
 
 			add_action('admin_init', function () use ($user_group_settings) {
 				if (!current_user_can('administrator')) {
+
+					// Hide update nag
+					remove_action('admin_notices', 'update_nag', 3);
+
 					$user = wp_get_current_user();
 
 					// Login redirect or default admin page
@@ -116,7 +120,7 @@ class FrontendHooks
 
 			add_action('admin_menu', function () use ($user_group_settings) {
 				if (!current_user_can('administrator')) {
-					global $menu;
+					global $menu, $submenu;
 					$user = wp_get_current_user();
 					$allowed = [];
 					foreach ($user->roles as $role) {
@@ -125,17 +129,37 @@ class FrontendHooks
 							break;
 						}
 					}
-					foreach ($menu as $key => $item) {
-						$slug = $item[2];
-						$keep = false;
+
+					$matches = function ($slug) use ($allowed) {
+						$path = strtok($slug, '?');
 						foreach ($allowed as $a) {
-							if (strpos($slug, $a) !== false) {
-								$keep = true;
-								break;
+							if ($slug === $a || $path === $a) {
+								return true;
 							}
 						}
+						return false;
+					};
+
+					// Filter submenu items first, so parents with an allowed child can be kept.
+					$parents_with_allowed_child = [];
+					if (!is_null($submenu) && is_array($submenu)) {
+						foreach ($submenu as $parent => $items) {
+							foreach ($items as $key => $item) {
+								if ($matches($item[2])) {
+									$parents_with_allowed_child[$parent] = true;
+								} else {
+									unset($submenu[$parent][$key]);
+								}
+							}
+						}
+					}
+
+					foreach ($menu as $key => $item) {
+						$slug = $item[2];
+						$keep = $matches($slug) || !empty($parents_with_allowed_child[$slug]);
 						if (!$keep) {
 							unset($menu[$key]);
+							unset($submenu[$slug]);
 						}
 					}
 				}
