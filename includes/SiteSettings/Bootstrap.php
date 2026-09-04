@@ -21,5 +21,6 @@ class Bootstrap
         register_activation_hook(AMRF_ADMIN_PLUGIN_FILE, [Repository::class, 'migrateFromThemeIfNeeded']);
 
         new Provider();
+        new SeoOutput();
     }
 }

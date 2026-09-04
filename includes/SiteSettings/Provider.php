@@ -41,6 +41,7 @@ class Provider
   {
     add_filter('amrf_site_settings_tabs', [$this, 'registerTabs']);
     add_action('admin_enqueue_scripts', [$this, 'enqueueMediaScript']);
+    add_action('admin_enqueue_scripts', [$this, 'enqueueSwitchStyles']);
 
     // wp-admin/options.php (where every Settings API form posts to) hardcodes
     // manage_options as the capability required to actually SAVE, regardless
@@ -163,6 +164,11 @@ class Provider
       return;
     }
 
+    if ($type === 'checkbox') {
+      $this->renderCheckboxField($key, $field_name, $value);
+      return;
+    }
+
     $html_type = $type === 'url' ? 'text' : $type;
     printf(
       '<input type="%1$s" id="%2$s" name="%3$s" value="%4$s" class="regular-text" />',
@@ -170,6 +176,33 @@ class Provider
       esc_attr($field_id),
       esc_attr($field_name),
       esc_attr($value)
+    );
+  }
+
+  /**
+   * Renders a toggle checkbox, same .switch/.slider markup used by
+   * Settings\Manager::renderCheckbox() and Hardening\Provider::renderCheckbox()
+   * so it looks identical everywhere in the plugin.
+   *
+   * Also emits a "{$key}_submitted" hidden marker: a checkbox is simply
+   * absent from $_POST when unchecked, and this option is shared across
+   * four tabs that each submit only their own fields — without this marker
+   * Repository::sanitize() can't tell "the SEO tab was submitted with this
+   * unchecked" apart from "a different tab was submitted, leave this
+   * untouched" (see sanitize()'s own comment on this).
+   *
+   * @param string $key   Field key.
+   * @param string $field_name Full input name (OPTION_NAME[key]).
+   * @param string $value Current stored value ('1' or '').
+   * @return void
+   */
+  private function renderCheckboxField(string $key, string $field_name, string $value): void
+  {
+    printf(
+      '<input type="hidden" name="%1$s_submitted" value="1" />'
+        . '<label class="switch"><input type="checkbox" name="%1$s" value="1" %2$s /><span class="slider round"></span></label>',
+      esc_attr($field_name),
+      checked($value, '1', false)
     );
   }
 

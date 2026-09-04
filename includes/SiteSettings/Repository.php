@@ -37,6 +37,7 @@ class Repository
     public static function getFields(): array
     {
         return [
+            'enable_seo_output' => [__('Enable SEO Output', 'amrf-admin'), 'checkbox', 'seo'],
             'seo_title' => [__('SEO title', 'amrf-admin'), 'text', 'seo'],
             'meta_description' => [__('Meta description', 'amrf-admin'), 'textarea', 'seo'],
             'share_image' => [__('Share image', 'amrf-admin'), 'media', 'seo'],
@@ -110,6 +111,11 @@ class Repository
         update_option(self::OPTION_NAME, $settings);
     }
 
+    public static function isSeoOutputEnabled(): bool
+    {
+        return !empty(self::getSettings()['enable_seo_output']);
+    }
+
     /**
      * All four tabs (SEO/Business/Address/Social) share this one option, but
      * each submits only its own fields — WordPress's Settings API never
@@ -128,11 +134,25 @@ class Repository
         $output = self::getSettings();
 
         foreach ($fields as $key => $field) {
+            [$label, $type] = $field;
+
+            if ($type === 'checkbox') {
+                // Unlike every other field type, a checkbox is simply
+                // absent from $_POST when unchecked — so its own presence
+                // can't tell "this tab wasn't submitted" apart from
+                // "submitted, unchecked". Provider::renderCheckboxField()
+                // renders a "{$key}_submitted" hidden marker alongside it
+                // specifically to disambiguate that.
+                if (is_array($input) && array_key_exists($key . '_submitted', $input)) {
+                    $output[$key] = !empty($input[$key]) ? '1' : '';
+                }
+                continue;
+            }
+
             if (!is_array($input) || !array_key_exists($key, $input)) {
                 continue;
             }
 
-            [$label, $type] = $field;
             $value = (string) $input[$key];
 
             $output[$key] = match ($type) {
