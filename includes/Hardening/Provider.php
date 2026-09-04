@@ -134,10 +134,24 @@ class Provider
    */
   public function redirect404ToHome(): void
   {
-    if (!is_user_logged_in() && is_404()) {
-      wp_safe_redirect(home_url(), 301);
-      exit;
+    if (is_user_logged_in() || !is_404()) {
+      return;
     }
+
+    // WordPress's own /wp-sitemap.xml and friends report is_404() true
+    // internally even when they're about to render valid content -- a
+    // sitemap route never corresponds to a normal post/page/archive
+    // query, so WP flags it not-found before its own sitemap renderer
+    // (a later template_redirect callback) gets a chance to actually
+    // serve it. Redirecting those away here would break the sitemap for
+    // every anonymous visitor -- search engines included, which defeats
+    // the entire point of having one.
+    if (get_query_var('sitemap') || get_query_var('sitemap-stylesheet')) {
+      return;
+    }
+
+    wp_safe_redirect(home_url(), 301);
+    exit;
   }
 
   /**
