@@ -255,10 +255,15 @@ class Provider
       return;
     }
 
-    echo '<div class="amrf-page-list">';
+    // Same .menu-items-container/.menu-item-checkbox markup as Allowed
+    // Menu Items (Settings\Manager::userRoleSettingsCallback()) — the CSS
+    // for both already ships in assets/css/amrf-admin-settings.css, so
+    // reusing the exact class names/structure gets an identical look for
+    // free instead of styling a second, slightly-different list.
+    echo '<div class="menu-items-container">';
     foreach ($pages as $page) {
       printf(
-        '<label style="display:block;"><input type="checkbox" name="%1$s[]" value="%2$d" %3$s /> %4$s <code>(ID: %2$d)</code></label>',
+        '<div class="menu-item-checkbox"><input type="checkbox" name="%1$s[]" value="%2$d" %3$s /><label>%4$s <code>(ID: %2$d)</code></label></div>',
         esc_attr($field_name),
         $page->ID,
         checked(in_array($page->ID, $selected, true), true, false),
