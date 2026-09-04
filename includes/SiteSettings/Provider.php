@@ -272,4 +272,22 @@ class Provider
       true
     );
   }
+
+  /**
+   * The shared .switch/.slider toggle styles live in assets/css/amrf-
+   * admin-settings.css, otherwise only loaded on the Admin Panel Settings
+   * page (SettingsPage::enqueueAssets()) — enqueued here too,
+   * unconditionally, same posture as Hardening\Provider's own switch-
+   * styles enqueue, so the enable_seo_output toggle actually looks like a
+   * toggle here instead of a bare checkbox.
+   *
+   * @return void
+   */
+  public function enqueueSwitchStyles(): void
+  {
+    wp_enqueue_style(
+      'amrf-admin-settings',
+      AMRF_ADMIN_PLUGIN_URL . 'assets/css/amrf-admin-settings.css'
+    );
+  }
 }
