@@ -170,12 +170,14 @@ class Manager
 
 		add_settings_section(
 			'user_role_section_' . $slug,
+			// translators: %s is the user role name (e.g. "Editor").
 			sprintf(__('%s Settings', 'amrf-admin'), translate_user_role($info['name'])),
 			[$this, 'printUserRoleSectionInfo'],
 			'amrf-admin-settings-' . $slug
 		);
 		add_settings_field(
 			'user_role_' . $slug . '_settings',
+			// translators: %s is the user role name (e.g. "Editor").
 			sprintf(__('%s Settings', 'amrf-admin'), $info['name']),
 			[$this, 'userRoleSettingsCallback'],
 			'amrf-admin-settings-' . $slug,

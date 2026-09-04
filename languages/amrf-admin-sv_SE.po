@@ -1,22 +1,24 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Admin Panel Settings 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/amrf-admin\n"
-"POT-Creation-Date: 2025-05-28T12:32:11+00:00\n"
-"PO-Revision-Date: 2025-06-16 11:51+0200\n"
+"Project-Id-Version: Admin Panel Settings 0.2.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/amrf-admin-panel-settings\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-04T15:22:29+00:00\n"
+"PO-Revision-Date: 2026-09-04 17:24+0200\n"
+"Language: sv_SE\n"
 "X-Generator: Poedit 3.6\n"
 "X-Domain: amrf-admin\n"
 
 #. Plugin Name of the plugin
-#: amrf-admin.php includes/Admin/SettingsPage.php:47
-#: includes/Admin/SettingsPage.php:48 includes/Hooks/AdminHooks.php:98
-#: includes/Utilities/SettingsRenderer.php:39
+#: amrf-admin.php
+#: includes/Admin/SettingsPage.php:76
+#: includes/Admin/SettingsPage.php:77
+#: includes/Hooks/AdminHooks.php:67
+#: includes/Hooks/AdminHooks.php:116
 msgid "Admin Panel Settings"
 msgstr "Inställningar för Adminpanelen"
 
@@ -25,137 +27,440 @@ msgstr "Inställningar för Adminpanelen"
 msgid "Customize admin panel settings for different user roles."
 msgstr "Ange panelinställningar för respektive användarroll."
 
-#: includes/Hooks/AdminHooks.php:79
+#: includes/Hooks/AdminHooks.php:96
 msgid "Settings"
 msgstr "Inställningar"
 
-#: includes/Hooks/FrontendHooks.php:159
+#: includes/Hooks/FrontendHooks.php:185
 msgid "Page Editor"
 msgstr "Redigera sida"
 
 #. translators: %d is the number indicating minimum password length
-#: includes/Hooks/FrontendHooks.php:210 includes/Hooks/FrontendHooks.php:242
+#: includes/Hooks/FrontendHooks.php:236
+#: includes/Hooks/FrontendHooks.php:268
 #, php-format
 msgid "ERROR: Password must be at least %d characters long."
 msgstr "FEL: Lösenordet måste bestå av minst %d tecken."
 
-#: includes/Settings/Manager.php:50
+#: includes/Settings/Manager.php:104
 msgid "General Settings"
 msgstr "Allmänna inställningar"
 
-#: includes/Settings/Manager.php:56
+#: includes/Settings/Manager.php:110
 msgid "Add Page Editor Link"
 msgstr "Lägg till \"Redigera sida\" i menyn"
 
-#: includes/Settings/Manager.php:63
+#: includes/Settings/Manager.php:124
 msgid "Minimum Password Length"
 msgstr "Minsta tillåtna antal tecken i lösenord"
 
-#: includes/Settings/Manager.php:70
+#: includes/Settings/Manager.php:131
 msgid "Prevent Non-Admins from Changing Passwords"
 msgstr "Förhindra att icke-administratörer byter lösenord"
 
-#: includes/Settings/Manager.php:77
+#: includes/Settings/Manager.php:138
 msgid "Hide Application Passwords for Non-Admins"
 msgstr "Dölj applikationslösenord för icke-administratörer"
 
-#: includes/Settings/Manager.php:84
+#: includes/Settings/Manager.php:145
 msgid "Remove Admin Bar Items for Non-Admins"
 msgstr "Ta bort länkar från administrationsfältet för icke-administratörer"
 
-#: includes/Settings/Manager.php:91
+#: includes/Settings/Manager.php:152
 msgid "Remove Default Dashboard Widgets"
 msgstr "Ta bort standardwidgetar från adminpanelen"
 
-#: includes/Settings/Manager.php:103 includes/Settings/Manager.php:109
+#. translators: %s is the user role name (e.g. "Editor").
+#: includes/Settings/Manager.php:174
+#: includes/Settings/Manager.php:181
 #, php-format
 msgid "%s Settings"
 msgstr "Inställningar för %s"
 
-#: includes/Settings/Manager.php:180
+#: includes/Settings/Manager.php:311
 msgid "Configure general admin panel settings."
 msgstr "Ange allmänna inställningar för adminpanelen."
 
-#: includes/Settings/Manager.php:190
+#: includes/Settings/Manager.php:321
 msgid "Configure settings for each user role."
 msgstr "Ange inställningar för respektive användarroll."
 
-#: includes/Settings/Manager.php:219
+#: includes/Settings/Manager.php:372
 msgid "Minimum required characters for user passwords."
 msgstr "Minsta antal tillåtna tecken för användarnas lösenord."
 
-#: includes/Settings/Manager.php:281
+#: includes/Settings/Manager.php:434
 msgid "Login Redirect"
 msgstr "Omdirigering efter inloggning"
 
-#: includes/Settings/Manager.php:284
+#: includes/Settings/Manager.php:437
 msgid "-- Select Redirect URL --"
 msgstr "-- Välj sida för omdirigering --"
 
-#: includes/Settings/Manager.php:285
+#: includes/Settings/Manager.php:438
 msgid "-- Front Page --"
 msgstr "-- Startsida --"
 
-#: includes/Settings/Manager.php:290
+#: includes/Settings/Manager.php:443
 msgid "URL to redirect this user role to after login."
 msgstr "Sida som skall visas för denna användarroll efter inloggning."
 
-#: includes/Settings/Manager.php:293
+#: includes/Settings/Manager.php:446
 msgid "Default Admin Page"
 msgstr "Startsida för adminpanelen"
 
-#: includes/Settings/Manager.php:298
+#: includes/Settings/Manager.php:451
 msgid "-- Select Default Page --"
 msgstr "-- Välj startsida --"
 
-#: includes/Settings/Manager.php:303
+#: includes/Settings/Manager.php:456
 msgid "Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below)."
 msgstr "Sida som visas när den här användarrollen besöker /wp-admin/ (måste finnas med bland tillåtna menyalternativ)."
 
-#: includes/Settings/Manager.php:306
-msgid "Rank Math Access"
-msgstr "Tillgång till Rank Math"
-
-#: includes/Settings/Manager.php:311
+#: includes/Settings/Manager.php:459
 msgid "Site Menus Access"
 msgstr "Tillgång till Menyer"
 
-#: includes/Settings/Manager.php:316
+#: includes/Settings/Manager.php:464
 msgid "Allowed Menu Items"
 msgstr "Tillåtna menyalternativ"
 
-#: includes/Settings/Manager.php:328
+#: includes/Settings/Manager.php:476
 msgid "Select which admin menu items should be visible to this user role."
 msgstr "Välj vilka menyalternativ som ska visas i administratörsmenyn för den här användarrollen."
 
-#: includes/Utilities/SettingsRenderer.php:30
+#: includes/Settings/Manager.php:67
 msgid "General"
 msgstr "Allmänna"
 
-#: includes/Settings/Manager.php:230
+#: includes/Settings/Manager.php:383
 msgid "Prevents non-admin users from changing their passwords."
 msgstr "Tar bort möjligheten att byta lösenord för icke-administratörer."
 
-#: includes/Settings/Manager.php:240
+#: includes/Settings/Manager.php:393
 msgid "Hides application passwords section for non-admin users."
 msgstr "Döljer applikationslösenord för icke-administratörer."
 
-#: includes/Settings/Manager.php:250
+#: includes/Settings/Manager.php:403
 msgid "Removes comments and new content links from admin bar for non-admins."
 msgstr "Tar bort länkar till kommentarer och nytt innehåll från administrationsfältet för icke-administratörer."
 
-#: includes/Settings/Manager.php:260
+#: includes/Settings/Manager.php:413
 msgid "Removes default dashboard widgets (Activity, Quick Draft, etc.)."
 msgstr "Tar bort standardwidgetar (Aktivitet, Snabbutkast etc.)"
 
-#: includes/Settings/Manager.php:307
-msgid "When enabled, this role will have access to all Rank Math features."
-msgstr "Ge denna roll tillgång till alla funktioner i Rank Math."
-
-#: includes/Settings/Manager.php:312
+#: includes/Settings/Manager.php:460
 msgid "Enable to allow this user role to access and edit site menus."
 msgstr "Ge denna roll tillgång till att redigera sajtens menyer."
 
-#: includes/Settings/Manager.php:202
+#: includes/Settings/Manager.php:333
 msgid "Adds a link to the front page editor in the admin menu."
 msgstr "Lägger till länken \"Redigera sida\" i administratörsmenyn."
+
+#. Author of the plugin
+#: amrf-admin.php
+msgid "Christofer Laurin"
+msgstr ""
+
+#. Author URI of the plugin
+#: amrf-admin.php
+msgid "https://github.com/dreadted/"
+msgstr ""
+
+#: includes/Admin/SiteSettingsMenu.php:55
+#: includes/Admin/SiteSettingsMenu.php:75
+#: includes/Admin/SiteSettingsMenu.php:76
+#: includes/Admin/SiteSettingsMenu.php:89
+#: includes/Admin/SiteSettingsMenu.php:90
+msgid "Site Settings"
+msgstr "Webbplatsinställningar"
+
+#: includes/FluentFormPrivacy/PrivacyRequests.php:41
+#: includes/FluentFormPrivacy/PrivacyRequests.php:50
+#: includes/FluentFormPrivacy/PrivacyRequests.php:147
+msgid "Contact form submissions"
+msgstr "Inskickade kontaktformulär"
+
+#: includes/FluentFormPrivacy/PrivacyRequests.php:142
+msgid "IP address"
+msgstr "IP-adress"
+
+#: includes/FluentFormPrivacy/PrivacyRequests.php:143
+msgid "Submitted"
+msgstr "Skickat"
+
+#: includes/FluentFormPrivacy/Provider.php:47
+#: includes/FluentFormPrivacy/Provider.php:48
+msgid "GDPR"
+msgstr "GDPR"
+
+#: includes/FluentFormPrivacy/Provider.php:78
+msgid "Form IDs"
+msgstr "Formulär-ID:n"
+
+#: includes/FluentFormPrivacy/Provider.php:85
+msgid "Delete submissions after this many days"
+msgstr "Radera inskickade formulär efter så här många dagar"
+
+#: includes/FluentFormPrivacy/Provider.php:103
+msgid "Comma-separated FluentForm form IDs this applies to — the daily retention cleanup and personal-data export/erase requests only ever touch these forms."
+msgstr "Kommaseparerade FluentForm-formulär-ID:n som detta gäller för — den dagliga rensningen och begäranden om export/radering av personuppgifter rör bara dessa formulär."
+
+#: includes/FluentFormPrivacy/Provider.php:118
+msgid "Blank or 0 = keep forever."
+msgstr "Tomt eller 0 = spara för alltid."
+
+#: includes/FluentFormValidation/Provider.php:72
+msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)."
+msgstr "Ange ett giltigt svenskt personnummer (ÅÅMMDD-XXXX)."
+
+#: includes/Hardening/Provider.php:65
+msgid "There is an error."
+msgstr "Ett fel har uppstått."
+
+#: includes/Hardening/Provider.php:166
+#: includes/Hardening/Provider.php:167
+msgid "Hardening"
+msgstr "Härdning"
+
+#: includes/Hardening/Provider.php:197
+msgid "Disable author archives"
+msgstr "Inaktivera författararkiv"
+
+#: includes/Hardening/Provider.php:198
+msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
+msgstr "Omdirigerar författararkivsidor till startsidan — användbart på sajter med en enda författare, eller för att undvika att användarnamn läcker via författar-URL:er."
+
+#: includes/Hardening/Provider.php:201
+msgid "Redirect 404 pages to the homepage"
+msgstr "Omdirigera 404-sidor till startsidan"
+
+#: includes/Hardening/Provider.php:202
+msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
+msgstr "Gäller bara utloggade besökare. Stäng av om sajten istället ska visa en riktig 404-sida."
+
+#: includes/Hardening/Provider.php:205
+msgid "Remove jQuery Migrate"
+msgstr "Ta bort jQuery Migrate"
+
+#: includes/Hardening/Provider.php:206
+msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
+msgstr "Stäng av om ett äldre plugin eller tema på sajten är beroende av jQuery Migrates kompatibilitetslager."
+
+#: includes/Hardening/Provider.php:209
+msgid "Disable generated image sizes"
+msgstr "Inaktivera genererade bildstorlekar"
+
+#: includes/Hardening/Provider.php:210
+msgid "Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress's own generated image sizes."
+msgstr "Hindrar WordPress från att generera ytterligare (responsiva) bildstorlekar och automatiskt skala stora uppladdningar. Stäng av om sajten är beroende av WordPress egna genererade bildstorlekar."
+
+#: includes/Settings/Manager.php:117
+msgid "Page Editor Link Target"
+msgstr "Mållänk för \"Redigera sida\""
+
+#: includes/Settings/Manager.php:201
+msgid "Settings have been reset to defaults."
+msgstr "Inställningarna har återställts till standardvärden."
+
+#: includes/Settings/Manager.php:354
+msgid "The link the \"Page Editor\" admin menu item points to, relative to the site root."
+msgstr "Länken som menyalternativet \"Redigera sida\" pekar på, relativt sajtens rot."
+
+#: includes/SiteSettings/Provider.php:197
+msgid "Select image"
+msgstr "Välj bild"
+
+#: includes/SiteSettings/Provider.php:198
+msgid "Use this image"
+msgstr "Använd denna bild"
+
+#: includes/SiteSettings/Provider.php:199
+msgid "Choose image"
+msgstr "Välj bild"
+
+#: includes/SiteSettings/Provider.php:204
+msgid "Remove image"
+msgstr "Ta bort bild"
+
+#: includes/SiteSettings/Repository.php:40
+msgid "SEO title"
+msgstr "SEO-titel"
+
+#: includes/SiteSettings/Repository.php:41
+msgid "Meta description"
+msgstr "Metabeskrivning"
+
+#: includes/SiteSettings/Repository.php:42
+msgid "Share image"
+msgstr "Delningsbild"
+
+#: includes/SiteSettings/Repository.php:43
+msgid "Open Graph locale (e.g. sv_SE)"
+msgstr "Open Graph-språkkod (t.ex. sv_SE)"
+
+#: includes/SiteSettings/Repository.php:44
+msgid "Theme color (hex)"
+msgstr "Temafärg (hex)"
+
+#: includes/SiteSettings/Repository.php:45
+msgid "Background color (hex)"
+msgstr "Bakgrundsfärg (hex)"
+
+#: includes/SiteSettings/Repository.php:47
+msgid "Business name"
+msgstr "Företagsnamn"
+
+#: includes/SiteSettings/Repository.php:48
+msgid "Business type (schema.org)"
+msgstr "Verksamhetstyp (schema.org)"
+
+#: includes/SiteSettings/Repository.php:49
+msgid "Person name"
+msgstr "Personnamn"
+
+#: includes/SiteSettings/Repository.php:50
+msgid "Job title"
+msgstr "Titel"
+
+#: includes/SiteSettings/Repository.php:51
+msgid "Email"
+msgstr "E-post"
+
+#: includes/SiteSettings/Repository.php:52
+msgid "Phone"
+msgstr "Telefon"
+
+#: includes/SiteSettings/Repository.php:55
+msgid "Swish number"
+msgstr "Swish-nummer"
+
+#: includes/SiteSettings/Repository.php:60
+msgid "Street address"
+msgstr "Gatuadress"
+
+#: includes/SiteSettings/Repository.php:61
+msgid "Postal code"
+msgstr "Postnummer"
+
+#: includes/SiteSettings/Repository.php:62
+msgid "City"
+msgstr "Ort"
+
+#: includes/SiteSettings/Repository.php:63
+msgid "Region"
+msgstr "Region"
+
+#: includes/SiteSettings/Repository.php:64
+msgid "Country"
+msgstr "Land"
+
+#: includes/SiteSettings/Repository.php:65
+msgid "Latitude"
+msgstr "Latitud"
+
+#: includes/SiteSettings/Repository.php:66
+msgid "Longitude"
+msgstr "Longitud"
+
+#: includes/SiteSettings/Repository.php:68
+msgid "Facebook URL"
+msgstr "Facebook-URL"
+
+#: includes/SiteSettings/Repository.php:69
+msgid "Instagram URL"
+msgstr "Instagram-URL"
+
+#: includes/SiteSettings/Repository.php:70
+msgid "X (Twitter) URL"
+msgstr "X (Twitter)-URL"
+
+#: includes/SiteSettings/Repository.php:71
+msgid "X (Twitter) handle"
+msgstr "X (Twitter)-användarnamn"
+
+#: includes/SiteSettings/Repository.php:81
+msgid "SEO"
+msgstr "SEO"
+
+#: includes/SiteSettings/Repository.php:82
+msgid "Business & Contact"
+msgstr "Företag & Kontakt"
+
+#: includes/SiteSettings/Repository.php:83
+msgid "Address"
+msgstr "Adress"
+
+#: includes/SiteSettings/Repository.php:84
+msgid "Social Media"
+msgstr "Sociala medier"
+
+#: includes/SupportGenix/Provider.php:110
+#: includes/SupportGenix/Provider.php:111
+msgid "Support Tickets"
+msgstr "Supportärenden"
+
+#: includes/SupportGenix/Provider.php:159
+msgid "Apply this site's default settings for Support Genix."
+msgstr "Tillämpa sajtens standardinställningar för Support Genix."
+
+#: includes/SupportGenix/Provider.php:164
+msgid "Apply Defaults"
+msgstr "Tillämpa standardvärden"
+
+#: includes/SupportGenix/Provider.php:181
+msgid "Security check failed"
+msgstr "Säkerhetskontrollen misslyckades"
+
+#: includes/SupportGenix/Provider.php:203
+msgid "Support Genix defaults applied successfully!"
+msgstr "Support Genix standardinställningar har tillämpats!"
+
+#: includes/SupportGenix/Provider.php:205
+msgid "There was an error applying the Support Genix defaults."
+msgstr "Ett fel uppstod när Support Genix standardinställningar skulle tillämpas."
+
+#: includes/SupportGenix/Provider.php:429
+msgid "Ticket"
+msgstr "Ärende"
+
+#: includes/SupportGenix/Provider.php:491
+msgid "You are not authorized to edit this page."
+msgstr "Du har inte behörighet att redigera den här sidan."
+
+#: includes/Umami/Provider.php:57
+#: includes/Umami/Provider.php:58
+msgid "Analytics"
+msgstr "Statistik"
+
+#: includes/Umami/Provider.php:79
+msgid "Umami ID is not set. Please configure it in the settings."
+msgstr "Umami-ID är inte inställt. Konfigurera det i inställningarna."
+
+#: includes/Umami/Provider.php:101
+msgid "Umami Settings"
+msgstr "Umami-inställningar"
+
+#: includes/Umami/Provider.php:102
+msgid "Umami"
+msgstr "Umami"
+
+#: includes/Umami/Provider.php:132
+msgid "Umami Site"
+msgstr "Umami-sajt"
+
+#: includes/Umami/Provider.php:139
+msgid "Umami ID"
+msgstr "Umami-ID"
+
+#: includes/Utilities/SettingsRenderer.php:105
+msgid "Reset to Defaults"
+msgstr "Återställ till standardvärden"
+
+#: assets/js/amrf-fluentform-validation.js:11
+msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)"
+msgstr "Ange ett giltigt svenskt personnummer (ÅÅMMDD-XXXX)"
+
+#: assets/js/amrf-fluentform-validation.js:15
+msgid "Personal Identity Number is required"
+msgstr "Personnummer krävs"
