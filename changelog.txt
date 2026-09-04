@@ -4,6 +4,68 @@ Changelog
 All notable changes to this project will be documented in this file.
 
 
+0.2.3
+------
+- languages: remove .gitignore
+- i18n: regenerate .pot and translate this week's new strings to Swedish
+- settings: auto-sync Page Editor link into allowed_menu_items on save
+- settings: default Add Page Editor Link off, make its target configurable, drop Rank Math
+- site-settings: fix cross-tab data wipe, cron scheduling, missing media JS
+- recover: replace guessed reconstructions with verbatim content found in a sibling session
+- recover: reconstruct includes/functions.php (missing, blocked bootstrap)
+- recover: reconstruct working tree after accidental rm -rf data loss
+- Bump version to 0.2.2
+- chore: add bump version helper script for GitHub Actions workflow
+- feat: enhance version bump workflow to support version type selection and manual version input
+- Bump version to 0.2.1
+- fix: hide update nag and filter admin menu items for non-administrators
+- Bump version to 0.2.1
+- fix: update badges workflow, and add bump_version
+- fix: remove admin bar items for non admins
+- feat: add reset to defaults button
+- fix: remove metadata section from README and streamline badge display
+- fix: update badge generation to create individual SVG files and modify README to display them
+- fix: update badge generation to output individual badge URLs
+- fix: correct regex patterns for extracting plugin data in badges workflow
+- fix: add workflow_dispatch trigger and simplify version extraction in badges workflow
+- fix: update Gist action to use exuanbo/actions-deploy-gist@v1 and correct file path
+- fix: update actions-gist version to 1.1.0 in badges workflow
+- chore: add README, changelog, and GitHub Actions for plugin badges
+- refactor: add documentation for autoloader function in amrf-admin.php
+- chore: update translation files for Swedish language and correct versioning details
+- refactor: replace AMRF_ADMIN_TEXT_DOMAIN with 'amrf-admin' for consistency in translation functions
+- chore: update plugin version to 0.2.0
+- chore: improve code formatting and method naming consistency in AdminHooks and VersionHelper classes
+- refactor: improve code formatting and documentation consistency in Manager class
+- refactor: streamline frontend hooks initialization and enhance role-based settings handling
+- chore: enhance code documentation with detailed class and method descriptions
+- refactor: implement settings link in plugin action links and display version in footer
+- feat: refactor password length enforcement into separate methods for profile updates and resets
+- fix: update login redirect URL for editor user group settings
+- feat: enhance user role settings with new capabilities and improved menu item scanning
+- refactor: remove unused adminPages property and related methods from MenuManager and Manager classes feat: enhance MenuScanner to prevent duplicate menu items and improve menu item retrieval logic fix: add current_tab hidden input in SettingsRenderer form for better settings management
+- feat: add 'Settings' link to plugin action links on the Plugins page
+- feat: rescan menu items and admin pages on user role settings page render
+- fix: change init hook to 'plugins_loaded'
+- refactor: separate classes
+- feat: enhance version display and menu item handling in admin settings
+- feat: add Rank Math and Site Menus capabilities for user roles and enhance checkbox rendering logic
+- refactor: streamline user role settings retrieval and improve default settings merging logic
+- refactor: enhance user settings retrieval and menu item filtering logic for submenu items
+- refactor: improve user role settings handling and streamline login redirect logic
+- chore: update version to 1.0.0 and add Swedish translation files
+- chore: remove outdated documentation on splitting admin settings page
+- refactor: enhance code documentation with detailed PHPDoc comments for clarity
+- refactor: streamline tab management and sanitize method for admin settings
+- fix: remove output from user role section info method
+- feat: hide user role in table headers for improved UI
+- fix: update text domain to amrf-admin
+- feat: implement tabbed navigation for admin panel settings and separate forms for general and user role settings
+- fix: update activation hook to use namespace for consistency
+- feat: add settings link and dynamic menu item filtering
+- i18n: add translation support for admin panel settings
+- refactor: update login redirect and default page settings to use dropdowns for user roles
+
 0.2.2
 ------
 - chore: add bump version helper script for GitHub Actions workflow
