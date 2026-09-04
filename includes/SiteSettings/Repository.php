@@ -111,17 +111,29 @@ class Repository
     }
 
     /**
+     * All four tabs (SEO/Business/Address/Social) share this one option, but
+     * each submits only its own fields — WordPress's Settings API never
+     * merges a submission with the option's existing value on its own, so a
+     * naive "rebuild the whole array from $input" sanitize callback quietly
+     * blanks out every OTHER tab's fields on each save (they're simply
+     * absent from $input). Start from the current stored values instead, and
+     * only touch keys this particular submission actually included.
+     *
      * @param mixed $input Raw POSTed value for this option.
      * @return array<string, string>
      */
     public static function sanitize($input): array
     {
         $fields = self::getFields();
-        $output = [];
+        $output = self::getSettings();
 
         foreach ($fields as $key => $field) {
+            if (!is_array($input) || !array_key_exists($key, $input)) {
+                continue;
+            }
+
             [$label, $type] = $field;
-            $value = is_array($input) && isset($input[$key]) ? (string) $input[$key] : '';
+            $value = (string) $input[$key];
 
             $output[$key] = match ($type) {
                 'email' => sanitize_email($value),

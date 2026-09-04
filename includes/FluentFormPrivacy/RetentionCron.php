@@ -24,6 +24,14 @@ class RetentionCron
     public function __construct()
     {
         register_activation_hook(AMRF_ADMIN_PLUGIN_FILE, [self::class, 'scheduleOnActivation']);
+        // Also self-heal on every normal load, not just plugin activation —
+        // this codebase is routinely deployed by syncing files directly onto
+        // a running site (see docker-bind-mount-rm-danger memory) rather than
+        // through WordPress's own deactivate/activate cycle, so the
+        // activation hook alone silently leaves this cron unscheduled after
+        // a file-level restore or sync. wp_next_scheduled() guard keeps this
+        // a no-op on every request where the event is already scheduled.
+        add_action('init', [self::class, 'scheduleOnActivation']);
         add_action(self::HOOK, [$this, 'run']);
     }
 
