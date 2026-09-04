@@ -468,6 +468,36 @@ class Provider
     }
 
     /**
+     * Keeps the ticket portal page out of WordPress's own built-in
+     * /wp-sitemap.xml — it's a login/ticket-creation utility page, not
+     * content, and there's no scenario where search-engine indexing of it
+     * is wanted. Deliberately unconditional (no settings toggle): unlike
+     * enable_seo_output, this isn't a judgment call a site owner would
+     * ever want to flip the other way.
+     *
+     * @param array $args WP_Query args for this sitemap's post type.
+     * @param string $post_type
+     * @return array
+     */
+    public function excludeTicketPageFromSitemap(array $args, string $post_type): array
+    {
+        if ('page' !== $post_type) {
+            return $args;
+        }
+
+        $page = get_page_by_path(self::TICKET_PAGE_SLUG);
+        if (!$page) {
+            return $args;
+        }
+
+        $exclude = isset($args['post__not_in']) && is_array($args['post__not_in']) ? $args['post__not_in'] : [];
+        $exclude[] = $page->ID;
+        $args['post__not_in'] = $exclude;
+
+        return $args;
+    }
+
+    /**
      * @return void
      */
     public function preventTicketPageEditAccess(): void

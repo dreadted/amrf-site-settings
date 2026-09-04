@@ -44,6 +44,8 @@ class Repository
             'og_locale' => [__('Open Graph locale (e.g. sv_SE)', 'amrf-admin'), 'text', 'seo'],
             'theme_color' => [__('Theme color (hex)', 'amrf-admin'), 'text', 'seo'],
             'background_color' => [__('Background color (hex)', 'amrf-admin'), 'text', 'seo'],
+            'restrict_sitemap' => [__('Restrict Sitemap to Selected Pages', 'amrf-admin'), 'checkbox', 'seo'],
+            'sitemap_page_ids' => [__('Pages Included in Sitemap', 'amrf-admin'), 'page_list', 'seo'],
 
             'business_name' => [__('Business name', 'amrf-admin'), 'text', 'business'],
             'business_type' => [__('Business type (schema.org)', 'amrf-admin'), 'text', 'business'],
@@ -145,6 +147,19 @@ class Repository
                 // specifically to disambiguate that.
                 if (is_array($input) && array_key_exists($key . '_submitted', $input)) {
                     $output[$key] = !empty($input[$key]) ? '1' : '';
+                }
+                continue;
+            }
+
+            if ($type === 'page_list') {
+                // Same "absent when nothing's checked" problem as
+                // checkbox above, same _submitted-marker fix — a
+                // deselect-everything save has to actually clear the
+                // list, not silently leave the old one in place.
+                if (is_array($input) && array_key_exists($key . '_submitted', $input)) {
+                    $ids = isset($input[$key]) && is_array($input[$key]) ? array_map('absint', $input[$key]) : [];
+                    $ids = array_values(array_unique(array_filter($ids)));
+                    $output[$key] = implode(',', $ids);
                 }
                 continue;
             }

@@ -45,6 +45,42 @@ class SeoOutput
         add_filter('pre_get_document_title', [$this, 'filterDocumentTitle']);
         add_action('wp_head', [$this, 'renderMetaTags']);
         add_action('wp_head', [$this, 'renderJsonLd']);
+
+        // Independent of enable_seo_output: WordPress's own built-in
+        // /wp-sitemap.xml exists regardless of whether this plugin's meta
+        // output is on, and a site owner may want to restrict it (e.g.
+        // keep a support-ticket portal page or similar utility page out
+        // of search results) without wanting the rest of the SEO output.
+        add_filter('wp_sitemaps_posts_query_args', [$this, 'restrictSitemapQueryArgs'], 10, 2);
+    }
+
+    /**
+     * Restricts the "page" post type's entries in WordPress's own built-in
+     * sitemap to exactly the pages selected in sitemap_page_ids, when
+     * restrict_sitemap is on. Empty selection while the toggle is on means
+     * "show nothing" (post__in => [0], a query that matches no post) --
+     * the toggle's whole purpose is to narrow what's exposed, so an empty
+     * list should never silently fall back to exposing every page.
+     *
+     * @param array $args WP_Query args for this sitemap's post type.
+     * @param string $postType
+     * @return array
+     */
+    public function restrictSitemapQueryArgs(array $args, string $postType): array
+    {
+        if ('page' !== $postType) {
+            return $args;
+        }
+
+        $settings = Repository::getSettings();
+        if (empty($settings['restrict_sitemap'])) {
+            return $args;
+        }
+
+        $ids = array_map('absint', array_filter(explode(',', $settings['sitemap_page_ids'])));
+        $args['post__in'] = $ids ?: [0];
+
+        return $args;
     }
 
     /**

@@ -169,6 +169,11 @@ class Provider
       return;
     }
 
+    if ($type === 'page_list') {
+      $this->renderPageListField($key, $field_name, $value);
+      return;
+    }
+
     $html_type = $type === 'url' ? 'text' : $type;
     printf(
       '<input type="%1$s" id="%2$s" name="%3$s" value="%4$s" class="regular-text" />',
@@ -216,6 +221,51 @@ class Provider
       esc_attr($field_name),
       checked($value, '1', false)
     );
+  }
+
+  /**
+   * A checkbox list of every published page, its title alongside its own
+   * database ID (per-page-ID visibility was requested explicitly, rather
+   * than a page-title-only picker) — same "{key}_submitted" marker
+   * mechanism as renderCheckboxField(), for the same reason: with nothing
+   * checked, the whole field is simply absent from $_POST, which
+   * Repository::sanitize() needs to be able to tell apart from "a
+   * different tab was submitted".
+   *
+   * @param string $key
+   * @param string $field_name
+   * @param string $value Comma-separated page IDs.
+   * @return void
+   */
+  private function renderPageListField(string $key, string $field_name, string $value): void
+  {
+    $selected = array_map('absint', array_filter(explode(',', $value)));
+    // Not just 'publish' -- WordPress ships a Privacy Policy page template
+    // left in 'draft' status by default until a site owner fills it in
+    // and publishes it, and get_pages()'s own default status filter would
+    // silently exclude it (and any other not-yet-published page) from
+    // ever being selectable here.
+    $pages = get_pages(['sort_column' => 'post_title', 'post_status' => ['publish', 'draft', 'private']]);
+    $submitted_name = Repository::OPTION_NAME . '[' . $key . '_submitted]';
+
+    printf('<input type="hidden" name="%s" value="1" />', esc_attr($submitted_name));
+
+    if (empty($pages)) {
+      echo '<p class="description">' . esc_html__('No pages found.', 'amrf-admin') . '</p>';
+      return;
+    }
+
+    echo '<div class="amrf-page-list">';
+    foreach ($pages as $page) {
+      printf(
+        '<label style="display:block;"><input type="checkbox" name="%1$s[]" value="%2$d" %3$s /> %4$s <code>(ID: %2$d)</code></label>',
+        esc_attr($field_name),
+        $page->ID,
+        checked(in_array($page->ID, $selected, true), true, false),
+        esc_html($page->post_title)
+      );
+    }
+    echo '</div>';
   }
 
   private function renderMediaField(string $field_id, string $field_name, string $value): void

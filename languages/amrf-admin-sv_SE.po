@@ -267,19 +267,19 @@ msgstr "Inställningarna har återställts till standardvärden."
 msgid "The link the \"Page Editor\" admin menu item points to, relative to the site root."
 msgstr "Länken som menyalternativet \"Redigera sida\" pekar på, relativt sajtens rot."
 
-#: includes/SiteSettings/Provider.php:230
+#: includes/SiteSettings/Provider.php:292
 msgid "Select image"
 msgstr "Välj bild"
 
-#: includes/SiteSettings/Provider.php:231
+#: includes/SiteSettings/Provider.php:293
 msgid "Use this image"
 msgstr "Använd denna bild"
 
-#: includes/SiteSettings/Provider.php:232
+#: includes/SiteSettings/Provider.php:294
 msgid "Choose image"
 msgstr "Välj bild"
 
-#: includes/SiteSettings/Provider.php:237
+#: includes/SiteSettings/Provider.php:299
 msgid "Remove image"
 msgstr "Ta bort bild"
 
@@ -307,91 +307,91 @@ msgstr "Temafärg (hex)"
 msgid "Background color (hex)"
 msgstr "Bakgrundsfärg (hex)"
 
-#: includes/SiteSettings/Repository.php:48
+#: includes/SiteSettings/Repository.php:50
 msgid "Business name"
 msgstr "Företagsnamn"
 
-#: includes/SiteSettings/Repository.php:49
+#: includes/SiteSettings/Repository.php:51
 msgid "Business type (schema.org)"
 msgstr "Verksamhetstyp (schema.org)"
 
-#: includes/SiteSettings/Repository.php:50
+#: includes/SiteSettings/Repository.php:52
 msgid "Person name"
 msgstr "Personnamn"
 
-#: includes/SiteSettings/Repository.php:51
+#: includes/SiteSettings/Repository.php:53
 msgid "Job title"
 msgstr "Titel"
 
-#: includes/SiteSettings/Repository.php:52
+#: includes/SiteSettings/Repository.php:54
 msgid "Email"
 msgstr "E-post"
 
-#: includes/SiteSettings/Repository.php:53
+#: includes/SiteSettings/Repository.php:55
 msgid "Phone"
 msgstr "Telefon"
 
-#: includes/SiteSettings/Repository.php:56
+#: includes/SiteSettings/Repository.php:58
 msgid "Swish number"
 msgstr "Swish-nummer"
 
-#: includes/SiteSettings/Repository.php:61
+#: includes/SiteSettings/Repository.php:63
 msgid "Street address"
 msgstr "Gatuadress"
 
-#: includes/SiteSettings/Repository.php:62
+#: includes/SiteSettings/Repository.php:64
 msgid "Postal code"
 msgstr "Postnummer"
 
-#: includes/SiteSettings/Repository.php:63
+#: includes/SiteSettings/Repository.php:65
 msgid "City"
 msgstr "Ort"
 
-#: includes/SiteSettings/Repository.php:64
+#: includes/SiteSettings/Repository.php:66
 msgid "Region"
 msgstr "Region"
 
-#: includes/SiteSettings/Repository.php:65
+#: includes/SiteSettings/Repository.php:67
 msgid "Country"
 msgstr "Land"
 
-#: includes/SiteSettings/Repository.php:66
+#: includes/SiteSettings/Repository.php:68
 msgid "Latitude"
 msgstr "Latitud"
 
-#: includes/SiteSettings/Repository.php:67
+#: includes/SiteSettings/Repository.php:69
 msgid "Longitude"
 msgstr "Longitud"
 
-#: includes/SiteSettings/Repository.php:69
+#: includes/SiteSettings/Repository.php:71
 msgid "Facebook URL"
 msgstr "Facebook-URL"
 
-#: includes/SiteSettings/Repository.php:70
+#: includes/SiteSettings/Repository.php:72
 msgid "Instagram URL"
 msgstr "Instagram-URL"
 
-#: includes/SiteSettings/Repository.php:71
+#: includes/SiteSettings/Repository.php:73
 msgid "X (Twitter) URL"
 msgstr "X (Twitter)-URL"
 
-#: includes/SiteSettings/Repository.php:72
+#: includes/SiteSettings/Repository.php:74
 msgid "X (Twitter) handle"
 msgstr "X (Twitter)-användarnamn"
 
-#: includes/SiteSettings/Repository.php:82
+#: includes/SiteSettings/Repository.php:84
 msgid "SEO"
 msgstr "SEO"
 
-#: includes/SiteSettings/Repository.php:83
+#: includes/SiteSettings/Repository.php:85
 msgid "Business & Contact"
 msgstr "Företag & Kontakt"
 
-#: includes/SiteSettings/Repository.php:84
+#: includes/SiteSettings/Repository.php:86
 msgid "Address"
 msgstr "Adress"
 
-#: includes/SiteSettings/Repository.php:85
+#: includes/SiteSettings/Repository.php:87
 msgid "Social Media"
 msgstr "Sociala medier"
 
@@ -424,7 +424,7 @@ msgstr "Ett fel uppstod när Support Genix standardinställningar skulle tilläm
 msgid "Ticket"
 msgstr "Ärende"
 
-#: includes/SupportGenix/Provider.php:491
+#: includes/SupportGenix/Provider.php:521
 msgid "You are not authorized to edit this page."
 msgstr "Du har inte behörighet att redigera den här sidan."
 
@@ -468,3 +468,15 @@ msgstr "Personnummer krävs"
 #: includes/SiteSettings/Repository.php:40
 msgid "Enable SEO Output"
 msgstr "Aktivera SEO-output"
+
+#: includes/SiteSettings/Provider.php:254
+msgid "No pages found."
+msgstr "Inga sidor hittades."
+
+#: includes/SiteSettings/Repository.php:47
+msgid "Restrict Sitemap to Selected Pages"
+msgstr "Begränsa sitemap till valda sidor"
+
+#: includes/SiteSettings/Repository.php:48
+msgid "Pages Included in Sitemap"
+msgstr "Sidor som ingår i sitemap"
