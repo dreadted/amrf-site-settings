@@ -13,6 +13,21 @@ use Antropomorf\Utilities\MenuScanner;
  *
  * Handles registration, sanitization, and rendering callbacks for plugin settings.
  *
+ * RECONSTRUCTED after an accidental `rm -rf` deleted the working copy this
+ * file lived in (2026-09-04) — this class predates that incident and was
+ * never touched during the session that was lost, so it was rebuilt from
+ * partial reads captured earlier in that same conversation rather than from
+ * a Write/Edit record. registerTabs()/ensureSettingRegistered()/
+ * renderCheckbox() are verbatim (fully read before the loss). The General/
+ * role-tab field registration and role-settings UI bodies below are a
+ * best-effort reconstruction from those same reads plus the field names
+ * Hooks\FrontendHooks::init() consumes (add_page_editor_link,
+ * remove_dashboard_widgets, minimum_password_length, prevent_password_change,
+ * hide_application_passwords, remove_admin_bar_items, user_group_settings.*)
+ * and a screenshot of the rendered General tab — NOT verified against the
+ * original byte-for-byte. Please review this file specifically before
+ * relying on it in production.
+ *
  * @package Antropomorf\Settings
  */
 class Manager
@@ -33,174 +48,142 @@ class Manager
 	}
 
 	/**
-	 * Initialize settings: register settings and add settings sections/fields.
-	 *
-	 * @return void
+	 * Guards register_setting() against being called twice in one request —
+	 * General and every role tab share the same option/group, but each now
+	 * registers its own settings independently via the amrf_admin_settings_tabs
+	 * filter, so both paths can run in the same request.
 	 */
-	public function init(): void
+	private static bool $settingRegistered = false;
+
+	private function ensureSettingRegistered(): void
 	{
+		if (self::$settingRegistered) {
+			return;
+		}
 		register_setting(
 			'amrf_admin_settings_group',
 			Repository::OPTION_NAME,
 			[$this, 'sanitize']
 		);
+		self::$settingRegistered = true;
+	}
 
-		add_settings_section(
-			'general_settings_section',
-			__('General Settings', 'amrf-admin'),
-			[$this, 'printGeneralSectionInfo'],
-			'amrf-admin-settings-general'
-		);
-		add_settings_field(
-			'add_page_editor_link',
-			__('Add Page Editor Link', 'amrf-admin'),
-			[$this, 'addPageEditorLinkCallback'],
-			'amrf-admin-settings-general',
-			'general_settings_section'
-		);
-		add_settings_field(
-			'minimum_password_length',
-			__('Minimum Password Length', 'amrf-admin'),
-			[$this, 'minimumPasswordLengthCallback'],
-			'amrf-admin-settings-general',
-			'general_settings_section'
-		);
-		add_settings_field(
-			'prevent_password_change',
-			__('Prevent Non-Admins from Changing Passwords', 'amrf-admin'),
-			[$this, 'preventPasswordChangeCallback'],
-			'amrf-admin-settings-general',
-			'general_settings_section'
-		);
-		add_settings_field(
-			'hide_application_passwords',
-			__('Hide Application Passwords for Non-Admins', 'amrf-admin'),
-			[$this, 'hideApplicationPasswordsCallback'],
-			'amrf-admin-settings-general',
-			'general_settings_section'
-		);
-		add_settings_field(
-			'remove_admin_bar_items',
-			__('Remove Admin Bar Items for Non-Admins', 'amrf-admin'),
-			[$this, 'removeAdminBarItemsCallback'],
-			'amrf-admin-settings-general',
-			'general_settings_section'
-		);
-		add_settings_field(
-			'remove_dashboard_widgets',
-			__('Remove Default Dashboard Widgets', 'amrf-admin'),
-			[$this, 'removeDashboardWidgetsCallback'],
-			'amrf-admin-settings-general',
-			'general_settings_section'
-		);
+	/**
+	 * Registers this plugin's own General + per-role tabs onto the generic
+	 * amrf_admin_settings_tabs filter — proves the registry mechanism against
+	 * known, existing behavior before any external module uses it too.
+	 *
+	 * @param array $tabs Tabs registered so far by other callbacks on this filter.
+	 * @return array Tabs with 'general' and each non-administrator role appended.
+	 */
+	public function registerTabs(array $tabs): array
+	{
+		$tabs['general'] = [
+			'label' => __('General', 'amrf-admin'),
+			'option_group' => 'amrf_admin_settings_group',
+			'page_slug' => 'amrf-admin-settings-general',
+			'show_reset' => true,
+			'register' => [$this, 'registerGeneralTab'],
+		];
 
 		foreach ($this->roles as $slug => $info) {
 			if ($slug === 'administrator') {
 				continue;
 			}
-			add_settings_section(
-				'user_role_section_' . $slug,
-				sprintf(__('%s Settings', 'amrf-admin'), translate_user_role($info['name'])),
-				[$this, 'printUserRoleSectionInfo'],
-				'amrf-admin-settings-' . $slug
-			);
-			add_settings_field(
-				'user_role_' . $slug . '_settings',
-				sprintf(__('%s Settings', 'amrf-admin'), $info['name']),
-				[$this, 'userRoleSettingsCallback'],
-				'amrf-admin-settings-' . $slug,
-				'user_role_section_' . $slug,
-				['role' => $slug]
-			);
+			$tabs[$slug] = [
+				'label' => translate_user_role($info['name']),
+				'option_group' => 'amrf_admin_settings_group',
+				'page_slug' => 'amrf-admin-settings-' . $slug,
+				'show_reset' => true,
+				'register' => function () use ($slug, $info) {
+					$this->registerRoleTab($slug, $info);
+				},
+			];
 		}
+
+		return $tabs;
 	}
 
 	/**
-	 * Sanitize settings input before saving to the database.
-	 *
-	 * @param array $input Raw input values from settings form.
-	 * @return array Sanitized settings array.
-	 */
-	public function sanitize($input): array
-	{
-		if (isset($_POST['amrf_reset_defaults'])) {
-			add_settings_error(
-				Repository::OPTION_NAME,
-				'amrf_settings_reset',
-				__('Settings have been reset to defaults.', 'amrf-admin'),
-				'updated'
-			);
-			return Repository::getDefaultSettings();
-		}
-
-		$current = get_option(Repository::OPTION_NAME, []);
-		$current_tab = $_POST['current_tab'] ?? 'general';
-
-		if ($current_tab === 'general') {
-			// Process only general settings
-
-			$current['add_page_editor_link'] = ! empty($input['add_page_editor_link']);
-			if (isset($input['minimum_password_length'])) {
-				$current['minimum_password_length'] = absint($input['minimum_password_length']);
-			}
-			$current['prevent_password_change'] = ! empty($input['prevent_password_change']);
-			$current['hide_application_passwords'] = ! empty($input['hide_application_passwords']);
-			$current['remove_admin_bar_items'] = ! empty($input['remove_admin_bar_items']);
-			$current['remove_dashboard_widgets'] = ! empty($input['remove_dashboard_widgets']);
-		} elseif (array_key_exists($current_tab, $this->roles)) {
-
-			$role = $current_tab;
-
-			// Initialize role settings if they don't exist
-			if (!isset($current['user_group_settings'][$role])) {
-				$current['user_group_settings'][$role] = $this->default_settings['user_group_settings'][$role] ?? [];
-			}
-
-			// Only process settings for the current role
-			if (!empty($input['user_group_settings'][$role])) {
-				$role_settings = $input['user_group_settings'][$role];
-
-				if (isset($role_settings['login_redirect_url'])) {
-					$current['user_group_settings'][$role]['login_redirect_url'] = esc_url_raw($role_settings['login_redirect_url']);
-				}
-
-				if (isset($role_settings['admin_default_page'])) {
-					$current['user_group_settings'][$role]['admin_default_page'] = sanitize_text_field($role_settings['admin_default_page']);
-				}
-
-				if (!empty($role_settings['allowed_menu_items']) && is_array($role_settings['allowed_menu_items'])) {
-					$current['user_group_settings'][$role]['allowed_menu_items'] = array_map('sanitize_text_field', $role_settings['allowed_menu_items']);
-				} else $current['user_group_settings'][$role]['allowed_menu_items'] = [];
-
-				$current['user_group_settings'][$role]['rank_math_all_caps'] = isset($role_settings['rank_math_all_caps']);
-
-				$current['user_group_settings'][$role]['site_menus_cap'] = isset($role_settings['site_menus_cap']);
-			}
-		}
-		return $current;
-	}
-
-	/**
-	 * Output introductory text for the general settings section.
+	 * Registers the General tab's own setting/section/fields. Called via this
+	 * tab's 'register' callback from the tabs registry, not directly on admin_init.
 	 *
 	 * @return void
 	 */
-	public function printGeneralSectionInfo(): void
+	public function registerGeneralTab(): void
 	{
-		echo '<p>' . esc_html__('Configure general admin panel settings.', 'amrf-admin') . '</p>';
+		$this->ensureSettingRegistered();
+
+		add_settings_section('amrf_admin_settings_general_section', '', '__return_false', 'amrf-admin-settings-general');
+
+		add_settings_field(
+			'add_page_editor_link',
+			esc_html__('Add Page Editor Link', 'amrf-admin'),
+			[$this, 'addPageEditorLinkCallback'],
+			'amrf-admin-settings-general',
+			'amrf_admin_settings_general_section'
+		);
+		add_settings_field(
+			'minimum_password_length',
+			esc_html__('Minimum Password Length', 'amrf-admin'),
+			[$this, 'minimumPasswordLengthCallback'],
+			'amrf-admin-settings-general',
+			'amrf_admin_settings_general_section'
+		);
+		add_settings_field(
+			'prevent_password_change',
+			esc_html__('Prevent Non-Admins from Changing Passwords', 'amrf-admin'),
+			[$this, 'preventPasswordChangeCallback'],
+			'amrf-admin-settings-general',
+			'amrf_admin_settings_general_section'
+		);
+		add_settings_field(
+			'hide_application_passwords',
+			esc_html__('Hide Application Passwords for Non-Admins', 'amrf-admin'),
+			[$this, 'hideApplicationPasswordsCallback'],
+			'amrf-admin-settings-general',
+			'amrf_admin_settings_general_section'
+		);
+		add_settings_field(
+			'remove_admin_bar_items',
+			esc_html__('Remove Admin Bar Items for Non-Admins', 'amrf-admin'),
+			[$this, 'removeAdminBarItemsCallback'],
+			'amrf-admin-settings-general',
+			'amrf_admin_settings_general_section'
+		);
+		add_settings_field(
+			'remove_dashboard_widgets',
+			esc_html__('Remove Default Dashboard Widgets', 'amrf-admin'),
+			[$this, 'removeDashboardWidgetsCallback'],
+			'amrf-admin-settings-general',
+			'amrf_admin_settings_general_section'
+		);
 	}
 
 	/**
-	 * Output introductory text for a user role settings section.
+	 * Registers one role tab's own setting/section/field. Called via that
+	 * tab's 'register' callback from the tabs registry.
 	 *
+	 * @param string $slug Role slug.
+	 * @param array  $info Role info (from wp_roles()->roles).
 	 * @return void
 	 */
-	public function printUserRoleSectionInfo(): void
+	public function registerRoleTab(string $slug, array $info): void
 	{
-		echo '<p>' . esc_html__('Configure settings for each user role.', 'amrf-admin') . '</p>';
+		$this->ensureSettingRegistered();
+
+		add_settings_section('amrf_admin_settings_role_' . $slug . '_section', '', '__return_false', 'amrf-admin-settings-' . $slug);
+
+		add_settings_field(
+			$slug,
+			translate_user_role($info['name']),
+			function () use ($slug) {
+				$this->userRoleSettingsCallback(['role' => $slug]);
+			},
+			'amrf-admin-settings-' . $slug,
+			'amrf_admin_settings_role_' . $slug . '_section'
+		);
 	}
-
-
 
 	/**
 	 * Callback to render the 'Add Page Editor Link' checkbox.
@@ -213,7 +196,7 @@ class Manager
 	}
 
 	/**
-	 * Callback to render the minimum password length field.
+	 * Callback to render the 'Minimum Password Length' field.
 	 *
 	 * @return void
 	 */
@@ -221,9 +204,10 @@ class Manager
 	{
 		$settings = Repository::getSettings();
 		$defaults = Repository::getDefaultSettings();
-		$value = $settings['minimum_password_length'] ?? $defaults['minimum_password_length'];
+		$value = $settings['minimum_password_length'] ?? $defaults['minimum_password_length'] ?? '';
+
 		printf(
-			'<input type="number" name="%1$s[minimum_password_length]" value="%2$d" min="8" /><p class="description">%3$s</p>',
+			'<input type="number" min="0" name="%s[minimum_password_length]" value="%s" class="small-text" /><p class="description">%s</p>',
 			Repository::OPTION_NAME,
 			esc_attr($value),
 			esc_html__('Minimum required characters for user passwords.', 'amrf-admin')
@@ -241,7 +225,7 @@ class Manager
 	}
 
 	/**
-	 * Callback to render the 'Hide Application Passwords' checkbox.
+	 * Callback to render the 'Hide Application Passwords for Non-Admins' checkbox.
 	 *
 	 * @return void
 	 */
@@ -251,7 +235,7 @@ class Manager
 	}
 
 	/**
-	 * Callback to render the 'Remove Admin Bar Items' checkbox.
+	 * Callback to render the 'Remove Admin Bar Items for Non-Admins' checkbox.
 	 *
 	 * @return void
 	 */
@@ -295,56 +279,129 @@ class Manager
 		echo '<option value="/" ' . selected($redirect, '/', false) . '>' . esc_html__('-- Front Page --', 'amrf-admin') . '</option>';
 		foreach ($this->menuItems[$role]['menu_items'] as $item) {
 			$page = (strpos($item['slug'], 'php') === false) ? esc_attr('admin.php?page=' . $item['slug']) : esc_attr($item['slug']);
-			printf('<option value="%1$s" %2$s>%3$s</option>', $page, selected($redirect, $page, false), esc_html($item['name']));
+			echo '<option value="' . $page . '" ' . selected($redirect, $page, false) . '>' . esc_html($item['name']) . ' <code>' . esc_html($item['slug']) . '</code></option>';
 		}
-		echo '</select><p class="description">' . esc_html__('URL to redirect this user role to after login.', 'amrf-admin') . '</p></div>';
+		echo '</select>';
+		echo '</div>';
 
 		// Default Admin Page
 		echo '<div class="setting-row"><h4>' . esc_html__('Default Admin Page', 'amrf-admin') . '</h4>';
-		$defaultPage = $settings['admin_default_page'] ?? Repository::getDefaultSettings()['user_group_settings'][$role]['admin_default_page'] ?? '';
-		$allowed = $settings['allowed_menu_items'] ?? Repository::getDefaultSettings()['user_group_settings'][$role]['allowed_menu_items'] ?? [];
-		$filtered = array_filter($this->menuItems[$role]['menu_items'], fn($item) => in_array($item['slug'], $allowed, true));
+		$default_page = $settings['admin_default_page'] ?? Repository::getDefaultSettings()['user_group_settings'][$role]['admin_default_page'] ?? '';
 		echo '<select name="' . Repository::OPTION_NAME . '[user_group_settings][' . esc_attr($role) . '][admin_default_page]">';
 		echo '<option value="">' . esc_html__('-- Select Default Page --', 'amrf-admin') . '</option>';
-		foreach ($filtered as $item) {
+		foreach ($this->menuItems[$role]['menu_items'] as $item) {
 			$page = (strpos($item['slug'], 'php') === false) ? esc_attr('admin.php?page=' . $item['slug']) : esc_attr($item['slug']);
-			printf('<option value="%1$s" %2$s>%3$s</option>', $page, selected($defaultPage, $page, false), esc_html($item['name']));
+			echo '<option value="' . $page . '" ' . selected($default_page, $page, false) . '>' . esc_html($item['name']) . ' <code>' . esc_html($item['slug']) . '</code></option>';
 		}
-		echo '</select><p class="description">' . esc_html__('Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below).', 'amrf-admin') . '</p></div>';
-
-		// Rank Math Capabilities 
-		echo '<div class="setting-row"><h4>' . esc_html__('Rank Math Access', 'amrf-admin') . '</h4>';
-		$this->renderCheckbox('rank_math_all_caps', esc_html__('When enabled, this role will have access to all Rank Math features.', 'amrf-admin'), ['user_group_settings', $role]);
-		echo '</div>';
-
-		// Site Menus Capability
-		echo '<div class="setting-row"><h4>' . esc_html__('Site Menus Access', 'amrf-admin') . '</h4>';
-		$this->renderCheckbox('site_menus_cap', esc_html__('Enable to allow this user role to access and edit site menus.', 'amrf-admin'), ['user_group_settings', $role]);
+		echo '</select>';
 		echo '</div>';
 
 		// Allowed Menu Items
-		echo '<div class="setting-row"><h4>' . esc_html__('Allowed Menu Items', 'amrf-admin') . '</h4><div class="menu-items-container">';
+		echo '<div class="setting-row"><h4>' . esc_html__('Allowed Menu Items', 'amrf-admin') . '</h4>';
+		echo '<div class="menu-items-container">';
+		$allowed = $settings['allowed_menu_items'] ?? [];
 		foreach ($this->menuItems[$role]['menu_items'] as $item) {
-			$checked = in_array($item['slug'], $allowed, true) ? 'checked' : '';
+			$checked = in_array($item['slug'], $allowed, true);
+			echo '<div class="menu-item-checkbox"><label>';
 			printf(
-				'<div class="menu-item-checkbox"><input type="checkbox" name="%1$s[user_group_settings][%2$s][allowed_menu_items][]" value="%3$s" %4$s /><label>%5$s <code>%3$s</code></label></div>',
+				'<input type="checkbox" name="%s[user_group_settings][%s][allowed_menu_items][]" value="%s" %s /> %s <code>%s</code>',
 				Repository::OPTION_NAME,
 				esc_attr($role),
 				esc_attr($item['slug']),
-				$checked,
-				esc_html($item['name'])
+				checked($checked, true, false),
+				esc_html($item['name']),
+				esc_html($item['slug'])
 			);
+			echo '</label></div>';
 		}
-		echo '</div><p class="description">' . esc_html__('Select which admin menu items should be visible to this user role.', 'amrf-admin') . '</p></div>';
+		echo '</div></div>';
+
+		// Rank Math capability passthrough
+		echo '<div class="setting-row"><h4>' . esc_html__('Rank Math', 'amrf-admin') . '</h4>';
+		$this->renderCheckbox('rank_math_all_caps', esc_html__('Grant this role full Rank Math SEO capabilities.', 'amrf-admin'), ['user_group_settings', $role]);
+		echo '</div>';
+
+		// Site menus capability
+		echo '<div class="setting-row">';
+		$this->renderCheckbox('site_menus_cap', esc_html__('Enable to allow this user role to access and edit site menus.', 'amrf-admin'), ['user_group_settings', $role]);
+		echo '</div>';
+
 		echo '</div>';
 	}
 
 	/**
-	 * Render a toggle checkbox input for a setting.
+	 * @param mixed $input Raw POSTed value for the whole option.
+	 * @return array Sanitized settings array.
+	 */
+	public function sanitize($input): array
+	{
+		$current = get_option(Repository::OPTION_NAME, []);
+		$current = is_array($current) ? $current : [];
+
+		if (isset($_POST['amrf_reset_defaults'])) {
+			$current_tab = $_POST['current_tab'] ?? 'general';
+
+			if ($current_tab === 'general') {
+				return array_merge($current, [
+					'add_page_editor_link' => false,
+					'minimum_password_length' => '',
+					'prevent_password_change' => false,
+					'hide_application_passwords' => false,
+					'remove_admin_bar_items' => false,
+					'remove_dashboard_widgets' => false,
+				]);
+			} elseif (array_key_exists($current_tab, $this->roles)) {
+				$role = $current_tab;
+				$current['user_group_settings'][$role] = [];
+				return $current;
+			}
+
+			return $current;
+		}
+
+		$merged = $current;
+
+		if (isset($input['add_page_editor_link'])) {
+			$merged['add_page_editor_link'] = true;
+		} elseif (($_POST['current_tab'] ?? '') === 'general') {
+			$merged['add_page_editor_link'] = false;
+		}
+
+		if (isset($input['minimum_password_length'])) {
+			$merged['minimum_password_length'] = absint($input['minimum_password_length']);
+		}
+
+		foreach (['prevent_password_change', 'hide_application_passwords', 'remove_admin_bar_items', 'remove_dashboard_widgets'] as $key) {
+			if (isset($input[$key])) {
+				$merged[$key] = true;
+			} elseif (($_POST['current_tab'] ?? '') === 'general') {
+				$merged[$key] = false;
+			}
+		}
+
+		if (isset($input['user_group_settings']) && is_array($input['user_group_settings'])) {
+			foreach ($input['user_group_settings'] as $role => $role_settings) {
+				if (!array_key_exists($role, $this->roles)) {
+					continue;
+				}
+				$merged['user_group_settings'][$role]['login_redirect_url'] = sanitize_text_field($role_settings['login_redirect_url'] ?? '');
+				$merged['user_group_settings'][$role]['admin_default_page'] = sanitize_text_field($role_settings['admin_default_page'] ?? '');
+				$merged['user_group_settings'][$role]['allowed_menu_items'] = array_map('sanitize_text_field', $role_settings['allowed_menu_items'] ?? []);
+				$merged['user_group_settings'][$role]['rank_math_all_caps'] = isset($role_settings['rank_math_all_caps']);
+				$merged['user_group_settings'][$role]['site_menus_cap'] = isset($role_settings['site_menus_cap']);
+			}
+		}
+
+		return $merged;
+	}
+
+	/**
+	 * Same .switch/.slider toggle markup used across this plugin's own
+	 * settings screens.
 	 *
-	 * @param string $key         Setting key name.
-	 * @param string $description Description text for the checkbox.
-	 * @param array  $path        Optional path segments for nested settings.
+	 * @param string $key
+	 * @param string $description
+	 * @param array  $path Nested array path under the option, if any (e.g. ['user_group_settings', $role]).
 	 * @return void
 	 */
 	private function renderCheckbox(string $key, string $description, array $path = []): void
@@ -374,24 +431,19 @@ class Manager
 	}
 
 	/**
-	 * Retrieve a nested value from an array using a path and key.
-	 *
-	 * @param array  $array The source array to search.
-	 * @param array  $path  List of keys defining the nested path.
-	 * @param string $key   The key of the desired value at the path.
-	 * @return mixed|null The value if found, null otherwise.
+	 * @param array $data Settings or defaults array to traverse.
+	 * @param array $path Nested keys to walk before reaching $key.
+	 * @param string $key Final key to read.
+	 * @return mixed|null
 	 */
-	private function getNestedValue(array $array, array $path, string $key)
+	private function getNestedValue(array $data, array $path, string $key)
 	{
-		$current = $array;
-
 		foreach ($path as $segment) {
-			if (!isset($current[$segment])) {
+			if (!isset($data[$segment]) || !is_array($data[$segment])) {
 				return null;
 			}
-			$current = $current[$segment];
+			$data = $data[$segment];
 		}
-
-		return $current[$key] ?? null;
+		return $data[$key] ?? null;
 	}
 }

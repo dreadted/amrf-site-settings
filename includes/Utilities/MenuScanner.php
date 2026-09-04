@@ -55,8 +55,15 @@ class MenuScanner
 							continue;
 						}
 
-						// Only process core WordPress submenu items (those ending with .php)
-						if (strpos($item[2], '.php') === false) continue;
+						// Only process core WordPress submenu items (those
+						// ending with .php) or this plugin's own submenus
+						// (e.g. Site Settings' GDPR page) — third-party
+						// plugins' own custom-slug submenus (Fluent Forms'
+						// internal tabs, Support Genix's own settings
+						// pages, etc.) stay excluded so this list doesn't
+						// balloon with noise no role should be assigned
+						// page-by-page anyway.
+						if (strpos($item[2], '.php') === false && strpos($item[2], 'amrf-') !== 0) continue;
 
 							$subname = self::getCleanMenuName($item[0]);
 							// Prefix submenu item name with its parent menu name

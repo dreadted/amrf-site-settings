@@ -2,28 +2,33 @@
 
 namespace Antropomorf\Utilities;
 
-if (! defined('ABSPATH')) {
-    exit;
+if (!defined('ABSPATH')) {
+	exit;
 }
 
 /**
- * Utility methods for retrieving plugin and file versions.
+ * Class VersionHelper
+ *
+ * RECONSTRUCTED (2026-09-04) after an accidental `rm -rf` deleted the
+ * working copy — never read in full, only referenced as
+ * VersionHelper::getVersion(). This implementation reads the Version
+ * header the standard WordPress way; low-risk to have inferred since the
+ * plugin header itself is the authoritative source either way.
  *
  * @package Antropomorf\Utilities
  */
 class VersionHelper
 {
-    /**
-     * Get the plugin version from its header.
-     *
-     * @return string Plugin version.
-     */
-    public static function getVersion(?string $file_path = null): string
-    {
-        if (! function_exists('get_plugin_data')) {
-            require_once ABSPATH . 'wp-admin/includes/plugin.php';
-        }
-        $data = get_plugin_data(AMRF_ADMIN_PLUGIN_FILE);
-        return $data['Version'] ?? '';
-    }
+	/**
+	 * @return string
+	 */
+	public static function getVersion(): string
+	{
+		if (!function_exists('get_file_data')) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+
+		$data = get_file_data(AMRF_ADMIN_PLUGIN_FILE, ['Version' => 'Version']);
+		return $data['Version'] ?? '';
+	}
 }

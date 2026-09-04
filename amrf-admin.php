@@ -46,8 +46,24 @@ load_plugin_textdomain(
     dirname(plugin_basename(__FILE__)) . '/languages'
 );
 
+require_once __DIR__ . '/includes/functions.php';
+
 use Antropomorf\Hooks\AdminHooks;
 use Antropomorf\Hooks\FrontendHooks;
+use Antropomorf\SiteSettings\Bootstrap as SiteSettingsBootstrap;
+use Antropomorf\FluentFormPrivacy\Bootstrap as FluentFormPrivacyBootstrap;
+use Antropomorf\SupportGenix\Bootstrap as SupportGenixBootstrap;
+use Antropomorf\Umami\Bootstrap as UmamiBootstrap;
+use Antropomorf\Branding\Bootstrap as BrandingBootstrap;
+use Antropomorf\FluentFormValidation\Bootstrap as FluentFormValidationBootstrap;
+use Antropomorf\Hardening\Bootstrap as HardeningBootstrap;
 
 AdminHooks::register();
 FrontendHooks::register();
+SiteSettingsBootstrap::register();
+FluentFormPrivacyBootstrap::register();
+SupportGenixBootstrap::register();
+UmamiBootstrap::register();
+BrandingBootstrap::register();
+FluentFormValidationBootstrap::register();
+HardeningBootstrap::register();

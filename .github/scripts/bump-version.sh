@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
-# Bumps the plugin version via the "Bump Version" GitHub Actions workflow
-# and syncs the resulting commit back to the local branch.
+# Bumps the plugin version locally: updates amrf-admin.php/readme.txt/
+# changelog.txt, commits, tags, and pushes both — no CI round-trip needed.
+# The pushed tag (v*.*.*) triggers .github/workflows/badges.yml on its own,
+# since it's a normal push from your own credentials, not the
+# GITHUB_TOKEN a workflow-triggered push would use (which GitHub
+# deliberately never re-triggers other workflows from).
 #
 # Usage:
-#   bin/bump-version.sh patch|minor|major
-#   bin/bump-version.sh manual 0.3.0
+#   .github/scripts/bump-version.sh patch|minor|major
+#   .github/scripts/bump-version.sh manual 0.3.0
 set -euo pipefail
 
 BUMP_TYPE="${1:-}"
@@ -17,11 +21,6 @@ fi
 
 if [[ "$BUMP_TYPE" == "manual" && -z "$MANUAL_VERSION" ]]; then
   echo "Usage: $0 manual <version>  (e.g. $0 manual 0.3.0)" >&2
-  exit 1
-fi
-
-if ! command -v gh >/dev/null 2>&1; then
-  echo "Error: gh CLI is not installed. See https://cli.github.com" >&2
   exit 1
 fi
 
@@ -42,25 +41,60 @@ if [[ "$(git rev-parse HEAD)" != "$(git rev-parse "origin/$BRANCH")" ]]; then
   exit 1
 fi
 
+CURRENT_VERSION=$(grep -oP 'Version:\s*\K[0-9]+\.[0-9]+\.[0-9]+' amrf-admin.php)
+
 if [[ "$BUMP_TYPE" == "manual" ]]; then
-  echo "Triggering workflow: bump_type=manual, version=$MANUAL_VERSION"
-  gh workflow run bump_version.yml -f bump_type=manual -f version="$MANUAL_VERSION"
+  NEW_VERSION="$MANUAL_VERSION"
 else
-  echo "Triggering workflow: bump_type=$BUMP_TYPE"
-  gh workflow run bump_version.yml -f bump_type="$BUMP_TYPE"
+  IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
+  case "$BUMP_TYPE" in
+    major) NEW_VERSION="$((MAJOR + 1)).0.0" ;;
+    minor) NEW_VERSION="$MAJOR.$((MINOR + 1)).0" ;;
+    patch) NEW_VERSION="$MAJOR.$MINOR.$((PATCH + 1))" ;;
+    *)
+      echo "Error: unknown bump type '$BUMP_TYPE' (expected patch|minor|major|manual)" >&2
+      exit 1
+      ;;
+  esac
 fi
 
-# gh workflow run is fire-and-forget; give the run a moment to be created
-# before we look for it.
-sleep 3
+echo "Bumping version: $CURRENT_VERSION -> $NEW_VERSION"
 
-RUN_ID="$(gh run list --workflow=bump_version.yml --limit 1 --json databaseId --jq '.[0].databaseId')"
-echo "Watching run $RUN_ID..."
-gh run watch "$RUN_ID" --exit-status
+# Collect commit messages since the last tag for the changelog entry.
+LAST_TAG="$(git describe --tags --abbrev=0 2>/dev/null || git rev-list --max-parents=0 HEAD)"
+echo "Collecting commits since: $LAST_TAG"
+CHANGES="$(git log "$LAST_TAG"..HEAD --pretty=format:"- %s" --no-merges)"
+if [[ -z "$CHANGES" ]]; then
+  CHANGES="- Maintenance release."
+fi
 
-echo "Syncing local branch..."
-git pull --ff-only
+# Update amrf-admin.php (matches "Version: X.X.X" and preserves spacing).
+sed -i "s/Version:[[:space:]]*[0-9.]*/Version:         $NEW_VERSION/" amrf-admin.php
 
-echo "Done. Current version files:"
+# Update readme.txt.
+sed -i "s/Stable tag:[[:space:]]*[0-9.]*/Stable tag: $NEW_VERSION/" readme.txt
+
+# Update changelog.txt — insert the new entry after the header block (line 5).
+new_entry_file="$(mktemp)"
+{
+  echo ""
+  echo "$NEW_VERSION"
+  echo "------"
+  echo "$CHANGES"
+} > "$new_entry_file"
+sed -i "5r $new_entry_file" changelog.txt
+rm -f "$new_entry_file"
+
+git add amrf-admin.php readme.txt changelog.txt
+git commit -m "Bump version to $NEW_VERSION"
+git tag "v$NEW_VERSION"
+
+echo "Pushing commit and tag..."
+git push
+git push origin "v$NEW_VERSION"
+
+echo ""
+echo "Done. Pushed commit + tag v$NEW_VERSION — the badges workflow will run automatically."
+echo "Current version files:"
 grep -m1 'Version:' amrf-admin.php
 grep -m1 'Stable tag:' readme.txt
