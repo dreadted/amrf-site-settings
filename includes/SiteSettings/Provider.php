@@ -240,12 +240,11 @@ class Provider
   private function renderPageListField(string $key, string $field_name, string $value): void
   {
     $selected = array_map('absint', array_filter(explode(',', $value)));
-    // Not just 'publish' -- WordPress ships a Privacy Policy page template
-    // left in 'draft' status by default until a site owner fills it in
-    // and publishes it, and get_pages()'s own default status filter would
-    // silently exclude it (and any other not-yet-published page) from
-    // ever being selectable here.
-    $pages = get_pages(['sort_column' => 'post_title', 'post_status' => ['publish', 'draft', 'private']]);
+    // Published only, deliberately -- WordPress's own sitemap always
+    // filters to post_status=publish regardless of this selection, so a
+    // draft/private page picked here would just silently never appear in
+    // the actual sitemap, making the toggle look broken when it isn't.
+    $pages = get_pages(['sort_column' => 'post_title', 'post_status' => 'publish']);
     $submitted_name = Repository::OPTION_NAME . '[' . $key . '_submitted]';
 
     printf('<input type="hidden" name="%s" value="1" />', esc_attr($submitted_name));
