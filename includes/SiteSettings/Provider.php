@@ -198,9 +198,21 @@ class Provider
    */
   private function renderCheckboxField(string $key, string $field_name, string $value): void
   {
+    // Deliberately NOT "{$field_name}_submitted" -- appending outside the
+    // closing "]" doesn't do what it looks like it does. PHP's form
+    // parser ignores everything after a bracket group's final "]" that
+    // isn't itself a new "[...]", so name="option[key]_submitted" is
+    // parsed as if "_submitted" weren't there at all: it collides with
+    // and silently overwrites option[key] itself (confirmed by testing
+    // parse_str() directly) -- which is exactly why this toggle refused
+    // to ever save as unchecked. The submitted-marker has to be its own
+    // distinct array key, "option[key_submitted]".
+    $submitted_name = Repository::OPTION_NAME . '[' . $key . '_submitted]';
+
     printf(
-      '<input type="hidden" name="%1$s_submitted" value="1" />'
-        . '<label class="switch"><input type="checkbox" name="%1$s" value="1" %2$s /><span class="slider round"></span></label>',
+      '<input type="hidden" name="%1$s" value="1" />'
+        . '<label class="switch"><input type="checkbox" name="%2$s" value="1" %3$s /><span class="slider round"></span></label>',
+      esc_attr($submitted_name),
       esc_attr($field_name),
       checked($value, '1', false)
     );
