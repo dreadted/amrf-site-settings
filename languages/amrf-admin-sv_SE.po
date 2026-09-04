@@ -267,131 +267,131 @@ msgstr "Inställningarna har återställts till standardvärden."
 msgid "The link the \"Page Editor\" admin menu item points to, relative to the site root."
 msgstr "Länken som menyalternativet \"Redigera sida\" pekar på, relativt sajtens rot."
 
-#: includes/SiteSettings/Provider.php:197
+#: includes/SiteSettings/Provider.php:230
 msgid "Select image"
 msgstr "Välj bild"
 
-#: includes/SiteSettings/Provider.php:198
+#: includes/SiteSettings/Provider.php:231
 msgid "Use this image"
 msgstr "Använd denna bild"
 
-#: includes/SiteSettings/Provider.php:199
+#: includes/SiteSettings/Provider.php:232
 msgid "Choose image"
 msgstr "Välj bild"
 
-#: includes/SiteSettings/Provider.php:204
+#: includes/SiteSettings/Provider.php:237
 msgid "Remove image"
 msgstr "Ta bort bild"
 
-#: includes/SiteSettings/Repository.php:40
+#: includes/SiteSettings/Repository.php:41
 msgid "SEO title"
 msgstr "SEO-titel"
 
-#: includes/SiteSettings/Repository.php:41
+#: includes/SiteSettings/Repository.php:42
 msgid "Meta description"
 msgstr "Metabeskrivning"
 
-#: includes/SiteSettings/Repository.php:42
+#: includes/SiteSettings/Repository.php:43
 msgid "Share image"
 msgstr "Delningsbild"
 
-#: includes/SiteSettings/Repository.php:43
+#: includes/SiteSettings/Repository.php:44
 msgid "Open Graph locale (e.g. sv_SE)"
 msgstr "Open Graph-språkkod (t.ex. sv_SE)"
 
-#: includes/SiteSettings/Repository.php:44
+#: includes/SiteSettings/Repository.php:45
 msgid "Theme color (hex)"
 msgstr "Temafärg (hex)"
 
-#: includes/SiteSettings/Repository.php:45
+#: includes/SiteSettings/Repository.php:46
 msgid "Background color (hex)"
 msgstr "Bakgrundsfärg (hex)"
 
-#: includes/SiteSettings/Repository.php:47
+#: includes/SiteSettings/Repository.php:48
 msgid "Business name"
 msgstr "Företagsnamn"
 
-#: includes/SiteSettings/Repository.php:48
+#: includes/SiteSettings/Repository.php:49
 msgid "Business type (schema.org)"
 msgstr "Verksamhetstyp (schema.org)"
 
-#: includes/SiteSettings/Repository.php:49
+#: includes/SiteSettings/Repository.php:50
 msgid "Person name"
 msgstr "Personnamn"
 
-#: includes/SiteSettings/Repository.php:50
+#: includes/SiteSettings/Repository.php:51
 msgid "Job title"
 msgstr "Titel"
 
-#: includes/SiteSettings/Repository.php:51
+#: includes/SiteSettings/Repository.php:52
 msgid "Email"
 msgstr "E-post"
 
-#: includes/SiteSettings/Repository.php:52
+#: includes/SiteSettings/Repository.php:53
 msgid "Phone"
 msgstr "Telefon"
 
-#: includes/SiteSettings/Repository.php:55
+#: includes/SiteSettings/Repository.php:56
 msgid "Swish number"
 msgstr "Swish-nummer"
 
-#: includes/SiteSettings/Repository.php:60
+#: includes/SiteSettings/Repository.php:61
 msgid "Street address"
 msgstr "Gatuadress"
 
-#: includes/SiteSettings/Repository.php:61
+#: includes/SiteSettings/Repository.php:62
 msgid "Postal code"
 msgstr "Postnummer"
 
-#: includes/SiteSettings/Repository.php:62
+#: includes/SiteSettings/Repository.php:63
 msgid "City"
 msgstr "Ort"
 
-#: includes/SiteSettings/Repository.php:63
+#: includes/SiteSettings/Repository.php:64
 msgid "Region"
 msgstr "Region"
 
-#: includes/SiteSettings/Repository.php:64
+#: includes/SiteSettings/Repository.php:65
 msgid "Country"
 msgstr "Land"
 
-#: includes/SiteSettings/Repository.php:65
+#: includes/SiteSettings/Repository.php:66
 msgid "Latitude"
 msgstr "Latitud"
 
-#: includes/SiteSettings/Repository.php:66
+#: includes/SiteSettings/Repository.php:67
 msgid "Longitude"
 msgstr "Longitud"
 
-#: includes/SiteSettings/Repository.php:68
+#: includes/SiteSettings/Repository.php:69
 msgid "Facebook URL"
 msgstr "Facebook-URL"
 
-#: includes/SiteSettings/Repository.php:69
+#: includes/SiteSettings/Repository.php:70
 msgid "Instagram URL"
 msgstr "Instagram-URL"
 
-#: includes/SiteSettings/Repository.php:70
+#: includes/SiteSettings/Repository.php:71
 msgid "X (Twitter) URL"
 msgstr "X (Twitter)-URL"
 
-#: includes/SiteSettings/Repository.php:71
+#: includes/SiteSettings/Repository.php:72
 msgid "X (Twitter) handle"
 msgstr "X (Twitter)-användarnamn"
 
-#: includes/SiteSettings/Repository.php:81
+#: includes/SiteSettings/Repository.php:82
 msgid "SEO"
 msgstr "SEO"
 
-#: includes/SiteSettings/Repository.php:82
+#: includes/SiteSettings/Repository.php:83
 msgid "Business & Contact"
 msgstr "Företag & Kontakt"
 
-#: includes/SiteSettings/Repository.php:83
+#: includes/SiteSettings/Repository.php:84
 msgid "Address"
 msgstr "Adress"
 
-#: includes/SiteSettings/Repository.php:84
+#: includes/SiteSettings/Repository.php:85
 msgid "Social Media"
 msgstr "Sociala medier"
 
@@ -464,3 +464,7 @@ msgstr "Ange ett giltigt svenskt personnummer (ÅÅMMDD-XXXX)"
 #: assets/js/amrf-fluentform-validation.js:15
 msgid "Personal Identity Number is required"
 msgstr "Personnummer krävs"
+
+#: includes/SiteSettings/Repository.php:40
+msgid "Enable SEO Output"
+msgstr "Aktivera SEO-output"
