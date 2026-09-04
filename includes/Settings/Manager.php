@@ -212,6 +212,7 @@ class Manager
 			if (isset($input['page_editor_link_target'])) {
 				$current['page_editor_link_target'] = sanitize_text_field($input['page_editor_link_target']);
 			}
+			$this->syncPageEditorLinkAllowedMenuItem($current);
 			if (isset($input['minimum_password_length'])) {
 				$current['minimum_password_length'] = absint($input['minimum_password_length']);
 			}
@@ -248,6 +249,54 @@ class Manager
 			}
 		}
 		return $current;
+	}
+
+	/**
+	 * The "Page Editor" admin menu item is registered with its own target
+	 * URL as its menu slug (FrontendHooks::addCustomPageToMenu() passes
+	 * home_url($target) as add_menu_page()'s $menu_slug argument — see
+	 * MenuScanner, which lists that raw slug verbatim), not a fixed string
+	 * like every other menu item. Each role's allowed_menu_items list has to
+	 * contain that exact URL for the item to stay visible to it, so without
+	 * this, changing page_editor_link_target (or turning the toggle on)
+	 * would silently break every role's existing visibility until someone
+	 * re-checked it by hand on each role tab. Runs on every General tab
+	 * save and keeps every role that already has an explicit allow-list in
+	 * sync automatically: drops any previous target's URL, adds the current
+	 * one only while the feature is enabled.
+	 *
+	 * @param array $current Settings array being built, modified in place.
+	 * @return void
+	 */
+	private function syncPageEditorLinkAllowedMenuItem(array &$current): void
+	{
+		$target = $current['page_editor_link_target'] ?? Repository::getDefaultSettings()['page_editor_link_target'];
+		$slug = home_url($target);
+		$site_prefix = home_url();
+
+		foreach ($this->roles as $role_slug => $info) {
+			if ($role_slug === 'administrator') {
+				continue;
+			}
+
+			$allowed = $current['user_group_settings'][$role_slug]['allowed_menu_items'] ?? null;
+			if ($allowed === null) {
+				// This role has no explicit allow-list configured yet —
+				// nothing to keep in sync, and creating one here would
+				// newly restrict a role that currently sees everything.
+				continue;
+			}
+
+			$allowed = array_values(array_filter($allowed, function ($item) use ($site_prefix) {
+				return strpos($item, $site_prefix) !== 0;
+			}));
+
+			if (!empty($current['add_page_editor_link'])) {
+				$allowed[] = $slug;
+			}
+
+			$current['user_group_settings'][$role_slug]['allowed_menu_items'] = $allowed;
+		}
 	}
 
 	/**
