@@ -113,7 +113,6 @@ class FrontendHooks
 					}
 
 					// Adjust capabilites according to user group settings
-					self::setCapabilities($user, $user_group_settings, 'rank_math_all_caps');
 					self::setCapabilities($user, $user_group_settings, 'site_menus_cap');
 				}
 			});
@@ -177,7 +176,10 @@ class FrontendHooks
 		$front = get_option('page_on_front');
 		$page = get_post($front);
 		if ($page) {
-			$url = home_url('/#builder_active');
+			$settings = Repository::getSettings();
+			$defaults = Repository::getDefaultSettings();
+			$target = $settings['page_editor_link_target'] ?? $defaults['page_editor_link_target'];
+			$url = home_url($target);
 			add_menu_page(
 				'themify-editor',
 				__('Page Editor', 'amrf-admin'),
@@ -375,24 +377,6 @@ class FrontendHooks
 	private static function getCapabilities(string $key): array
 	{
 		$capabilities =  [
-			'rank_math_all_caps' => [
-				'rank_math_site_analysis',
-				'rank_math_onpage_analysis',
-				'rank_math_onpage_general',
-				'rank_math_onpage_snippet',
-				'rank_math_onpage_social',
-				'rank_math_titles',
-				'rank_math_general',
-				'rank_math_sitemap',
-				'rank_math_404_monitor',
-				'rank_math_link_builder',
-				'rank_math_redirections',
-				'rank_math_role_manager',
-				'rank_math_analytics',
-				'rank_math_onpage_advanced',
-				'rank_math_content_ai',
-				'rank_math_admin_bar',
-			],
 			'site_menus_cap' => ['edit_theme_options']
 		];
 

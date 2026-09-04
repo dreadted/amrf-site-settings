@@ -113,6 +113,13 @@ class Manager
 			'general_settings_section'
 		);
 		add_settings_field(
+			'page_editor_link_target',
+			__('Page Editor Link Target', 'amrf-admin'),
+			[$this, 'pageEditorLinkTargetCallback'],
+			'amrf-admin-settings-general',
+			'general_settings_section'
+		);
+		add_settings_field(
 			'minimum_password_length',
 			__('Minimum Password Length', 'amrf-admin'),
 			[$this, 'minimumPasswordLengthCallback'],
@@ -202,6 +209,9 @@ class Manager
 			// Process only general settings
 
 			$current['add_page_editor_link'] = ! empty($input['add_page_editor_link']);
+			if (isset($input['page_editor_link_target'])) {
+				$current['page_editor_link_target'] = sanitize_text_field($input['page_editor_link_target']);
+			}
 			if (isset($input['minimum_password_length'])) {
 				$current['minimum_password_length'] = absint($input['minimum_password_length']);
 			}
@@ -233,8 +243,6 @@ class Manager
 				if (!empty($role_settings['allowed_menu_items']) && is_array($role_settings['allowed_menu_items'])) {
 					$current['user_group_settings'][$role]['allowed_menu_items'] = array_map('sanitize_text_field', $role_settings['allowed_menu_items']);
 				} else $current['user_group_settings'][$role]['allowed_menu_items'] = [];
-
-				$current['user_group_settings'][$role]['rank_math_all_caps'] = isset($role_settings['rank_math_all_caps']);
 
 				$current['user_group_settings'][$role]['site_menus_cap'] = isset($role_settings['site_menus_cap']);
 			}
@@ -272,6 +280,28 @@ class Manager
 	public function addPageEditorLinkCallback(): void
 	{
 		$this->renderCheckbox('add_page_editor_link', esc_html__('Adds a link to the front page editor in the admin menu.', 'amrf-admin'));
+	}
+
+	/**
+	 * Callback to render the page editor link target field — the URL (relative
+	 * to the site root) that the "Page Editor" admin menu item points to.
+	 * Defaults to the front-end page builder's own activation fragment
+	 * (Repository::getDefaultSettings()'s '/#builder_active'), but any link
+	 * on the site can be substituted here instead.
+	 *
+	 * @return void
+	 */
+	public function pageEditorLinkTargetCallback(): void
+	{
+		$settings = Repository::getSettings();
+		$defaults = Repository::getDefaultSettings();
+		$value = $settings['page_editor_link_target'] ?? $defaults['page_editor_link_target'];
+		printf(
+			'<input type="text" name="%1$s[page_editor_link_target]" value="%2$s" class="regular-text" /><p class="description">%3$s</p>',
+			Repository::OPTION_NAME,
+			esc_attr($value),
+			esc_html__('The link the "Page Editor" admin menu item points to, relative to the site root.', 'amrf-admin')
+		);
 	}
 
 	/**
@@ -373,11 +403,6 @@ class Manager
 			printf('<option value="%1$s" %2$s>%3$s</option>', $page, selected($defaultPage, $page, false), esc_html($item['name']));
 		}
 		echo '</select><p class="description">' . esc_html__('Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below).', 'amrf-admin') . '</p></div>';
-
-		// Rank Math Capabilities 
-		echo '<div class="setting-row"><h4>' . esc_html__('Rank Math Access', 'amrf-admin') . '</h4>';
-		$this->renderCheckbox('rank_math_all_caps', esc_html__('When enabled, this role will have access to all Rank Math features.', 'amrf-admin'), ['user_group_settings', $role]);
-		echo '</div>';
 
 		// Site Menus Capability
 		echo '<div class="setting-row"><h4>' . esc_html__('Site Menus Access', 'amrf-admin') . '</h4>';

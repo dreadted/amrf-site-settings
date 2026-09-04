@@ -25,7 +25,8 @@ class Repository
     public static function getDefaultSettings(): array
     {
         return [
-            'add_page_editor_link' => true,
+            'add_page_editor_link' => false,
+            'page_editor_link_target' => '/#builder_active',
             'minimum_password_length' => 20,
             'prevent_password_change' => true,
             'hide_application_passwords' => true,
@@ -40,12 +41,10 @@ class Repository
                         'fluent_forms',
                         'nav-menus.php',
                         'profile.php',
-                        'rank-math',
                         'support-tickets',
                         'umami-analytics',
                         'upload.php',
                     ],
-                    'rank_math_all_caps' => false,
                     'site_menus_cap' => false,
                 ],
             ],
