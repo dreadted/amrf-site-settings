@@ -83,7 +83,7 @@ class SettingsRenderer
    * submit_button() — used both by render() above for a tabbed page, and by
    * standalone single-purpose settings pages that have no tab strip of their
    * own (see Admin\SiteSettingsMenu's amrf_site_settings_pages entries, e.g.
-   * FluentFormPrivacy's GDPR page).
+   * ContactForm's Contact Forms page).
    *
    * @param string      $option_group Settings API option group for settings_fields().
    * @param string      $page_slug    Settings API page slug for do_settings_sections().

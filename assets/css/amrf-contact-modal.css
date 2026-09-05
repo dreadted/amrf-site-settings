@@ -1,0 +1,91 @@
+/**
+ * Lightbox shell for the sitewide "#kontakt" contact link (see
+ * includes/ContactForm/Modal.php + assets/js/amrf-contact-modal.js).
+ * Only the modal chrome lives here — FluentForm's own field/label/button
+ * markup keeps its own styling (fluentform-public-default.css, enqueued
+ * alongside this by FluentForm's shortcode handler itself); the optional
+ * consistency-CSS toggle (assets/css/amrf-contact-form-styling.css) is
+ * what maps FluentForm's palette onto the site's own theme colors.
+ *
+ * Positioning/backdrop/open-close transition ported from ptsussis-theme's
+ * assets/css/contact-modal.css — same dialog background/border-radius/
+ * box-shadow tokens as this plugin's other frontend-facing modules already
+ * assume exist (theme.json-generated --wp--preset--* custom properties).
+ */
+.amrf-contact-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 100;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	padding: 4rem 1.5rem;
+	overflow-y: auto;
+	opacity: 0;
+	transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.amrf-contact-modal[hidden] {
+	display: none;
+}
+
+.amrf-contact-modal[data-visible] {
+	opacity: 1;
+}
+
+.amrf-contact-modal-backdrop {
+	position: fixed;
+	inset: 0;
+	background: rgb(0 0 0 / 55%);
+}
+
+.amrf-contact-modal-dialog {
+	position: relative;
+	width: 100%;
+	max-width: 28rem;
+	background: var(--wp--preset--color--neutral);
+	border-radius: var(--border-radius);
+	box-shadow: var(--wp--preset--shadow--card);
+	padding: 2.5rem 2rem 2rem;
+	transform: translateY(-0.75rem) scale(0.98);
+	transition: transform 0.25s ease;
+}
+
+.amrf-contact-modal[data-visible] .amrf-contact-modal-dialog {
+	transform: translateY(0) scale(1);
+}
+
+.amrf-contact-modal-close {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	width: 2.5rem;
+	height: 2.5rem;
+	border: 0;
+	background: none;
+	font-size: 1.5rem;
+	line-height: 1;
+	cursor: pointer;
+	color: var(--wp--preset--color--contrast);
+}
+
+.amrf-contact-modal-close:hover {
+	color: var(--wp--preset--color--secondary);
+}
+
+.amrf-contact-modal-privacy-note {
+	margin: 1rem 0 0;
+	font-size: 0.8em;
+	opacity: 0.7;
+}
+
+.amrf-contact-modal-privacy-note a {
+	color: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.amrf-contact-modal,
+	.amrf-contact-modal-dialog {
+		transition: none;
+	}
+}

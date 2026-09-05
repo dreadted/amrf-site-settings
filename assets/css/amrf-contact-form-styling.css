@@ -1,0 +1,58 @@
+/**
+ * FluentForm consistency styling — enqueued only when the "Contact Forms"
+ * Site Settings page's "Apply Consistent Contact Form Styling" toggle
+ * (Repository::isConsistentStylingEnabled()) is on. Maps FluentForm's own
+ * palette/border-radius custom properties onto this site's theme tokens,
+ * plus the same field-level fixes amrf-theme's own assets/fluentform.css
+ * already applied — ported here so every FluentForm on the site gets them
+ * consistently, opt-in per site rather than baked into one theme.
+ */
+:root {
+	--fluentform-primary: var(--wp--preset--color--primary);
+	--fluentform-secondary: var(--wp--preset--color--contrast);
+	--fluentform-danger: var(--wp--preset--color--accent-red);
+	--fluentform-border-radius: var(--border-radius);
+}
+
+.fluentform .ff_t_c {
+	padding: 1rem;
+}
+
+.ff-message-success {
+	border: none;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+	background-color: var(--wp--preset--color--neutral);
+	border-radius: var(--border-radius);
+}
+
+.ff-message-success p {
+	margin: 0;
+}
+
+.fluentform input[type="checkbox"],
+.fluentform input[type="radio"] {
+	-webkit-appearance: none;
+	border: 1px solid var(--fluentform-border-color);
+	border-radius: 4px;
+}
+
+.ff-default .ff-el-input--label label,
+.fluentform .ff_t_c {
+	font-size: 0.875em;
+	font-weight: 700;
+}
+
+span.ff_tc_checkbox:has(input.ff_gdpr_field) + .ff_t_c::after {
+	color: var(--fluentform-danger);
+	content: " *";
+	margin-left: 3px;
+}
+
+input.ff_gdpr_field:focus {
+	border-color: var(--fluentform-primary) !important;
+}
+
+.fluentform .ff-el-is-error .text-danger {
+	font-size: 1rem;
+	font-weight: bold;
+}

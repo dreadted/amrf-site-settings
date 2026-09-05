@@ -1,6 +1,6 @@
 <?php
 
-namespace Antropomorf\FluentFormPrivacy;
+namespace Antropomorf\ContactForm;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
  * directly against its source: wp-content/plugins/fluentform, grepped for
  * every reference to that meta key — only ever written/removed).
  *
- * @package Antropomorf\FluentFormPrivacy
+ * @package Antropomorf\ContactForm
  */
 class RetentionCron
 {
@@ -61,7 +61,7 @@ class RetentionCron
             return;
         }
 
-        $form_ids = Repository::getFormIds();
+        $form_ids = Repository::getContactFormIds();
         if (empty($form_ids)) {
             return;
         }

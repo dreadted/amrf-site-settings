@@ -1,6 +1,6 @@
 <?php
 
-namespace Antropomorf\FluentFormPrivacy;
+namespace Antropomorf\ContactForm;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
  * accessor now, so this stays generic automatically rather than needing
  * its own copy of that field.
  *
- * @package Antropomorf\FluentFormPrivacy
+ * @package Antropomorf\ContactForm
  */
 class EmailSignoff
 {

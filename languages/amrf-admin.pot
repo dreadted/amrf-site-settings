@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-04T16:14:34+00:00\n"
+"POT-Creation-Date: 2026-09-05T04:04:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -38,6 +38,14 @@ msgstr ""
 msgid "https://github.com/dreadted/"
 msgstr ""
 
+#: assets/js/amrf-fluentform-validation.js:11
+msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)"
+msgstr ""
+
+#: assets/js/amrf-fluentform-validation.js:15
+msgid "Personal Identity Number is required"
+msgstr ""
+
 #: includes/Admin/SiteSettingsMenu.php:55
 #: includes/Admin/SiteSettingsMenu.php:75
 #: includes/Admin/SiteSettingsMenu.php:76
@@ -46,38 +54,75 @@ msgstr ""
 msgid "Site Settings"
 msgstr ""
 
-#: includes/FluentFormPrivacy/PrivacyRequests.php:41
-#: includes/FluentFormPrivacy/PrivacyRequests.php:50
-#: includes/FluentFormPrivacy/PrivacyRequests.php:147
+#: includes/ContactForm/Modal.php:117
+msgid "Contact"
+msgstr ""
+
+#: includes/ContactForm/Modal.php:118
+msgid "Close"
+msgstr ""
+
+#: includes/ContactForm/Modal.php:132
+msgid "We process your personal data to answer your message. Read more in our %1$sprivacy policy%2$s."
+msgstr ""
+
+#: includes/ContactForm/PrivacyRequests.php:41
+#: includes/ContactForm/PrivacyRequests.php:50
+#: includes/ContactForm/PrivacyRequests.php:147
 msgid "Contact form submissions"
 msgstr ""
 
-#: includes/FluentFormPrivacy/PrivacyRequests.php:142
+#: includes/ContactForm/PrivacyRequests.php:142
 msgid "IP address"
 msgstr ""
 
-#: includes/FluentFormPrivacy/PrivacyRequests.php:143
+#: includes/ContactForm/PrivacyRequests.php:143
 msgid "Submitted"
 msgstr ""
 
-#: includes/FluentFormPrivacy/Provider.php:47
-#: includes/FluentFormPrivacy/Provider.php:48
+#: includes/ContactForm/Provider.php:64
+#: includes/ContactForm/Provider.php:65
+msgid "Contact Forms"
+msgstr ""
+
+#: includes/ContactForm/Provider.php:95
+msgid "Default Contact Form"
+msgstr ""
+
+#: includes/ContactForm/Provider.php:102
+msgid "Apply Consistent Contact Form Styling"
+msgstr ""
+
+#: includes/ContactForm/Provider.php:111
 msgid "GDPR"
 msgstr ""
 
-#: includes/FluentFormPrivacy/Provider.php:78
-msgid "Form IDs"
+#: includes/ContactForm/Provider.php:115
+msgid "Contact Forms Subject to Retention"
 msgstr ""
 
-#: includes/FluentFormPrivacy/Provider.php:85
+#: includes/ContactForm/Provider.php:122
 msgid "Delete submissions after this many days"
 msgstr ""
 
-#: includes/FluentFormPrivacy/Provider.php:103
-msgid "Comma-separated FluentForm form IDs this applies to — the daily retention cleanup and personal-data export/erase requests only ever touch these forms."
+#: includes/ContactForm/Provider.php:154
+#: includes/ContactForm/Provider.php:206
+msgid "No FluentForm forms found."
 msgstr ""
 
-#: includes/FluentFormPrivacy/Provider.php:118
+#: includes/ContactForm/Provider.php:168
+msgid "The form the sitewide \"#kontakt\" link/button opens in a lightbox."
+msgstr ""
+
+#: includes/ContactForm/Provider.php:184
+msgid "Maps FluentForm's own color/border-radius variables to this site's theme colors and applies additional styling fixes, on every FluentForm on the site."
+msgstr ""
+
+#: includes/ContactForm/Provider.php:221
+msgid "The daily retention cleanup and personal-data export/erase requests only ever touch these forms."
+msgstr ""
+
+#: includes/ContactForm/Provider.php:239
 msgid "Blank or 0 = keep forever."
 msgstr ""
 
@@ -89,40 +134,40 @@ msgstr ""
 msgid "There is an error."
 msgstr ""
 
-#: includes/Hardening/Provider.php:166
-#: includes/Hardening/Provider.php:167
+#: includes/Hardening/Provider.php:180
+#: includes/Hardening/Provider.php:181
 msgid "Hardening"
 msgstr ""
 
-#: includes/Hardening/Provider.php:197
+#: includes/Hardening/Provider.php:211
 msgid "Disable author archives"
 msgstr ""
 
-#: includes/Hardening/Provider.php:198
+#: includes/Hardening/Provider.php:212
 msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
 msgstr ""
 
-#: includes/Hardening/Provider.php:201
+#: includes/Hardening/Provider.php:215
 msgid "Redirect 404 pages to the homepage"
 msgstr ""
 
-#: includes/Hardening/Provider.php:202
+#: includes/Hardening/Provider.php:216
 msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
 msgstr ""
 
-#: includes/Hardening/Provider.php:205
+#: includes/Hardening/Provider.php:219
 msgid "Remove jQuery Migrate"
 msgstr ""
 
-#: includes/Hardening/Provider.php:206
+#: includes/Hardening/Provider.php:220
 msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
 msgstr ""
 
-#: includes/Hardening/Provider.php:209
+#: includes/Hardening/Provider.php:223
 msgid "Disable generated image sizes"
 msgstr ""
 
-#: includes/Hardening/Provider.php:210
+#: includes/Hardening/Provider.php:224
 msgid "Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress's own generated image sizes."
 msgstr ""
 
@@ -134,10 +179,8 @@ msgstr ""
 msgid "Page Editor"
 msgstr ""
 
-#. translators: %d is the number indicating minimum password length
 #: includes/Hooks/FrontendHooks.php:236
 #: includes/Hooks/FrontendHooks.php:268
-#, php-format
 msgid "ERROR: Password must be at least %d characters long."
 msgstr ""
 
@@ -177,10 +220,8 @@ msgstr ""
 msgid "Remove Default Dashboard Widgets"
 msgstr ""
 
-#. translators: %s is the user role name (e.g. "Editor").
 #: includes/Settings/Manager.php:174
 #: includes/Settings/Manager.php:181
-#, php-format
 msgid "%s Settings"
 msgstr ""
 
@@ -268,23 +309,23 @@ msgstr ""
 msgid "Select which admin menu items should be visible to this user role."
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:254
+#: includes/SiteSettings/Provider.php:253
 msgid "No pages found."
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:292
+#: includes/SiteSettings/Provider.php:296
 msgid "Select image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:293
+#: includes/SiteSettings/Provider.php:297
 msgid "Use this image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:294
+#: includes/SiteSettings/Provider.php:298
 msgid "Choose image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:299
+#: includes/SiteSettings/Provider.php:303
 msgid "Remove image"
 msgstr ""
 
@@ -472,12 +513,4 @@ msgstr ""
 
 #: includes/Utilities/SettingsRenderer.php:105
 msgid "Reset to Defaults"
-msgstr ""
-
-#: assets/js/amrf-fluentform-validation.js:11
-msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)"
-msgstr ""
-
-#: assets/js/amrf-fluentform-validation.js:15
-msgid "Personal Identity Number is required"
 msgstr ""
