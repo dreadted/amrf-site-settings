@@ -1,0 +1,17 @@
+/**
+ * Replaces a "#swish" link entirely on devices unlikely to run the Swish
+ * app (see amrf-swish.js) — a plain "card" look (rounded corners + soft
+ * shadow), same idea as ptsussis-theme's own .cta-swish-qr, but with
+ * literal values rather than theme.json custom properties: this plugin
+ * runs across several themes with different design tokens, so it can't
+ * assume any one theme's variables exist.
+ */
+.amrf-swish-qr {
+	display: block;
+	width: 100%;
+	max-width: 12rem;
+	height: auto;
+	margin-block: 1rem;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+}

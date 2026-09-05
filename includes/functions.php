@@ -24,11 +24,34 @@ function amrf_get_site_settings(): array
 }
 
 /**
- * Swish's own deep-link URL for a given Swish number, or '' if blank.
+ * This site's Swish tab settings (number/amount/message + their own
+ * "editable after scanning" toggles) — see includes/Swish/Repository.php.
+ * Every field key always present, defaulted to ''.
  *
- * @param string $swish_number Typically amrf_get_site_settings()['swish_number'].
+ * @return array<string, string>
  */
-function amrf_build_swish_url(string $swish_number): string
+function amrf_get_swish_settings(): array
 {
-    return \Antropomorf\SiteSettings\Swish::buildUrl($swish_number);
+    return \Antropomorf\Swish\Repository::getSettings();
+}
+
+/**
+ * Swish's own deep-link URL, or '' if no number is set. Typically called
+ * with amrf_get_swish_settings()'s own fields, same shape as
+ * Swish\FrontendProvider's own localized amrfSwish.swishUrl.
+ *
+ * @param string $swish_number
+ * @param string $amount
+ * @param bool   $amount_editable
+ * @param string $message
+ * @param bool   $message_editable
+ */
+function amrf_build_swish_url(
+    string $swish_number,
+    string $amount = '',
+    bool $amount_editable = true,
+    string $message = '',
+    bool $message_editable = true
+): string {
+    return \Antropomorf\SiteSettings\Swish::buildUrl($swish_number, $amount, $amount_editable, $message, $message_editable);
 }

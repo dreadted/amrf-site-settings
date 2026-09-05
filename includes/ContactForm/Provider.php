@@ -9,18 +9,17 @@ if (!defined('ABSPATH')) {
 /**
  * Class Provider
  *
- * Registers the "Contact Forms" page onto the amrf_site_settings_pages
- * registry (see Admin\SiteSettingsMenu, the shared "Site Settings" top-
- * level menu) — its own page rather than a tab, same as it was under this
- * module's previous "GDPR" name. Capability: edit_theme_options, same as
- * the menu's own default.
+ * Registers the "Contact Forms" and "GDPR" tabs onto amrf_forms_tabs (see
+ * Forms\Menu, the shared "Forms" page these tabs live under, formerly this
+ * class's own single "Contact Forms" page — see Forms\Menu::PAGE_SLUG's
+ * own docblock for why that page's admin menu slug is preserved unchanged
+ * even though this stopped being its own page). Capability:
+ * edit_theme_options, same as the menu's own default.
  *
- * Two sections: a general one (which FluentForm form the sitewide
- * "#kontakt" lightbox — see Modal — opens, and whether this plugin's own
- * FluentForm consistency CSS is applied sitewide), and a "GDPR" one
- * (unchanged from before: which forms the retention cron and personal-
- * data export/erase requests apply to, and for how long) — see Modal's
- * docblock and Repository's docblock for the reasoning behind each.
+ * Both tabs still share the SAME option (Repository::OPTION_NAME) via one
+ * option_group — unchanged from when they were two sections stacked on one
+ * page, just presented as two tabs now. See Modal's docblock and
+ * Repository's docblock for the reasoning behind each field.
  *
  * @package Antropomorf\ContactForm
  */
@@ -29,21 +28,17 @@ class Provider
   private const OPTION_GROUP = 'amrf_contact_form_group';
 
   /**
-   * Kept at its original 'amrf-site-settings-gdpr' value rather than
-   * renamed to match this page's new "Contact Forms" title — a site's
-   * saved amrf_admin_settings[user_group_settings][$role][allowed_menu_items]
-   * (Settings\Repository) may already list this exact slug for a role
-   * that was explicitly granted access to it; renaming the slug would
-   * silently revoke that access on upgrade (the item just vanishes from
-   * an already-saved allow-list, no error, no migration path back). The
-   * slug is never shown to a site visitor or editor, only the page_title/
-   * menu_title below are, so nothing is actually lost by keeping it.
+   * Internal Settings-API page slugs only — passed to do_settings_sections()/
+   * settings_fields(), never shown as a WP admin menu item, so unlike
+   * Forms\Menu::PAGE_SLUG these are free to be whatever's convenient; they
+   * don't participate in allowed_menu_items matching at all.
    */
-  private const PAGE_SLUG = 'amrf-site-settings-gdpr';
+  private const CONTACT_PAGE_SLUG = 'amrf-forms-contact';
+  private const GDPR_PAGE_SLUG = 'amrf-forms-gdpr';
 
   public function __construct()
   {
-    add_filter('amrf_site_settings_pages', [$this, 'registerPages']);
+    add_filter('amrf_forms_tabs', [$this, 'registerTabs']);
 
     // wp-admin/options.php hardcodes manage_options as the capability
     // required to actually SAVE a Settings API form, regardless of what
@@ -74,79 +69,97 @@ class Provider
   }
 
   /**
-   * @param array $pages Pages registered so far by other callbacks on this filter.
-   * @return array Pages with 'contact-forms' appended.
+   * @param array $tabs Tabs registered so far by other callbacks on this filter.
+   * @return array Tabs with 'contact-forms' and 'gdpr' appended.
    */
-  public function registerPages(array $pages): array
+  public function registerTabs(array $tabs): array
   {
-    $pages['contact-forms'] = [
-      'page_title' => __('Contact Forms', 'amrf-admin'),
-      'menu_title' => __('Contact Forms', 'amrf-admin'),
-      'capability' => 'edit_theme_options',
-      'menu_slug' => self::PAGE_SLUG,
+    $tabs['contact-forms'] = [
+      'label' => __('Contact Forms', 'amrf-admin'),
       'option_group' => self::OPTION_GROUP,
-      'page_slug' => self::PAGE_SLUG,
+      'page_slug' => self::CONTACT_PAGE_SLUG,
       'show_reset' => false,
-      'register' => [$this, 'register'],
+      'register' => [$this, 'registerContactFormsFields'],
     ];
 
-    return $pages;
+    $tabs['gdpr'] = [
+      'label' => __('GDPR', 'amrf-admin'),
+      'option_group' => self::OPTION_GROUP,
+      'page_slug' => self::GDPR_PAGE_SLUG,
+      'show_reset' => false,
+      'register' => [$this, 'registerGdprFields'],
+    ];
+
+    return $tabs;
   }
 
   /**
-   * Called via this page's 'register' callback from the pages registry, on
-   * admin_init.
+   * Called via the 'contact-forms' tab's 'register' callback
+   * (Forms\Menu::registerTabSettings(), on admin_init). register_setting()
+   * only actually needs calling once per option, but the Settings API
+   * doesn't care about a harmless repeat call — registerGdprFields() calls
+   * it too, since either tab can be the first one WordPress happens to
+   * touch depending on which tab is currently open.
    *
    * @return void
    */
-  public function register(): void
+  public function registerContactFormsFields(): void
   {
-    register_setting(
-      self::OPTION_GROUP,
-      Repository::OPTION_NAME,
-      [Repository::class, 'sanitize']
-    );
+    register_setting(self::OPTION_GROUP, Repository::OPTION_NAME, [Repository::class, 'sanitize']);
 
-    add_settings_section('contact_form_section', '', '__return_false', self::PAGE_SLUG);
+    add_settings_section('contact_form_section', '', '__return_false', self::CONTACT_PAGE_SLUG);
 
     add_settings_field(
       'default_contact_form_id',
       __('Default Contact Form', 'amrf-admin'),
       [$this, 'renderDefaultContactFormField'],
-      self::PAGE_SLUG,
+      self::CONTACT_PAGE_SLUG,
       'contact_form_section'
     );
     add_settings_field(
       'enable_consistent_styling',
       __('Apply Consistent Contact Form Styling', 'amrf-admin'),
       [$this, 'renderConsistentStylingField'],
-      self::PAGE_SLUG,
+      self::CONTACT_PAGE_SLUG,
       'contact_form_section'
     );
     add_settings_field(
       'altcha_enabled',
       __('Enable ALTCHA Spam Protection', 'amrf-admin'),
       [$this, 'renderAltchaEnabledField'],
-      self::PAGE_SLUG,
+      self::CONTACT_PAGE_SLUG,
       'contact_form_section'
     );
-    // A real (non-empty) section title prints as its own <h2> via
-    // do_settings_sections() — this is the visible "GDPR" heading the
-    // feature asked for, not just a docblock label.
-    add_settings_section('gdpr_section', __('GDPR', 'amrf-admin'), '__return_false', self::PAGE_SLUG);
+  }
+
+  /**
+   * Called via the 'gdpr' tab's 'register' callback, on admin_init — see
+   * registerContactFormsFields()'s own doc comment for why register_setting()
+   * is repeated here too.
+   *
+   * @return void
+   */
+  public function registerGdprFields(): void
+  {
+    register_setting(self::OPTION_GROUP, Repository::OPTION_NAME, [Repository::class, 'sanitize']);
+
+    // No section title needed here — the tab itself is already labeled
+    // "GDPR" (registerTabs()), unlike before when both sections shared one
+    // page and needed their own visible <h2> to tell them apart.
+    add_settings_section('gdpr_section', '', '__return_false', self::GDPR_PAGE_SLUG);
 
     add_settings_field(
       'contact_form_ids',
       __('Contact Forms Subject to Retention', 'amrf-admin'),
       [$this, 'renderContactFormIdsField'],
-      self::PAGE_SLUG,
+      self::GDPR_PAGE_SLUG,
       'gdpr_section'
     );
     add_settings_field(
       'retention_days',
       __('Delete submissions after this many days', 'amrf-admin'),
       [$this, 'renderRetentionDaysField'],
-      self::PAGE_SLUG,
+      self::GDPR_PAGE_SLUG,
       'gdpr_section'
     );
   }
