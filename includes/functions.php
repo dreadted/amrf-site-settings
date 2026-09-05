@@ -3,7 +3,7 @@
 /**
  * Public, non-namespaced function API for themes to consume — a small,
  * stable surface separate from the plugin's internal Antropomorf\* classes,
- * required directly from amrf-admin.php (the autoloader only maps class
+ * required directly from amrf-site-settings.php (the autoloader only maps class
  * names, not plain functions).
  */
 

@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 /**
  * Class Bootstrap
  *
- * Entry point for the Contact Form module, called once from amrf-admin.php
+ * Entry point for the Contact Form module, called once from amrf-site-settings.php
  * alongside the other modules' Bootstrap::register() calls. Covers the
  * "Contact Forms" Site Settings page (default form + consistency-CSS
  * toggle, and — under its "GDPR" heading — retention scope/duration), the

@@ -61,7 +61,7 @@ class AdminHooks
         // sort first regardless of which order other modules' Bootstrap
         // classes happen to run in (this callback itself only fires on
         // plugins_loaded, later than a module that hooks the filter
-        // synchronously from amrf-admin.php would).
+        // synchronously from amrf-site-settings.php would).
         add_filter('amrf_admin_settings_tabs', [$settingsManager, 'registerTabs'], 5);
 
         $renderer = new SettingsRenderer('amrf_admin_settings_tabs', 'amrf-admin-settings', __('Admin Panel Settings', 'amrf-admin'));
