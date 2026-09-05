@@ -15,9 +15,18 @@ if (!defined('ABSPATH')) {
  * only when the number/amount/message/editable flags actually change
  * (Repository::sanitize() is the only caller, and only it knows both the
  * before and after values of one save), and caches the result to uploads/
- * as a single fixed-filename .webp file rather than a media library
+ * as a single fixed-filename .svg file rather than a media library
  * attachment — this is a derived cache of the settings above, not
  * something an editor manages directly.
+ *
+ * Requested as SVG, not PNG/JPG: a first attempt recolored the raster PNG
+ * to black via Imagick (pixel thresholding + an alpha-masked circle to
+ * keep Swish's own logo in color) and it crashed the real site — the
+ * webserver's ImageMagick 6.9 doesn't have the alpha-channel constants
+ * that install's ImageMagick 7.1 does, and every test of that code had
+ * run against the wrong one. SVG sidesteps the whole problem: recoloring
+ * is a plain DOM edit on Swish's own markup (see applyBlackStyle()), no
+ * image library involved at all, so there's no version to drift on.
  *
  * @package Antropomorf\Swish
  */
@@ -25,15 +34,8 @@ class QrCodeGenerator
 {
   private const API_URL = 'https://mpc.getswish.net/qrg-swish/api/v1/prefilled';
 
-  /**
-   * Square size in px requested from the API. No cropping needed (unlike
-   * the original hand-uploaded-image spec) — the API already returns a
-   * clean, centered square QR.
-   */
-  private const SIZE = 500;
-
   private const UPLOAD_SUBDIR = 'amrf-swish';
-  private const FILENAME = 'swish-qr.webp';
+  private const FILENAME = 'swish-qr.svg';
 
   /**
    * @param array<string, string> $before Settings as they were before this save.
@@ -77,13 +79,13 @@ class QrCodeGenerator
   /**
    * @param array<string, string> $settings
    * @return string|null The final, cache-busted image URL, or null on
-   *                      any failure (network, non-200, image conversion).
+   *                      any failure (network or a response the write
+   *                      to uploads/ couldn't complete).
    */
   private static function generate(array $settings): ?string
   {
     $body = [
-      'format' => 'png',
-      'size' => self::SIZE,
+      'format' => 'svg',
       // Deliberately non-editable: this is the site's own receiving
       // account, not something a scanned code should let the payer
       // redirect elsewhere.
@@ -108,19 +110,19 @@ class QrCodeGenerator
       return null;
     }
 
-    $png = wp_remote_retrieve_body($response);
-    if ($png === '') {
+    $svg = wp_remote_retrieve_body($response);
+    if ($svg === '') {
       return null;
     }
 
-    return self::saveAsWebp($png);
+    return self::save(self::applyBlackStyle($svg));
   }
 
   /**
-   * @param string $png Raw PNG bytes from the API.
-   * @return string|null Cache-busted URL of the saved .webp, or null on failure.
+   * @param string $svg Final SVG markup to write to uploads/.
+   * @return string|null Cache-busted URL, or null if the write failed.
    */
-  private static function saveAsWebp(string $png): ?string
+  private static function save(string $svg): ?string
   {
     $upload_dir = wp_upload_dir();
     if (!empty($upload_dir['error'])) {
@@ -130,22 +132,8 @@ class QrCodeGenerator
     $dir = trailingslashit($upload_dir['basedir']) . self::UPLOAD_SUBDIR;
     wp_mkdir_p($dir);
 
-    $tmp_file = wp_tempnam('amrf-swish-qr.png');
-    if ($tmp_file === false || file_put_contents($tmp_file, $png) === false) {
-      return null;
-    }
-
-    $editor = wp_get_image_editor($tmp_file);
-    if (is_wp_error($editor)) {
-      wp_delete_file($tmp_file);
-      return null;
-    }
-
     $destination = trailingslashit($dir) . self::FILENAME;
-    $saved = $editor->save($destination, 'image/webp');
-    wp_delete_file($tmp_file);
-
-    if (is_wp_error($saved)) {
+    if (file_put_contents($destination, $svg) === false) {
       return null;
     }
 
@@ -153,7 +141,59 @@ class QrCodeGenerator
 
     // Fixed filename, always overwritten — a plain URL would otherwise
     // keep serving a browser/CDN-cached copy from before this save.
-    return add_query_arg('v', substr(md5($png), 0, 8), $url);
+    return add_query_arg('v', substr(md5($svg), 0, 8), $url);
+  }
+
+  /**
+   * Swish's API always returns its own brand gradient (teal through pink
+   * to yellow) — no request parameter changes that (confirmed empirically:
+   * several plausible extra JSON fields like "color"/"style"/"colorScheme"
+   * were silently ignored on the PNG endpoint, byte-identical response
+   * every time; also absent from the official request-body reference).
+   *
+   * The SVG Swish returns cleanly separates its own logo artwork (a
+   * `<g id="swishlogo">`, pulled in once via `<use>`, built from many of
+   * its own distinct gradients — Adobe Illustrator export IDs) from the
+   * actual scannable QR pattern (the finder-pattern corners and every data
+   * dot), which all share ONE simple two-stop gradient, `id="grad"`. Since
+   * nothing in the logo artwork references that gradient at all, turning
+   * both of its stops black recolors exactly the QR pattern and nothing
+   * else — confirmed by diffing a real response before/after this edit:
+   * only those two stop-color values changed, byte-for-byte identical
+   * everywhere else. This is the "black" style on swish.nu/marknadsmaterial/
+   * qr-generator's own tool, not an all-or-nothing recolor.
+   *
+   * Falls back to the original colored markup (rather than failing the
+   * whole save) if the response isn't parseable XML, or Swish ever renames
+   * that gradient — Swish's own branding is a fine default, just not the
+   * one asked for.
+   *
+   * @param string $svg
+   * @return string SVG markup, restyled if possible.
+   */
+  private static function applyBlackStyle(string $svg): string
+  {
+    $dom = new \DOMDocument();
+    $previous = libxml_use_internal_errors(true);
+    $loaded = $dom->loadXML($svg);
+    libxml_use_internal_errors($previous);
+
+    if (!$loaded) {
+      return $svg;
+    }
+
+    // local-name() instead of a plain tag/attribute selector — sidesteps
+    // needing to register the SVG default namespace on DOMXPath just for
+    // one query.
+    $xpath = new \DOMXPath($dom);
+    $stops = $xpath->query("//*[local-name()='linearGradient'][@id='grad']/*[local-name()='stop']");
+
+    foreach ($stops as $stop) {
+      $stop->setAttribute('stop-color', '#000000');
+    }
+
+    $result = $dom->saveXML();
+    return $result !== false ? $result : $svg;
   }
 
   /**
