@@ -65,6 +65,25 @@ class Altcha
         add_action('fluentform/before_form_render', [$this, 'enqueueWidget']);
         add_action('fluentform/render_item_submit_button', [$this, 'renderWidget']);
         add_action('fluentform/before_form_validation', [$this, 'validateSubmission'], 10, 2);
+        add_filter('fluentform/white_listed_fields', [$this, 'whitelistField']);
+    }
+
+    /**
+     * FluentForm builds $formData by intersecting the raw POST against the
+     * form's own registered fields plus this whitelist
+     * (Helper::getWhiteListedFields(), which is how its own built-in
+     * reCaptcha/hCaptcha/Turnstile response fields survive without being
+     * real form elements either) — without this, 'altcha' is silently
+     * stripped before validateSubmission() ever sees it, and every
+     * submission fails as if the solution were invalid.
+     *
+     * @param string[] $fields
+     * @return string[]
+     */
+    public function whitelistField(array $fields): array
+    {
+        $fields[] = self::FIELD_NAME;
+        return $fields;
     }
 
     /**
