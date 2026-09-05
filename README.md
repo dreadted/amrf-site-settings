@@ -1,4 +1,4 @@
-# Admin Panel Settings
+# AMRF Site Settings
 
 A WordPress plugin that controls what each user role can see and do in
 wp-admin, plus a set of optional site-level modules (SEO, GDPR, security
@@ -80,7 +80,7 @@ independently and are only relevant if the site actually uses that feature:
   (blocking XML-RPC, a generic login error message instead of "unknown
   username", hiding the WordPress version tag, blocking `?username=`
   probing, and removing the `/wp/v2/users` REST endpoint), plus four
-  behavior changes that default to *on* but can be switched off per site:
+  behavior changes that default to _on_ but can be switched off per site:
   disabling author archives, redirecting logged-out 404s to the homepage,
   removing jQuery Migrate, and disabling WordPress's generated/responsive
   image sizes.
