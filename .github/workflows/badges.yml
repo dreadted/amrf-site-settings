@@ -16,7 +16,7 @@ jobs:
       - name: Extract plugin data
         id: plugin_data
         run: |
-          PLUGIN_VERSION=$(grep "Version:" amrf-admin.php | sed 's/.*Version:[ 	]*//')
+          PLUGIN_VERSION=$(grep "Version:" amrf-site-settings.php | sed 's/.*Version:[ 	]*//')
           echo "plugin_version=$PLUGIN_VERSION" >> $GITHUB_OUTPUT
 
           REQUIRES_WP=$(grep "Requires at least:" readme.txt | sed 's/.*Requires at least:[ 	]*//')

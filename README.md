@@ -118,7 +118,7 @@ otherwise they're inert:
 
 ## Installation
 
-1. Upload the `amrf-admin-panel-settings` folder to the `/wp-content/plugins/` directory.
+1. Upload the `amrf-site-settings` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the **Plugins** screen in WordPress.
 3. Navigate to **Settings → Admin Panel Settings** to configure per-role access, and **Settings → Site Settings** for the optional modules above.
 
