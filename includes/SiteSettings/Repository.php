@@ -42,8 +42,8 @@ class Repository
             'meta_description' => [__('Meta description', 'amrf-admin'), 'textarea', 'seo'],
             'share_image' => [__('Share image', 'amrf-admin'), 'media', 'seo'],
             'og_locale' => [__('Open Graph locale (e.g. sv_SE)', 'amrf-admin'), 'text', 'seo'],
-            'theme_color' => [__('Theme color (hex)', 'amrf-admin'), 'text', 'seo'],
-            'background_color' => [__('Background color (hex)', 'amrf-admin'), 'text', 'seo'],
+            'theme_color' => [__('Theme color', 'amrf-admin'), 'color', 'seo'],
+            'background_color' => [__('Background color', 'amrf-admin'), 'color', 'seo'],
             'restrict_sitemap' => [__('Restrict Sitemap to Selected Pages', 'amrf-admin'), 'checkbox', 'seo'],
             'sitemap_page_ids' => [__('Pages Included in Sitemap', 'amrf-admin'), 'page_list', 'seo'],
 
@@ -89,11 +89,82 @@ class Repository
     }
 
     /**
-     * @return array<string, string> Every field defaulted to an empty string.
+     * @return array<string, string> Every field defaulted to an empty
+     *                                 string, except theme_color/
+     *                                 background_color — see
+     *                                 getThemeDefaultColors().
      */
     public static function getDefaults(): array
     {
-        return array_fill_keys(array_keys(self::getFields()), '');
+        $defaults = array_fill_keys(array_keys(self::getFields()), '');
+        return array_merge($defaults, self::getThemeDefaultColors());
+    }
+
+    /**
+     * Starting values for the theme_color/background_color color pickers,
+     * read from the active theme's own theme.json palette instead of
+     * defaulting to blank — <input type="color"> renders an empty value as
+     * black, which looks like a real (wrong) choice rather than "unset".
+     * Only ever fills the gap before this option has been saved once: the
+     * moment the SEO tab is submitted, sanitize() stores whatever the color
+     * picker held (the theme default, or the user's own pick) as a literal
+     * value from then on, per Settings API normal behavior.
+     *
+     * WP_Theme_JSON_Resolver was only added in WP 5.8, one version past
+     * this plugin's declared floor (5.6) — class_exists guards it the same
+     * way shortcode_exists() guards other optional integrations elsewhere
+     * in this codebase.
+     *
+     * @return array{theme_color: string, background_color: string}
+     */
+    private static function getThemeDefaultColors(): array
+    {
+        if (!class_exists('WP_Theme_JSON_Resolver')) {
+            return ['theme_color' => '#000000', 'background_color' => '#ffffff'];
+        }
+
+        $palette = \WP_Theme_JSON_Resolver::get_merged_data()->get_settings()['color']['palette']['theme'] ?? [];
+        $by_slug = array_column($palette, 'color', 'slug');
+        $first = $palette[0]['color'] ?? '';
+
+        $theme_color = $by_slug['primary'] ?? $by_slug['accent-1'] ?? $first;
+        $background_color = self::resolveThemeBackgroundColor($by_slug) ?? $by_slug['base'] ?? $by_slug['background'] ?? '';
+
+        return [
+            'theme_color' => $theme_color !== '' ? $theme_color : '#000000',
+            'background_color' => $background_color !== '' ? $background_color : '#ffffff',
+        ];
+    }
+
+    /**
+     * theme.json's styles.color.background is the theme author's own
+     * explicit choice for the page background — preferred over guessing a
+     * palette slug when a theme actually declares it. Resolved raw data
+     * renders that as e.g. "var(--wp--preset--color--base)"; translate the
+     * slug back to its hex via the same palette rather than emitting a
+     * literal var() reference into an <input type="color">, which browsers
+     * reject.
+     *
+     * @param array<string, string> $by_slug Palette slug => hex color.
+     * @return string|null
+     */
+    private static function resolveThemeBackgroundColor(array $by_slug): ?string
+    {
+        $background = \WP_Theme_JSON_Resolver::get_merged_data()->get_raw_data()['styles']['color']['background'] ?? '';
+
+        if ($background === '') {
+            return null;
+        }
+
+        if (preg_match('/^#[0-9a-f]{3,8}$/i', $background)) {
+            return $background;
+        }
+
+        if (preg_match('/--wp--preset--color--([a-z0-9-]+)/', $background, $matches)) {
+            return $by_slug[$matches[1]] ?? null;
+        }
+
+        return null;
     }
 
     /**
@@ -102,7 +173,22 @@ class Repository
     public static function getSettings(): array
     {
         $stored = get_option(self::OPTION_NAME, []);
-        return wp_parse_args(is_array($stored) ? $stored : [], self::getDefaults());
+        $settings = wp_parse_args(is_array($stored) ? $stored : [], self::getDefaults());
+
+        // wp_parse_args() only fills in KEYS MISSING from $stored — a site
+        // saved before theme_color/background_color existed, or before they
+        // became color pickers, already has both stored as a literal ''
+        // (the old text field's empty state). An empty string isn't a real
+        // saved choice here the way it is for other text fields — nothing
+        // lets you "clear" a color picker — so it's treated the same as
+        // never having been set.
+        foreach (['theme_color', 'background_color'] as $key) {
+            if ($settings[$key] === '') {
+                $settings[$key] = self::getThemeDefaultColors()[$key];
+            }
+        }
+
+        return $settings;
     }
 
     /**
@@ -175,6 +261,12 @@ class Repository
                 'url', 'media' => esc_url_raw($value),
                 'textarea' => sanitize_textarea_field($value),
                 'number' => (string) absint($value),
+                // <input type="color"> only ever submits a valid #rrggbb,
+                // but sanitize() can be reached via any code that calls
+                // update_option()/the REST settings endpoint directly —
+                // an invalid value falls back to what's already stored
+                // rather than persisting garbage a color picker rejects.
+                'color' => preg_match('/^#[0-9a-f]{6}$/i', $value) ? $value : $output[$key],
                 default => sanitize_text_field($value),
             };
         }

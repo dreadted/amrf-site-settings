@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
  *   Business & Contact/Address/Social Media tabs.
  * - Pages on amrf_site_settings_pages each get their OWN add_submenu_page(),
  *   for a module that doesn't fit the shared-tab-strip shape (its own
- *   capability, e.g. FluentFormPrivacy's GDPR page — retention/export/erase
+ *   capability, e.g. ContactForm's Contact Forms page — retention/export/erase
  *   settings are more sensitive than site contact info, hence
  *   manage_options there instead of this menu's own default capability).
  *

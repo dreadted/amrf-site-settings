@@ -59,13 +59,23 @@ independently and are only relevant if the site actually uses that feature:
   [Swish](https://www.swish.nu/) payment number, postal address fields, and
   social profile links/handles. These feed the SEO structured data above
   and are reused wherever the site needs the business's own details.
-- **GDPR** — for sites using FluentForm: registers form submissions with
+- **Contact Forms** — for sites using FluentForm: a "Default Contact Form"
+  picker that opens as a sitewide lightbox whenever a link/button points at
+  the `#kontakt` anchor, a toggle that maps FluentForm's own hardcoded
+  colors/border-radius/font onto the site's own `theme.json` tokens, and
+  invisible, always-on [ALTCHA](https://altcha.org/) proof-of-work spam
+  protection on every FluentForm on the site — a self-hosted alternative to
+  FluentForm's built-in Cloudflare Turnstile field, with no settings, no
+  external account, and no site key tied to a specific domain: the signing
+  secret is generated and stored automatically the first time it's needed,
+  so it works unchanged across dev/staging/production clones of a site.
+  Under its own **GDPR** heading: registers form submissions with
   WordPress's own **Tools → Export/Erase Personal Data** tools (which
   FluentForm does not do on its own), a daily cron that deletes
   submissions past a configurable retention period (a real replacement for
   a FluentForm free-tier setting that the plugin saves but never actually
-  enforces), and personalized wording on WordPress's own privacy-request
-  emails.
+  enforces) for a chosen subset of forms, and personalized wording on
+  WordPress's own privacy-request emails.
 - **Hardening** — a handful of always-on, no-downside protections
   (blocking XML-RPC, a generic login error message instead of "unknown
   username", hiding the WordPress version tag, blocking `?username=`
@@ -86,7 +96,7 @@ otherwise they're inert:
 
 - **FluentForm** — Swedish personal identity number (personnummer)
   validation and display formatting for any text field marked with a
-  specific CSS class, on top of the GDPR handling above.
+  specific CSS class, on top of the Contact Forms handling above.
 - **Support Genix Lite** — a "Support Tickets" admin menu (an iframe onto
   the front-end ticket portal), an "Apply Defaults" button on that plugin's
   own settings page to seed its default ticket categories, visibility/edit

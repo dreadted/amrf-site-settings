@@ -1,6 +1,6 @@
 <?php
 
-namespace Antropomorf\FluentFormPrivacy;
+namespace Antropomorf\ContactForm;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
  * set of labels, and finds the matching email by scanning all field values
  * for anything email-shaped instead of a hardcoded 'email' key.
  *
- * @package Antropomorf\FluentFormPrivacy
+ * @package Antropomorf\ContactForm
  */
 class PrivacyRequests
 {
@@ -112,7 +112,7 @@ class PrivacyRequests
      */
     public function exportPersonalData(string $email_address, int $page = 1): array
     {
-        $form_ids = Repository::getFormIds();
+        $form_ids = Repository::getContactFormIds();
         if (empty($form_ids)) {
             return ['data' => [], 'done' => true];
         }
@@ -165,7 +165,7 @@ class PrivacyRequests
      */
     public function erasePersonalData(string $email_address, int $page = 1): array
     {
-        $form_ids = Repository::getFormIds();
+        $form_ids = Repository::getContactFormIds();
         if (empty($form_ids)) {
             return ['items_removed' => false, 'items_retained' => false, 'messages' => [], 'done' => true];
         }
