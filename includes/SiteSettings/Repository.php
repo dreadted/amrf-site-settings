@@ -53,9 +53,14 @@ class Repository
             'job_title' => [__('Job title', 'amrf-admin'), 'text', 'business'],
             'email' => [__('Email', 'amrf-admin'), 'email', 'business'],
             'phone' => [__('Phone', 'amrf-admin'), 'text', 'business'],
-            // Swish is a nationwide Swedish payment scheme, not specific to
-            // any one business that uses it — see Swish::buildUrl().
-            'swish_number' => [__('Swish number', 'amrf-admin'), 'text', 'business'],
+            // Swish number moved to its own "Swish" tab on the Forms page
+            // (Swish\Repository) — it now drives QR generation too, not
+            // just this field's old display-only purpose. Swish\Repository::
+            // getSettings() reads whatever's left of this option's own
+            // 'swish_number' key once, as a one-time migration for a site
+            // that already had it set — the key itself is left orphaned
+            // here rather than actively scrubbed, same as any other retired
+            // field in this codebase.
             // No canonical-URL field — reuse WordPress's own siteurl/home
             // option (home_url()) instead, one source of truth per
             // environment rather than two that can drift apart.
