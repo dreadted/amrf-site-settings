@@ -15,7 +15,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Plugin Name of the plugin
-#: amrf-admin.php
+#: amrf-site-settings.php
 #: includes/Admin/SettingsPage.php:76
 #: includes/Admin/SettingsPage.php:77
 #: includes/Hooks/AdminHooks.php:67
@@ -24,17 +24,17 @@ msgid "Admin Panel Settings"
 msgstr "Inställningar för Adminpanelen"
 
 #. Description of the plugin
-#: amrf-admin.php
+#: amrf-site-settings.php
 msgid "Customize admin panel settings for different user roles."
 msgstr "Ange panelinställningar för respektive användarroll."
 
 #. Author of the plugin
-#: amrf-admin.php
+#: amrf-site-settings.php
 msgid "Christofer Laurin"
 msgstr ""
 
 #. Author URI of the plugin
-#: amrf-admin.php
+#: amrf-site-settings.php
 msgid "https://github.com/dreadted/"
 msgstr ""
 
@@ -74,49 +74,48 @@ msgstr "IP-adress"
 msgid "Submitted"
 msgstr "Skickat"
 
-#: includes/ContactForm/Provider.php:64
-#: includes/ContactForm/Provider.php:65
+#: includes/ContactForm/Provider.php:78
 msgid "Contact Forms"
 msgstr "Kontaktformulär"
 
-#: includes/ContactForm/Provider.php:95
+#: includes/ContactForm/Provider.php:114
 msgid "Default Contact Form"
 msgstr "Standardkontaktformulär"
 
-#: includes/ContactForm/Provider.php:102
+#: includes/ContactForm/Provider.php:121
 msgid "Apply Consistent Contact Form Styling"
 msgstr "Tillämpa enhetlig formulärstil"
 
-#: includes/ContactForm/Provider.php:117
+#: includes/ContactForm/Provider.php:86
 msgid "GDPR"
 msgstr "GDPR"
 
-#: includes/ContactForm/Provider.php:121
+#: includes/ContactForm/Provider.php:153
 msgid "Contact Forms Subject to Retention"
 msgstr "Formulär som omfattas av rensningen"
 
-#: includes/ContactForm/Provider.php:128
+#: includes/ContactForm/Provider.php:160
 msgid "Delete submissions after this many days"
 msgstr "Radera inskickade formulär efter så här många dagar"
 
-#: includes/ContactForm/Provider.php:160
-#: includes/ContactForm/Provider.php:238
+#: includes/ContactForm/Provider.php:192
+#: includes/ContactForm/Provider.php:274
 msgid "No FluentForm forms found."
 msgstr "Inga FluentForm-formulär hittades."
 
-#: includes/ContactForm/Provider.php:174
+#: includes/ContactForm/Provider.php:206
 msgid "The form the sitewide \"#kontakt\" link/button opens in a lightbox."
 msgstr "Formuläret som sajtens länkar/knappar mot ankaret \"#kontakt\" öppnar i en lightbox."
 
-#: includes/ContactForm/Provider.php:190
+#: includes/ContactForm/Provider.php:228
 msgid "Maps FluentForm's own color/border-radius variables to this site's theme colors and applies additional styling fixes, on every FluentForm on the site."
 msgstr "Kopplar FluentForms egna färg-/hörnradievariabler till sajtens temafärger och tillämpar ytterligare stiljusteringar, på samtliga FluentForm-formulär på sajten."
 
-#: includes/ContactForm/Provider.php:253
+#: includes/ContactForm/Provider.php:289
 msgid "The daily retention cleanup and personal-data export/erase requests only ever touch these forms."
 msgstr "Den dagliga rensningen och begäranden om export/radering av personuppgifter rör bara dessa formulär."
 
-#: includes/ContactForm/Provider.php:271
+#: includes/ContactForm/Provider.php:307
 msgid "Blank or 0 = keep forever."
 msgstr "Tomt eller 0 = spara för alltid."
 
@@ -387,67 +386,67 @@ msgstr "E-post"
 msgid "Phone"
 msgstr "Telefon"
 
-#: includes/SiteSettings/Repository.php:58
+#: includes/Swish/Provider.php:68
 msgid "Swish number"
 msgstr "Swish-nummer"
 
-#: includes/SiteSettings/Repository.php:63
+#: includes/SiteSettings/Repository.php:68
 msgid "Street address"
 msgstr "Gatuadress"
 
-#: includes/SiteSettings/Repository.php:64
+#: includes/SiteSettings/Repository.php:69
 msgid "Postal code"
 msgstr "Postnummer"
 
-#: includes/SiteSettings/Repository.php:65
+#: includes/SiteSettings/Repository.php:70
 msgid "City"
 msgstr "Ort"
 
-#: includes/SiteSettings/Repository.php:66
+#: includes/SiteSettings/Repository.php:71
 msgid "Region"
 msgstr "Region"
 
-#: includes/SiteSettings/Repository.php:67
+#: includes/SiteSettings/Repository.php:72
 msgid "Country"
 msgstr "Land"
 
-#: includes/SiteSettings/Repository.php:68
+#: includes/SiteSettings/Repository.php:73
 msgid "Latitude"
 msgstr "Latitud"
 
-#: includes/SiteSettings/Repository.php:69
+#: includes/SiteSettings/Repository.php:74
 msgid "Longitude"
 msgstr "Longitud"
 
-#: includes/SiteSettings/Repository.php:71
+#: includes/SiteSettings/Repository.php:76
 msgid "Facebook URL"
 msgstr "Facebook-URL"
 
-#: includes/SiteSettings/Repository.php:72
+#: includes/SiteSettings/Repository.php:77
 msgid "Instagram URL"
 msgstr "Instagram-URL"
 
-#: includes/SiteSettings/Repository.php:73
+#: includes/SiteSettings/Repository.php:78
 msgid "X (Twitter) URL"
 msgstr "X (Twitter)-URL"
 
-#: includes/SiteSettings/Repository.php:74
+#: includes/SiteSettings/Repository.php:79
 msgid "X (Twitter) handle"
 msgstr "X (Twitter)-användarnamn"
 
-#: includes/SiteSettings/Repository.php:84
+#: includes/SiteSettings/Repository.php:89
 msgid "SEO"
 msgstr "SEO"
 
-#: includes/SiteSettings/Repository.php:85
+#: includes/SiteSettings/Repository.php:90
 msgid "Business & Contact"
 msgstr "Företag & Kontakt"
 
-#: includes/SiteSettings/Repository.php:86
+#: includes/SiteSettings/Repository.php:91
 msgid "Address"
 msgstr "Adress"
 
-#: includes/SiteSettings/Repository.php:87
+#: includes/SiteSettings/Repository.php:92
 msgid "Social Media"
 msgstr "Sociala medier"
 
@@ -513,14 +512,60 @@ msgstr "Umami-ID"
 msgid "Reset to Defaults"
 msgstr "Återställ till standardvärden"
 
-#: includes/ContactForm/Altcha.php:190
+#: includes/ContactForm/Altcha.php:209
 msgid "Spam verification failed, please reload the page and try again."
 msgstr "Spamverifieringen misslyckades, ladda om sidan och försök igen."
 
-#: includes/ContactForm/Provider.php:109
+#: includes/ContactForm/Provider.php:128
 msgid "Enable ALTCHA Spam Protection"
 msgstr "Aktivera ALTCHA-spamskydd"
 
-#: includes/ContactForm/Provider.php:216
+#: includes/ContactForm/Provider.php:252
 msgid "Adds invisible, no-configuration spam protection to every FluentForm on the site. Turn off if this site already handles spam protection another way (e.g. its own plugin)."
 msgstr "Lägger till osynligt spamskydd utan konfiguration på samtliga FluentForm-formulär på sajten. Stäng av om sajten redan hanterar spamskydd på annat sätt (t.ex. med ett eget plugin)."
+
+#: includes/Forms/Menu.php:55
+#: includes/Forms/Menu.php:56
+#: includes/Forms/Menu.php:94
+msgid "Forms"
+msgstr "Formulär"
+
+#: includes/Swish/Provider.php:46
+msgid "Swish"
+msgstr "Swish"
+
+#: includes/Swish/Provider.php:69
+msgid "Prefilled amount"
+msgstr "Förifyllt belopp"
+
+#: includes/Swish/Provider.php:70
+msgid "Prefilled message"
+msgstr "Förifyllt meddelande"
+
+#: includes/Swish/Provider.php:75
+msgid "Any link with the address \"#swish\" anywhere on the site opens this directly in the Swish app on a phone, or shows this QR code on a device that can't run it."
+msgstr "Alla länkar med adressen \"#swish\" någonstans på sajten öppnar detta direkt i Swish-appen på en mobil, eller visar denna QR-kod på en enhet som inte kan köra den."
+
+#: includes/Swish/Provider.php:94
+msgid "Current Swish QR code"
+msgstr "Aktuell Swish QR-kod"
+
+#: includes/Swish/Provider.php:115
+msgid "Blank = no amount prefilled."
+msgstr "Tomt = inget belopp förifyllt."
+
+#: includes/Swish/Provider.php:140
+msgid "Editable by the payer after scanning"
+msgstr "Redigerbart av betalaren efter skanning"
+
+#: includes/Swish/QrCodeGenerator.php:67
+msgid "The Swish QR code could not be regenerated — the previous one (if any) is still in use. Try saving again."
+msgstr "Swish QR-koden kunde inte genereras om — den tidigare (om någon finns) används fortfarande. Försök spara igen."
+
+#: assets/js/amrf-fluentform-validation.js:11
+msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)"
+msgstr ""
+
+#: assets/js/amrf-fluentform-validation.js:15
+msgid "Personal Identity Number is required"
+msgstr ""

@@ -3,19 +3,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Admin Panel Settings 0.2.3\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/amrf-admin-panel-settings\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/amrf-site-settings\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-05T13:10:25+00:00\n"
+"POT-Creation-Date: 2026-09-05T22:01:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
 
 #. Plugin Name of the plugin
-#: amrf-admin.php
+#: amrf-site-settings.php
 #: includes/Admin/SettingsPage.php:76
 #: includes/Admin/SettingsPage.php:77
 #: includes/Hooks/AdminHooks.php:67
@@ -24,17 +24,17 @@ msgid "Admin Panel Settings"
 msgstr ""
 
 #. Description of the plugin
-#: amrf-admin.php
+#: amrf-site-settings.php
 msgid "Customize admin panel settings for different user roles."
 msgstr ""
 
 #. Author of the plugin
-#: amrf-admin.php
+#: amrf-site-settings.php
 msgid "Christofer Laurin"
 msgstr ""
 
 #. Author URI of the plugin
-#: amrf-admin.php
+#: amrf-site-settings.php
 msgid "https://github.com/dreadted/"
 msgstr ""
 
@@ -46,7 +46,7 @@ msgstr ""
 msgid "Site Settings"
 msgstr ""
 
-#: includes/ContactForm/Altcha.php:190
+#: includes/ContactForm/Altcha.php:209
 msgid "Spam verification failed, please reload the page and try again."
 msgstr ""
 
@@ -78,62 +78,67 @@ msgstr ""
 msgid "Submitted"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:64
-#: includes/ContactForm/Provider.php:65
+#: includes/ContactForm/Provider.php:78
 msgid "Contact Forms"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:95
-msgid "Default Contact Form"
-msgstr ""
-
-#: includes/ContactForm/Provider.php:102
-msgid "Apply Consistent Contact Form Styling"
-msgstr ""
-
-#: includes/ContactForm/Provider.php:109
-msgid "Enable ALTCHA Spam Protection"
-msgstr ""
-
-#: includes/ContactForm/Provider.php:117
+#: includes/ContactForm/Provider.php:86
 msgid "GDPR"
 msgstr ""
 
+#: includes/ContactForm/Provider.php:114
+msgid "Default Contact Form"
+msgstr ""
+
 #: includes/ContactForm/Provider.php:121
-msgid "Contact Forms Subject to Retention"
+msgid "Apply Consistent Contact Form Styling"
 msgstr ""
 
 #: includes/ContactForm/Provider.php:128
-msgid "Delete submissions after this many days"
+msgid "Enable ALTCHA Spam Protection"
+msgstr ""
+
+#: includes/ContactForm/Provider.php:153
+msgid "Contact Forms Subject to Retention"
 msgstr ""
 
 #: includes/ContactForm/Provider.php:160
-#: includes/ContactForm/Provider.php:238
+msgid "Delete submissions after this many days"
+msgstr ""
+
+#: includes/ContactForm/Provider.php:192
+#: includes/ContactForm/Provider.php:274
 msgid "No FluentForm forms found."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:174
+#: includes/ContactForm/Provider.php:206
 msgid "The form the sitewide \"#kontakt\" link/button opens in a lightbox."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:190
+#: includes/ContactForm/Provider.php:228
 msgid "Maps FluentForm's own color/border-radius variables to this site's theme colors and applies additional styling fixes, on every FluentForm on the site."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:216
+#: includes/ContactForm/Provider.php:252
 msgid "Adds invisible, no-configuration spam protection to every FluentForm on the site. Turn off if this site already handles spam protection another way (e.g. its own plugin)."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:253
+#: includes/ContactForm/Provider.php:289
 msgid "The daily retention cleanup and personal-data export/erase requests only ever touch these forms."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:271
+#: includes/ContactForm/Provider.php:307
 msgid "Blank or 0 = keep forever."
 msgstr ""
 
 #: includes/FluentFormValidation/Provider.php:72
 msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)."
+msgstr ""
+
+#: includes/Forms/Menu.php:55
+#: includes/Forms/Menu.php:56
+#: includes/Forms/Menu.php:94
+msgid "Forms"
 msgstr ""
 
 #: includes/Hardening/Provider.php:65
@@ -399,67 +404,63 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:58
-msgid "Swish number"
-msgstr ""
-
-#: includes/SiteSettings/Repository.php:63
+#: includes/SiteSettings/Repository.php:68
 msgid "Street address"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:64
+#: includes/SiteSettings/Repository.php:69
 msgid "Postal code"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:65
+#: includes/SiteSettings/Repository.php:70
 msgid "City"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:66
+#: includes/SiteSettings/Repository.php:71
 msgid "Region"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:67
+#: includes/SiteSettings/Repository.php:72
 msgid "Country"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:68
+#: includes/SiteSettings/Repository.php:73
 msgid "Latitude"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:69
+#: includes/SiteSettings/Repository.php:74
 msgid "Longitude"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:71
+#: includes/SiteSettings/Repository.php:76
 msgid "Facebook URL"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:72
+#: includes/SiteSettings/Repository.php:77
 msgid "Instagram URL"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:73
+#: includes/SiteSettings/Repository.php:78
 msgid "X (Twitter) URL"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:74
+#: includes/SiteSettings/Repository.php:79
 msgid "X (Twitter) handle"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:84
+#: includes/SiteSettings/Repository.php:89
 msgid "SEO"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:85
+#: includes/SiteSettings/Repository.php:90
 msgid "Business & Contact"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:86
+#: includes/SiteSettings/Repository.php:91
 msgid "Address"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:87
+#: includes/SiteSettings/Repository.php:92
 msgid "Social Media"
 msgstr ""
 
@@ -496,6 +497,42 @@ msgstr ""
 msgid "You are not authorized to edit this page."
 msgstr ""
 
+#: includes/Swish/Provider.php:46
+msgid "Swish"
+msgstr ""
+
+#: includes/Swish/Provider.php:68
+msgid "Swish number"
+msgstr ""
+
+#: includes/Swish/Provider.php:69
+msgid "Prefilled amount"
+msgstr ""
+
+#: includes/Swish/Provider.php:70
+msgid "Prefilled message"
+msgstr ""
+
+#: includes/Swish/Provider.php:75
+msgid "Any link with the address \"#swish\" anywhere on the site opens this directly in the Swish app on a phone, or shows this QR code on a device that can't run it."
+msgstr ""
+
+#: includes/Swish/Provider.php:94
+msgid "Current Swish QR code"
+msgstr ""
+
+#: includes/Swish/Provider.php:115
+msgid "Blank = no amount prefilled."
+msgstr ""
+
+#: includes/Swish/Provider.php:140
+msgid "Editable by the payer after scanning"
+msgstr ""
+
+#: includes/Swish/QrCodeGenerator.php:67
+msgid "The Swish QR code could not be regenerated — the previous one (if any) is still in use. Try saving again."
+msgstr ""
+
 #: includes/Umami/Provider.php:57
 #: includes/Umami/Provider.php:58
 msgid "Analytics"
@@ -523,4 +560,12 @@ msgstr ""
 
 #: includes/Utilities/SettingsRenderer.php:105
 msgid "Reset to Defaults"
+msgstr ""
+
+#: assets/js/amrf-fluentform-validation.js:11
+msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)"
+msgstr ""
+
+#: assets/js/amrf-fluentform-validation.js:15
+msgid "Personal Identity Number is required"
 msgstr ""
