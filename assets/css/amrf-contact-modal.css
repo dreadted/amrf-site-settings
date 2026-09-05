@@ -44,7 +44,7 @@
 	width: 100%;
 	max-width: 28rem;
 	background: var(--wp--preset--color--neutral);
-	border-radius: var(--border-radius);
+	border-radius: var(--wp--custom--border-radius, var(--border-radius, 6px));
 	box-shadow: var(--wp--preset--shadow--card);
 	padding: 2.5rem 2rem 2rem;
 	transform: translateY(-0.75rem) scale(0.98);
