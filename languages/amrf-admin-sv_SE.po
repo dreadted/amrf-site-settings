@@ -352,12 +352,12 @@ msgid "Open Graph locale (e.g. sv_SE)"
 msgstr "Open Graph-språkkod (t.ex. sv_SE)"
 
 #: includes/SiteSettings/Repository.php:45
-msgid "Theme color (hex)"
-msgstr "Temafärg (hex)"
+msgid "Theme color"
+msgstr "Temafärg"
 
 #: includes/SiteSettings/Repository.php:46
-msgid "Background color (hex)"
-msgstr "Bakgrundsfärg (hex)"
+msgid "Background color"
+msgstr "Bakgrundsfärg"
 
 #: includes/SiteSettings/Repository.php:47
 msgid "Restrict Sitemap to Selected Pages"

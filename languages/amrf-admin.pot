@@ -350,11 +350,11 @@ msgid "Open Graph locale (e.g. sv_SE)"
 msgstr ""
 
 #: includes/SiteSettings/Repository.php:45
-msgid "Theme color (hex)"
+msgid "Theme color"
 msgstr ""
 
 #: includes/SiteSettings/Repository.php:46
-msgid "Background color (hex)"
+msgid "Background color"
 msgstr ""
 
 #: includes/SiteSettings/Repository.php:47
