@@ -50,6 +50,25 @@ class Repository
   }
 
   /**
+   * True while sanitize() is already running — guards against the
+   * infinite-recursion trap below: register_setting() (Provider::register(),
+   * on admin_init) wires sanitize() onto WordPress's own
+   * "sanitize_option_amrf_swish_settings" filter, which EVERY update_option()
+   * call for this option runs through, including the migration write below.
+   * Without this guard, getSettings() finding no stored option calls
+   * update_option() to migrate it, which re-enters sanitize() via that
+   * filter, which (used to) call getSettings() again, which still finds no
+   * stored option (the migrating write hasn't landed yet) and calls
+   * update_option() again — forever, ballooning memory without end until
+   * something outside PHP itself gives up. Confirmed live: this is exactly
+   * what took down the whole WSL VM on 2026-09-05, not just one request.
+   * sanitize() itself was ALSO changed to never call getSettings() at all
+   * (see its own comment) — this flag is deliberate defense in depth on top
+   * of that, not a substitute for it.
+   */
+  private static bool $sanitizing = false;
+
+  /**
    * @return array<string, string>
    */
   public static function getSettings(): array
@@ -62,10 +81,28 @@ class Repository
       if (is_array($legacy) && !empty($legacy[self::LEGACY_FIELD_KEY])) {
         $migrated['number'] = (string) $legacy[self::LEGACY_FIELD_KEY];
       }
+
+      self::$sanitizing = true;
       update_option(self::OPTION_NAME, $migrated);
+      self::$sanitizing = false;
+
       return $migrated;
     }
 
+    return wp_parse_args(is_array($stored) ? $stored : [], self::getDefaults());
+  }
+
+  /**
+   * The stored option's raw value, defaulted — but never migrating (no
+   * update_option() side effect) and never going through getSettings()
+   * itself. sanitize() uses this instead of getSettings() for its "current
+   * value" precisely to stay out of the recursion trap described above.
+   *
+   * @return array<string, string>
+   */
+  private static function getStoredSettings(): array
+  {
+    $stored = get_option(self::OPTION_NAME, []);
     return wp_parse_args(is_array($stored) ? $stored : [], self::getDefaults());
   }
 
@@ -113,7 +150,16 @@ class Repository
    */
   public static function sanitize($input): array
   {
-    $current = self::getSettings();
+    // Re-entered via our own update_option() call inside getSettings()'s
+    // migration branch (see self::$sanitizing's own comment) — the value
+    // passed in IS already the fully-formed migrated array, not raw $_POST
+    // shape, and none of QrCodeGenerator's work (a real external API call)
+    // belongs in a plain migration. Pass it through as-is.
+    if (self::$sanitizing) {
+      return is_array($input) ? wp_parse_args($input, self::getDefaults()) : self::getDefaults();
+    }
+
+    $current = self::getStoredSettings();
     $input = is_array($input) ? $input : [];
 
     $output = $current;
