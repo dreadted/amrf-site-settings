@@ -130,6 +130,8 @@ class QrCodeGenerator
     $dir = trailingslashit($upload_dir['basedir']) . self::UPLOAD_SUBDIR;
     wp_mkdir_p($dir);
 
+    $png = self::recolorToBlack($png);
+
     $tmp_file = wp_tempnam('amrf-swish-qr.png');
     if ($tmp_file === false || file_put_contents($tmp_file, $png) === false) {
       return null;
@@ -154,6 +156,52 @@ class QrCodeGenerator
     // Fixed filename, always overwritten — a plain URL would otherwise
     // keep serving a browser/CDN-cached copy from before this save.
     return add_query_arg('v', substr(md5($png), 0, 8), $url);
+  }
+
+  /**
+   * Swish's API returns the code in its own brand gradient (teal through
+   * pink to yellow), not a plain black-on-white QR — recolored here to
+   * black since that's what was asked for, on the raw PNG before it's ever
+   * written to disk (so the cached .webp is always already black, no
+   * separate "which color" setting to track).
+   *
+   * Uses HSL lightness rather than plain grayscale luma for the black/white
+   * split: confirmed by visual comparison that luma clips too aggressively
+   * — pure yellow's luma is close enough to white (~88%) that a naive
+   * threshold on it drops real QR modules, while yellow's HSL lightness
+   * (~50%) sits clearly apart from white (100%), same margin as every
+   * other color in the gradient.
+   *
+   * Falls back to the original colored PNG (rather than failing the whole
+   * save) if Imagick isn't available — Swish's own branding is a fine
+   * default, just not the one asked for.
+   *
+   * @param string $png
+   * @return string PNG bytes, recolored if possible.
+   */
+  private static function recolorToBlack(string $png): string
+  {
+    if (!extension_loaded('imagick')) {
+      return $png;
+    }
+
+    try {
+      $source = new \Imagick();
+      $source->readImageBlob($png);
+
+      $canvas = new \Imagick();
+      $canvas->newImage($source->getImageWidth(), $source->getImageHeight(), new \ImagickPixel('white'));
+      $canvas->compositeImage($source, \Imagick::COMPOSITE_OVER, 0, 0);
+
+      $canvas->transformImageColorspace(\Imagick::COLORSPACE_HSL);
+      $canvas->separateImageChannel(\Imagick::CHANNEL_BLUE); // the L in HSL, once separated
+      $canvas->thresholdImage(0.85 * \Imagick::getQuantumRange()['quantumRangeLong']);
+      $canvas->setImageFormat('png');
+
+      return $canvas->getImageBlob();
+    } catch (\ImagickException $e) {
+      return $png;
+    }
   }
 
   /**
