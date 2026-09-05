@@ -89,7 +89,7 @@ class Provider
 
     if ($settings['qr_url'] !== '') {
       printf(
-        '<p><img src="%1$s" alt="%2$s" style="max-width:160px;height:auto;" /></p>',
+        '<p style="margin-top:10px;"><img src="%1$s" alt="%2$s" style="max-width:160px;height:auto;" /></p>',
         esc_url($settings['qr_url']),
         esc_attr__('Current Swish QR code', 'amrf-admin')
       );
