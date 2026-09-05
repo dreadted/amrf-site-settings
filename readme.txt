@@ -1,4 +1,4 @@
-=== Admin Panel Settings ===
+=== AMRF Site Settings ===
 Contributors: dreadted
 Requires at least: 5.6
 Tested up to: 6.9
