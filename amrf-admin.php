@@ -1,13 +1,15 @@
 <?php
 
 /**
- * Plugin Name:     Admin Panel Settings
- * Description:     Customize admin panel settings for different user roles.
- * Version:         0.2.3
- * Author:          Christofer Laurin
- * Author URI:      https://github.com/dreadted/
- * Text Domain:     amrf-admin
- * Domain Path:     /languages
+ * Plugin Name:       Admin Panel Settings
+ * Description:       Customize admin panel settings for different user roles.
+ * Version:           0.2.3
+ * Requires at least: 5.6
+ * Requires PHP:      8.0
+ * Author:            Christofer Laurin
+ * Author URI:        https://github.com/dreadted/
+ * Text Domain:       amrf-admin
+ * Domain Path:       /languages
  */
 
 if (!defined('ABSPATH')) {
