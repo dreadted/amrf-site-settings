@@ -130,7 +130,7 @@ class QrCodeGenerator
     $dir = trailingslashit($upload_dir['basedir']) . self::UPLOAD_SUBDIR;
     wp_mkdir_p($dir);
 
-    $png = self::recolorToBlack($png);
+    $png = self::applyBlackStyle($png);
 
     $tmp_file = wp_tempnam('amrf-swish-qr.png');
     if ($tmp_file === false || file_put_contents($tmp_file, $png) === false) {
@@ -159,11 +159,25 @@ class QrCodeGenerator
   }
 
   /**
-   * Swish's API returns the code in its own brand gradient (teal through
-   * pink to yellow), not a plain black-on-white QR — recolored here to
-   * black since that's what was asked for, on the raw PNG before it's ever
-   * written to disk (so the cached .webp is always already black, no
-   * separate "which color" setting to track).
+   * Fraction of the image's width used as the radius of the circle kept in
+   * full color for Swish's own center logo — measured empirically against
+   * a real 500px response (the logo sits dead center, ~100-120px across,
+   * with a clear quiet-space gap before the nearest real QR module), same
+   * relative size regardless of the requested `size`, so a fraction of
+   * width rather than a fixed pixel count.
+   */
+  private const LOGO_RADIUS_FRACTION = 0.12;
+
+  /**
+   * Swish's API always returns its own brand gradient (teal through pink
+   * to yellow) — no request parameter changes that (confirmed empirically:
+   * several plausible extra JSON fields like "color"/"style"/"colorScheme"
+   * were silently ignored, byte-identical response every time). Recolored
+   * here instead, on the raw PNG before it's ever written to disk: every
+   * actual QR module (the part a scanner reads) becomes plain black on
+   * white, while Swish's own colorful swirl logo in the center is kept —
+   * matching the "black" style on swish.nu/marknadsmaterial/qr-generator's
+   * own tool, not an all-or-nothing recolor.
    *
    * Uses HSL lightness rather than plain grayscale luma for the black/white
    * split: confirmed by visual comparison that luma clips too aggressively
@@ -173,13 +187,14 @@ class QrCodeGenerator
    * other color in the gradient.
    *
    * Falls back to the original colored PNG (rather than failing the whole
-   * save) if Imagick isn't available — Swish's own branding is a fine
-   * default, just not the one asked for.
+   * save) if Imagick isn't available, or if anything about this goes
+   * wrong — Swish's own branding is a fine default, just not the one
+   * asked for.
    *
    * @param string $png
-   * @return string PNG bytes, recolored if possible.
+   * @return string PNG bytes, restyled if possible.
    */
-  private static function recolorToBlack(string $png): string
+  private static function applyBlackStyle(string $png): string
   {
     if (!extension_loaded('imagick')) {
       return $png;
@@ -188,17 +203,50 @@ class QrCodeGenerator
     try {
       $source = new \Imagick();
       $source->readImageBlob($png);
+      $width = $source->getImageWidth();
+      $height = $source->getImageHeight();
 
+      // Flattened onto white, still in full color — the source for both
+      // the black/white pass below and the color logo cutout.
       $canvas = new \Imagick();
-      $canvas->newImage($source->getImageWidth(), $source->getImageHeight(), new \ImagickPixel('white'));
+      $canvas->newImage($width, $height, new \ImagickPixel('white'));
       $canvas->compositeImage($source, \Imagick::COMPOSITE_OVER, 0, 0);
 
-      $canvas->transformImageColorspace(\Imagick::COLORSPACE_HSL);
-      $canvas->separateImageChannel(\Imagick::CHANNEL_BLUE); // the L in HSL, once separated
-      $canvas->thresholdImage(0.85 * \Imagick::getQuantumRange()['quantumRangeLong']);
-      $canvas->setImageFormat('png');
+      $blackAndWhite = clone $canvas;
+      $blackAndWhite->transformImageColorspace(\Imagick::COLORSPACE_HSL);
+      $blackAndWhite->separateImageChannel(\Imagick::CHANNEL_BLUE); // the L in HSL, once separated
+      $blackAndWhite->thresholdImage(0.85 * \Imagick::getQuantumRange()['quantumRangeLong']);
+      // separateImageChannel() above leaves the image in a single-channel
+      // grayscale colorspace — compositing the full-color logo on top of
+      // that (below) needs a normal 3-channel colorspace first, or the
+      // logo's own colors get muddied into the composite instead of
+      // sitting cleanly on top of it (confirmed: this exact wash-out
+      // happened before this line was added).
+      $blackAndWhite->transformImageColorspace(\Imagick::COLORSPACE_SRGB);
 
-      return $canvas->getImageBlob();
+      // A black canvas with a white filled circle, used below as a
+      // grayscale opacity mask (Imagick::COMPOSITE_COPYOPACITY reads the
+      // mask's own alpha channel, not its RGB tone — ALPHACHANNEL_OFF is
+      // the API equivalent of ImageMagick CLI's "-alpha off", making it
+      // fall back to reading grayscale intensity instead; skipping this
+      // silently no-ops the whole mask, confirmed while building this).
+      $radius = (int) round($width * self::LOGO_RADIUS_FRACTION);
+      $mask = new \Imagick();
+      $mask->newImage($width, $height, new \ImagickPixel('black'));
+      $draw = new \ImagickDraw();
+      $draw->setFillColor(new \ImagickPixel('white'));
+      $draw->circle($width / 2, $height / 2, $width / 2, $height / 2 - $radius);
+      $mask->drawImage($draw);
+      $mask->setImageAlphaChannel(\Imagick::ALPHACHANNEL_OFF);
+
+      $logo = clone $canvas;
+      $logo->setImageAlphaChannel(\Imagick::ALPHACHANNEL_ON);
+      $logo->compositeImage($mask, \Imagick::COMPOSITE_COPYOPACITY, 0, 0);
+
+      $blackAndWhite->compositeImage($logo, \Imagick::COMPOSITE_OVER, 0, 0);
+      $blackAndWhite->setImageFormat('png');
+
+      return $blackAndWhite->getImageBlob();
     } catch (\ImagickException $e) {
       return $png;
     }
