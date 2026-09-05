@@ -5,7 +5,7 @@
  * Description:       Customize admin panel settings for different user roles.
  * Version:           0.2.3
  * Requires at least: 5.6
- * Requires PHP:      8.0
+ * Requires PHP:      8.1
  * Author:            Christofer Laurin
  * Author URI:        https://github.com/dreadted/
  * Text Domain:       amrf-admin
@@ -19,6 +19,14 @@ if (!defined('ABSPATH')) {
 define('AMRF_ADMIN_PLUGIN_FILE', __FILE__);
 define('AMRF_ADMIN_PLUGIN_DIR', __DIR__);
 define('AMRF_ADMIN_PLUGIN_URL', plugin_dir_url(__FILE__));
+
+// Composer dependencies (currently just altcha-org/altcha, for
+// ContactForm\Altcha's sitewide spam protection) — vendor/ is committed to
+// the repo since this plugin has no build step, so no composer install is
+// required after checkout.
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
+}
 
 /**
  * Autoloader for plugin classes.

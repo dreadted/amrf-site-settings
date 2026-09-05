@@ -1,5 +1,3 @@
-# Copyright (C) 2026 Christofer Laurin
-# This file is distributed under the same license as the Admin Panel Settings plugin.
 msgid ""
 msgstr ""
 "Project-Id-Version: Admin Panel Settings 0.2.3\n"
@@ -11,9 +9,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-09-05T04:04:33+00:00\n"
 "PO-Revision-Date: 2026-09-05T04:04:33+00:00\n"
+"Language: sv_SE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
-"Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Plugin Name of the plugin
@@ -40,14 +38,6 @@ msgstr ""
 msgid "https://github.com/dreadted/"
 msgstr ""
 
-#: assets/js/amrf-fluentform-validation.js:11
-msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)"
-msgstr "Ange ett giltigt svenskt personnummer (ÅÅMMDD-XXXX)"
-
-#: assets/js/amrf-fluentform-validation.js:15
-msgid "Personal Identity Number is required"
-msgstr "Personnummer krävs"
-
 #: includes/Admin/SiteSettingsMenu.php:55
 #: includes/Admin/SiteSettingsMenu.php:75
 #: includes/Admin/SiteSettingsMenu.php:76
@@ -64,7 +54,9 @@ msgstr "Kontakt"
 msgid "Close"
 msgstr "Stäng"
 
+#. translators: 1: opening <a> tag to the privacy policy (omitted if it isn't published yet), 2: closing </a> tag
 #: includes/ContactForm/Modal.php:132
+#, php-format
 msgid "We process your personal data to answer your message. Read more in our %1$sprivacy policy%2$s."
 msgstr "Vi behandlar dina personuppgifter för att kunna svara på ditt meddelande. Läs mer i vår %1$sintegritetspolicy%2$s."
 
@@ -95,36 +87,36 @@ msgstr "Standardkontaktformulär"
 msgid "Apply Consistent Contact Form Styling"
 msgstr "Tillämpa enhetlig formulärstil"
 
-#: includes/ContactForm/Provider.php:111
+#: includes/ContactForm/Provider.php:117
 msgid "GDPR"
 msgstr "GDPR"
 
-#: includes/ContactForm/Provider.php:115
+#: includes/ContactForm/Provider.php:121
 msgid "Contact Forms Subject to Retention"
 msgstr "Formulär som omfattas av rensningen"
 
-#: includes/ContactForm/Provider.php:122
+#: includes/ContactForm/Provider.php:128
 msgid "Delete submissions after this many days"
 msgstr "Radera inskickade formulär efter så här många dagar"
 
-#: includes/ContactForm/Provider.php:154
-#: includes/ContactForm/Provider.php:206
+#: includes/ContactForm/Provider.php:160
+#: includes/ContactForm/Provider.php:238
 msgid "No FluentForm forms found."
 msgstr "Inga FluentForm-formulär hittades."
 
-#: includes/ContactForm/Provider.php:168
+#: includes/ContactForm/Provider.php:174
 msgid "The form the sitewide \"#kontakt\" link/button opens in a lightbox."
 msgstr "Formuläret som sajtens länkar/knappar mot ankaret \"#kontakt\" öppnar i en lightbox."
 
-#: includes/ContactForm/Provider.php:184
+#: includes/ContactForm/Provider.php:190
 msgid "Maps FluentForm's own color/border-radius variables to this site's theme colors and applies additional styling fixes, on every FluentForm on the site."
 msgstr "Kopplar FluentForms egna färg-/hörnradievariabler till sajtens temafärger och tillämpar ytterligare stiljusteringar, på samtliga FluentForm-formulär på sajten."
 
-#: includes/ContactForm/Provider.php:221
+#: includes/ContactForm/Provider.php:253
 msgid "The daily retention cleanup and personal-data export/erase requests only ever touch these forms."
 msgstr "Den dagliga rensningen och begäranden om export/radering av personuppgifter rör bara dessa formulär."
 
-#: includes/ContactForm/Provider.php:239
+#: includes/ContactForm/Provider.php:271
 msgid "Blank or 0 = keep forever."
 msgstr "Tomt eller 0 = spara för alltid."
 
@@ -181,8 +173,10 @@ msgstr "Inställningar"
 msgid "Page Editor"
 msgstr "Redigera sida"
 
+#. translators: %d is the number indicating minimum password length
 #: includes/Hooks/FrontendHooks.php:236
 #: includes/Hooks/FrontendHooks.php:268
+#, php-format
 msgid "ERROR: Password must be at least %d characters long."
 msgstr "FEL: Lösenordet måste bestå av minst %d tecken."
 
@@ -222,8 +216,10 @@ msgstr "Ta bort länkar från administrationsfältet för icke-administratörer"
 msgid "Remove Default Dashboard Widgets"
 msgstr "Ta bort standardwidgetar från adminpanelen"
 
+#. translators: %s is the user role name (e.g. "Editor").
 #: includes/Settings/Manager.php:174
 #: includes/Settings/Manager.php:181
+#, php-format
 msgid "%s Settings"
 msgstr "Inställningar för %s"
 
@@ -516,3 +512,15 @@ msgstr "Umami-ID"
 #: includes/Utilities/SettingsRenderer.php:105
 msgid "Reset to Defaults"
 msgstr "Återställ till standardvärden"
+
+#: includes/ContactForm/Altcha.php:190
+msgid "Spam verification failed, please reload the page and try again."
+msgstr "Spamverifieringen misslyckades, ladda om sidan och försök igen."
+
+#: includes/ContactForm/Provider.php:109
+msgid "Enable ALTCHA Spam Protection"
+msgstr "Aktivera ALTCHA-spamskydd"
+
+#: includes/ContactForm/Provider.php:216
+msgid "Adds invisible, no-configuration spam protection to every FluentForm on the site. Turn off if this site already handles spam protection another way (e.g. its own plugin)."
+msgstr "Lägger till osynligt spamskydd utan konfiguration på samtliga FluentForm-formulär på sajten. Stäng av om sajten redan hanterar spamskydd på annat sätt (t.ex. med ett eget plugin)."

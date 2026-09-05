@@ -12,11 +12,16 @@ if (!defined('ABSPATH')) {
  * Storage/defaults/sanitization for the Contact Forms page: which
  * FluentForm form the sitewide "#kontakt" lightbox opens
  * (default_contact_form_id), whether this plugin's own consistency CSS is
- * applied to every FluentForm on the site (enable_consistent_styling), and
- * — under that page's "GDPR" heading — which forms the daily retention
- * cron/personal-data export-erase requests apply to (contact_form_ids,
- * replacing the old free-text 'form_ids' with a checkbox list of forms
- * that actually exist) and for how long (retention_days).
+ * applied to every FluentForm on the site (enable_consistent_styling),
+ * whether sitewide ALTCHA spam protection is on (altcha_enabled, see
+ * ContactForm\Altcha — on by default, off is only for a site that wants to
+ * run its own spam protection instead), and — under that page's "GDPR"
+ * heading — which forms the daily retention cron/personal-data
+ * export-erase requests apply to (contact_form_ids, replacing the old
+ * free-text 'form_ids' with a checkbox list of forms that actually exist)
+ * and for how long (retention_days). Also owns altcha_hmac_key (see
+ * getAltchaHmacKey()) — unlike altcha_enabled, not a user-facing setting
+ * at all, just stored alongside the rest.
  *
  * OPTION_NAME deliberately keeps its original 'amrf_fluentform_privacy'
  * value rather than renaming to match this module's new ContactForm
@@ -35,20 +40,25 @@ class Repository
     public const OPTION_NAME = 'amrf_fluentform_privacy';
 
     /**
-     * @return array{default_contact_form_id: string, enable_consistent_styling: bool, contact_form_ids: int[], retention_days: string}
+     * @return array{default_contact_form_id: string, enable_consistent_styling: bool, altcha_enabled: bool, contact_form_ids: int[], retention_days: string}
      */
     public static function getDefaults(): array
     {
         return [
             'default_contact_form_id' => '1',
             'enable_consistent_styling' => false,
+            // On by default — a site that wants to run its own spam
+            // protection instead (or none at all) can turn this off, but
+            // the point of it needing no configuration is that it works
+            // out of the box otherwise.
+            'altcha_enabled' => true,
             'contact_form_ids' => [],
             'retention_days' => '',
         ];
     }
 
     /**
-     * @return array{default_contact_form_id: string, enable_consistent_styling: bool, contact_form_ids: int[], retention_days: string}
+     * @return array{default_contact_form_id: string, enable_consistent_styling: bool, altcha_enabled: bool, contact_form_ids: int[], retention_days: string}
      */
     public static function getSettings(): array
     {
@@ -71,7 +81,7 @@ class Repository
 
     /**
      * @param mixed $input Raw POSTed value for this option.
-     * @return array{default_contact_form_id: string, enable_consistent_styling: bool, contact_form_ids: int[], retention_days: string}
+     * @return array{default_contact_form_id: string, enable_consistent_styling: bool, altcha_enabled: bool, contact_form_ids: int[], retention_days: string}
      */
     public static function sanitize($input): array
     {
@@ -91,6 +101,10 @@ class Repository
         $output['enable_consistent_styling'] = array_key_exists('enable_consistent_styling_submitted', $input)
             ? !empty($input['enable_consistent_styling'])
             : $current['enable_consistent_styling'];
+
+        $output['altcha_enabled'] = array_key_exists('altcha_enabled_submitted', $input)
+            ? !empty($input['altcha_enabled'])
+            : $current['altcha_enabled'];
 
         if (array_key_exists('contact_form_ids_submitted', $input)) {
             $ids = isset($input['contact_form_ids']) && is_array($input['contact_form_ids'])
@@ -116,6 +130,36 @@ class Repository
     public static function isConsistentStylingEnabled(): bool
     {
         return self::getSettings()['enable_consistent_styling'];
+    }
+
+    public static function isAltchaEnabled(): bool
+    {
+        return self::getSettings()['altcha_enabled'];
+    }
+
+    /**
+     * Auto-generated once per site and stored invisibly, on first use —
+     * unlike Cloudflare Turnstile's site key, ALTCHA's secret doesn't need
+     * to be human-chosen, memorable, or portable between sites (a
+     * challenge is only ever verified by the same site that issued it), so
+     * there's nothing a settings field would let a site owner usefully do
+     * with it except accidentally leak, weaken, or desync it. Storage
+     * intentionally bypasses sanitize()/the Settings API entirely — this
+     * key is never part of any form submission.
+     *
+     * @return string
+     */
+    public static function getAltchaHmacKey(): string
+    {
+        $stored = get_option(self::OPTION_NAME, []);
+        $stored = is_array($stored) ? $stored : [];
+
+        if (empty($stored['altcha_hmac_key'])) {
+            $stored['altcha_hmac_key'] = bin2hex(random_bytes(32));
+            update_option(self::OPTION_NAME, $stored);
+        }
+
+        return $stored['altcha_hmac_key'];
     }
 
     /**

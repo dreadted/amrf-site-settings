@@ -25,6 +25,7 @@ class Bootstrap
     {
         new Provider();
         new Modal();
+        new Altcha();
         new RetentionCron();
         new PrivacyRequests();
         new EmailSignoff();

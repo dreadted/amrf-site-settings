@@ -52,6 +52,25 @@ class Provider
     add_filter('option_page_capability_' . self::OPTION_GROUP, function () {
       return 'edit_theme_options';
     });
+
+    add_action('admin_enqueue_scripts', [$this, 'enqueueSwitchStyles']);
+  }
+
+  /**
+   * The shared .switch/.slider toggle styles live in assets/css/amrf-
+   * admin-settings.css, otherwise only loaded on the Admin Panel Settings/
+   * Site Settings/Hardening pages — enqueued here too, unconditionally,
+   * same posture as Hardening\Provider's own identical method (cheap,
+   * scoped class names, no per-page hook check needed).
+   *
+   * @return void
+   */
+  public function enqueueSwitchStyles(): void
+  {
+    wp_enqueue_style(
+      'amrf-admin-settings',
+      AMRF_ADMIN_PLUGIN_URL . 'assets/css/amrf-admin-settings.css'
+    );
   }
 
   /**
@@ -104,7 +123,13 @@ class Provider
       self::PAGE_SLUG,
       'contact_form_section'
     );
-
+    add_settings_field(
+      'altcha_enabled',
+      __('Enable ALTCHA Spam Protection', 'amrf-admin'),
+      [$this, 'renderAltchaEnabledField'],
+      self::PAGE_SLUG,
+      'contact_form_section'
+    );
     // A real (non-empty) section title prints as its own <h2> via
     // do_settings_sections() — this is the visible "GDPR" heading the
     // feature asked for, not just a docblock label.
@@ -168,20 +193,50 @@ class Provider
     echo '<p class="description">' . esc_html__('The form the sitewide "#kontakt" link/button opens in a lightbox.', 'amrf-admin') . '</p>';
   }
 
+  /**
+   * Same .switch/.slider toggle markup as Settings\Manager::renderCheckbox()
+   * and Hardening\Provider::renderCheckbox() — amrf-admin-settings.css
+   * (already enqueued for this page, see registerPages()) styles it
+   * identically wherever it's used.
+   *
+   * @return void
+   */
   public function renderConsistentStylingField(): void
   {
     $enabled = Repository::isConsistentStylingEnabled();
-    $id = Repository::OPTION_NAME . '_enable_consistent_styling';
     $name = Repository::OPTION_NAME . '[enable_consistent_styling]';
     $submitted_name = Repository::OPTION_NAME . '[enable_consistent_styling_submitted]';
 
     printf('<input type="hidden" name="%s" value="1" />', esc_attr($submitted_name));
     printf(
-      '<label for="%1$s"><input type="checkbox" id="%1$s" name="%2$s" value="1" %3$s /> %4$s</label>',
-      esc_attr($id),
+      '<label class="switch"><input type="checkbox" name="%1$s" value="1" %2$s /><span class="slider round"></span></label><p class="description">%3$s</p>',
       esc_attr($name),
       checked($enabled, true, false),
       esc_html__('Maps FluentForm\'s own color/border-radius variables to this site\'s theme colors and applies additional styling fixes, on every FluentForm on the site.', 'amrf-admin')
+    );
+  }
+
+  /**
+   * On by default (Repository::getDefaults()) — this toggle exists only
+   * for a site that wants to run its own spam protection instead (or
+   * none at all), not to make ALTCHA opt-in. The signing secret itself
+   * (Repository::getAltchaHmacKey()) has no field here at all — see that
+   * method's own docblock for why.
+   *
+   * @return void
+   */
+  public function renderAltchaEnabledField(): void
+  {
+    $enabled = Repository::isAltchaEnabled();
+    $name = Repository::OPTION_NAME . '[altcha_enabled]';
+    $submitted_name = Repository::OPTION_NAME . '[altcha_enabled_submitted]';
+
+    printf('<input type="hidden" name="%s" value="1" />', esc_attr($submitted_name));
+    printf(
+      '<label class="switch"><input type="checkbox" name="%1$s" value="1" %2$s /><span class="slider round"></span></label><p class="description">%3$s</p>',
+      esc_attr($name),
+      checked($enabled, true, false),
+      esc_html__('Adds invisible, no-configuration spam protection to every FluentForm on the site. Turn off if this site already handles spam protection another way (e.g. its own plugin).', 'amrf-admin')
     );
   }
 
