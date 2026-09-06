@@ -28,24 +28,30 @@
  * (.ff-el-form-control) instead of inheriting the page's font like the
  * rest of the form wrapper already does (.ff-default itself is already
  * font-family: inherit) — without this, the theme's body font never
- * reaches the actual input/select/textarea fields.
+ * reaches the actual input/select/textarea fields. font-size isn't set at
+ * all by FluentForm's own CSS, so it falls back to the browser's own
+ * built-in default for form controls (not the page's font-size) unless
+ * told to inherit too.
  */
 .fluentform .ff-el-form-control {
 	font-family: inherit;
+	font-size: inherit;
 }
 
 /**
  * FluentForm's own default stylesheet hardcodes .ff_btn_style's
- * border-radius (7px) rather than using --fluentform-border-radius, and
- * form controls don't inherit font-family from an ancestor's `inherit`
- * the way normal elements do — both apply to every button variant, not
- * just the primary one. Font falls back to the same `inherit` as every
- * other field when the theme doesn't declare its own button font.
+ * border-radius (7px) and font-size (16px) rather than using
+ * --fluentform-border-radius/inheriting, and form controls don't inherit
+ * font-family from an ancestor's `inherit` the way normal elements do —
+ * all three apply to every button variant, not just the primary one. Font
+ * falls back to the same `inherit` as every other field when the theme
+ * doesn't declare its own button font.
  */
 .ff-default .ff_btn_style {
 	border-radius: var(--fluentform-border-radius);
 	font-family: var(--amrf-button-font-family, inherit);
 	font-weight: var(--amrf-button-font-weight, inherit);
+	font-size: inherit;
 }
 
 /**
@@ -59,6 +65,9 @@
 	border-color: var(--fluentform-primary);
 	color: var(--amrf-button-text, #fff);
 	box-shadow: var(--amrf-button-shadow, none);
+	/* FluentForm's own .ff_btn_style transition list, plus transform — so
+	   the hover lift below animates instead of snapping. */
+	transition: transform 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .ff-default .ff-btn-primary:not(.ff_btn_no_style):focus,
@@ -66,6 +75,14 @@
 	background-color: var(--amrf-button-hover-background, var(--fluentform-primary));
 	border-color: var(--amrf-button-hover-background, var(--fluentform-primary));
 	opacity: 0.85;
+}
+
+/* The same lift ptsussis-theme's own .cta:hover uses — not something
+   theme.json's styles.elements.button:hover schema can express (it only
+   covers color/border/shadow), so this stays a plain, portable default
+   rather than something read from the theme. */
+.ff-default .ff-btn-primary:not(.ff_btn_no_style):hover {
+	transform: translateY(-0.1rem);
 }
 
 .fluentform .ff_t_c {
