@@ -248,6 +248,8 @@ class Manager
 				} else $current['user_group_settings'][$role]['allowed_menu_items'] = [];
 
 				$current['user_group_settings'][$role]['site_menus_cap'] = isset($role_settings['site_menus_cap']);
+				$current['user_group_settings'][$role]['fluentform_entries_access'] = isset($role_settings['fluentform_entries_access']);
+				$this->syncFluentFormEntriesAllowedMenuItem($current, $role);
 			}
 		}
 		return $current;
@@ -299,6 +301,46 @@ class Manager
 
 			$current['user_group_settings'][$role_slug]['allowed_menu_items'] = $allowed;
 		}
+	}
+
+	/**
+	 * Keeps the "Entries" admin submenu (fluent_forms_all_entries) in sync
+	 * with the fluentform_entries_access toggle for the role being saved.
+	 *
+	 * Granting the underlying capabilities (see FrontendHooks::getCapabilities())
+	 * isn't enough on its own: this plugin's own allowed_menu_items filter
+	 * (FrontendHooks's admin_menu callback, priority 999) strips any admin
+	 * menu item not on that list regardless of capability, which would
+	 * otherwise 403 a role straight back out of the very page this toggle
+	 * just granted access to. Only fluent_forms_all_entries needs adding —
+	 * WordPress keeps a submenu's top-level parent (fluent_forms) visible on
+	 * its own once any one of its children is allowed, so that doesn't need
+	 * listing here too.
+	 *
+	 * Unlike syncPageEditorLinkAllowedMenuItem(), this only ever touches the
+	 * one role tab actually being saved — allowed_menu_items was already
+	 * rebuilt from this same submission just above, so it's always a
+	 * concrete array here, never the "not configured yet" null that method
+	 * has to guard against for every OTHER role.
+	 *
+	 * @param array  $current Settings array being built, modified in place.
+	 * @param string $role    Role slug whose tab was just submitted.
+	 * @return void
+	 */
+	private function syncFluentFormEntriesAllowedMenuItem(array &$current, string $role): void
+	{
+		$menuSlug = 'fluent_forms_all_entries';
+		$allowed = $current['user_group_settings'][$role]['allowed_menu_items'];
+
+		if (!empty($current['user_group_settings'][$role]['fluentform_entries_access'])) {
+			if (!in_array($menuSlug, $allowed, true)) {
+				$allowed[] = $menuSlug;
+			}
+		} else {
+			$allowed = array_values(array_diff($allowed, [$menuSlug]));
+		}
+
+		$current['user_group_settings'][$role]['allowed_menu_items'] = $allowed;
 	}
 
 	/**
@@ -454,6 +496,16 @@ class Manager
 			printf('<option value="%1$s" %2$s>%3$s</option>', $page, selected($defaultPage, $page, false), esc_html($item['name']));
 		}
 		echo '</select><p class="description">' . esc_html__('Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below).', 'amrf-admin') . '</p></div>';
+
+		// Fluent Forms Entries Access — only relevant, and only shown, on a
+		// site that actually has Fluent Forms (shortcode_exists('fluentform')
+		// is this codebase's established way of detecting it elsewhere, e.g.
+		// ContactForm\Provider).
+		if (shortcode_exists('fluentform')) {
+			echo '<div class="setting-row"><h4>' . esc_html__('Form Entries Access', 'amrf-admin') . '</h4>';
+			$this->renderCheckbox('fluentform_entries_access', esc_html__('Enable to allow this user role to view and manage Fluent Forms entries (view, delete, mark read/unread, favorite) — not forms themselves or site-wide Fluent Forms settings.', 'amrf-admin'), ['user_group_settings', $role]);
+			echo '</div>';
+		}
 
 		// Site Menus Capability
 		echo '<div class="setting-row"><h4>' . esc_html__('Site Menus Access', 'amrf-admin') . '</h4>';

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-06T05:25:08+00:00\n"
+"POT-Creation-Date: 2026-09-06T06:59:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -186,13 +186,13 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: includes/Hooks/FrontendHooks.php:185
+#: includes/Hooks/FrontendHooks.php:186
 msgid "Page Editor"
 msgstr ""
 
 #. translators: %d is the number indicating minimum password length
-#: includes/Hooks/FrontendHooks.php:236
-#: includes/Hooks/FrontendHooks.php:268
+#: includes/Hooks/FrontendHooks.php:237
+#: includes/Hooks/FrontendHooks.php:269
 #, php-format
 msgid "ERROR: Password must be at least %d characters long."
 msgstr ""
@@ -244,83 +244,91 @@ msgstr ""
 msgid "Settings have been reset to defaults."
 msgstr ""
 
-#: includes/Settings/Manager.php:311
+#: includes/Settings/Manager.php:353
 msgid "Configure general admin panel settings."
 msgstr ""
 
-#: includes/Settings/Manager.php:321
+#: includes/Settings/Manager.php:363
 msgid "Configure settings for each user role."
 msgstr ""
 
-#: includes/Settings/Manager.php:333
+#: includes/Settings/Manager.php:375
 msgid "Adds a link to the front page editor in the admin menu."
 msgstr ""
 
-#: includes/Settings/Manager.php:354
+#: includes/Settings/Manager.php:396
 msgid "The link the \"Page Editor\" admin menu item points to, relative to the site root."
 msgstr ""
 
-#: includes/Settings/Manager.php:372
+#: includes/Settings/Manager.php:414
 msgid "Minimum required characters for user passwords."
 msgstr ""
 
-#: includes/Settings/Manager.php:383
+#: includes/Settings/Manager.php:425
 msgid "Prevents non-admin users from changing their passwords."
 msgstr ""
 
-#: includes/Settings/Manager.php:393
+#: includes/Settings/Manager.php:435
 msgid "Hides application passwords section for non-admin users."
 msgstr ""
 
-#: includes/Settings/Manager.php:403
+#: includes/Settings/Manager.php:445
 msgid "Removes comments and new content links from admin bar for non-admins."
 msgstr ""
 
-#: includes/Settings/Manager.php:413
+#: includes/Settings/Manager.php:455
 msgid "Removes default dashboard widgets (Activity, Quick Draft, etc.)."
 msgstr ""
 
-#: includes/Settings/Manager.php:434
+#: includes/Settings/Manager.php:476
 msgid "Login Redirect"
 msgstr ""
 
-#: includes/Settings/Manager.php:437
+#: includes/Settings/Manager.php:479
 msgid "-- Select Redirect URL --"
 msgstr ""
 
-#: includes/Settings/Manager.php:438
+#: includes/Settings/Manager.php:480
 msgid "-- Front Page --"
 msgstr ""
 
-#: includes/Settings/Manager.php:443
+#: includes/Settings/Manager.php:485
 msgid "URL to redirect this user role to after login."
 msgstr ""
 
-#: includes/Settings/Manager.php:446
+#: includes/Settings/Manager.php:488
 msgid "Default Admin Page"
 msgstr ""
 
-#: includes/Settings/Manager.php:451
+#: includes/Settings/Manager.php:493
 msgid "-- Select Default Page --"
 msgstr ""
 
-#: includes/Settings/Manager.php:456
+#: includes/Settings/Manager.php:498
 msgid "Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below)."
 msgstr ""
 
-#: includes/Settings/Manager.php:459
+#: includes/Settings/Manager.php:505
+msgid "Form Entries Access"
+msgstr ""
+
+#: includes/Settings/Manager.php:506
+msgid "Enable to allow this user role to view and manage Fluent Forms entries (view, delete, mark read/unread, favorite) — not forms themselves or site-wide Fluent Forms settings."
+msgstr ""
+
+#: includes/Settings/Manager.php:511
 msgid "Site Menus Access"
 msgstr ""
 
-#: includes/Settings/Manager.php:460
+#: includes/Settings/Manager.php:512
 msgid "Enable to allow this user role to access and edit site menus."
 msgstr ""
 
-#: includes/Settings/Manager.php:464
+#: includes/Settings/Manager.php:516
 msgid "Allowed Menu Items"
 msgstr ""
 
-#: includes/Settings/Manager.php:476
+#: includes/Settings/Manager.php:528
 msgid "Select which admin menu items should be visible to this user role."
 msgstr ""
 
