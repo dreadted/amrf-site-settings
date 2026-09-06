@@ -6,13 +6,21 @@
  * plus the same field-level fixes amrf-theme's own assets/fluentform.css
  * already applied — ported here so every FluentForm on the site gets them
  * consistently, opt-in per site rather than baked into one theme.
+ *
+ * The button-specific rules below prefer the --amrf-button-* variables
+ * (Modal::inlineThemeButtonStyle(), read from the active theme's own
+ * theme.json styles.elements.button) over the generic preset-color
+ * fallbacks — a theme's actual button design and its abstract "primary"
+ * color are two different things (ptsussis-theme's own button uses its
+ * "secondary" color, for example), and a theme that declares the former
+ * should win.
  */
 :root {
-	--fluentform-primary: var(--wp--preset--color--primary);
+	--fluentform-primary: var(--amrf-button-background, var(--wp--preset--color--primary));
 	--fluentform-secondary: var(--wp--preset--color--contrast);
 	--fluentform-danger: var(--wp--preset--color--accent-red);
 	--fluentform-border-color: color-mix(in srgb, var(--wp--preset--color--contrast) 25%, transparent);
-	--fluentform-border-radius: var(--wp--custom--border-radius, var(--border-radius, 4px));
+	--fluentform-border-radius: var(--amrf-button-border-radius, var(--wp--custom--border-radius, var(--border-radius, 4px)));
 }
 
 /**
@@ -20,37 +28,64 @@
  * (.ff-el-form-control) instead of inheriting the page's font like the
  * rest of the form wrapper already does (.ff-default itself is already
  * font-family: inherit) — without this, the theme's body font never
- * reaches the actual input/select/textarea fields.
+ * reaches the actual input/select/textarea fields. font-size isn't set at
+ * all by FluentForm's own CSS, so it falls back to the browser's own
+ * built-in default for form controls (not the page's font-size) unless
+ * told to inherit too.
  */
 .fluentform .ff-el-form-control {
 	font-family: inherit;
+	font-size: inherit;
+}
+
+/**
+ * FluentForm's own default stylesheet only gives .ff-el-group a
+ * margin-bottom (20px) — even spacing above and below reads better
+ * between fields.
+ */
+.fluentform .ff-el-group {
+	margin-block: 2rem;
 }
 
 /**
  * FluentForm's own default stylesheet hardcodes .ff_btn_style's
- * border-radius (7px) rather than using --fluentform-border-radius, and
- * form controls don't inherit font-family from an ancestor's `inherit`
- * the way normal elements do — both apply to every button variant, not
- * just the primary one.
+ * border-radius (7px) and font-size (16px) rather than using
+ * --fluentform-border-radius/inheriting, and form controls don't inherit
+ * font-family from an ancestor's `inherit` the way normal elements do —
+ * all three apply to every button variant, not just the primary one. Font
+ * falls back to the same `inherit` as every other field when the theme
+ * doesn't declare its own button font.
  */
 .ff-default .ff_btn_style {
 	border-radius: var(--fluentform-border-radius);
-	font-family: inherit;
+	font-family: var(--amrf-button-font-family, inherit);
+	font-weight: var(--amrf-button-font-weight, inherit);
+	font-size: var(--amrf-button-font-size, inherit);
 }
 
 /**
  * FluentForm's own default stylesheet reads --fluentform-primary for the
  * input focus border, but hardcodes its submit button color (#007bff)
  * rather than using the variable — without this, the button never
- * reflects the theme's primary color at all.
+ * reflects the theme's own button design at all. Both .ff-btn-primary
+ * (a generic style variant, e.g. multi-step "next") and .ff-btn-submit
+ * (what FluentForm's own default single-page submit button actually
+ * carries — confirmed live, it does NOT get .ff-btn-primary) need this.
  */
-.ff-default .ff-btn-primary:not(.ff_btn_no_style) {
+.ff-default .ff-btn-primary:not(.ff_btn_no_style),
+.ff-default .ff-btn-submit:not(.ff_btn_no_style) {
 	background-color: var(--fluentform-primary);
 	border-color: var(--fluentform-primary);
+	color: var(--amrf-button-text, #fff);
+	box-shadow: var(--amrf-button-shadow, none);
 }
 
 .ff-default .ff-btn-primary:not(.ff_btn_no_style):focus,
-.ff-default .ff-btn-primary:not(.ff_btn_no_style):hover {
+.ff-default .ff-btn-primary:not(.ff_btn_no_style):hover,
+.ff-default .ff-btn-submit:not(.ff_btn_no_style):focus,
+.ff-default .ff-btn-submit:not(.ff_btn_no_style):hover {
+	background-color: var(--amrf-button-hover-background, var(--fluentform-primary));
+	border-color: var(--amrf-button-hover-background, var(--fluentform-primary));
 	opacity: 0.85;
 }
 

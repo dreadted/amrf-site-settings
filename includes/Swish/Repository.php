@@ -19,10 +19,14 @@ class Repository
   public const OPTION_NAME = 'amrf_swish_settings';
 
   /**
-   * Legacy field, migrated lazily on read (not an activation hook, since
-   * that never fires for an already-active plugin updated in place).
+   * ptsussis-theme's own original site-settings option — read directly
+   * from here, not via SiteSettings\Repository's already-migrated copy:
+   * that migration's sanitize() strips swish_number (not one of its own
+   * fields) before this class ever gets a chance to read it. Migrated
+   * lazily on read (not an activation hook, since that never fires for an
+   * already-active plugin updated in place).
    */
-  private const LEGACY_OPTION_NAME = \Antropomorf\SiteSettings\Repository::OPTION_NAME;
+  private const LEGACY_THEME_OPTION_NAME = 'ptsussis_site_settings';
   private const LEGACY_FIELD_KEY = 'swish_number';
 
   /**
@@ -60,7 +64,7 @@ class Repository
     $stored = get_option(self::OPTION_NAME, null);
 
     if ($stored === null) {
-      $legacy = get_option(self::LEGACY_OPTION_NAME, []);
+      $legacy = get_option(self::LEGACY_THEME_OPTION_NAME, []);
       $migrated = self::getDefaults();
       if (is_array($legacy) && !empty($legacy[self::LEGACY_FIELD_KEY])) {
         $migrated['number'] = (string) $legacy[self::LEGACY_FIELD_KEY];

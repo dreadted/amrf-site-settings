@@ -1,9 +1,10 @@
 /**
  * Modal for the sitewide "#kontakt" contact link — opens for any
  * `<a href="#kontakt">` or `[data-contact-trigger]` element. The form inside
- * is FluentForm's own markup (Modal.php); this only manages the modal shell:
- * open/close, focus trapping, and auto-close after FluentForm's
- * "fluentform_submission_success" event.
+ * is FluentForm's own markup (Modal.php); this manages the modal shell
+ * (open/close, focus trapping, auto-close after FluentForm's
+ * "fluentform_submission_success" event) and pre-fills the form's Subject
+ * field from the trigger element's own data-topic, if it has one.
  */
 (function () {
 	var modal = document.querySelector('[data-contact-modal]');
@@ -66,11 +67,15 @@
 		}
 	}
 
-	function openModal() {
+	function openModal(trigger) {
 		clearTimeout(autoCloseTimer);
 
 		if (form) {
 			form.reset();
+			var subjectField = form.querySelector('[name="subject"]');
+			if (subjectField) {
+				subjectField.value = (trigger && trigger.dataset.topic) || '';
+			}
 		}
 
 		lastFocused = document.activeElement;
@@ -121,7 +126,7 @@
 			return;
 		}
 		event.preventDefault();
-		openModal();
+		openModal(trigger);
 	});
 
 	if (closeButton) {

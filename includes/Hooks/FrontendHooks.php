@@ -76,6 +76,10 @@ class FrontendHooks
 		// pages, so it's a no-op elsewhere.
 		add_action('admin_head', [self::class, 'hideFluentFormsHeaderForNonAdmins']);
 
+		// Also unconditional, same reasoning: current_user_can() checks
+		// below make it a no-op for admins/actual form managers.
+		add_action('admin_init', [self::class, 'redirectFluentFormsMainPageForNonManagers']);
+
 		if (!empty($settings['user_group_settings'])) {
 			$user_group_settings = $settings['user_group_settings'];
 
@@ -353,6 +357,40 @@ class FrontendHooks
 		}
 
 		echo '<style>#wpbody-content > div.ff_header { display: none; }</style>' . "\n";
+	}
+
+	/**
+	 * FluentForm registers its top-level "Fluent Forms" menu item and its
+	 * own "Forms" submenu under the exact same slug (fluent_forms) and
+	 * capability (fluentform_dashboard_access) — hiding "Forms" from the
+	 * visible menu (allowed_menu_items) doesn't stop a user who only has
+	 * entries access from reaching it directly, since clicking the
+	 * top-level sidebar label — or just typing the URL — lands on that
+	 * same page. fluentform_dashboard_access itself can't be revoked
+	 * either: FluentForm's own menu registration bails out entirely
+	 * without it, taking the (wanted) Entries page down with it. Redirect
+	 * away from this one specific page instead, for anyone who can see it
+	 * but isn't an actual form manager.
+	 *
+	 * @return void
+	 */
+	public static function redirectFluentFormsMainPageForNonManagers(): void
+	{
+		if (!is_admin() || ($_GET['page'] ?? '') !== 'fluent_forms') {
+			return;
+		}
+
+		if (current_user_can('administrator') || current_user_can('fluentform_forms_manager')) {
+			return;
+		}
+
+		if (!current_user_can('fluentform_dashboard_access')) {
+			// No FluentForm access at all — let WP show its own permission error.
+			return;
+		}
+
+		wp_safe_redirect(admin_url('admin.php?page=fluent_forms_all_entries'));
+		exit;
 	}
 
 	/**

@@ -2,23 +2,23 @@
 # This file is distributed under the same license as the Admin Panel Settings plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Admin Panel Settings 0.2.3\n"
+"Project-Id-Version: Admin Panel Settings 0.3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/amrf-site-settings\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-06T11:05:52+00:00\n"
+"POT-Creation-Date: 2026-09-06T14:35:34+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
 
 #. Plugin Name of the plugin
 #: amrf-site-settings.php
-#: includes/Admin/SettingsPage.php:76
-#: includes/Admin/SettingsPage.php:77
-#: includes/Hooks/AdminHooks.php:67
+#: includes/Admin/SettingsPage.php:66
+#: includes/Admin/SettingsPage.php:67
+#: includes/Hooks/AdminHooks.php:63
 msgid "Admin Panel Settings"
 msgstr ""
 
@@ -37,551 +37,551 @@ msgstr ""
 msgid "https://github.com/dreadted/"
 msgstr ""
 
+#: includes/Admin/SiteSettingsMenu.php:40
 #: includes/Admin/SiteSettingsMenu.php:55
-#: includes/Admin/SiteSettingsMenu.php:75
-#: includes/Admin/SiteSettingsMenu.php:76
-#: includes/Admin/SiteSettingsMenu.php:89
-#: includes/Admin/SiteSettingsMenu.php:90
-#: includes/Hooks/AdminHooks.php:123
+#: includes/Admin/SiteSettingsMenu.php:56
+#: includes/Admin/SiteSettingsMenu.php:68
+#: includes/Admin/SiteSettingsMenu.php:69
+#: includes/Hooks/AdminHooks.php:108
 msgid "Site Settings"
 msgstr ""
 
-#: includes/ContactForm/Altcha.php:209
+#: includes/ContactForm/Altcha.php:172
 msgid "Spam verification failed, please reload the page and try again."
 msgstr ""
 
-#: includes/ContactForm/Modal.php:117
+#: includes/ContactForm/Modal.php:98
 msgid "Contact"
 msgstr ""
 
-#: includes/ContactForm/Modal.php:118
+#: includes/ContactForm/Modal.php:99
 msgid "Close"
 msgstr ""
 
 #. translators: 1: opening <a> tag to the privacy policy (omitted if it isn't published yet), 2: closing </a> tag
-#: includes/ContactForm/Modal.php:132
+#: includes/ContactForm/Modal.php:111
 #, php-format
 msgid "We process your personal data to answer your message. Read more in our %1$sprivacy policy%2$s."
 msgstr ""
 
-#: includes/ContactForm/PrivacyRequests.php:41
-#: includes/ContactForm/PrivacyRequests.php:50
-#: includes/ContactForm/PrivacyRequests.php:147
+#: includes/ContactForm/PrivacyRequests.php:34
+#: includes/ContactForm/PrivacyRequests.php:43
+#: includes/ContactForm/PrivacyRequests.php:140
 msgid "Contact form submissions"
 msgstr ""
 
-#: includes/ContactForm/PrivacyRequests.php:142
+#: includes/ContactForm/PrivacyRequests.php:135
 msgid "IP address"
 msgstr ""
 
-#: includes/ContactForm/PrivacyRequests.php:143
+#: includes/ContactForm/PrivacyRequests.php:136
 msgid "Submitted"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:78
+#: includes/ContactForm/Provider.php:60
 msgid "Contact Forms"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:86
+#: includes/ContactForm/Provider.php:68
 msgid "GDPR"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:114
+#: includes/ContactForm/Provider.php:93
 msgid "Default Contact Form"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:121
+#: includes/ContactForm/Provider.php:100
 msgid "Apply Consistent Contact Form Styling"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:128
+#: includes/ContactForm/Provider.php:107
 msgid "Enable ALTCHA Spam Protection"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:153
+#: includes/ContactForm/Provider.php:128
 msgid "Contact Forms Subject to Retention"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:160
+#: includes/ContactForm/Provider.php:135
 msgid "Delete submissions after this many days"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:192
-#: includes/ContactForm/Provider.php:274
+#: includes/ContactForm/Provider.php:167
+#: includes/ContactForm/Provider.php:241
 msgid "No FluentForm forms found."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:206
+#: includes/ContactForm/Provider.php:181
 msgid "The form the sitewide \"#kontakt\" link/button opens in a lightbox."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:228
+#: includes/ContactForm/Provider.php:200
 msgid "Maps FluentForm's own color/border-radius variables to this site's theme colors and applies additional styling fixes, on every FluentForm on the site."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:252
+#: includes/ContactForm/Provider.php:221
 msgid "Adds invisible, no-configuration spam protection to every FluentForm on the site. Turn off if this site already handles spam protection another way (e.g. its own plugin)."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:289
+#: includes/ContactForm/Provider.php:256
 msgid "The daily retention cleanup and personal-data export/erase requests only ever touch these forms."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:307
+#: includes/ContactForm/Provider.php:272
 msgid "Blank or 0 = keep forever."
 msgstr ""
 
-#: includes/FluentFormValidation/Provider.php:72
+#: includes/FluentFormValidation/Provider.php:62
 msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)."
 msgstr ""
 
-#: includes/Forms/Menu.php:55
-#: includes/Forms/Menu.php:56
-#: includes/Forms/Menu.php:94
+#: includes/Forms/Menu.php:44
+#: includes/Forms/Menu.php:45
+#: includes/Forms/Menu.php:78
 msgid "Forms"
 msgstr ""
 
-#: includes/Hardening/Provider.php:65
+#: includes/Hardening/Provider.php:47
 msgid "There is an error."
 msgstr ""
 
-#: includes/Hardening/Provider.php:180
-#: includes/Hardening/Provider.php:181
+#: includes/Hardening/Provider.php:160
+#: includes/Hardening/Provider.php:161
 msgid "Hardening"
 msgstr ""
 
-#: includes/Hardening/Provider.php:211
+#: includes/Hardening/Provider.php:191
 msgid "Disable author archives"
 msgstr ""
 
-#: includes/Hardening/Provider.php:212
+#: includes/Hardening/Provider.php:192
 msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
 msgstr ""
 
-#: includes/Hardening/Provider.php:215
+#: includes/Hardening/Provider.php:195
 msgid "Redirect 404 pages to the homepage"
 msgstr ""
 
-#: includes/Hardening/Provider.php:216
+#: includes/Hardening/Provider.php:196
 msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
 msgstr ""
 
-#: includes/Hardening/Provider.php:219
+#: includes/Hardening/Provider.php:199
 msgid "Remove jQuery Migrate"
 msgstr ""
 
-#: includes/Hardening/Provider.php:220
+#: includes/Hardening/Provider.php:200
 msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
 msgstr ""
 
-#: includes/Hardening/Provider.php:223
+#: includes/Hardening/Provider.php:203
 msgid "Disable generated image sizes"
 msgstr ""
 
-#: includes/Hardening/Provider.php:224
+#: includes/Hardening/Provider.php:204
 msgid "Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress's own generated image sizes."
 msgstr ""
 
-#: includes/Hooks/AdminHooks.php:96
+#: includes/Hooks/AdminHooks.php:87
 msgid "Settings"
 msgstr ""
 
-#: includes/Hooks/FrontendHooks.php:194
+#: includes/Hooks/FrontendHooks.php:177
 msgid "Page Editor"
 msgstr ""
 
 #. translators: %d is the number indicating minimum password length
-#: includes/Hooks/FrontendHooks.php:245
-#: includes/Hooks/FrontendHooks.php:277
+#: includes/Hooks/FrontendHooks.php:228
+#: includes/Hooks/FrontendHooks.php:260
 #, php-format
 msgid "ERROR: Password must be at least %d characters long."
 msgstr ""
 
-#: includes/Settings/Manager.php:67
+#: includes/Settings/Manager.php:61
 msgid "General"
 msgstr ""
 
-#: includes/Settings/Manager.php:104
+#: includes/Settings/Manager.php:98
 msgid "General Settings"
 msgstr ""
 
-#: includes/Settings/Manager.php:110
+#: includes/Settings/Manager.php:104
 msgid "Add Page Editor Link"
 msgstr ""
 
-#: includes/Settings/Manager.php:117
+#: includes/Settings/Manager.php:111
 msgid "Page Editor Link Target"
 msgstr ""
 
-#: includes/Settings/Manager.php:124
+#: includes/Settings/Manager.php:118
 msgid "Minimum Password Length"
 msgstr ""
 
-#: includes/Settings/Manager.php:131
+#: includes/Settings/Manager.php:125
 msgid "Prevent Non-Admins from Changing Passwords"
 msgstr ""
 
-#: includes/Settings/Manager.php:138
+#: includes/Settings/Manager.php:132
 msgid "Hide Application Passwords for Non-Admins"
 msgstr ""
 
-#: includes/Settings/Manager.php:145
+#: includes/Settings/Manager.php:139
 msgid "Remove Admin Bar Items for Non-Admins"
 msgstr ""
 
-#: includes/Settings/Manager.php:152
+#: includes/Settings/Manager.php:146
 msgid "Remove Default Dashboard Widgets"
 msgstr ""
 
 #. translators: %s is the user role name (e.g. "Editor").
-#: includes/Settings/Manager.php:174
-#: includes/Settings/Manager.php:181
+#: includes/Settings/Manager.php:168
+#: includes/Settings/Manager.php:175
 #, php-format
 msgid "%s Settings"
 msgstr ""
 
-#: includes/Settings/Manager.php:201
+#: includes/Settings/Manager.php:195
 msgid "Settings have been reset to defaults."
 msgstr ""
 
-#: includes/Settings/Manager.php:485
+#: includes/Settings/Manager.php:410
 msgid "Configure general admin panel settings."
 msgstr ""
 
-#: includes/Settings/Manager.php:495
+#: includes/Settings/Manager.php:420
 msgid "Configure settings for each user role."
 msgstr ""
 
-#: includes/Settings/Manager.php:507
+#: includes/Settings/Manager.php:432
 msgid "Adds a link to the front page editor in the admin menu."
 msgstr ""
 
-#: includes/Settings/Manager.php:528
+#: includes/Settings/Manager.php:453
 msgid "The link the \"Page Editor\" admin menu item points to, relative to the site root."
 msgstr ""
 
-#: includes/Settings/Manager.php:546
+#: includes/Settings/Manager.php:471
 msgid "Minimum required characters for user passwords."
 msgstr ""
 
-#: includes/Settings/Manager.php:557
+#: includes/Settings/Manager.php:482
 msgid "Prevents non-admin users from changing their passwords."
 msgstr ""
 
-#: includes/Settings/Manager.php:567
+#: includes/Settings/Manager.php:492
 msgid "Hides application passwords section for non-admin users."
 msgstr ""
 
-#: includes/Settings/Manager.php:577
+#: includes/Settings/Manager.php:502
 msgid "Removes comments and new content links from admin bar for non-admins."
 msgstr ""
 
-#: includes/Settings/Manager.php:587
+#: includes/Settings/Manager.php:512
 msgid "Removes default dashboard widgets (Activity, Quick Draft, etc.)."
 msgstr ""
 
-#: includes/Settings/Manager.php:608
+#: includes/Settings/Manager.php:532
 msgid "Login Redirect"
 msgstr ""
 
-#: includes/Settings/Manager.php:611
+#: includes/Settings/Manager.php:535
 msgid "-- Select Redirect URL --"
 msgstr ""
 
-#: includes/Settings/Manager.php:612
+#: includes/Settings/Manager.php:536
 msgid "-- Front Page --"
 msgstr ""
 
-#: includes/Settings/Manager.php:617
+#: includes/Settings/Manager.php:541
 msgid "URL to redirect this user role to after login."
 msgstr ""
 
-#: includes/Settings/Manager.php:620
+#: includes/Settings/Manager.php:544
 msgid "Default Admin Page"
 msgstr ""
 
-#: includes/Settings/Manager.php:625
+#: includes/Settings/Manager.php:549
 msgid "-- Select Default Page --"
 msgstr ""
 
-#: includes/Settings/Manager.php:630
+#: includes/Settings/Manager.php:554
 msgid "Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below)."
 msgstr ""
 
-#: includes/Settings/Manager.php:637
+#: includes/Settings/Manager.php:558
 msgid "Form Entries Access"
 msgstr ""
 
-#: includes/Settings/Manager.php:638
+#: includes/Settings/Manager.php:559
 msgid "Enable to allow this user role to view and manage Fluent Forms entries (view, delete, mark read/unread, favorite) — not forms themselves or site-wide Fluent Forms settings."
 msgstr ""
 
-#: includes/Settings/Manager.php:650
+#: includes/Settings/Manager.php:565
 msgid "Site Settings Access"
 msgstr ""
 
-#: includes/Settings/Manager.php:651
+#: includes/Settings/Manager.php:566
 msgid "Enable to give this user role access to the Site Settings menu (SEO, Business & Contact, Address, Social Media, Forms/GDPR/Swish) and to native theme menu/design editing (Appearance → Menus/Customize on a classic theme, or the Site Editor on a block theme)."
 msgstr ""
 
-#: includes/Settings/Manager.php:655
+#: includes/Settings/Manager.php:570
 msgid "Allowed Menu Items"
 msgstr ""
 
-#: includes/Settings/Manager.php:667
+#: includes/Settings/Manager.php:582
 msgid "Select which admin menu items should be visible to this user role."
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:124
+#: includes/SiteSettings/Provider.php:96
 msgid "Discourage search engines from indexing this site"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:240
+#: includes/SiteSettings/Provider.php:199
 msgid "Mirrors the \"Discourage search engines from indexing this site\" setting under Settings → Reading and applies immediately. While this is on, the rest of this tab is locked, since none of it has any effect until search engines are allowed back in."
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:263
+#: includes/SiteSettings/Provider.php:217
 msgid "You are not allowed to change this setting."
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:338
+#: includes/SiteSettings/Provider.php:272
 msgid "No pages found."
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:381
+#: includes/SiteSettings/Provider.php:312
 msgid "Select image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:382
+#: includes/SiteSettings/Provider.php:313
 msgid "Use this image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:383
+#: includes/SiteSettings/Provider.php:314
 msgid "Choose image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:388
+#: includes/SiteSettings/Provider.php:319
 msgid "Remove image"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:40
+#: includes/SiteSettings/Repository.php:33
 msgid "Enable SEO Output"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:41
+#: includes/SiteSettings/Repository.php:34
 msgid "SEO title"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:42
+#: includes/SiteSettings/Repository.php:35
 msgid "Meta description"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:43
+#: includes/SiteSettings/Repository.php:36
 msgid "Share image"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:44
+#: includes/SiteSettings/Repository.php:37
 msgid "Open Graph locale (e.g. sv_SE)"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:45
+#: includes/SiteSettings/Repository.php:38
 msgid "Theme color"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:46
+#: includes/SiteSettings/Repository.php:39
 msgid "Background color"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:47
+#: includes/SiteSettings/Repository.php:40
 msgid "Restrict Sitemap to Selected Pages"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:48
+#: includes/SiteSettings/Repository.php:41
 msgid "Pages Included in Sitemap"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:50
+#: includes/SiteSettings/Repository.php:43
 msgid "Business name"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:51
+#: includes/SiteSettings/Repository.php:44
 msgid "Business type (schema.org)"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:52
+#: includes/SiteSettings/Repository.php:45
 msgid "Person name"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:53
+#: includes/SiteSettings/Repository.php:46
 msgid "Job title"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:54
+#: includes/SiteSettings/Repository.php:47
 msgid "Email"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:55
+#: includes/SiteSettings/Repository.php:48
 msgid "Phone"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:68
+#: includes/SiteSettings/Repository.php:53
 msgid "Street address"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:69
+#: includes/SiteSettings/Repository.php:54
 msgid "Postal code"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:70
+#: includes/SiteSettings/Repository.php:55
 msgid "City"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:71
+#: includes/SiteSettings/Repository.php:56
 msgid "Region"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:72
+#: includes/SiteSettings/Repository.php:57
 msgid "Country"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:73
+#: includes/SiteSettings/Repository.php:58
 msgid "Latitude"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:74
+#: includes/SiteSettings/Repository.php:59
 msgid "Longitude"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:76
+#: includes/SiteSettings/Repository.php:61
 msgid "Facebook URL"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:77
+#: includes/SiteSettings/Repository.php:62
 msgid "Instagram URL"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:81
+#: includes/SiteSettings/Repository.php:65
 msgid "X (Twitter) URL"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:91
+#: includes/SiteSettings/Repository.php:75
 msgid "SEO"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:92
+#: includes/SiteSettings/Repository.php:76
 msgid "Business & Contact"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:93
+#: includes/SiteSettings/Repository.php:77
 msgid "Address"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:94
+#: includes/SiteSettings/Repository.php:78
 msgid "Social Media"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:110
-#: includes/SupportGenix/Provider.php:111
+#: includes/SupportGenix/Provider.php:90
+#: includes/SupportGenix/Provider.php:91
 msgid "Support Tickets"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:159
+#: includes/SupportGenix/Provider.php:138
 msgid "Apply this site's default settings for Support Genix."
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:164
+#: includes/SupportGenix/Provider.php:143
 msgid "Apply Defaults"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:181
+#: includes/SupportGenix/Provider.php:160
 msgid "Security check failed"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:203
+#: includes/SupportGenix/Provider.php:182
 msgid "Support Genix defaults applied successfully!"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:205
+#: includes/SupportGenix/Provider.php:184
 msgid "There was an error applying the Support Genix defaults."
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:429
+#: includes/SupportGenix/Provider.php:385
 msgid "Ticket"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:521
+#: includes/SupportGenix/Provider.php:474
 msgid "You are not authorized to edit this page."
 msgstr ""
 
-#: includes/Swish/Provider.php:46
+#: includes/Swish/Provider.php:44
 msgid "Swish"
 msgstr ""
 
-#: includes/Swish/Provider.php:68
+#: includes/Swish/Provider.php:66
 msgid "Swish number"
 msgstr ""
 
-#: includes/Swish/Provider.php:69
+#: includes/Swish/Provider.php:67
 msgid "Prefilled amount"
 msgstr ""
 
-#: includes/Swish/Provider.php:70
+#: includes/Swish/Provider.php:68
 msgid "Prefilled message"
 msgstr ""
 
-#: includes/Swish/Provider.php:75
+#: includes/Swish/Provider.php:73
 msgid "Any link with the address \"#swish\" anywhere on the site opens this directly in the Swish app on a phone, or shows this QR code on a device that can't run it."
 msgstr ""
 
-#: includes/Swish/Provider.php:94
+#: includes/Swish/Provider.php:92
 msgid "Current Swish QR code"
 msgstr ""
 
-#: includes/Swish/Provider.php:115
+#: includes/Swish/Provider.php:111
 msgid "Blank = no amount prefilled."
 msgstr ""
 
-#: includes/Swish/Provider.php:140
+#: includes/Swish/Provider.php:136
 msgid "Editable by the payer after scanning"
 msgstr ""
 
-#: includes/Swish/QrCodeGenerator.php:67
+#: includes/Swish/QrCodeGenerator.php:57
 msgid "The Swish QR code could not be regenerated — the previous one (if any) is still in use. Try saving again."
 msgstr ""
 
-#: includes/Umami/Provider.php:57
-#: includes/Umami/Provider.php:58
+#: includes/Umami/Provider.php:42
+#: includes/Umami/Provider.php:43
 msgid "Analytics"
 msgstr ""
 
-#: includes/Umami/Provider.php:79
+#: includes/Umami/Provider.php:63
 msgid "Umami ID is not set. Please configure it in the settings."
 msgstr ""
 
-#: includes/Umami/Provider.php:101
+#: includes/Umami/Provider.php:85
 msgid "Umami Settings"
 msgstr ""
 
-#: includes/Umami/Provider.php:102
+#: includes/Umami/Provider.php:86
 msgid "Umami"
 msgstr ""
 
-#: includes/Umami/Provider.php:132
+#: includes/Umami/Provider.php:116
 msgid "Umami Site"
 msgstr ""
 
-#: includes/Umami/Provider.php:139
+#: includes/Umami/Provider.php:123
 msgid "Umami ID"
 msgstr ""
 
-#: includes/Utilities/SettingsRenderer.php:105
+#: includes/Utilities/SettingsRenderer.php:85
 msgid "Reset to Defaults"
 msgstr ""
 
-#: assets/js/amrf-fluentform-validation.js:11
+#: assets/js/amrf-fluentform-validation.js:6
 msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)"
 msgstr ""
 
-#: assets/js/amrf-fluentform-validation.js:15
+#: assets/js/amrf-fluentform-validation.js:10
 msgid "Personal Identity Number is required"
 msgstr ""

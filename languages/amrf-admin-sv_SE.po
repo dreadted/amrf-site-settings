@@ -16,9 +16,9 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: amrf-site-settings.php
-#: includes/Admin/SettingsPage.php:76
-#: includes/Admin/SettingsPage.php:77
-#: includes/Hooks/AdminHooks.php:67
+#: includes/Admin/SettingsPage.php:66
+#: includes/Admin/SettingsPage.php:67
+#: includes/Hooks/AdminHooks.php:63
 msgid "Admin Panel Settings"
 msgstr "Inställningar för Adminpanelen"
 
@@ -37,551 +37,551 @@ msgstr ""
 msgid "https://github.com/dreadted/"
 msgstr ""
 
+#: includes/Admin/SiteSettingsMenu.php:40
 #: includes/Admin/SiteSettingsMenu.php:55
-#: includes/Admin/SiteSettingsMenu.php:75
-#: includes/Admin/SiteSettingsMenu.php:76
-#: includes/Admin/SiteSettingsMenu.php:89
-#: includes/Admin/SiteSettingsMenu.php:90
-#: includes/Hooks/AdminHooks.php:123
+#: includes/Admin/SiteSettingsMenu.php:56
+#: includes/Admin/SiteSettingsMenu.php:68
+#: includes/Admin/SiteSettingsMenu.php:69
+#: includes/Hooks/AdminHooks.php:108
 msgid "Site Settings"
 msgstr "Webbplatsinställningar"
 
-#: includes/ContactForm/Modal.php:117
+#: includes/ContactForm/Modal.php:98
 msgid "Contact"
 msgstr "Kontakt"
 
-#: includes/ContactForm/Modal.php:118
+#: includes/ContactForm/Modal.php:99
 msgid "Close"
 msgstr "Stäng"
 
 #. translators: 1: opening <a> tag to the privacy policy (omitted if it isn't published yet), 2: closing </a> tag
-#: includes/ContactForm/Modal.php:132
+#: includes/ContactForm/Modal.php:111
 #, php-format
 msgid "We process your personal data to answer your message. Read more in our %1$sprivacy policy%2$s."
 msgstr "Vi behandlar dina personuppgifter för att kunna svara på ditt meddelande. Läs mer i vår %1$sintegritetspolicy%2$s."
 
-#: includes/ContactForm/PrivacyRequests.php:41
-#: includes/ContactForm/PrivacyRequests.php:50
-#: includes/ContactForm/PrivacyRequests.php:147
+#: includes/ContactForm/PrivacyRequests.php:34
+#: includes/ContactForm/PrivacyRequests.php:43
+#: includes/ContactForm/PrivacyRequests.php:140
 msgid "Contact form submissions"
 msgstr "Inskickade kontaktformulär"
 
-#: includes/ContactForm/PrivacyRequests.php:142
+#: includes/ContactForm/PrivacyRequests.php:135
 msgid "IP address"
 msgstr "IP-adress"
 
-#: includes/ContactForm/PrivacyRequests.php:143
+#: includes/ContactForm/PrivacyRequests.php:136
 msgid "Submitted"
 msgstr "Skickat"
 
-#: includes/ContactForm/Provider.php:78
+#: includes/ContactForm/Provider.php:60
 msgid "Contact Forms"
 msgstr "Kontaktformulär"
 
-#: includes/ContactForm/Provider.php:114
+#: includes/ContactForm/Provider.php:93
 msgid "Default Contact Form"
 msgstr "Standardkontaktformulär"
 
-#: includes/ContactForm/Provider.php:121
+#: includes/ContactForm/Provider.php:100
 msgid "Apply Consistent Contact Form Styling"
 msgstr "Tillämpa enhetlig formulärstil"
 
-#: includes/ContactForm/Provider.php:86
+#: includes/ContactForm/Provider.php:68
 msgid "GDPR"
 msgstr "GDPR"
 
-#: includes/ContactForm/Provider.php:153
+#: includes/ContactForm/Provider.php:128
 msgid "Contact Forms Subject to Retention"
 msgstr "Formulär som omfattas av rensningen"
 
-#: includes/ContactForm/Provider.php:160
+#: includes/ContactForm/Provider.php:135
 msgid "Delete submissions after this many days"
 msgstr "Radera inskickade formulär efter så här många dagar"
 
-#: includes/ContactForm/Provider.php:192
-#: includes/ContactForm/Provider.php:274
+#: includes/ContactForm/Provider.php:167
+#: includes/ContactForm/Provider.php:241
 msgid "No FluentForm forms found."
 msgstr "Inga FluentForm-formulär hittades."
 
-#: includes/ContactForm/Provider.php:206
+#: includes/ContactForm/Provider.php:181
 msgid "The form the sitewide \"#kontakt\" link/button opens in a lightbox."
 msgstr "Formuläret som sajtens länkar/knappar mot ankaret \"#kontakt\" öppnar i en lightbox."
 
-#: includes/ContactForm/Provider.php:228
+#: includes/ContactForm/Provider.php:200
 msgid "Maps FluentForm's own color/border-radius variables to this site's theme colors and applies additional styling fixes, on every FluentForm on the site."
 msgstr "Kopplar FluentForms egna färg-/hörnradievariabler till sajtens temafärger och tillämpar ytterligare stiljusteringar, på samtliga FluentForm-formulär på sajten."
 
-#: includes/ContactForm/Provider.php:289
+#: includes/ContactForm/Provider.php:256
 msgid "The daily retention cleanup and personal-data export/erase requests only ever touch these forms."
 msgstr "Den dagliga rensningen och begäranden om export/radering av personuppgifter rör bara dessa formulär."
 
-#: includes/ContactForm/Provider.php:307
+#: includes/ContactForm/Provider.php:272
 msgid "Blank or 0 = keep forever."
 msgstr "Tomt eller 0 = spara för alltid."
 
-#: includes/FluentFormValidation/Provider.php:72
+#: includes/FluentFormValidation/Provider.php:62
 msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)."
 msgstr "Ange ett giltigt svenskt personnummer (ÅÅMMDD-XXXX)."
 
-#: includes/Hardening/Provider.php:65
+#: includes/Hardening/Provider.php:47
 msgid "There is an error."
 msgstr "Ett fel har uppstått."
 
-#: includes/Hardening/Provider.php:180
-#: includes/Hardening/Provider.php:181
+#: includes/Hardening/Provider.php:160
+#: includes/Hardening/Provider.php:161
 msgid "Hardening"
 msgstr "Härdning"
 
-#: includes/Hardening/Provider.php:211
+#: includes/Hardening/Provider.php:191
 msgid "Disable author archives"
 msgstr "Inaktivera författararkiv"
 
-#: includes/Hardening/Provider.php:212
+#: includes/Hardening/Provider.php:192
 msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
 msgstr "Omdirigerar författararkivsidor till startsidan — användbart på sajter med en enda författare, eller för att undvika att användarnamn läcker via författar-URL:er."
 
-#: includes/Hardening/Provider.php:215
+#: includes/Hardening/Provider.php:195
 msgid "Redirect 404 pages to the homepage"
 msgstr "Omdirigera 404-sidor till startsidan"
 
-#: includes/Hardening/Provider.php:216
+#: includes/Hardening/Provider.php:196
 msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
 msgstr "Gäller bara utloggade besökare. Stäng av om sajten istället ska visa en riktig 404-sida."
 
-#: includes/Hardening/Provider.php:219
+#: includes/Hardening/Provider.php:199
 msgid "Remove jQuery Migrate"
 msgstr "Ta bort jQuery Migrate"
 
-#: includes/Hardening/Provider.php:220
+#: includes/Hardening/Provider.php:200
 msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
 msgstr "Stäng av om ett äldre plugin eller tema på sajten är beroende av jQuery Migrates kompatibilitetslager."
 
-#: includes/Hardening/Provider.php:223
+#: includes/Hardening/Provider.php:203
 msgid "Disable generated image sizes"
 msgstr "Inaktivera genererade bildstorlekar"
 
-#: includes/Hardening/Provider.php:224
+#: includes/Hardening/Provider.php:204
 msgid "Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress's own generated image sizes."
 msgstr "Hindrar WordPress från att generera ytterligare (responsiva) bildstorlekar och automatiskt skala stora uppladdningar. Stäng av om sajten är beroende av WordPress egna genererade bildstorlekar."
 
-#: includes/Hooks/AdminHooks.php:96
+#: includes/Hooks/AdminHooks.php:87
 msgid "Settings"
 msgstr "Inställningar"
 
-#: includes/Hooks/FrontendHooks.php:194
+#: includes/Hooks/FrontendHooks.php:177
 msgid "Page Editor"
 msgstr "Redigera sida"
 
 #. translators: %d is the number indicating minimum password length
-#: includes/Hooks/FrontendHooks.php:245
-#: includes/Hooks/FrontendHooks.php:277
+#: includes/Hooks/FrontendHooks.php:228
+#: includes/Hooks/FrontendHooks.php:260
 #, php-format
 msgid "ERROR: Password must be at least %d characters long."
 msgstr "FEL: Lösenordet måste bestå av minst %d tecken."
 
-#: includes/Settings/Manager.php:67
+#: includes/Settings/Manager.php:61
 msgid "General"
 msgstr "Allmänna"
 
-#: includes/Settings/Manager.php:104
+#: includes/Settings/Manager.php:98
 msgid "General Settings"
 msgstr "Allmänna inställningar"
 
-#: includes/Settings/Manager.php:110
+#: includes/Settings/Manager.php:104
 msgid "Add Page Editor Link"
 msgstr "Lägg till \"Redigera sida\" i menyn"
 
-#: includes/Settings/Manager.php:117
+#: includes/Settings/Manager.php:111
 msgid "Page Editor Link Target"
 msgstr "Mållänk för \"Redigera sida\""
 
-#: includes/Settings/Manager.php:124
+#: includes/Settings/Manager.php:118
 msgid "Minimum Password Length"
 msgstr "Minsta tillåtna antal tecken i lösenord"
 
-#: includes/Settings/Manager.php:131
+#: includes/Settings/Manager.php:125
 msgid "Prevent Non-Admins from Changing Passwords"
 msgstr "Förhindra att icke-administratörer byter lösenord"
 
-#: includes/Settings/Manager.php:138
+#: includes/Settings/Manager.php:132
 msgid "Hide Application Passwords for Non-Admins"
 msgstr "Dölj applikationslösenord för icke-administratörer"
 
-#: includes/Settings/Manager.php:145
+#: includes/Settings/Manager.php:139
 msgid "Remove Admin Bar Items for Non-Admins"
 msgstr "Ta bort länkar från administrationsfältet för icke-administratörer"
 
-#: includes/Settings/Manager.php:152
+#: includes/Settings/Manager.php:146
 msgid "Remove Default Dashboard Widgets"
 msgstr "Ta bort standardwidgetar från adminpanelen"
 
 #. translators: %s is the user role name (e.g. "Editor").
-#: includes/Settings/Manager.php:174
-#: includes/Settings/Manager.php:181
+#: includes/Settings/Manager.php:168
+#: includes/Settings/Manager.php:175
 #, php-format
 msgid "%s Settings"
 msgstr "Inställningar för %s"
 
-#: includes/Settings/Manager.php:201
+#: includes/Settings/Manager.php:195
 msgid "Settings have been reset to defaults."
 msgstr "Inställningarna har återställts till standardvärden."
 
-#: includes/Settings/Manager.php:485
+#: includes/Settings/Manager.php:410
 msgid "Configure general admin panel settings."
 msgstr "Ange allmänna inställningar för adminpanelen."
 
-#: includes/Settings/Manager.php:495
+#: includes/Settings/Manager.php:420
 msgid "Configure settings for each user role."
 msgstr "Ange inställningar för respektive användarroll."
 
-#: includes/Settings/Manager.php:507
+#: includes/Settings/Manager.php:432
 msgid "Adds a link to the front page editor in the admin menu."
 msgstr "Lägger till länken \"Redigera sida\" i administratörsmenyn."
 
-#: includes/Settings/Manager.php:528
+#: includes/Settings/Manager.php:453
 msgid "The link the \"Page Editor\" admin menu item points to, relative to the site root."
 msgstr "Länken som menyalternativet \"Redigera sida\" pekar på, relativt sajtens rot."
 
-#: includes/Settings/Manager.php:546
+#: includes/Settings/Manager.php:471
 msgid "Minimum required characters for user passwords."
 msgstr "Minsta antal tillåtna tecken för användarnas lösenord."
 
-#: includes/Settings/Manager.php:557
+#: includes/Settings/Manager.php:482
 msgid "Prevents non-admin users from changing their passwords."
 msgstr "Tar bort möjligheten att byta lösenord för icke-administratörer."
 
-#: includes/Settings/Manager.php:567
+#: includes/Settings/Manager.php:492
 msgid "Hides application passwords section for non-admin users."
 msgstr "Döljer applikationslösenord för icke-administratörer."
 
-#: includes/Settings/Manager.php:577
+#: includes/Settings/Manager.php:502
 msgid "Removes comments and new content links from admin bar for non-admins."
 msgstr "Tar bort länkar till kommentarer och nytt innehåll från administrationsfältet för icke-administratörer."
 
-#: includes/Settings/Manager.php:587
+#: includes/Settings/Manager.php:512
 msgid "Removes default dashboard widgets (Activity, Quick Draft, etc.)."
 msgstr "Tar bort standardwidgetar (Aktivitet, Snabbutkast etc.)"
 
-#: includes/Settings/Manager.php:608
+#: includes/Settings/Manager.php:532
 msgid "Login Redirect"
 msgstr "Omdirigering efter inloggning"
 
-#: includes/Settings/Manager.php:611
+#: includes/Settings/Manager.php:535
 msgid "-- Select Redirect URL --"
 msgstr "-- Välj sida för omdirigering --"
 
-#: includes/Settings/Manager.php:612
+#: includes/Settings/Manager.php:536
 msgid "-- Front Page --"
 msgstr "-- Startsida --"
 
-#: includes/Settings/Manager.php:617
+#: includes/Settings/Manager.php:541
 msgid "URL to redirect this user role to after login."
 msgstr "Sida som skall visas för denna användarroll efter inloggning."
 
-#: includes/Settings/Manager.php:620
+#: includes/Settings/Manager.php:544
 msgid "Default Admin Page"
 msgstr "Startsida för adminpanelen"
 
-#: includes/Settings/Manager.php:625
+#: includes/Settings/Manager.php:549
 msgid "-- Select Default Page --"
 msgstr "-- Välj startsida --"
 
-#: includes/Settings/Manager.php:630
+#: includes/Settings/Manager.php:554
 msgid "Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below)."
 msgstr "Sida som visas när den här användarrollen besöker /wp-admin/ (måste finnas med bland tillåtna menyalternativ)."
 
-#: includes/Settings/Manager.php:655
+#: includes/Settings/Manager.php:570
 msgid "Allowed Menu Items"
 msgstr "Tillåtna menyalternativ"
 
-#: includes/Settings/Manager.php:667
+#: includes/Settings/Manager.php:582
 msgid "Select which admin menu items should be visible to this user role."
 msgstr "Välj vilka menyalternativ som ska visas i administratörsmenyn för den här användarrollen."
 
-#: includes/SiteSettings/Provider.php:338
+#: includes/SiteSettings/Provider.php:272
 msgid "No pages found."
 msgstr "Inga sidor hittades."
 
-#: includes/SiteSettings/Provider.php:381
+#: includes/SiteSettings/Provider.php:312
 msgid "Select image"
 msgstr "Välj bild"
 
-#: includes/SiteSettings/Provider.php:382
+#: includes/SiteSettings/Provider.php:313
 msgid "Use this image"
 msgstr "Använd denna bild"
 
-#: includes/SiteSettings/Provider.php:383
+#: includes/SiteSettings/Provider.php:314
 msgid "Choose image"
 msgstr "Välj bild"
 
-#: includes/SiteSettings/Provider.php:388
+#: includes/SiteSettings/Provider.php:319
 msgid "Remove image"
 msgstr "Ta bort bild"
 
-#: includes/SiteSettings/Repository.php:40
+#: includes/SiteSettings/Repository.php:33
 msgid "Enable SEO Output"
 msgstr "Aktivera SEO-output"
 
-#: includes/SiteSettings/Repository.php:41
+#: includes/SiteSettings/Repository.php:34
 msgid "SEO title"
 msgstr "SEO-titel"
 
-#: includes/SiteSettings/Repository.php:42
+#: includes/SiteSettings/Repository.php:35
 msgid "Meta description"
 msgstr "Metabeskrivning"
 
-#: includes/SiteSettings/Repository.php:43
+#: includes/SiteSettings/Repository.php:36
 msgid "Share image"
 msgstr "Delningsbild"
 
-#: includes/SiteSettings/Repository.php:44
+#: includes/SiteSettings/Repository.php:37
 msgid "Open Graph locale (e.g. sv_SE)"
 msgstr "Open Graph-språkkod (t.ex. sv_SE)"
 
-#: includes/SiteSettings/Repository.php:45
+#: includes/SiteSettings/Repository.php:38
 msgid "Theme color"
 msgstr "Temafärg"
 
-#: includes/SiteSettings/Repository.php:46
+#: includes/SiteSettings/Repository.php:39
 msgid "Background color"
 msgstr "Bakgrundsfärg"
 
-#: includes/SiteSettings/Repository.php:47
+#: includes/SiteSettings/Repository.php:40
 msgid "Restrict Sitemap to Selected Pages"
 msgstr "Begränsa sitemap till valda sidor"
 
-#: includes/SiteSettings/Repository.php:48
+#: includes/SiteSettings/Repository.php:41
 msgid "Pages Included in Sitemap"
 msgstr "Sidor som ingår i sitemap"
 
-#: includes/SiteSettings/Repository.php:50
+#: includes/SiteSettings/Repository.php:43
 msgid "Business name"
 msgstr "Företagsnamn"
 
-#: includes/SiteSettings/Repository.php:51
+#: includes/SiteSettings/Repository.php:44
 msgid "Business type (schema.org)"
 msgstr "Verksamhetstyp (schema.org)"
 
-#: includes/SiteSettings/Repository.php:52
+#: includes/SiteSettings/Repository.php:45
 msgid "Person name"
 msgstr "Personnamn"
 
-#: includes/SiteSettings/Repository.php:53
+#: includes/SiteSettings/Repository.php:46
 msgid "Job title"
 msgstr "Titel"
 
-#: includes/SiteSettings/Repository.php:54
+#: includes/SiteSettings/Repository.php:47
 msgid "Email"
 msgstr "E-post"
 
-#: includes/SiteSettings/Repository.php:55
+#: includes/SiteSettings/Repository.php:48
 msgid "Phone"
 msgstr "Telefon"
 
-#: includes/Swish/Provider.php:68
+#: includes/Swish/Provider.php:66
 msgid "Swish number"
 msgstr "Swish-nummer"
 
-#: includes/SiteSettings/Repository.php:68
+#: includes/SiteSettings/Repository.php:53
 msgid "Street address"
 msgstr "Gatuadress"
 
-#: includes/SiteSettings/Repository.php:69
+#: includes/SiteSettings/Repository.php:54
 msgid "Postal code"
 msgstr "Postnummer"
 
-#: includes/SiteSettings/Repository.php:70
+#: includes/SiteSettings/Repository.php:55
 msgid "City"
 msgstr "Ort"
 
-#: includes/SiteSettings/Repository.php:71
+#: includes/SiteSettings/Repository.php:56
 msgid "Region"
 msgstr "Region"
 
-#: includes/SiteSettings/Repository.php:72
+#: includes/SiteSettings/Repository.php:57
 msgid "Country"
 msgstr "Land"
 
-#: includes/SiteSettings/Repository.php:73
+#: includes/SiteSettings/Repository.php:58
 msgid "Latitude"
 msgstr "Latitud"
 
-#: includes/SiteSettings/Repository.php:74
+#: includes/SiteSettings/Repository.php:59
 msgid "Longitude"
 msgstr "Longitud"
 
-#: includes/SiteSettings/Repository.php:76
+#: includes/SiteSettings/Repository.php:61
 msgid "Facebook URL"
 msgstr "Facebook-URL"
 
-#: includes/SiteSettings/Repository.php:77
+#: includes/SiteSettings/Repository.php:62
 msgid "Instagram URL"
 msgstr "Instagram-URL"
 
-#: includes/SiteSettings/Repository.php:81
+#: includes/SiteSettings/Repository.php:65
 msgid "X (Twitter) URL"
 msgstr "X (Twitter)-URL"
 
-#: includes/SiteSettings/Repository.php:91
+#: includes/SiteSettings/Repository.php:75
 msgid "SEO"
 msgstr "SEO"
 
-#: includes/SiteSettings/Repository.php:92
+#: includes/SiteSettings/Repository.php:76
 msgid "Business & Contact"
 msgstr "Företag & Kontakt"
 
-#: includes/SiteSettings/Repository.php:93
+#: includes/SiteSettings/Repository.php:77
 msgid "Address"
 msgstr "Adress"
 
-#: includes/SiteSettings/Repository.php:94
+#: includes/SiteSettings/Repository.php:78
 msgid "Social Media"
 msgstr "Sociala medier"
 
-#: includes/SupportGenix/Provider.php:110
-#: includes/SupportGenix/Provider.php:111
+#: includes/SupportGenix/Provider.php:90
+#: includes/SupportGenix/Provider.php:91
 msgid "Support Tickets"
 msgstr "Supportärenden"
 
-#: includes/SupportGenix/Provider.php:159
+#: includes/SupportGenix/Provider.php:138
 msgid "Apply this site's default settings for Support Genix."
 msgstr "Tillämpa sajtens standardinställningar för Support Genix."
 
-#: includes/SupportGenix/Provider.php:164
+#: includes/SupportGenix/Provider.php:143
 msgid "Apply Defaults"
 msgstr "Tillämpa standardvärden"
 
-#: includes/SupportGenix/Provider.php:181
+#: includes/SupportGenix/Provider.php:160
 msgid "Security check failed"
 msgstr "Säkerhetskontrollen misslyckades"
 
-#: includes/SupportGenix/Provider.php:203
+#: includes/SupportGenix/Provider.php:182
 msgid "Support Genix defaults applied successfully!"
 msgstr "Support Genix standardinställningar har tillämpats!"
 
-#: includes/SupportGenix/Provider.php:205
+#: includes/SupportGenix/Provider.php:184
 msgid "There was an error applying the Support Genix defaults."
 msgstr "Ett fel uppstod när Support Genix standardinställningar skulle tillämpas."
 
-#: includes/SupportGenix/Provider.php:429
+#: includes/SupportGenix/Provider.php:385
 msgid "Ticket"
 msgstr "Ärende"
 
-#: includes/SupportGenix/Provider.php:521
+#: includes/SupportGenix/Provider.php:474
 msgid "You are not authorized to edit this page."
 msgstr "Du har inte behörighet att redigera den här sidan."
 
-#: includes/Umami/Provider.php:57
-#: includes/Umami/Provider.php:58
+#: includes/Umami/Provider.php:42
+#: includes/Umami/Provider.php:43
 msgid "Analytics"
 msgstr "Statistik"
 
-#: includes/Umami/Provider.php:79
+#: includes/Umami/Provider.php:63
 msgid "Umami ID is not set. Please configure it in the settings."
 msgstr "Umami-ID är inte inställt. Konfigurera det i inställningarna."
 
-#: includes/Umami/Provider.php:101
+#: includes/Umami/Provider.php:85
 msgid "Umami Settings"
 msgstr "Umami-inställningar"
 
-#: includes/Umami/Provider.php:102
+#: includes/Umami/Provider.php:86
 msgid "Umami"
 msgstr "Umami"
 
-#: includes/Umami/Provider.php:132
+#: includes/Umami/Provider.php:116
 msgid "Umami Site"
 msgstr "Umami-sajt"
 
-#: includes/Umami/Provider.php:139
+#: includes/Umami/Provider.php:123
 msgid "Umami ID"
 msgstr "Umami-ID"
 
-#: includes/Utilities/SettingsRenderer.php:105
+#: includes/Utilities/SettingsRenderer.php:85
 msgid "Reset to Defaults"
 msgstr "Återställ till standardvärden"
 
-#: includes/ContactForm/Altcha.php:209
+#: includes/ContactForm/Altcha.php:172
 msgid "Spam verification failed, please reload the page and try again."
 msgstr "Spamverifieringen misslyckades, ladda om sidan och försök igen."
 
-#: includes/ContactForm/Provider.php:128
+#: includes/ContactForm/Provider.php:107
 msgid "Enable ALTCHA Spam Protection"
 msgstr "Aktivera ALTCHA-spamskydd"
 
-#: includes/ContactForm/Provider.php:252
+#: includes/ContactForm/Provider.php:221
 msgid "Adds invisible, no-configuration spam protection to every FluentForm on the site. Turn off if this site already handles spam protection another way (e.g. its own plugin)."
 msgstr "Lägger till osynligt spamskydd utan konfiguration på samtliga FluentForm-formulär på sajten. Stäng av om sajten redan hanterar spamskydd på annat sätt (t.ex. med ett eget plugin)."
 
-#: includes/Forms/Menu.php:55
-#: includes/Forms/Menu.php:56
-#: includes/Forms/Menu.php:94
+#: includes/Forms/Menu.php:44
+#: includes/Forms/Menu.php:45
+#: includes/Forms/Menu.php:78
 msgid "Forms"
 msgstr "Formulär"
 
-#: includes/Swish/Provider.php:46
+#: includes/Swish/Provider.php:44
 msgid "Swish"
 msgstr "Swish"
 
-#: includes/Swish/Provider.php:69
+#: includes/Swish/Provider.php:67
 msgid "Prefilled amount"
 msgstr "Förifyllt belopp"
 
-#: includes/Swish/Provider.php:70
+#: includes/Swish/Provider.php:68
 msgid "Prefilled message"
 msgstr "Förifyllt meddelande"
 
-#: includes/Swish/Provider.php:75
+#: includes/Swish/Provider.php:73
 msgid "Any link with the address \"#swish\" anywhere on the site opens this directly in the Swish app on a phone, or shows this QR code on a device that can't run it."
 msgstr "Alla länkar med adressen \"#swish\" någonstans på sajten öppnar detta direkt i Swish-appen på en mobil, eller visar denna QR-kod på en enhet som inte kan köra den."
 
-#: includes/Swish/Provider.php:94
+#: includes/Swish/Provider.php:92
 msgid "Current Swish QR code"
 msgstr "Aktuell Swish QR-kod"
 
-#: includes/Swish/Provider.php:115
+#: includes/Swish/Provider.php:111
 msgid "Blank = no amount prefilled."
 msgstr "Tomt = inget belopp förifyllt."
 
-#: includes/Swish/Provider.php:140
+#: includes/Swish/Provider.php:136
 msgid "Editable by the payer after scanning"
 msgstr "Redigerbart av betalaren efter skanning"
 
-#: includes/Swish/QrCodeGenerator.php:67
+#: includes/Swish/QrCodeGenerator.php:57
 msgid "The Swish QR code could not be regenerated — the previous one (if any) is still in use. Try saving again."
 msgstr "Swish QR-koden kunde inte genereras om — den tidigare (om någon finns) används fortfarande. Försök spara igen."
 
-#: assets/js/amrf-fluentform-validation.js:11
+#: assets/js/amrf-fluentform-validation.js:6
 msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)"
 msgstr "Fyll i ett giltigt svenskt personnummer (ÅÅMMDD-XXXX)"
 
-#: assets/js/amrf-fluentform-validation.js:15
+#: assets/js/amrf-fluentform-validation.js:10
 msgid "Personal Identity Number is required"
 msgstr "Personnummer är obligatoriskt"
 
-#: includes/Settings/Manager.php:637
+#: includes/Settings/Manager.php:558
 msgid "Form Entries Access"
 msgstr "Åtkomst till formulärposter"
 
-#: includes/Settings/Manager.php:638
+#: includes/Settings/Manager.php:559
 msgid "Enable to allow this user role to view and manage Fluent Forms entries (view, delete, mark read/unread, favorite) — not forms themselves or site-wide Fluent Forms settings."
 msgstr "Aktivera för att ge den här användarrollen behörighet att visa och hantera poster i Fluent Forms (visa, radera, markera läst/oläst, favorit) — inte formulären själva eller Fluent Forms sajtomfattande inställningar."
 
-#: includes/Settings/Manager.php:650
+#: includes/Settings/Manager.php:565
 msgid "Site Settings Access"
 msgstr "Åtkomst till webbplatsinställningar"
 
-#: includes/Settings/Manager.php:651
+#: includes/Settings/Manager.php:566
 msgid "Enable to give this user role access to the Site Settings menu (SEO, Business & Contact, Address, Social Media, Forms/GDPR/Swish) and to native theme menu/design editing (Appearance → Menus/Customize on a classic theme, or the Site Editor on a block theme)."
 msgstr "Aktivera för att ge den här användarrollen åtkomst till menyn Webbplatsinställningar (SEO, Företag & Kontakt, Adress, Sociala medier, Formulär/GDPR/Swish) samt till WordPress egen temameny-/designredigering (Utseende → Menyer/Anpassa i ett klassiskt tema, eller webbplatsredigeraren i ett blocktema)."
 
-#: includes/SiteSettings/Provider.php:124
+#: includes/SiteSettings/Provider.php:96
 msgid "Discourage search engines from indexing this site"
 msgstr "Avskräck sökmotorer från att indexera den här webbplatsen"
 
-#: includes/SiteSettings/Provider.php:240
+#: includes/SiteSettings/Provider.php:199
 msgid "Mirrors the \"Discourage search engines from indexing this site\" setting under Settings → Reading and applies immediately. While this is on, the rest of this tab is locked, since none of it has any effect until search engines are allowed back in."
 msgstr "Speglar inställningen \"Avskräck sökmotorer från att indexera den här webbplatsen\" under Inställningar → Läsning och tillämpas omedelbart. Så länge den är aktiverad är resten av fliken låst, eftersom inget av det har någon effekt förrän sökmotorer släpps in igen."
 
-#: includes/SiteSettings/Provider.php:263
+#: includes/SiteSettings/Provider.php:217
 msgid "You are not allowed to change this setting."
 msgstr "Du har inte behörighet att ändra den här inställningen."

@@ -93,13 +93,19 @@ class Repository
 
     /**
      * Starting values for the theme_color/background_color color pickers,
-     * read from the active theme's own theme.json palette instead of
-     * defaulting to blank — <input type="color"> renders an empty value as
-     * black, which looks like a real (wrong) choice rather than "unset".
-     * Only ever fills the gap before this option has been saved once: the
-     * moment the SEO tab is submitted, sanitize() stores whatever the color
-     * picker held (the theme default, or the user's own pick) as a literal
-     * value from then on, per Settings API normal behavior.
+     * read from the active theme's own theme.json instead of defaulting to
+     * blank — <input type="color"> renders an empty value as black, which
+     * looks like a real (wrong) choice rather than "unset". Only ever
+     * fills the gap before this option has been saved once: the moment the
+     * SEO tab is submitted, sanitize() stores whatever the color picker
+     * held (the theme default, or the user's own pick) as a literal value
+     * from then on, per Settings API normal behavior.
+     *
+     * background_color prefers the theme's custom.contactFormBackground
+     * token (see ptsussis-theme's theme.json) over styles.color.background
+     * — the page's own background and a sensible manifest/splash-screen
+     * background are often two different colors, and a theme that cares
+     * to distinguish them can say so explicitly.
      *
      * WP_Theme_JSON_Resolver needs WP 5.8+, past this plugin's 5.6 floor —
      * class_exists guards it.
@@ -112,16 +118,44 @@ class Repository
             return ['theme_color' => '#000000', 'background_color' => '#ffffff'];
         }
 
-        $palette = \WP_Theme_JSON_Resolver::get_merged_data()->get_settings()['color']['palette']['theme'] ?? [];
+        $settings = \WP_Theme_JSON_Resolver::get_merged_data()->get_settings();
+        $palette = $settings['color']['palette']['theme'] ?? [];
         $by_slug = array_column($palette, 'color', 'slug');
         $first = $palette[0]['color'] ?? '';
 
         $theme_color = $by_slug['primary'] ?? $by_slug['accent-1'] ?? $first;
-        $background_color = self::resolveThemeBackgroundColor($by_slug) ?? $by_slug['base'] ?? $by_slug['background'] ?? '';
+        $background_color = self::resolveColorReference($settings['custom']['contactFormBackground'] ?? '', $by_slug)
+            ?? self::resolveThemeBackgroundColor($by_slug)
+            ?? $by_slug['base'] ?? $by_slug['background'] ?? '';
 
         return [
             'theme_color' => $theme_color !== '' ? $theme_color : '#000000',
             'background_color' => $background_color !== '' ? $background_color : '#ffffff',
+        ];
+    }
+
+    /**
+     * The active theme's own primary/secondary palette colors — the
+     * sensible default for the amrf_site_colors filter (Branding\
+     * Provider's console badge, SupportGenix\Provider's ticket-portal
+     * color shadowing), so both work for any theme out of the box instead
+     * of requiring it to hook that filter itself. '' for either slug the
+     * theme doesn't declare — callers fall back to their own default.
+     *
+     * @return array{primary: string, secondary: string}
+     */
+    public static function getThemeBrandColors(): array
+    {
+        if (!class_exists('WP_Theme_JSON_Resolver')) {
+            return ['primary' => '', 'secondary' => ''];
+        }
+
+        $palette = \WP_Theme_JSON_Resolver::get_merged_data()->get_settings()['color']['palette']['theme'] ?? [];
+        $by_slug = array_column($palette, 'color', 'slug');
+
+        return [
+            'primary' => $by_slug['primary'] ?? '',
+            'secondary' => $by_slug['secondary'] ?? '',
         ];
     }
 
@@ -137,19 +171,65 @@ class Repository
     {
         $background = \WP_Theme_JSON_Resolver::get_merged_data()->get_raw_data()['styles']['color']['background'] ?? '';
 
-        if ($background === '') {
+        return self::resolveColorReference($background, $by_slug);
+    }
+
+    /**
+     * A theme.json color value is either a literal hex, a
+     * var(--wp--preset--color--slug) reference, or empty/unset.
+     *
+     * @param array<string, string> $by_slug Palette slug => hex color.
+     * @return string|null
+     */
+    private static function resolveColorReference(string $value, array $by_slug): ?string
+    {
+        if ($value === '') {
             return null;
         }
 
-        if (preg_match('/^#[0-9a-f]{3,8}$/i', $background)) {
-            return $background;
+        if (preg_match('/^#[0-9a-f]{3,8}$/i', $value)) {
+            return $value;
         }
 
-        if (preg_match('/--wp--preset--color--([a-z0-9-]+)/', $background, $matches)) {
+        if (preg_match('/--wp--preset--color--([a-z0-9-]+)/', $value, $matches)) {
             return $by_slug[$matches[1]] ?? null;
         }
 
         return null;
+    }
+
+    /**
+     * The active theme's own sitewide button design, straight from
+     * theme.json's styles.elements.button — whatever ptsussis-theme (or
+     * any theme declaring this standard schema) says its buttons look
+     * like, so a plugin-rendered button (the contact form's submit
+     * button) can match it without either side hardcoding the other's
+     * colors/fonts. Values are passed through as-is (var() references
+     * included) — unlike getThemeDefaultColors(), nothing here needs
+     * resolving to a literal hex, it only ever becomes CSS.
+     *
+     * @return array<string, string> CSS custom property name => value,
+     *                                 only for whatever the theme actually
+     *                                 declared.
+     */
+    public static function getThemeButtonStyle(): array
+    {
+        if (!class_exists('WP_Theme_JSON_Resolver')) {
+            return [];
+        }
+
+        $button = \WP_Theme_JSON_Resolver::get_merged_data()->get_raw_data()['styles']['elements']['button'] ?? [];
+
+        return array_filter([
+            '--amrf-button-background' => $button['color']['background'] ?? '',
+            '--amrf-button-text' => $button['color']['text'] ?? '',
+            '--amrf-button-font-family' => $button['typography']['fontFamily'] ?? '',
+            '--amrf-button-font-weight' => $button['typography']['fontWeight'] ?? '',
+            '--amrf-button-font-size' => $button['typography']['fontSize'] ?? '',
+            '--amrf-button-border-radius' => $button['border']['radius'] ?? '',
+            '--amrf-button-shadow' => $button['shadow'] ?? '',
+            '--amrf-button-hover-background' => $button[':hover']['color']['background'] ?? '',
+        ]);
     }
 
     /**

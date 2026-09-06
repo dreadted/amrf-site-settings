@@ -19,5 +19,6 @@ class Bootstrap
 
         new Provider();
         new SeoOutput();
+        new Favicons();
     }
 }
