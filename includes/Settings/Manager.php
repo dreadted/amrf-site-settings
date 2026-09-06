@@ -248,6 +248,9 @@ class Manager
 				} else $current['user_group_settings'][$role]['allowed_menu_items'] = [];
 
 				$current['user_group_settings'][$role]['site_menus_cap'] = isset($role_settings['site_menus_cap']);
+				$this->syncSiteSettingsAllowedMenuItems($current, $role);
+				$this->applySiteMenusCapToExistingUsers($role, $current['user_group_settings'][$role]['site_menus_cap']);
+
 				$current['user_group_settings'][$role]['fluentform_entries_access'] = isset($role_settings['fluentform_entries_access']);
 				$this->syncFluentFormEntriesAllowedMenuItem($current, $role);
 				$this->applyFluentFormEntriesAccessToExistingUsers($role, $current['user_group_settings'][$role]['fluentform_entries_access']);
@@ -301,6 +304,78 @@ class Manager
 			}
 
 			$current['user_group_settings'][$role_slug]['allowed_menu_items'] = $allowed;
+		}
+	}
+
+	/**
+	 * Keeps the plugin's own "Site Settings" (amrf-site-settings: SEO/
+	 * Business & Contact/Address/Social Media) and "Forms" (amrf-site-
+	 * settings-gdpr: Contact Forms/GDPR/Swish — see Forms\Menu::PAGE_SLUG's
+	 * own docblock for why that page's slug still says "gdpr") submenu
+	 * pages in sync with the site_menus_cap toggle for the role being
+	 * saved, same reasoning and same "only touches the role tab actually
+	 * being saved" caveat as syncFluentFormEntriesAllowedMenuItem() — both
+	 * pages already require edit_theme_options (Admin\SiteSettingsMenu,
+	 * Forms\Menu), so without this a role granted the capability would
+	 * still get 403'd straight back out by this plugin's OWN
+	 * allowed_menu_items filter.
+	 *
+	 * The displayed toggle label changed to "Site Settings Access" (was
+	 * "Site Menus Access") once it became clear these two pages, not just
+	 * native theme menu editing, were the toggle's main draw for most
+	 * admins — but the setting itself stays keyed as site_menus_cap, same
+	 * "never rename the stored key/slug" reasoning as Forms\Menu::PAGE_SLUG:
+	 * an already-saved allowed_menu_items list is matched by exact string
+	 * elsewhere (Hooks\FrontendHooks::init()) and would silently break on
+	 * every site already using this plugin otherwise.
+	 *
+	 * @param array  $current Settings array being built, modified in place.
+	 * @param string $role    Role slug whose tab was just submitted.
+	 * @return void
+	 */
+	private function syncSiteSettingsAllowedMenuItems(array &$current, string $role): void
+	{
+		$menuSlugs = ['amrf-site-settings', 'amrf-site-settings-gdpr'];
+		$allowed = $current['user_group_settings'][$role]['allowed_menu_items'];
+
+		if (!empty($current['user_group_settings'][$role]['site_menus_cap'])) {
+			$allowed = array_values(array_unique(array_merge($allowed, $menuSlugs)));
+		} else {
+			$allowed = array_values(array_diff($allowed, $menuSlugs));
+		}
+
+		$current['user_group_settings'][$role]['allowed_menu_items'] = $allowed;
+	}
+
+	/**
+	 * Applies (or revokes) edit_theme_options on every EXISTING account in
+	 * $role immediately, for exactly the same reason
+	 * applyFluentFormEntriesAccessToExistingUsers() does: relying solely on
+	 * FrontendHooks::setCapabilities()'s lazy per-account, every-admin-
+	 * request re-sync leaves a window on toggle-OFF where a stale-
+	 * capability account can still pass WordPress's page-access check for
+	 * one more request (falling back to a parent menu's capability once
+	 * this plugin's own allowed_menu_items filter has already stripped the
+	 * specific submenu entry) — producing the exact same broken-render
+	 * symptoms (null title passed into wp-admin/admin-header.php's
+	 * strip_tags() call, "headers already sent" once output has started)
+	 * confirmed live for fluentform_entries_access. Saving immediately here
+	 * closes that window for every account that already exists at save
+	 * time; the lazy sync still covers accounts created after this save.
+	 *
+	 * @param string $role    Role slug whose tab was just submitted.
+	 * @param bool   $enabled Whether site_menus_cap is now on.
+	 * @return void
+	 */
+	private function applySiteMenusCapToExistingUsers(string $role, bool $enabled): void
+	{
+		foreach (get_users(['role' => $role, 'fields' => 'ID']) as $userId) {
+			$user = new \WP_User($userId);
+			if ($enabled) {
+				$user->add_cap('edit_theme_options');
+			} else {
+				$user->remove_cap('edit_theme_options');
+			}
 		}
 	}
 
@@ -564,9 +639,16 @@ class Manager
 			echo '</div>';
 		}
 
-		// Site Menus Capability
-		echo '<div class="setting-row"><h4>' . esc_html__('Site Menus Access', 'amrf-admin') . '</h4>';
-		$this->renderCheckbox('site_menus_cap', esc_html__('Enable to allow this user role to access and edit site menus.', 'amrf-admin'), ['user_group_settings', $role]);
+		// Site Settings Capability — still stored/keyed as site_menus_cap
+		// (see syncSiteSettingsAllowedMenuItems()'s docblock for why the
+		// internal key stays put even though the displayed label changed)
+		// and still grants plain WordPress edit_theme_options under the
+		// hood, same as ever — that's also what gates native theme menu/
+		// design editing (Appearance → Menus/Customize on a classic theme,
+		// or the Site Editor on a block theme), which is why one checkbox
+		// still covers both.
+		echo '<div class="setting-row"><h4>' . esc_html__('Site Settings Access', 'amrf-admin') . '</h4>';
+		$this->renderCheckbox('site_menus_cap', esc_html__('Enable to give this user role access to the Site Settings menu (SEO, Business & Contact, Address, Social Media, Forms/GDPR/Swish) and to native theme menu/design editing (Appearance → Menus/Customize on a classic theme, or the Site Editor on a block theme).', 'amrf-admin'), ['user_group_settings', $role]);
 		echo '</div>';
 
 		// Allowed Menu Items

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-06T06:59:24+00:00\n"
+"POT-Creation-Date: 2026-09-06T07:35:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -186,13 +186,13 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: includes/Hooks/FrontendHooks.php:186
+#: includes/Hooks/FrontendHooks.php:194
 msgid "Page Editor"
 msgstr ""
 
 #. translators: %d is the number indicating minimum password length
-#: includes/Hooks/FrontendHooks.php:237
-#: includes/Hooks/FrontendHooks.php:269
+#: includes/Hooks/FrontendHooks.php:245
+#: includes/Hooks/FrontendHooks.php:277
 #, php-format
 msgid "ERROR: Password must be at least %d characters long."
 msgstr ""
@@ -244,91 +244,91 @@ msgstr ""
 msgid "Settings have been reset to defaults."
 msgstr ""
 
-#: includes/Settings/Manager.php:353
+#: includes/Settings/Manager.php:485
 msgid "Configure general admin panel settings."
 msgstr ""
 
-#: includes/Settings/Manager.php:363
+#: includes/Settings/Manager.php:495
 msgid "Configure settings for each user role."
 msgstr ""
 
-#: includes/Settings/Manager.php:375
+#: includes/Settings/Manager.php:507
 msgid "Adds a link to the front page editor in the admin menu."
 msgstr ""
 
-#: includes/Settings/Manager.php:396
+#: includes/Settings/Manager.php:528
 msgid "The link the \"Page Editor\" admin menu item points to, relative to the site root."
 msgstr ""
 
-#: includes/Settings/Manager.php:414
+#: includes/Settings/Manager.php:546
 msgid "Minimum required characters for user passwords."
 msgstr ""
 
-#: includes/Settings/Manager.php:425
+#: includes/Settings/Manager.php:557
 msgid "Prevents non-admin users from changing their passwords."
 msgstr ""
 
-#: includes/Settings/Manager.php:435
+#: includes/Settings/Manager.php:567
 msgid "Hides application passwords section for non-admin users."
 msgstr ""
 
-#: includes/Settings/Manager.php:445
+#: includes/Settings/Manager.php:577
 msgid "Removes comments and new content links from admin bar for non-admins."
 msgstr ""
 
-#: includes/Settings/Manager.php:455
+#: includes/Settings/Manager.php:587
 msgid "Removes default dashboard widgets (Activity, Quick Draft, etc.)."
 msgstr ""
 
-#: includes/Settings/Manager.php:476
+#: includes/Settings/Manager.php:608
 msgid "Login Redirect"
 msgstr ""
 
-#: includes/Settings/Manager.php:479
+#: includes/Settings/Manager.php:611
 msgid "-- Select Redirect URL --"
 msgstr ""
 
-#: includes/Settings/Manager.php:480
+#: includes/Settings/Manager.php:612
 msgid "-- Front Page --"
 msgstr ""
 
-#: includes/Settings/Manager.php:485
+#: includes/Settings/Manager.php:617
 msgid "URL to redirect this user role to after login."
 msgstr ""
 
-#: includes/Settings/Manager.php:488
+#: includes/Settings/Manager.php:620
 msgid "Default Admin Page"
 msgstr ""
 
-#: includes/Settings/Manager.php:493
+#: includes/Settings/Manager.php:625
 msgid "-- Select Default Page --"
 msgstr ""
 
-#: includes/Settings/Manager.php:498
+#: includes/Settings/Manager.php:630
 msgid "Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below)."
 msgstr ""
 
-#: includes/Settings/Manager.php:505
+#: includes/Settings/Manager.php:637
 msgid "Form Entries Access"
 msgstr ""
 
-#: includes/Settings/Manager.php:506
+#: includes/Settings/Manager.php:638
 msgid "Enable to allow this user role to view and manage Fluent Forms entries (view, delete, mark read/unread, favorite) — not forms themselves or site-wide Fluent Forms settings."
 msgstr ""
 
-#: includes/Settings/Manager.php:511
-msgid "Site Menus Access"
+#: includes/Settings/Manager.php:650
+msgid "Site Settings Access"
 msgstr ""
 
-#: includes/Settings/Manager.php:512
-msgid "Enable to allow this user role to access and edit site menus."
+#: includes/Settings/Manager.php:651
+msgid "Enable to give this user role access to the Site Settings menu (SEO, Business & Contact, Address, Social Media, Forms/GDPR/Swish) and to native theme menu/design editing (Appearance → Menus/Customize on a classic theme, or the Site Editor on a block theme)."
 msgstr ""
 
-#: includes/Settings/Manager.php:516
+#: includes/Settings/Manager.php:655
 msgid "Allowed Menu Items"
 msgstr ""
 
-#: includes/Settings/Manager.php:528
+#: includes/Settings/Manager.php:667
 msgid "Select which admin menu items should be visible to this user role."
 msgstr ""
 
