@@ -200,6 +200,7 @@ class Repository
             '--amrf-button-text' => $button['color']['text'] ?? '',
             '--amrf-button-font-family' => $button['typography']['fontFamily'] ?? '',
             '--amrf-button-font-weight' => $button['typography']['fontWeight'] ?? '',
+            '--amrf-button-font-size' => $button['typography']['fontSize'] ?? '',
             '--amrf-button-border-radius' => $button['border']['radius'] ?? '',
             '--amrf-button-shadow' => $button['shadow'] ?? '',
             '--amrf-button-hover-background' => $button[':hover']['color']['background'] ?? '',
