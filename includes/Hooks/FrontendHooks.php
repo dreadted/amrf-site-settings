@@ -327,7 +327,6 @@ class FrontendHooks
 				'wp-logo',
 				'site-name',
 				'view-site',
-				'edit',
 				'themify_builder',
 				'top-secondary',
 				'my-account',
