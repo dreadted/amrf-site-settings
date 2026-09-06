@@ -9,23 +9,11 @@ if (!defined('ABSPATH')) {
 /**
  * Class Modal
  *
- * Wires any "#kontakt" link/button on the site to a lightbox containing
- * the real FluentForm form configured as Repository::getDefaultContactFormId()
- * — ported from ptsussis-theme's includes/contact-modal.php + assets/js/
- * contact-modal.js, generalized: that version was hardcoded to a single
- * ptsussis/cta block (its own data-contact-trigger attribute) and form id
- * 1, and only ever rendered on the front page (the only page that block
- * could appear on for that specific site). A shared plugin can't assume
- * either — this instead matches ANY `<a href="#kontakt">` sitewide (plus
- * an optional data-contact-trigger attribute for a non-anchor element that
- * wants the same behavior — see assets/js/amrf-contact-modal.js), and
- * renders the form the "Contact Forms" Site Settings page has configured,
- * on every page.
- *
- * FluentForm dependency: no-ops entirely if the shortcode itself is
- * missing (plugin deactivated) or renders empty (configured form id
- * doesn't exist) — same defensive-guard convention this codebase already
- * uses for optional plugin integrations elsewhere.
+ * Wires any `<a href="#kontakt">` (or element with data-contact-trigger,
+ * see assets/js/amrf-contact-modal.js) sitewide to a lightbox containing
+ * the FluentForm configured via Repository::getDefaultContactFormId().
+ * No-ops entirely if FluentForm is inactive or the configured form doesn't
+ * exist.
  *
  * @package Antropomorf\ContactForm
  */
@@ -44,15 +32,10 @@ class Modal
   }
 
   /**
-   * Renders the configured form's shortcode early — during
-   * wp_enqueue_scripts, well before wp_head prints enqueued styles — and
-   * caches the result on $this->formHtml for renderContactModal() (wp_footer)
-   * to just echo. FluentForm's own shortcode handler enqueues its CSS/JS
-   * as a side effect of actually rendering; doing that for the first time
-   * inside a wp_footer callback — where a modal naturally belongs in the
-   * DOM — would enqueue those styles too late for wp_head to have already
-   * printed them. Rendering early and only echoing the cached markup
-   * later avoids that entirely.
+   * Renders the form shortcode early (wp_enqueue_scripts) and caches it for
+   * renderContactModal() to echo — FluentForm enqueues its CSS/JS as a side
+   * effect of rendering, which would be too late for wp_head if done from
+   * wp_footer directly.
    *
    * @return void
    */
@@ -99,10 +82,8 @@ class Modal
   }
 
   /**
-   * Prints the modal shell around the form HTML cached above. Nothing to
-   * print — FluentForm missing, or the configured form id doesn't exist —
-   * means no modal markup at all, and no dangling "#kontakt" link that
-   * silently does nothing worse than a normal anchor jump would.
+   * Prints the modal shell around the cached form HTML; prints nothing if
+   * there's no form to show.
    *
    * @return void
    */
@@ -121,9 +102,7 @@ class Modal
         <?php echo $this->formHtml; ?>
         <p class="amrf-contact-modal-privacy-note">
           <?php
-          // get_privacy_policy_url() only ever returns a URL for a
-          // PUBLISHED privacy policy page — renders without a link until
-          // one exists, no code change needed once it's published.
+          // Only returns a URL once the privacy policy page is published.
           $policy_url = get_privacy_policy_url();
           $link_open = $policy_url ? '<a href="' . esc_url($policy_url) . '">' : '';
           $link_close = $policy_url ? '</a>' : '';

@@ -1,10 +1,8 @@
 <?php
 
 /**
- * Public, non-namespaced function API for themes to consume — a small,
- * stable surface separate from the plugin's internal Antropomorf\* classes,
- * required directly from amrf-site-settings.php (the autoloader only maps class
- * names, not plain functions).
+ * Public, non-namespaced function API for themes to consume — required
+ * directly since the autoloader only maps class names, not plain functions.
  */
 
 if (!defined('ABSPATH')) {
@@ -12,9 +10,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * This site's business/contact settings — the plugin's equivalent of
- * ptsussis-theme's own ptsussis_get_site_settings(), same return shape
- * (every field key always present, defaulted to '').
+ * This site's business/contact settings. Every field key always present,
+ * defaulted to ''.
  *
  * @return array<string, string>
  */
@@ -25,8 +22,8 @@ function amrf_get_site_settings(): array
 
 /**
  * This site's Swish tab settings (number/amount/message + their own
- * "editable after scanning" toggles) — see includes/Swish/Repository.php.
- * Every field key always present, defaulted to ''.
+ * "editable after scanning" toggles). Every field key always present,
+ * defaulted to ''.
  *
  * @return array<string, string>
  */
@@ -36,9 +33,7 @@ function amrf_get_swish_settings(): array
 }
 
 /**
- * Swish's own deep-link URL, or '' if no number is set. Typically called
- * with amrf_get_swish_settings()'s own fields, same shape as
- * Swish\FrontendProvider's own localized amrfSwish.swishUrl.
+ * Swish's own deep-link URL, or '' if no number is set.
  *
  * @param string $swish_number
  * @param string $amount

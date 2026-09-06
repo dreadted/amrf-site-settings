@@ -7,10 +7,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Bootstrap
- *
- * Entry point for the Hardening module, called once from amrf-admin.php
- * alongside the other modules' Bootstrap::register() calls.
+ * Entry point for the Hardening module.
  *
  * @package Antropomorf\Hardening
  */

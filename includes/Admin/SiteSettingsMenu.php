@@ -11,26 +11,15 @@ if (!defined('ABSPATH')) {
 /**
  * Class SiteSettingsMenu
  *
- * Owns the plugin's own top-level "Site Settings" admin menu — separate from,
- * and unrelated to, the "Admin Panel Settings" page Admin\SettingsPage owns
- * under Settings. Two kinds of module hang off this menu:
+ * Owns the plugin's top-level "Site Settings" admin menu. Tabs registered on
+ * amrf_site_settings_tabs share one page via a nav-tab-wrapper (see
+ * SiteSettings\Provider); modules on amrf_site_settings_pages each get their
+ * own add_submenu_page() when they need their own capability or full-custom
+ * markup.
  *
- * - Tabs on amrf_site_settings_tabs share ONE page (the menu's default/first
- *   submenu) via a nav-tab-wrapper, same mechanism as
- *   amrf_admin_settings_tabs — see SiteSettings\Provider for the SEO/
- *   Business & Contact/Address/Social Media tabs.
- * - Pages on amrf_site_settings_pages each get their OWN add_submenu_page(),
- *   for a module that doesn't fit the shared-tab-strip shape (its own
- *   capability, e.g. ContactForm's Contact Forms page — retention/export/erase
- *   settings are more sensitive than site contact info, hence
- *   manage_options there instead of this menu's own default capability).
- *
- * Capability: edit_theme_options, not manage_options — this is the exact
- * capability Hooks\FrontendHooks already grants non-administrator roles at
- * login time when a role's "site_menus_cap" checkbox (Settings\Manager) is
- * enabled, so reusing it here means no new per-role toggle is needed for
- * roles that should be able to fill in Site Settings (editors etc.), not
- * just administrators.
+ * Capability: edit_theme_options, not manage_options — matches what
+ * Hooks\FrontendHooks grants via a role's "site_menus_cap" toggle, so
+ * non-admin roles can reach this menu without a separate capability.
  *
  * @package Antropomorf\Admin
  */
@@ -38,11 +27,7 @@ class SiteSettingsMenu
 {
   private const CAPABILITY = 'edit_theme_options';
 
-  /**
-   * Public so other Admin classes hanging their own submenu off this same
-   * parent (e.g. SettingsPage) can reference it without duplicating the
-   * literal string.
-   */
+  /** Public so sibling Admin classes can reference this slug directly. */
   public const MENU_SLUG = 'amrf-site-settings';
 
   private const TABS_FILTER = 'amrf_site_settings_tabs';
@@ -62,11 +47,6 @@ class SiteSettingsMenu
    * Registers the top-level menu plus its default (tabbed) submenu page,
    * then every module's own page from amrf_site_settings_pages.
    *
-   * Icon and menu position match ptsussis-theme's original
-   * add_menu_page('Site Settings', ...) call (includes/site-settings.php) —
-   * this is that same menu item, now living in the shared plugin instead of
-   * one theme.
-   *
    * @return void
    */
   public function addMenu(): void
@@ -81,9 +61,8 @@ class SiteSettingsMenu
       80
     );
 
-    // Same slug as the parent — WordPress collapses this into the parent
-    // menu's own link instead of adding a redundant duplicate entry, exactly
-    // like core's own Tools/Settings menus do for their first submenu.
+    // Same slug as the parent — WordPress collapses this into the parent's
+    // own link instead of adding a duplicate entry.
     add_submenu_page(
       self::MENU_SLUG,
       __('Site Settings', 'amrf-admin'),
@@ -109,12 +88,9 @@ class SiteSettingsMenu
 
   /**
    * Generic render callback for an amrf_site_settings_pages entry — a plain
-   * heading plus the same Settings API form glue the tabbed page uses,
-   * minus the tab strip. A module that needs fully custom markup (e.g. a
-   * future Umami iframe page) can pass its own 'render' callback instead
-   * of 'option_group'/'page_slug' and bypass this. SupportGenix's ticket
-   * page deliberately does NOT use this mechanism — it's its own
-   * top-level menu, see SupportGenix\Provider's docblock for why.
+   * heading plus the same Settings API form glue the tabbed page uses. A
+   * module needing fully custom markup passes its own 'render' callback
+   * instead of 'option_group'/'page_slug' to bypass this.
    *
    * @param array $page One amrf_site_settings_pages entry.
    * @return void
@@ -134,9 +110,7 @@ class SiteSettingsMenu
 
   /**
    * Calls every registered tab's and page's own 'register' callback
-   * (register_setting/add_settings_section/add_settings_field) — the
-   * admin_init-timed counterpart to addMenu()'s render-time filter reads.
-   * Mirrors Admin\SettingsPage::registerTabSettings() for the other menu.
+   * (register_setting/add_settings_section/add_settings_field), on admin_init.
    *
    * @return void
    */

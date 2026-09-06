@@ -37,14 +37,10 @@ class Repository
                     'login_redirect_url' => '/',
                     'admin_default_page' => 'profile.php',
                     'allowed_menu_items' => [
-                        // Full URL, not just the fragment — this menu item's
-                        // slug (add_menu_page()'s own $menu_slug argument in
-                        // FrontendHooks::addCustomPageToMenu()) IS its target
-                        // URL, and allowed_menu_items is matched against the
-                        // exact slug. A bare '#builder_active' entry here
-                        // would silently never match. Manager::sanitize()'s
-                        // syncPageEditorLinkAllowedMenuItem() keeps this in
-                        // sync automatically after the initial activation.
+                        // Full URL — the menu slug IS the target URL
+                        // (FrontendHooks::addCustomPageToMenu()), matched
+                        // exactly. Manager::syncPageEditorLinkAllowedMenuItem()
+                        // keeps this in sync after activation.
                         home_url('/#builder_active'),
                         'fluent_forms',
                         'nav-menus.php',

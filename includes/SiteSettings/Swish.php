@@ -9,10 +9,8 @@ if (!defined('ABSPATH')) {
 /**
  * Class Swish
  *
- * Swish is a nationwide Swedish payment scheme, not specific to any one
- * business that uses it — its own documented "open the app with these
- * details prefilled" deep-link format, ported from ptsussis-theme's
- * ptsussis_build_swish_url() unchanged.
+ * Builds Swish's documented "open the app with these details prefilled"
+ * deep-link URL.
  *
  * @package Antropomorf\SiteSettings
  */

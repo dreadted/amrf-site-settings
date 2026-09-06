@@ -9,33 +9,22 @@ if (!defined('ABSPATH')) {
 /**
  * Class Provider
  *
- * Generalized from amrf-theme's includes/support-genix.php (same boilerplate
- * pattern copied into every new theme via wp_install.sh's scaffolding — see
- * the plan's Context section). Wraps the third-party Support Genix Lite
- * plugin (its own admin pages/tables/hooks are prefixed apbd_wps_/apbd-wps/
- * support-genix, unrelated to this plugin's own naming, and untouched here):
+ * Wraps the third-party Support Genix Lite plugin (its own admin pages/
+ * tables/hooks, prefixed apbd_wps_/apbd-wps/support-genix, untouched here):
  *
  * - A "Support Tickets" page — an iframe onto the front-end /ticket page —
- *   as its own top-level add_menu_page(), capability 'edit_posts', matching
- *   amrf-theme's original support_tickets_menu() exactly (slug, icon,
- *   position). Deliberately NOT nested under Admin\SiteSettingsMenu's "Site
- *   Settings" the way GDPR/Umami are: that menu's own top-level capability
- *   is 'edit_theme_options', and WordPress only skips checking a parent's
- *   own capability when it has an accessible submenu — an Editor with only
- *   this one page allowed would need that specific submenu individually
- *   allow-listed (not just the parent) for "Site Settings" to show at all,
- *   a confusing gotcha discovered when testing as an Editor. A separate
- *   top-level menu, gated at 'edit_posts' directly, sidesteps that.
+ *   as its own top-level add_menu_page(), capability 'edit_posts'.
+ *   Deliberately NOT nested under Admin\SiteSettingsMenu's "Site Settings":
+ *   that menu's capability is 'edit_theme_options', and an Editor with only
+ *   this one page allowed would need the submenu individually allow-listed
+ *   for the parent menu to show at all. A separate top-level menu at
+ *   'edit_posts' sidesteps that.
  * - An "Apply Defaults" button injected onto Support Genix Lite's OWN
- *   settings page (page slug 'support-genix', not one of ours) — seeds its
- *   ticket categories/assignment rule and settings option once.
+ *   settings page — seeds its ticket categories/assignment rule/settings once.
  * - Ticket page visibility/edit-access lockdown for non-administrators.
- * - Brand-color shadowing on the plugin's own portal header output, via
- *   apply_filters('amrf_site_colors', [...]) instead of the original
- *   theme's regex-against-style.css guess at --primary/--secondary custom
- *   properties — a theme now states its own colors explicitly, and the
- *   filter is named for the site's colors generally, not this one module,
- *   since other consumers may want the same site colors later.
+ * - Brand-color shadowing on the plugin's portal header output via
+ *   apply_filters('amrf_site_colors', [...]) — named generally since other
+ *   consumers may want the same site colors.
  *
  * @package Antropomorf\SupportGenix
  */
@@ -53,11 +42,7 @@ class Provider
      */
     private const TICKET_PAGE_SLUG = 'ticket';
 
-    /**
-     * This module's own top-level admin menu slug — matches amrf-theme's
-     * original support_tickets_menu() exactly, not one of Support Genix
-     * Lite's own slugs.
-     */
+    /** This module's own top-level admin menu slug, not one of Support Genix Lite's own. */
     private const MENU_SLUG = 'support-tickets';
 
     public function __construct()
@@ -79,11 +64,8 @@ class Provider
 
     /**
      * Hides Support Genix Lite's own in-admin upsell nags (a promo banner
-     * and an offer bar/popup injected by its ApbdWps_OfferLite class) —
-     * ported from amrf-theme's assets/admin.css. Not scoped to one screen:
-     * that offer bar can appear on any wp-admin page, same reasoning as
-     * why WordPress's own update-nag removal (Hooks\FrontendHooks) isn't
-     * page-specific either.
+     * and offer bar/popup from its ApbdWps_OfferLite class). Not scoped to
+     * one screen — that offer bar can appear on any wp-admin page.
      *
      * @return void
      */
@@ -98,9 +80,7 @@ class Provider
     }
 
     /**
-     * Registers "Support Tickets" as its own top-level menu — icon and
-     * position match amrf-theme's original support_tickets_menu() exactly
-     * (includes/support-genix.php).
+     * Registers "Support Tickets" as its own top-level menu.
      *
      * @return void
      */
@@ -118,10 +98,9 @@ class Provider
     }
 
     /**
-     * Same iframe wrapper the theme used — the ticket portal itself is a
-     * normal front-end page (self::TICKET_PAGE_SLUG) that Support Genix Lite
-     * serves; this just lets non-administrators reach it from wp-admin
-     * without a separate front-end login/navigation step.
+     * The ticket portal is a normal front-end page (self::TICKET_PAGE_SLUG)
+     * Support Genix Lite serves; this iframe lets non-admins reach it from
+     * wp-admin without a separate login/navigation step.
      *
      * @return void
      */
@@ -208,9 +187,8 @@ class Provider
 
     /**
      * Seeds Support Genix Lite's own tables/option with this site's
-     * defaults, once. Ported as-is from the theme — table/column names and
-     * values belong to that plugin's own schema, not this one's to
-     * generalize further.
+     * defaults, once. Table/column names and values belong to that
+     * plugin's own schema.
      *
      * @return bool
      */
@@ -330,16 +308,9 @@ class Provider
             'disable_guest_email_to_ticket_creation' => 'Y',
             'footer_cp_text' => [$lang => ''],
             'ticket_page' => [$lang => $this->ensureTicketPage($lang)],
-            // Support Genix Lite's own setup wizard writes these two keys
-            // through its DisableSetupWizard()/dataSetupWizard() methods —
-            // step 4 is that plugin's CURRENT wizard-completed value,
-            // confirmed by running its wizard by hand (modules/
-            // Apbd_wps_settings.php). The original theme code this was
-            // ported from had this at 3 — stale from an older plugin
-            // version, silently wrong after an update. If Support Genix
-            // Lite adds more wizard steps in a future update, this will
-            // need bumping again; there's no version-independent way to
-            // ask the plugin for its own "wizard finished" step number.
+            // Step 4 is Support Genix Lite's current wizard-completed value
+            // (confirmed by running its wizard by hand) — may need bumping
+            // if that plugin adds wizard steps in a future update.
             'setup_wizard_step' => 4,
             'setup_wizard_finished' => true,
         ];
@@ -361,16 +332,10 @@ class Provider
     }
 
     /**
-     * Replicates Support Genix Lite's own language-key resolution
-     * (core/ApbdWpsBaseModuleLite.php, ~line 933) so our writes land under
-     * the SAME key the plugin's own GetOption()/AddOption() would use to
-     * read them back. It's WPML/Polylang-gated, not locale-gated — without
-     * either active it's always 'en' regardless of site language (verified:
-     * this sandbox runs sv_SE with neither plugin installed, and the
-     * plugin's own setup wizard still produced 'en' keys). Standard .po/.mo
-     * translation of Genix's own UI strings is unrelated to this key and
-     * unaffected by it either way — this only matters if WPML/Polylang gets
-     * installed later.
+     * Replicates Support Genix Lite's own language-key resolution so writes
+     * land under the same key its GetOption()/AddOption() reads back.
+     * WPML/Polylang-gated, not locale-gated — always 'en' without either
+     * active, regardless of site language.
      *
      * @return string
      */
@@ -391,23 +356,14 @@ class Provider
     }
 
     /**
-     * Finds or creates the front-end ticket portal page and returns its ID,
-     * for the 'ticket_page' setting Support Genix Lite's own portal_
-     * templates()/portal_redirect() check to decide whether/how to render
-     * the portal (see modules/Apbd_wps_settings.php) — NOT slug-based, so
-     * home_url('/' . self::TICKET_PAGE_SLUG) only actually works once this
-     * setting points at a real page.
+     * Finds or creates the front-end ticket portal page and returns its ID
+     * for the 'ticket_page' setting — NOT slug-based, so
+     * home_url('/' . self::TICKET_PAGE_SLUG) only works once this setting
+     * points at a real page. Page shape matches what the plugin's own setup
+     * wizard produces.
      *
-     * Page shape (title/slug/content/status) matches exactly what running
-     * the plugin's own setup wizard by hand produced — a Gutenberg
-     * shortcode block, not the shortcode as bare text, though both render
-     * identically; matching it exactly is just closer editor parity with a
-     * wizard-created page.
-     *
-     * @param string $lang Resolved language key (see resolveLanguageKey()) —
-     *                      passed in rather than re-resolved, so this reads
-     *                      back under the exact same key it's about to be
-     *                      written under.
+     * @param string $lang Resolved language key — passed in so this reads
+     *                      back under the exact key it's about to write under.
      * @return int Page ID.
      */
     private function ensureTicketPage(string $lang): int
@@ -468,12 +424,9 @@ class Provider
     }
 
     /**
-     * Keeps the ticket portal page out of WordPress's own built-in
-     * /wp-sitemap.xml — it's a login/ticket-creation utility page, not
-     * content, and there's no scenario where search-engine indexing of it
-     * is wanted. Deliberately unconditional (no settings toggle): unlike
-     * enable_seo_output, this isn't a judgment call a site owner would
-     * ever want to flip the other way.
+     * Keeps the ticket portal page out of WP's built-in /wp-sitemap.xml —
+     * it's a login/ticket-creation utility page, never wanted in search
+     * results. Unconditional, no settings toggle.
      *
      * @param array $args WP_Query args for this sitemap's post type.
      * @param string $post_type
@@ -532,23 +485,11 @@ class Provider
 
     /**
      * Replaces Support Genix Lite's own default brand colors in its
-     * buffered portal-header output with this site's colors, declared via
-     * apply_filters('amrf_site_colors', [...]) — this is a site-wide
-     * concept (any module can read it), not something specific to Support
-     * Genix, so it's named for the site's colors, not this one consumer.
-     *
-     * Search targets confirmed against the installed plugin's own source
-     * (modules/Apbd_wps_settings.php: get_primary_brand_color()/
-     * get_secondary_brand_color(), both plain hardcoded returns with no
-     * apply_filters() of their own — this plugin genuinely doesn't expose
-     * a hook for its brand colors, hence shadowing its rendered output
-     * instead). '#0bbc5c'/'#ff6e30' are those two methods' real values —
-     * matches the original theme code exactly, confirmed by reading the
-     * plugin source rather than by guessing from a CLI test (an earlier,
-     * WRONG "fix" here briefly swapped these for '#029bdd'/'#ff00b2' after
-     * a CLI test happened to capture an unrelated CSS bundle — the
-     * plugin's OWN wp-admin settings page styling, not the front-end
-     * ticket portal this action actually renders).
+     * buffered portal-header output with this site's colors
+     * (amrf_site_colors filter) — the plugin hardcodes its brand colors
+     * with no filter of its own, so this shadows the rendered output
+     * instead. '#0bbc5c'/'#ff6e30' are its real values (get_primary_brand_color()/
+     * get_secondary_brand_color() in modules/Apbd_wps_settings.php).
      *
      * @return void
      */

@@ -1,11 +1,7 @@
 /**
- * Drives the "Discourage search engines" toggle on the Site Settings SEO
- * tab (Provider::renderDiscourageSearchEnginesField()). Unlike every other
- * field on this tab, it isn't part of the Settings API form at all — it
- * writes straight to WordPress's own blog_public option via admin-ajax.php
- * the moment it's flipped, then locks or unlocks every other field on the
- * tab to match, so the toggle's effect is visible immediately instead of
- * only after a Save + reload.
+ * Drives the "Discourage search engines" toggle on the Site Settings SEO tab.
+ * Writes straight to WordPress's blog_public option via admin-ajax.php the
+ * moment it's flipped, then locks/unlocks the rest of the tab to match.
  */
 ( function ( $ ) {
 	'use strict';

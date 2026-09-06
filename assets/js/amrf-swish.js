@@ -1,12 +1,7 @@
 /**
- * Sitewide "#swish" link handling — ported from ptsussis-theme's
- * blocks/cta/index.js (canRunSwish() device check, unchanged), generalized
- * to scan the whole rendered page for plain <a href="#swish"> instead of a
- * specific block's own data-swish-trigger button, since amrf-theme has no
- * block/CTA system for a per-block feature to hang off of. Config comes
- * from one global object (amrfSwish, via wp_localize_script — see
- * Swish\FrontendProvider) rather than per-element data attributes: there's
- * only ever one Swish account per site.
+ * Sitewide "#swish" link handling — scans the page for `<a href="#swish">`
+ * and swaps each for either a deep link (mobile) or a QR code (desktop).
+ * Config comes from one global object, amrfSwish (Swish\FrontendProvider).
  */
 
 function canRunSwish() {

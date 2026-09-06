@@ -9,10 +9,8 @@ if (!defined('ABSPATH')) {
 /**
  * Class Repository
  *
- * Storage, defaults, and sanitization for the Swish tab's own settings —
- * split out of SiteSettings\Repository's old 'swish_number' Business field
- * into its own option, since this now also drives QrCodeGenerator (amount/
- * message actually change what gets generated, not just displayed).
+ * Storage, defaults, and sanitization for the Swish tab's own settings,
+ * which also drive QrCodeGenerator.
  *
  * @package Antropomorf\Swish
  */
@@ -21,13 +19,8 @@ class Repository
   public const OPTION_NAME = 'amrf_swish_settings';
 
   /**
-   * The option this field used to live in, before the Swish tab existed —
-   * read once, lazily, to carry an already-configured number over. See
-   * getSettings()'s own comment for why this is a lazy read-time check
-   * rather than a register_activation_hook callback like SiteSettings\
-   * Repository::migrateFromThemeIfNeeded(): that hook never fires for an
-   * already-active plugin just being updated in place, which is exactly
-   * how this ships to every site already running this plugin.
+   * Legacy field, migrated lazily on read (not an activation hook, since
+   * that never fires for an already-active plugin updated in place).
    */
   private const LEGACY_OPTION_NAME = \Antropomorf\SiteSettings\Repository::OPTION_NAME;
   private const LEGACY_FIELD_KEY = 'swish_number';
@@ -50,21 +43,12 @@ class Repository
   }
 
   /**
-   * True while sanitize() is already running — guards against the
-   * infinite-recursion trap below: register_setting() (Provider::register(),
-   * on admin_init) wires sanitize() onto WordPress's own
-   * "sanitize_option_amrf_swish_settings" filter, which EVERY update_option()
-   * call for this option runs through, including the migration write below.
-   * Without this guard, getSettings() finding no stored option calls
-   * update_option() to migrate it, which re-enters sanitize() via that
-   * filter, which (used to) call getSettings() again, which still finds no
-   * stored option (the migrating write hasn't landed yet) and calls
-   * update_option() again — forever, ballooning memory without end until
-   * something outside PHP itself gives up. Confirmed live: this is exactly
-   * what took down the whole WSL VM on 2026-09-05, not just one request.
-   * sanitize() itself was ALSO changed to never call getSettings() at all
-   * (see its own comment) — this flag is deliberate defense in depth on top
-   * of that, not a substitute for it.
+   * True while sanitize() is already running — guards against infinite
+   * recursion: update_option() for this option re-enters sanitize() via
+   * WP's "sanitize_option_..." filter, and the migration write in
+   * getSettings() below would otherwise call update_option() again forever.
+   * Do not remove without understanding this. sanitize() also never calls
+   * getSettings() itself, as defense in depth on top of this flag.
    */
   private static bool $sanitizing = false;
 
@@ -137,24 +121,17 @@ class Repository
   }
 
   /**
-   * One option, one page, one form — unlike SiteSettings\Repository::
-   * sanitize()/ContactForm\Repository::sanitize(), this option is never
-   * shared across multiple tabs/pages, so there's no "was this checkbox's
-   * OWN tab even submitted" ambiguity to resolve with a "{key}_submitted"
-   * hidden marker: every call to this method IS this one form's full
-   * submission, so a checkbox simply absent from $input plainly means
-   * "unchecked," nothing more to disambiguate.
+   * One option, one page, one form — no "{key}_submitted" marker needed
+   * since every call here is this form's full submission; an absent
+   * checkbox plainly means "unchecked".
    *
    * @param mixed $input Raw POSTed value for this option.
    * @return array<string, string>
    */
   public static function sanitize($input): array
   {
-    // Re-entered via our own update_option() call inside getSettings()'s
-    // migration branch (see self::$sanitizing's own comment) — the value
-    // passed in IS already the fully-formed migrated array, not raw $_POST
-    // shape, and none of QrCodeGenerator's work (a real external API call)
-    // belongs in a plain migration. Pass it through as-is.
+    // Re-entered via getSettings()'s migration write (see $sanitizing) —
+    // $input is already the fully-formed migrated array, not raw $_POST.
     if (self::$sanitizing) {
       return is_array($input) ? wp_parse_args($input, self::getDefaults()) : self::getDefaults();
     }

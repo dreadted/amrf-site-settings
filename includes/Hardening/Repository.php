@@ -9,13 +9,8 @@ if (!defined('ABSPATH')) {
 /**
  * Class Repository
  *
- * Storage/defaults/sanitization for the opinionated, behavior-changing
- * hardening toggles (see Provider's docblock for why these four are
- * toggles while the rest of the ported hardening is unconditional).
- * Defaults to true for all four — per-site opt-OUT, not opt-in: the
- * person building this plugin reports 9 of 10 sites they build want this
- * behavior, so a freshly-activated site matches that common case without
- * any configuration.
+ * Storage/defaults/sanitization for the behavior-changing hardening toggles
+ * (see Provider). Defaults to true for all four — opt-out, not opt-in.
  *
  * @package Antropomorf\Hardening
  */

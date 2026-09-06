@@ -9,12 +9,8 @@ if (!defined('ABSPATH')) {
 /**
  * Class EmailSignoff
  *
- * Personalizes WordPress core's own privacy-request emails (the "please
- * confirm this request" email and, for exports, the "your file is ready"
- * follow-up) with Site Settings' person_name instead of core's default
- * "All at ###SITENAME###" — reads through the SiteSettings module's own
- * accessor now, so this stays generic automatically rather than needing
- * its own copy of that field.
+ * Personalizes WP core's privacy-request emails with Site Settings'
+ * person_name instead of core's default "All at ###SITENAME###".
  *
  * @package Antropomorf\ContactForm
  */

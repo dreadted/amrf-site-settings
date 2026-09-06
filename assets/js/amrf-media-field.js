@@ -1,11 +1,6 @@
 /**
- * Media library picker for Site Settings' "media" field type (currently
- * just share_image). attachment.url is the original/full-size file URL —
- * what site.webmanifest and og:image both need, not a cropped WP subsize.
- *
- * Ported from ptsussis-theme's site-settings-media.js: selector classes
- * renamed ptsussis-media-field -> amrf-media-field to match this plugin's
- * renderMediaField() markup, logic otherwise unchanged.
+ * Media library picker for Site Settings' "media" field type. Uses
+ * attachment.url (the original/full-size file), not a cropped WP subsize.
  */
 ( function ( $ ) {
 	'use strict';

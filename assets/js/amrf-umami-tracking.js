@@ -1,10 +1,4 @@
-/* addUmamiTracking
--------------------------------------------------------------------
-Add umami tracking for non-logged in users. Ported from amrf-theme's
-assets/scripts.js — self-contained here (own DOMContentLoaded listener
-below) instead of relying on a theme's own init sequence, since this now
-needs to work for any theme, not just one that happens to load it.
-*/
+// Adds umami tracking for logged-out visitors only.
 const addUmamiTracking = () => {
   return new Promise((resolve) => {
     if (
@@ -26,14 +20,8 @@ const addUmamiTracking = () => {
   });
 };
 
-/* trackFormSubmit
--------------------------------------------------------------------
-Sends event to umami when a configured button is clicked. The original
-theme code hardcoded a single "#contact .ff-btn-submit" selector; this
-reads amrfUmamiButtons instead — localized from
-apply_filters('amrf_umami_tracked_buttons', []) (see Umami\Provider) —
-so any theme/plugin can register its own buttons without editing this file.
-*/
+// Tracks clicks on buttons registered via apply_filters('amrf_umami_tracked_buttons', [])
+// (see Umami\Provider), localized into amrfUmamiButtons.
 const trackFormSubmit = () => {
   const buttons = typeof amrfUmamiButtons !== "undefined" ? amrfUmamiButtons : [];
 
@@ -45,10 +33,7 @@ const trackFormSubmit = () => {
   }
 };
 
-/* trackOutboundLinks
--------------------------------------------------------------------
-Sends event to umami when outbound link is clicked
-*/
+// Marks outbound links for umami's data-umami-event auto-tracking.
 const trackOutboundLinks = () => {
   document.querySelectorAll("a").forEach((a) => {
     if (

@@ -9,19 +9,11 @@ if (!defined('ABSPATH')) {
 /**
  * Class Provider
  *
- * Registers the SEO/Business & Contact/Address/Social Media tabs — one per
- * Repository::getSections() entry — onto the amrf_site_settings_tabs
- * registry (see Admin\SiteSettingsMenu, the shared "Site Settings" top-level
- * menu these tabs share a single page under). Same mechanism as the
- * plugin's own General/role tabs on amrf_admin_settings_tabs
- * (Settings\Manager), just a different filter/page — see
- * Admin\SiteSettingsMenu's docblock for why these two tab groups stay
- * separate rather than one overloaded filter.
- *
- * All four tabs save into the SAME option (Repository::OPTION_NAME) via one
- * option_group, but each gets its own page_slug so do_settings_sections()
- * only pulls that one tab's section — sharing an option_group across
- * multiple pages/tabs is an ordinary, supported Settings API pattern.
+ * Registers the SEO/Business & Contact/Address/Social Media tabs onto the
+ * amrf_site_settings_tabs registry (see Admin\SiteSettingsMenu). All four
+ * tabs save into the same option (Repository::OPTION_NAME) via one
+ * option_group, each with its own page_slug so do_settings_sections() only
+ * pulls that tab's section.
  *
  * @package Antropomorf\SiteSettings
  */
@@ -29,22 +21,10 @@ class Provider
 {
   private const OPTION_GROUP = 'amrf_site_settings_group';
 
-  /**
-   * Both the AJAX action name and its nonce action — the toggle rendered by
-   * renderDiscourageSearchEnginesField() writes straight to WordPress's own
-   * blog_public option via admin-ajax.php, not through this tab's normal
-   * Settings API save (see that method's docblock for why: it has to apply
-   * immediately, without a page reload, so the rest of the tab can lock/
-   * unlock right away).
-   */
+  /** AJAX action + nonce action for the "discourage search engines" toggle. */
   private const AJAX_ACTION = 'amrf_toggle_search_engine_visibility';
 
-  /**
-   * Guards register_setting()/add_settings_section()/add_settings_field()
-   * against running once per tab (registerTabs() below returns 4 tabs that
-   * all point at register() as their 'register' callback) — same pattern as
-   * Settings\Manager::ensureSettingRegistered().
-   */
+  /** Guards register_setting()/add_settings_section()/add_settings_field() against running once per tab. */
   private static bool $registered = false;
 
   public function __construct()
@@ -55,13 +35,8 @@ class Provider
     add_action('admin_enqueue_scripts', [$this, 'enqueueSearchVisibilityScript']);
     add_action('wp_ajax_' . self::AJAX_ACTION, [$this, 'ajaxToggleSearchEngineVisibility']);
 
-    // wp-admin/options.php (where every Settings API form posts to) hardcodes
-    // manage_options as the capability required to actually SAVE, regardless
-    // of what capability the page itself needed to be reached — completely
-    // separate from Admin\SiteSettingsMenu's own edit_theme_options gate on
-    // the menu. Without this filter, a user who can see this tab (granted
-    // edit_theme_options via the site_menus_cap role toggle) still gets
-    // "you are not allowed to manage options for this site" on submit.
+    // wp-admin/options.php hardcodes manage_options to save any Settings
+    // API form, regardless of what capability reached the page.
     add_filter('option_page_capability_' . self::OPTION_GROUP, function () {
       return 'edit_theme_options';
     });
@@ -112,12 +87,9 @@ class Provider
       $section_id = 'site_settings_section_' . $section_key;
       add_settings_section($section_id, '', '__return_false', $page_slug);
 
-      // Rendered first, ahead of every field from getFields() below — this
-      // is WordPress's own site-wide "discourage search engines" setting
-      // (blog_public), not one of this plugin's fields, but it belongs at
-      // the top of the SEO tab specifically since it's what makes the rest
-      // of this tab's output meaningful or moot. See
-      // renderDiscourageSearchEnginesField()'s own docblock.
+      // Rendered first, ahead of getFields() below — WP's own
+      // "discourage search engines" setting, not one of this plugin's
+      // fields, but it decides whether the rest of this tab does anything.
       if ($section_key === 'seo') {
         add_settings_field(
           'site_settings_discourage_search_engines',
@@ -157,14 +129,10 @@ class Provider
   }
 
   /**
-   * Renders one field by its declared type — text/email/number inputs,
-   * a textarea, or the media picker. "url" fields deliberately render as
-   * a plain text input, not <input type="url"> — an HTML5 url input
-   * silently blocks the *entire* form's submission if any one of them
-   * holds a non-empty value without a URL scheme, with no visible error
-   * if that field happens to be scrolled out of view. Server-side
-   * esc_url_raw() (Repository::sanitize()) still handles the actual
-   * sanitization either way.
+   * Renders one field by its declared type. "url" fields render as plain
+   * text inputs, not <input type="url"> — an HTML5 url input silently
+   * blocks the whole form's submission on one malformed value with no
+   * visible error. esc_url_raw() (Repository::sanitize()) still sanitizes.
    *
    * @param string $key  Field key, matches a Repository::getFields() entry.
    * @param string $type Field type, matches a Repository::getFields() entry.
@@ -213,21 +181,12 @@ class Provider
   }
 
   /**
-   * Toggle for WordPress's own blog_public option (Settings > Reading's
-   * "Discourage search engines from indexing this site"), surfaced here
-   * too since it's what Repository::isSeoOutputEnabled() gates the rest of
-   * this tab's output on — a site owner flipping this on should see, right
-   * here, that everything else below just went inert, not discover it by
-   * noticing meta tags disappeared from view-source.
-   *
-   * Same .switch/.slider markup and label-wrapping as renderCheckboxField()
-   * so it's visually indistinguishable from Enable SEO Output, but it's
-   * deliberately NOT one of Repository::getFields() — it has no "name"
-   * attribute at all, so it never round-trips through $_POST/sanitize() on
-   * a normal Save. amrf-search-visibility-toggle.js drives it entirely via
-   * admin-ajax.php (ajaxToggleSearchEngineVisibility()), applying the
-   * change immediately and locking/unlocking every other field on this tab
-   * to match — no Save click needed, and no stale "saved" state possible.
+   * Toggle for WP's own blog_public option, surfaced here since it's what
+   * Repository::isSeoOutputEnabled() gates the rest of this tab on. Same
+   * .switch/.slider markup as renderCheckboxField() but has no "name"
+   * attribute — it never goes through $_POST/sanitize(), only
+   * amrf-search-visibility-toggle.js via admin-ajax.php
+   * (ajaxToggleSearchEngineVisibility()).
    *
    * @return void
    */
@@ -244,14 +203,9 @@ class Provider
   }
 
   /**
-   * AJAX save target for renderDiscourageSearchEnginesField()'s toggle —
-   * writes straight to WordPress's own blog_public option instead of going
-   * through Repository::sanitize()/this tab's option_group, since this
-   * isn't one of this plugin's own settings. Same edit_theme_options gate
-   * as the rest of this tab (Provider's own option_page_capability filter),
-   * not manage_options as Settings > Reading itself requires, so a role
-   * granted access to this page doesn't hit a mismatched capability wall
-   * flipping the exact setting this tab tells them about.
+   * AJAX save target for the discourage-search-engines toggle — writes
+   * straight to blog_public. Same edit_theme_options gate as the rest of
+   * this tab, not core's own manage_options.
    *
    * @return void
    */
@@ -270,16 +224,10 @@ class Provider
   }
 
   /**
-   * Renders a toggle checkbox, same .switch/.slider markup used by
-   * Settings\Manager::renderCheckbox() and Hardening\Provider::renderCheckbox()
-   * so it looks identical everywhere in the plugin.
-   *
-   * Also emits a "{$key}_submitted" hidden marker: a checkbox is simply
-   * absent from $_POST when unchecked, and this option is shared across
-   * four tabs that each submit only their own fields — without this marker
-   * Repository::sanitize() can't tell "the SEO tab was submitted with this
-   * unchecked" apart from "a different tab was submitted, leave this
-   * untouched" (see sanitize()'s own comment on this).
+   * Renders a toggle checkbox, same .switch/.slider markup as
+   * Settings\Manager::renderCheckbox(). Also emits a "{$key}_submitted"
+   * hidden marker so Repository::sanitize() can tell "submitted unchecked"
+   * apart from "a different tab was submitted".
    *
    * @param string $key   Field key.
    * @param string $field_name Full input name (OPTION_NAME[key]).
@@ -288,15 +236,9 @@ class Provider
    */
   private function renderCheckboxField(string $key, string $field_name, string $value): void
   {
-    // Deliberately NOT "{$field_name}_submitted" -- appending outside the
-    // closing "]" doesn't do what it looks like it does. PHP's form
-    // parser ignores everything after a bracket group's final "]" that
-    // isn't itself a new "[...]", so name="option[key]_submitted" is
-    // parsed as if "_submitted" weren't there at all: it collides with
-    // and silently overwrites option[key] itself (confirmed by testing
-    // parse_str() directly) -- which is exactly why this toggle refused
-    // to ever save as unchecked. The submitted-marker has to be its own
-    // distinct array key, "option[key_submitted]".
+    // Not "{$field_name}_submitted" -- PHP's form parser ignores anything
+    // after a bracket group's final "]", so that would collide with and
+    // overwrite option[key] itself. Must be its own key, "option[key_submitted]".
     $submitted_name = Repository::OPTION_NAME . '[' . $key . '_submitted]';
 
     printf(
@@ -309,13 +251,8 @@ class Provider
   }
 
   /**
-   * A checkbox list of every published page, its title alongside its own
-   * database ID (per-page-ID visibility was requested explicitly, rather
-   * than a page-title-only picker) — same "{key}_submitted" marker
-   * mechanism as renderCheckboxField(), for the same reason: with nothing
-   * checked, the whole field is simply absent from $_POST, which
-   * Repository::sanitize() needs to be able to tell apart from "a
-   * different tab was submitted".
+   * A checkbox list of every published page (title + ID), same
+   * "{key}_submitted" marker mechanism as renderCheckboxField().
    *
    * @param string $key
    * @param string $field_name
@@ -325,10 +262,7 @@ class Provider
   private function renderPageListField(string $key, string $field_name, string $value): void
   {
     $selected = array_map('absint', array_filter(explode(',', $value)));
-    // Published only, deliberately -- WordPress's own sitemap always
-    // filters to post_status=publish regardless of this selection, so a
-    // draft/private page picked here would just silently never appear in
-    // the actual sitemap, making the toggle look broken when it isn't.
+    // Published only — WP's own sitemap always filters to publish anyway.
     $pages = get_pages(['sort_column' => 'post_title', 'post_status' => 'publish']);
     $submitted_name = Repository::OPTION_NAME . '[' . $key . '_submitted]';
 
@@ -340,10 +274,7 @@ class Provider
     }
 
     // Same .menu-items-container/.menu-item-checkbox markup as Allowed
-    // Menu Items (Settings\Manager::userRoleSettingsCallback()) — the CSS
-    // for both already ships in assets/css/amrf-admin-settings.css, so
-    // reusing the exact class names/structure gets an identical look for
-    // free instead of styling a second, slightly-different list.
+    // Menu Items (Settings\Manager::userRoleSettingsCallback()).
     echo '<div class="menu-items-container">';
     foreach ($pages as $page) {
       printf(
@@ -392,17 +323,10 @@ class Provider
   }
 
   /**
-   * Only needed on the plugin's own "Site Settings" page (every SEO/Business/
-   * Address/Social tab renders there) — a 'media' field might not even be on
-   * the currently viewed tab, but enqueuing wp_enqueue_media() unconditionally
-   * there is the same cost the original ptsussis-theme page paid, and far
-   * simpler than tracking exactly which tab needs it per request.
-   *
-   * Hook suffix: this page is registered as the FIRST submenu under the new
-   * top-level "Site Settings" menu, with the same slug as the menu itself
-   * (Admin\SiteSettingsMenu::addMenu()) — WordPress's naming convention for
-   * that case is "toplevel_page_{slug}", same idea as the "settings_page_"
-   * prefix a submenu-under-Settings gets.
+   * Enqueued unconditionally on the "Site Settings" page rather than
+   * tracking which tab actually has the media field. Hook suffix is
+   * "toplevel_page_amrf-site-settings" since this page shares its slug
+   * with the top-level menu (Admin\SiteSettingsMenu::addMenu()).
    *
    * @param string $hook Current admin page hook suffix.
    * @return void
@@ -425,12 +349,8 @@ class Provider
   }
 
   /**
-   * The shared .switch/.slider toggle styles live in assets/css/amrf-
-   * admin-settings.css, otherwise only loaded on the Admin Panel Settings
-   * page (SettingsPage::enqueueAssets()) — enqueued here too,
-   * unconditionally, same posture as Hardening\Provider's own switch-
-   * styles enqueue, so the enable_seo_output toggle actually looks like a
-   * toggle here instead of a bare checkbox.
+   * Shared .switch/.slider styles, enqueued unconditionally here too so
+   * this tab's toggles render correctly.
    *
    * @return void
    */
@@ -443,12 +363,8 @@ class Provider
   }
 
   /**
-   * Only the SEO tab has renderDiscourageSearchEnginesField()'s toggle (and
-   * only its fields need locking), so this checks $_GET['tab'] on top of
-   * enqueueMediaScript()'s hook-suffix check rather than reusing that
-   * method outright — every tab shares the same physical admin page/hook
-   * suffix (SettingsRenderer switches tabs via $_GET, not separate pages),
-   * so the hook check alone can't tell them apart.
+   * Only the SEO tab needs this script — checks $_GET['tab'] too, since
+   * every tab shares the same hook suffix.
    *
    * @param string $hook Current admin page hook suffix.
    * @return void

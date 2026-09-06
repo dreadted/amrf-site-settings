@@ -10,24 +10,10 @@ if (!defined('ABSPATH')) {
  * Class Provider
  *
  * Registers "Umami Settings" onto the amrf_site_settings_pages registry
- * (see Admin\SiteSettingsMenu, the shared "Site Settings" top-level menu),
- * capability manage_options — matches amrf-theme's original
- * umami_settings_page() (add_options_page(), also manage_options), just
- * consolidated under this plugin's own menu instead of WordPress core's
- * Settings.
- *
- * Also enqueues the front-end tracking script (assets/js/amrf-umami-
- * tracking.js — ported from amrf-theme's assets/scripts.js) and injects
- * the umami_site value + apply_filters('amrf_umami_tracked_buttons', [])
- * the same way enqueue.php's wp_add_inline_script()/wp_localize_script()
- * calls did.
- *
- * The "Analytics" iframe report page is its own top-level menu, not a
- * Site Settings submenu — same edit_posts-vs-parent-capability reasoning
- * that moved SupportGenix's ticket page there: slug/icon/position match
- * amrf-theme's original umami_analytics_menu() exactly, including the
- * slug, so any role already allow-listed for 'umami-analytics' keeps
- * working unchanged.
+ * (manage_options), enqueues the front-end tracking script with the
+ * umami_site value + amrf_umami_tracked_buttons filter injected, and
+ * registers the "Analytics" iframe page as its own top-level menu (same
+ * edit_posts-vs-parent-capability reasoning as SupportGenix's ticket page).
  *
  * @package Antropomorf\Umami
  */
@@ -46,8 +32,7 @@ class Provider
   }
 
   /**
-   * Registers the "Analytics" top-level menu — icon and position match
-   * amrf-theme's original umami_analytics_menu() (includes/umami.php).
+   * Registers the "Analytics" top-level menu.
    *
    * @return void
    */
@@ -66,8 +51,7 @@ class Provider
 
   /**
    * Renders an iframe onto Umami's own eu.umami.is/share analytics viewer
-   * for this site's umami_id — identical markup/URL-building to the
-   * original umami_analytics_page().
+   * for this site's umami_id.
    *
    * @return void
    */
@@ -168,13 +152,8 @@ class Provider
   }
 
   /**
-   * Front-end only (wp_enqueue_scripts, not admin_enqueue_scripts) — same
-   * as the original theme's enqueue_frontend_scripts(). No-ops with an
-   * empty umami_site the same way the original did (addUmamiTracking()'s
-   * own `typeof umamiSite !== 'undefined'` guard means the const not
-   * existing at all is already handled, but skipping the inline script
-   * entirely when there's nothing to track avoids an empty-string
-   * data-website-id attribute).
+   * Front-end only. Skips the inline script entirely when umami_site is
+   * empty, avoiding an empty-string data-website-id attribute.
    *
    * @return void
    */

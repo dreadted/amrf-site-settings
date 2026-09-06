@@ -10,20 +10,10 @@ if (!defined('ABSPATH')) {
  * Class SeoOutput
  *
  * Document title, meta description, Open Graph/Twitter Card tags, and
- * Organization+Person JSON-LD — ported from ptsussis-theme's
- * includes/seo.php, generalized: that version hardcoded og:locale
- * ('sv_SE') and the theme-color meta (its own brand hex) as constants;
- * this reads them from Repository's og_locale/theme_color fields instead
- * (the reason those fields exist at all — see Repository's own docblock).
- * Everything here is gated behind the enable_seo_output toggle, since
- * unlike a single-purpose theme this plugin has to stay off by default
- * for a site that already runs its own SEO plugin.
- *
- * Favicon links and the /site.webmanifest endpoint from the source file
- * are deliberately NOT ported here — those assume theme-specific asset
- * paths (get_stylesheet_directory_uri() . '/assets/images/...'), and this
- * plugin doesn't tie itself to any one theme's file layout. WordPress's
- * own Site Icon feature covers the favicon case generically instead.
+ * Organization+Person JSON-LD. Gated behind the enable_seo_output toggle,
+ * off by default for a site that already runs its own SEO plugin.
+ * Favicons aren't handled here — WordPress's own Site Icon feature covers
+ * that generically.
  *
  * @package Antropomorf\SiteSettings
  */
@@ -31,13 +21,8 @@ class SeoOutput
 {
     public function __construct()
     {
-        // Some themes never declare title-tag support (classic themes that
-        // still hardcode <title> in header.php) -- pre_get_document_title
-        // silently never fires without it. This plugin can't assume the
-        // active theme happens to have it (see functions.php's own note
-        // about not tailoring the plugin to any one theme), so it adds the
-        // support itself if missing, same as WordPress recommends any
-        // plugin needing document-title control do.
+        // pre_get_document_title never fires without title-tag support,
+        // which some classic themes never declare.
         if (!current_theme_supports('title-tag')) {
             add_theme_support('title-tag');
         }
@@ -46,21 +31,15 @@ class SeoOutput
         add_action('wp_head', [$this, 'renderMetaTags']);
         add_action('wp_head', [$this, 'renderJsonLd']);
 
-        // Independent of enable_seo_output: WordPress's own built-in
-        // /wp-sitemap.xml exists regardless of whether this plugin's meta
-        // output is on, and a site owner may want to restrict it (e.g.
-        // keep a support-ticket portal page or similar utility page out
-        // of search results) without wanting the rest of the SEO output.
+        // Independent of enable_seo_output: WP's built-in /wp-sitemap.xml
+        // exists regardless of this plugin's meta output.
         add_filter('wp_sitemaps_posts_query_args', [$this, 'restrictSitemapQueryArgs'], 10, 2);
     }
 
     /**
-     * Restricts the "page" post type's entries in WordPress's own built-in
-     * sitemap to exactly the pages selected in sitemap_page_ids, when
-     * restrict_sitemap is on. Empty selection while the toggle is on means
-     * "show nothing" (post__in => [0], a query that matches no post) --
-     * the toggle's whole purpose is to narrow what's exposed, so an empty
-     * list should never silently fall back to exposing every page.
+     * Restricts the "page" post type's sitemap entries to sitemap_page_ids
+     * when restrict_sitemap is on. Empty selection means "show nothing"
+     * (post__in => [0]), not "show everything".
      *
      * @param array $args WP_Query args for this sitemap's post type.
      * @param string $postType
@@ -84,10 +63,8 @@ class SeoOutput
     }
 
     /**
-     * Document <title> — Repository's seo_title overrides WordPress's own
-     * title-tag output, but only on the front page, matching the source:
-     * there's no per-post override field, so every other page keeps
-     * WordPress's normal title behavior untouched.
+     * Document <title> — Repository's seo_title overrides WP's title-tag
+     * output on the front page only; there's no per-post override field.
      *
      * @param string $title
      * @return string
@@ -215,9 +192,7 @@ if ($xHandle) :
     }
 
     /**
-     * Organization + Person JSON-LD, front page only (same reasoning as
-     * the document-title override: there's effectively only one route
-     * this data describes).
+     * Organization + Person JSON-LD, front page only.
      *
      * @param array<string, string> $settings
      * @return array<string, mixed>|null
@@ -272,10 +247,8 @@ if ($xHandle) :
             if ($settings['phone']) {
                 $organization['telephone'] = $settings['phone'];
             }
-            // No 'email' here deliberately, matching the source -- an
-            // address that's otherwise given the obfuscation treatment
-            // anywhere it's displayed shouldn't turn around and leak in
-            // plain text here.
+            // No 'email' -- it's obfuscated everywhere else it's displayed,
+            // shouldn't leak in plain text here.
             if ($sameAs) {
                 $organization['sameAs'] = $sameAs;
             }

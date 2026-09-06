@@ -57,24 +57,15 @@ class AdminHooks
             $roles,
             $menuManager->getMenuItems()
         );
-        // Priority 5, not the default 10 — General/role tabs should always
-        // sort first regardless of which order other modules' Bootstrap
-        // classes happen to run in (this callback itself only fires on
-        // plugins_loaded, later than a module that hooks the filter
-        // synchronously from amrf-site-settings.php would).
+        // Priority 5 so General/role tabs always sort first.
         add_filter('amrf_admin_settings_tabs', [$settingsManager, 'registerTabs'], 5);
 
         $renderer = new SettingsRenderer('amrf_admin_settings_tabs', 'amrf-admin-settings', __('Admin Panel Settings', 'amrf-admin'));
 
-        // SiteSettingsMenu first: its admin_menu callback calls add_menu_page()
-        // for 'amrf-site-settings', which populates WordPress's own
-        // $admin_page_hooks global for that slug. SettingsPage's admin_menu
-        // callback then calls add_submenu_page() under that same slug — if it
-        // ran first, get_plugin_page_hookname() would compute the wrong hook
-        // suffix (falls back to a generic 'admin_page_' prefix instead of the
-        // real one), since $admin_page_hooks wouldn't have an entry for the
-        // parent yet. Same-priority admin_menu callbacks fire in registration
-        // order, so instantiation order here is what actually decides this.
+        // Must instantiate before SettingsPage: its add_menu_page() call
+        // populates $admin_page_hooks for 'amrf-site-settings', which
+        // SettingsPage's add_submenu_page() needs to compute the right hook
+        // suffix.
         new SiteSettingsMenu();
         new SettingsPage($renderer);
     }
@@ -101,14 +92,8 @@ class AdminHooks
 
     /**
      * Show plugin version in the WordPress admin footer on every page under
-     * this plugin's own "Site Settings" top-level menu — not just the
-     * "Admin Panel Settings" submenu, which used to be the only page this
-     * checked for (a leftover from when that submenu was this plugin's only
-     * admin page, before Site Settings grew its own top-level menu with
-     * several submenus of its own). $screen->parent_base is WordPress's own
-     * "which top-level menu is this page under" value, true for the
-     * top-level page itself as well as every one of its submenus, so this
-     * covers all of them without listing each one's hook suffix by hand.
+     * this plugin's "Site Settings" top-level menu. $screen->parent_base
+     * matches the top-level page itself and every one of its submenus.
      *
      * @param string $footer_text Original footer text.
      * @return string Footer text with version appended for this plugin.

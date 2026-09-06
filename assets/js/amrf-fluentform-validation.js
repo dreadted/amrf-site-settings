@@ -1,11 +1,6 @@
-/* addPINValidation
--------------------------------------------------------------------
-Client side validation for Personal Identity Number form field. Ported
-verbatim from amrf-theme's assets/scripts.js — identifies the field by
-the "ff-personnummer" CSS class (see FluentFormValidation\Provider's
-CONTAINER_CLASS), not by field name, so this stays language/spelling
-independent and never hijacks an unrelated field.
-*/
+// Client-side validation for the Swedish Personal Identity Number field,
+// identified by the "ff-personnummer" CSS class (FluentFormValidation\Provider's
+// CONTAINER_CLASS), not by field name.
 
 const pinValidationStrings = {
   invalidPin: wp.i18n.__(

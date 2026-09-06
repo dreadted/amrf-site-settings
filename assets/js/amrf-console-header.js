@@ -1,12 +1,5 @@
-/* consoleHeader
--------------------------------------------------------------------
-Output a stylized console badge with the site host, theme version, and
-author. Ported from amrf-theme's assets/scripts.js — that version fetched
-the theme's own style.css and regex-parsed Author/Version/--primary/--dark
-out of it; here amrfBranding (localized by Branding\Provider from
-wp_get_theme() + apply_filters('amrf_site_colors', [...])) already has
-everything needed, so no network request or parsing is required.
-*/
+// Prints a stylized console badge with the site host, theme version, and
+// author, using amrfBranding (localized by Branding\Provider).
 const consoleHeader = () => {
   const { author, version, primary, dark } = window.amrfBranding || {};
   const year = new Date().getFullYear();

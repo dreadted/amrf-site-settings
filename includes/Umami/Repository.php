@@ -9,14 +9,10 @@ if (!defined('ABSPATH')) {
 /**
  * Class Repository
  *
- * Storage/defaults/sanitization for Umami analytics configuration —
- * generalized from amrf-theme's includes/umami.php, which stored these as
- * two flat, unprefixed WP options (umami_site, umami_id — collision-prone,
- * and read by get_option() calls scattered across enqueue.php/umami.php).
- * Kept as two distinct fields despite the similar names: umami_site is the
- * tracking script's data-website-id, umami_id is the separate ID the
- * Analytics share-iframe URL uses — the original theme code never treated
- * them as the same value, so this doesn't assume they are either.
+ * Storage/defaults/sanitization for Umami analytics configuration. Two
+ * distinct fields despite the similar names: 'site' is the tracking
+ * script's data-website-id, 'id' is the separate ID the Analytics
+ * share-iframe URL uses.
  *
  * @package Antropomorf\Umami
  */
@@ -24,10 +20,7 @@ class Repository
 {
   public const OPTION_NAME = 'amrf_umami';
 
-  /**
-   * The two legacy theme options this replaces — read once, on activation,
-   * to carry existing production values over. See migrateFromThemeIfNeeded().
-   */
+  /** Legacy theme options, migrated once on activation. See migrateFromThemeIfNeeded(). */
   private const LEGACY_SITE_OPTION = 'umami_site';
   private const LEGACY_ID_OPTION = 'umami_id';
 

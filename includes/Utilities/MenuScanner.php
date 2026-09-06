@@ -16,8 +16,6 @@ if (!defined('ABSPATH')) {
 class MenuScanner
 {
 	/**
-	 * Scan WordPress admin menus and submenus for the given roles.
-	 *
 	 * @param array $roles List of roles to include in the scan.
 	 * @return array Menu items organized by role.
 	 */
@@ -36,7 +34,6 @@ class MenuScanner
 
 			if (!is_null($menu) && is_array($menu)) {
 				foreach ($menu as $item) {
-					// Skip separators and empty items
 					if (empty($item[2]) || strpos($item[2], 'separator') !== false) {
 						continue;
 					}
@@ -50,23 +47,15 @@ class MenuScanner
 			if (!is_null($submenu) && is_array($submenu)) {
 				foreach ($submenu as $parent => $items) {
 					foreach ($items as $item) {
-						// Skip separators and empty items
 						if (empty($item[2]) || strpos($item[2], 'separator') !== false) {
 							continue;
 						}
 
-						// Only process core WordPress submenu items (those
-						// ending with .php) or this plugin's own submenus
-						// (e.g. Site Settings' GDPR page) — third-party
-						// plugins' own custom-slug submenus (Fluent Forms'
-						// internal tabs, Support Genix's own settings
-						// pages, etc.) stay excluded so this list doesn't
-						// balloon with noise no role should be assigned
-						// page-by-page anyway.
+						// Core WP pages (.php slugs) and this plugin's own submenus only —
+						// excludes third-party plugins' custom tabs/settings pages.
 						if (strpos($item[2], '.php') === false && strpos($item[2], 'amrf-') !== 0) continue;
 
 							$subname = self::getCleanMenuName($item[0]);
-							// Prefix submenu item name with its parent menu name
 							$parent_name = '';
 							foreach ($menu as $top) {
 								if (! empty($top[2]) && $top[2] === $parent) {
@@ -111,8 +100,6 @@ class MenuScanner
 	}
 
 	/**
-	 * Retrieve a list of all admin page slugs from menus and submenus.
-	 *
 	 * @return array List of admin page slugs.
 	 */
 	public static function scanAdminPages(): array
@@ -137,36 +124,15 @@ class MenuScanner
 		return $pages;
 	}
 
-	/**
-	 * Strip HTML tags and span elements from a menu title.
-	 *
-	 * @param string $menu_title Raw menu title HTML.
-	 * @return string Cleaned menu title text.
-	 */
 	private static function getCleanMenuName($menu_title)
 	{
-		// Remove all <span>...</span> and their contents (including nested spans)
 		$clean = preg_replace('/<span\b[^>]*>.*?<\/span>/si', '', $menu_title);
-
-		// Remove any other HTML tags just in case
 		$clean = wp_strip_all_tags($clean);
-
-		// Decode HTML entities
 		$clean = html_entity_decode($clean, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-
-		// Trim whitespace
 		$clean = trim($clean);
-
 		return $clean;
 	}
 
-	/**
-	 * Check if a slug already exists in the collected menu items.
-	 *
-	 * @param array  $menuItems List of menu item arrays with 'slug' keys.
-	 * @param string $slug      Slug to check for existence.
-	 * @return bool True if slug exists, false otherwise.
-	 */
 	private static function slugExists(array $menuItems, string $slug): bool
 	{
 		foreach ($menuItems as $item) {
