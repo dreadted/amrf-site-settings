@@ -9,18 +9,9 @@ if (!defined('ABSPATH')) {
 /**
  * Class Provider
  *
- * Generalized from amrf-theme's assets/scripts.js consoleHeader() — a
- * stylized "%c" console.log badge showing the site host, theme version,
- * and author, on every front-end page load.
- *
- * The original fetched the theme's own style.css over the network and
- * regex-matched "Author:"/"Version:"/"--primary:"/"--dark:" out of the raw
- * text — fragile (breaks if that header/CSS-variable formatting ever
- * shifts) and needless: WordPress already knows the active theme's Author/
- * Version via wp_get_theme(), no fetch() required. Colors come from
- * apply_filters('amrf_site_colors', [...]) instead of scraping CSS custom
- * properties — same mechanism SupportGenix\Provider already uses, so a
- * theme declares its colors once and every consumer shares them.
+ * Prints a stylized console.log badge (site host, theme version, author) on
+ * every front-end page load. Colors come from the amrf_site_colors filter
+ * so a theme can declare them once for every consumer.
  *
  * @package Antropomorf\Branding
  */

@@ -7,10 +7,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Bootstrap
- *
- * Entry point for the Site Settings module, called once from amrf-admin.php
- * alongside Hooks\AdminHooks::register()/FrontendHooks::register().
+ * Entry point for the Site Settings module.
  *
  * @package Antropomorf\SiteSettings
  */

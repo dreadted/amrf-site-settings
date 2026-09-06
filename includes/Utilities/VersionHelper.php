@@ -13,11 +13,6 @@ if (! defined('ABSPATH')) {
  */
 class VersionHelper
 {
-    /**
-     * Get the plugin version from its header.
-     *
-     * @return string Plugin version.
-     */
     public static function getVersion(?string $file_path = null): string
     {
         if (! function_exists('get_plugin_data')) {

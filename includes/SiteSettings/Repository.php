@@ -9,10 +9,7 @@ if (!defined('ABSPATH')) {
 /**
  * Class Repository
  *
- * Storage, defaults, and sanitization for one site's business/contact info —
- * ported from ptsussis-theme's includes/site-settings.php, generalized (no
- * theme-specific seeded content, og:locale/theme/background colors added as
- * real fields instead of hardcoded constants in that theme's seo.php).
+ * Storage, defaults, and sanitization for one site's business/contact info.
  *
  * @package Antropomorf\SiteSettings
  */
@@ -20,11 +17,7 @@ class Repository
 {
     public const OPTION_NAME = 'amrf_site_settings';
 
-    /**
-     * The theme option this replaces on the site that had it — read once,
-     * on activation, to carry existing production data over. See
-     * migrateFromThemeIfNeeded().
-     */
+    /** Legacy theme option, migrated once on activation. See migrateFromThemeIfNeeded(). */
     private const LEGACY_THEME_OPTION_NAME = 'ptsussis_site_settings';
 
     /**
@@ -53,17 +46,9 @@ class Repository
             'job_title' => [__('Job title', 'amrf-admin'), 'text', 'business'],
             'email' => [__('Email', 'amrf-admin'), 'email', 'business'],
             'phone' => [__('Phone', 'amrf-admin'), 'text', 'business'],
-            // Swish number moved to its own "Swish" tab on the Forms page
-            // (Swish\Repository) — it now drives QR generation too, not
-            // just this field's old display-only purpose. Swish\Repository::
-            // getSettings() reads whatever's left of this option's own
-            // 'swish_number' key once, as a one-time migration for a site
-            // that already had it set — the key itself is left orphaned
-            // here rather than actively scrubbed, same as any other retired
-            // field in this codebase.
-            // No canonical-URL field — reuse WordPress's own siteurl/home
-            // option (home_url()) instead, one source of truth per
-            // environment rather than two that can drift apart.
+            // Swish number lives on its own "Swish" tab now (Swish\Repository).
+            // No canonical-URL field — reuse WordPress's own home_url()
+            // instead of a second value that can drift.
 
             'street' => [__('Street address', 'amrf-admin'), 'text', 'address'],
             'postal_code' => [__('Postal code', 'amrf-admin'), 'text', 'address'],
@@ -76,8 +61,7 @@ class Repository
             'facebook_url' => [__('Facebook URL', 'amrf-admin'), 'url', 'social'],
             'instagram_url' => [__('Instagram URL', 'amrf-admin'), 'url', 'social'],
             // No separate handle field — SeoOutput::extractXHandle() pulls
-            // it straight out of the path segment after x.com/, so there's
-            // only one value to keep in sync per site instead of two.
+            // it from the URL directly.
             'x_url' => [__('X (Twitter) URL', 'amrf-admin'), 'url', 'social'],
         ];
     }
@@ -117,10 +101,8 @@ class Repository
      * picker held (the theme default, or the user's own pick) as a literal
      * value from then on, per Settings API normal behavior.
      *
-     * WP_Theme_JSON_Resolver was only added in WP 5.8, one version past
-     * this plugin's declared floor (5.6) — class_exists guards it the same
-     * way shortcode_exists() guards other optional integrations elsewhere
-     * in this codebase.
+     * WP_Theme_JSON_Resolver needs WP 5.8+, past this plugin's 5.6 floor —
+     * class_exists guards it.
      *
      * @return array{theme_color: string, background_color: string}
      */
@@ -144,13 +126,9 @@ class Repository
     }
 
     /**
-     * theme.json's styles.color.background is the theme author's own
-     * explicit choice for the page background — preferred over guessing a
-     * palette slug when a theme actually declares it. Resolved raw data
-     * renders that as e.g. "var(--wp--preset--color--base)"; translate the
-     * slug back to its hex via the same palette rather than emitting a
-     * literal var() reference into an <input type="color">, which browsers
-     * reject.
+     * theme.json's styles.color.background is resolved as e.g.
+     * "var(--wp--preset--color--base)" — translate that back to a hex value
+     * since <input type="color"> rejects var() references.
      *
      * @param array<string, string> $by_slug Palette slug => hex color.
      * @return string|null
@@ -182,13 +160,8 @@ class Repository
         $stored = get_option(self::OPTION_NAME, []);
         $settings = wp_parse_args(is_array($stored) ? $stored : [], self::getDefaults());
 
-        // wp_parse_args() only fills in KEYS MISSING from $stored — a site
-        // saved before theme_color/background_color existed, or before they
-        // became color pickers, already has both stored as a literal ''
-        // (the old text field's empty state). An empty string isn't a real
-        // saved choice here the way it is for other text fields — nothing
-        // lets you "clear" a color picker — so it's treated the same as
-        // never having been set.
+        // A stored '' isn't a real choice here — nothing clears a color
+        // picker — so treat it as unset.
         foreach (['theme_color', 'background_color'] as $key) {
             if ($settings[$key] === '') {
                 $settings[$key] = self::getThemeDefaultColors()[$key];
@@ -216,17 +189,10 @@ class Repository
     }
 
     /**
-     * WordPress's own "Discourage search engines from indexing this site"
-     * toggle (Settings > Reading), stored as the core blog_public option --
-     * NOT one of this plugin's own fields. Checked here (rather than left
-     * to WordPress's own noindex meta tag alone) because that tag is only
-     * ever a request compliant crawlers may honor; it does nothing to stop
-     * this plugin's own Open Graph/Twitter Card tags and Organization/
-     * Person JSON-LD (business name, address, phone, geo-coordinates) from
-     * still being emitted and picked up by link-preview scrapers that don't
-     * consult robots meta at all. Gating isSeoOutputEnabled() on this closes
-     * that gap without touching robots output itself, which core already
-     * owns.
+     * WordPress's own "Discourage search engines" setting (core's
+     * blog_public option, not one of this plugin's fields) — checked here
+     * since core's noindex tag alone doesn't stop this plugin's own OG/
+     * Twitter/JSON-LD output from still being scraped.
      *
      * @return bool
      */
@@ -236,13 +202,10 @@ class Repository
     }
 
     /**
-     * All four tabs (SEO/Business/Address/Social) share this one option, but
-     * each submits only its own fields — WordPress's Settings API never
-     * merges a submission with the option's existing value on its own, so a
-     * naive "rebuild the whole array from $input" sanitize callback quietly
-     * blanks out every OTHER tab's fields on each save (they're simply
-     * absent from $input). Start from the current stored values instead, and
-     * only touch keys this particular submission actually included.
+     * All four tabs share this one option but each submits only its own
+     * fields — start from current stored values and only touch keys this
+     * submission actually included, or every other tab's fields get
+     * silently blanked.
      *
      * @param mixed $input Raw POSTed value for this option.
      * @return array<string, string>
@@ -256,12 +219,9 @@ class Repository
             [$label, $type] = $field;
 
             if ($type === 'checkbox') {
-                // Unlike every other field type, a checkbox is simply
-                // absent from $_POST when unchecked — so its own presence
-                // can't tell "this tab wasn't submitted" apart from
-                // "submitted, unchecked". Provider::renderCheckboxField()
-                // renders a "{$key}_submitted" hidden marker alongside it
-                // specifically to disambiguate that.
+                // A checkbox is absent from $_POST when unchecked — the
+                // "{$key}_submitted" marker (Provider::renderCheckboxField())
+                // disambiguates that from "tab not submitted".
                 if (is_array($input) && array_key_exists($key . '_submitted', $input)) {
                     $output[$key] = !empty($input[$key]) ? '1' : '';
                 }
@@ -269,10 +229,8 @@ class Repository
             }
 
             if ($type === 'page_list') {
-                // Same "absent when nothing's checked" problem as
-                // checkbox above, same _submitted-marker fix — a
-                // deselect-everything save has to actually clear the
-                // list, not silently leave the old one in place.
+                // Same _submitted-marker fix as checkbox — a
+                // deselect-everything save must actually clear the list.
                 if (is_array($input) && array_key_exists($key . '_submitted', $input)) {
                     $ids = isset($input[$key]) && is_array($input[$key]) ? array_map('absint', $input[$key]) : [];
                     $ids = array_values(array_unique(array_filter($ids)));
@@ -292,11 +250,8 @@ class Repository
                 'url', 'media' => esc_url_raw($value),
                 'textarea' => sanitize_textarea_field($value),
                 'number' => (string) absint($value),
-                // <input type="color"> only ever submits a valid #rrggbb,
-                // but sanitize() can be reached via any code that calls
-                // update_option()/the REST settings endpoint directly —
-                // an invalid value falls back to what's already stored
-                // rather than persisting garbage a color picker rejects.
+                // Invalid values (possible via direct update_option()/REST
+                // calls) fall back to what's already stored.
                 'color' => preg_match('/^#[0-9a-f]{6}$/i', $value) ? $value : $output[$key],
                 default => sanitize_text_field($value),
             };
@@ -306,11 +261,9 @@ class Repository
     }
 
     /**
-     * Copies ptsussis-theme's own site-settings option over on first
-     * activation, so a site migrating from that theme's built-in Site
-     * Settings doesn't need its real business data re-entered by hand.
-     * No-ops if this plugin's own option already holds data, or the legacy
-     * theme option doesn't exist — safe to call on every activation.
+     * Copies ptsussis-theme's site-settings option over on first
+     * activation. No-ops if this plugin's option already holds data or the
+     * legacy option doesn't exist.
      *
      * @return void
      */

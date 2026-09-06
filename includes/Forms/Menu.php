@@ -12,29 +12,18 @@ if (!defined('ABSPATH')) {
  * Class Menu
  *
  * Registers the "Forms" page shell onto amrf_site_settings_pages (see
- * Admin\SiteSettingsMenu, the shared "Site Settings" top-level menu) —
- * knows nothing about Swish or Contact Forms specifically, only that
- * SOME tabs exist on amrf_forms_tabs. Same relationship as
- * SiteSettings\Provider registering tabs onto amrf_site_settings_tabs
- * without Admin\SiteSettingsMenu knowing anything about SEO/Business/
- * Address/Social — see Utilities\SettingsRenderer's own docblock, which
- * is designed to be instantiated once per independent tab group.
+ * Admin\SiteSettingsMenu) — knows nothing about Swish or Contact Forms
+ * specifically, only that some tabs exist on amrf_forms_tabs.
  *
  * @package Antropomorf\Forms
  */
 class Menu
 {
   /**
-   * Kept at its original 'amrf-site-settings-gdpr' value from when this
-   * was ContactForm\Provider's own single "Contact Forms" page — a role's
-   * saved allowed_menu_items allow-list (Settings\Repository, matched by
-   * exact slug string in Hooks\FrontendHooks::init()) would silently lose
-   * access to this page on any rename, on every site already using this
-   * plugin, with no error and no migration path back. The slug is never
-   * shown to a site visitor or editor, only the page_title/menu_title
-   * below are (now "Forms"), so nothing is actually lost by keeping it —
-   * same reasoning ContactForm\Provider's own docblock already gave for
-   * this exact slug.
+   * A role's saved allowed_menu_items allow-list matches this slug exactly
+   * (Hooks\FrontendHooks::init()) — renaming it would silently break access
+   * for existing sites. Not shown to visitors/editors; only page_title/
+   * menu_title ("Forms") are.
    */
   public const PAGE_SLUG = 'amrf-site-settings-gdpr';
 
@@ -64,10 +53,8 @@ class Menu
   }
 
   /**
-   * Admin\SiteSettingsMenu::registerSettings() calls this (this page
-   * entry's own 'register' key) on admin_init — the counterpart to
-   * SiteSettingsMenu's OWN identical loop over amrf_site_settings_tabs,
-   * just one level down for this page's own amrf_forms_tabs tabs.
+   * Called via this page's 'register' key (Admin\SiteSettingsMenu::registerSettings()),
+   * on admin_init.
    *
    * @return void
    */
@@ -81,11 +68,8 @@ class Menu
   }
 
   /**
-   * Bypasses Admin\SiteSettingsMenu::renderPage()'s default plain-heading
-   * fallback (this page entry has no 'option_group'/'page_slug' of its
-   * own — only a 'render' callback) in favor of its own tab strip, exactly
-   * like Admin\SiteSettingsMenu and Admin\SettingsPage each render their
-   * own via their own SettingsRenderer instance.
+   * Renders its own tab strip via SettingsRenderer instead of
+   * SiteSettingsMenu's default plain-heading fallback.
    *
    * @return void
    */

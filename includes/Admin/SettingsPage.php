@@ -11,11 +11,9 @@ if (!defined('ABSPATH')) {
 /**
  * Class SettingsPage
  *
- * Registers the settings page and enqueues assets for the admin panel settings.
- * Knows nothing about which tabs exist or what they store — every tab
- * (this plugin's own General/role tabs included) registers itself onto the
- * amrf_admin_settings_tabs filter; this class just renders whatever's there
- * and, on admin_init, calls each tab's own 'register' callback.
+ * Registers the "Admin Panel Settings" page and its assets. Tabs register
+ * themselves onto the amrf_admin_settings_tabs filter; this class just
+ * renders whatever's there.
  *
  * @package Antropomorf\Admin
  */
@@ -23,12 +21,7 @@ class SettingsPage
 {
     private $renderer;
 
-    /**
-     * Hook suffix add_submenu_page() actually returns for this page — read
-     * back instead of guessed, unlike the string literal this used to
-     * compare against (fragile: it depends on the parent slug/menu type,
-     * and silently breaks if either ever changes).
-     */
+    /** Hook suffix returned by add_submenu_page(), used to scope asset loading. */
     private $hookSuffix;
 
     /**
@@ -61,11 +54,8 @@ class SettingsPage
     }
 
     /**
-     * Register the settings page as a submenu under the plugin's own "Site
-     * Settings" top-level menu (Admin\SiteSettingsMenu) — still
-     * manage_options, administrators only, just consolidated under the
-     * plugin's own menu instead of WordPress core's "Settings" the way it
-     * used to live, so everything this plugin owns is findable in one place.
+     * Registers as a submenu under the plugin's own "Site Settings" menu,
+     * administrators only.
      *
      * @return void
      */

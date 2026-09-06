@@ -16,29 +16,15 @@ if (!defined('ABSPATH')) {
 /**
  * Class Altcha
  *
- * Sitewide, invisible proof-of-work spam protection for every FluentForm on
- * the site, replacing FluentForm's own built-in Cloudflare Turnstile field.
- * Turnstile ties a site key to specific domains registered on Cloudflare's
- * own dashboard; that key travels with a database export, so a site cloned
- * for dev/staging carries a key that's only valid for the original domain —
- * every other environment gets a real, user-visible "invalid domain" error
- * from Cloudflare's own script. ALTCHA's HMAC secret
- * (Repository::getAltchaHmacKey(), auto-generated and stored on first use —
- * no external account, nothing for a site owner to configure) signs and
- * verifies challenges without ever calling out to a third-party service,
- * and therefore works identically on every domain the same secret happens
- * to be deployed to, including a cloned database.
+ * Sitewide, invisible proof-of-work spam protection for every FluentForm,
+ * instead of FluentForm's built-in Cloudflare Turnstile field — Turnstile's
+ * site key is domain-locked, so a cloned dev/staging DB breaks it. ALTCHA
+ * signs/verifies challenges with a local auto-generated HMAC secret
+ * (Repository::getAltchaHmacKey()), no external service or config needed.
  *
- * Unlike Turnstile, no FluentForm form-builder element is used — the widget
- * is injected directly into every rendered form via FluentForm's own render
- * hooks (fluentform/render_item_submit_button), so protection is automatic
- * for every existing and future form without configuring each one
- * individually. display="invisible" + auto="onsubmit" means no checkbox or
- * other visual indicator ever appears in the form itself — the only
- * settings-page control is a plain on/off toggle
- * (Repository::isAltchaEnabled(), on by default) for a site that wants to
- * run its own spam protection instead; there's still nothing to configure
- * beyond that, no secret or key ever shown.
+ * The widget is injected into every form via FluentForm's own render hooks,
+ * invisible (display="invisible" auto="onsubmit"), toggled sitewide via
+ * Repository::isAltchaEnabled() (on by default).
  *
  * @package Antropomorf\ContactForm
  */
@@ -69,13 +55,8 @@ class Altcha
     }
 
     /**
-     * FluentForm builds $formData by intersecting the raw POST against the
-     * form's own registered fields plus this whitelist
-     * (Helper::getWhiteListedFields(), which is how its own built-in
-     * reCaptcha/hCaptcha/Turnstile response fields survive without being
-     * real form elements either) — without this, 'altcha' is silently
-     * stripped before validateSubmission() ever sees it, and every
-     * submission fails as if the solution were invalid.
+     * FluentForm strips POST fields not in its registered fields or this
+     * whitelist — without it, 'altcha' never reaches validateSubmission().
      *
      * @param string[] $fields
      * @return string[]
@@ -87,11 +68,8 @@ class Altcha
     }
 
     /**
-     * SHA-256 keeps the client-side proof-of-work cheap (a few thousand
-     * plain hash computations, sub-second even on a slow phone) — ALTCHA's
-     * heavier algorithms (Argon2id/Scrypt) trade that for stronger
-     * resistance against large-scale abuse, which a small contact form
-     * doesn't need.
+     * SHA-256 keeps the client-side proof-of-work sub-second; ALTCHA's
+     * heavier algorithms (Argon2id/Scrypt) aren't needed for a contact form.
      *
      * @return Sha
      */
@@ -106,10 +84,8 @@ class Altcha
     }
 
     /**
-     * Public, unauthenticated by design — this is the same trust boundary
-     * as the widget it serves: anyone can request a challenge (that's how
-     * every visitor's browser gets one), the HMAC secret is what makes a
-     * solved challenge unforgeable, not who's allowed to ask for one.
+     * Public/unauthenticated by design — the HMAC secret makes a solved
+     * challenge unforgeable, not who's allowed to request one.
      *
      * @return void
      */
@@ -132,15 +108,10 @@ class Altcha
             // One hash per attempt — difficulty comes entirely from
             // keyPrefixLength below, not from repeating work per guess.
             cost: 1,
-            // keyPrefix must be passed as '' (not left at its own default
-            // of '00') to actually make the library randomize a prefix of
-            // keyPrefixLength bytes — otherwise every challenge silently
-            // reuses the fixed 1-byte '00' target instead.
+            // Must be '' (not the library's own '00' default) or it never
+            // randomizes the prefix.
             keyPrefix: '',
-            // 2 random bytes = ~65k possible prefixes, ~32k average
-            // brute-force attempts client-side: fast enough to be
-            // invisible (well under a second), still real, asymmetric
-            // work a spam script has to redo for every submission.
+            // 2 random bytes: sub-second client-side, still real per-submission work.
             keyPrefixLength: 2,
             expiresAt: time() + 600,
         ));
@@ -152,9 +123,7 @@ class Altcha
     }
 
     /**
-     * Fires once per form, only when a form is actually about to render —
-     * unlike loading the widget script sitewide on every page regardless
-     * of whether it contains a form at all.
+     * Fires once per form, only when it's actually about to render.
      *
      * @return void
      */
@@ -171,9 +140,7 @@ class Altcha
 
     /**
      * Hooks the same action FluentForm's own submit-button renderer uses,
-     * so this prints adjacent to it in every form regardless of form type
-     * or step configuration — see FormBuilder::compile()'s
-     * 'fluentform/render_item_submit_button' call.
+     * so it prints adjacent to it regardless of form type/step.
      *
      * @return void
      */
@@ -186,13 +153,9 @@ class Altcha
     }
 
     /**
-     * Hooked the same way FluentForm's own validateReCaptcha/HCaptcha/
-     * Turnstile run — see FormValidationService::validateSubmission(),
-     * which calls do_action('fluentform/before_form_validation', ...)
-     * before any of its own hardcoded provider checks. Throwing
-     * ValidationException here is caught by the exact same code path
-     * Turnstile's own failure uses, so the submitter sees a normal
-     * "please fix this field" error, not a broken page.
+     * Hooked the same way FluentForm's own captcha providers run — throwing
+     * ValidationException here surfaces as a normal field error, not a
+     * broken page.
      *
      * @param array $fields    Unused — required by the hook signature.
      * @param array $formData  The submitted form data, by reference.

@@ -20,10 +20,7 @@ define('AMRF_ADMIN_PLUGIN_FILE', __FILE__);
 define('AMRF_ADMIN_PLUGIN_DIR', __DIR__);
 define('AMRF_ADMIN_PLUGIN_URL', plugin_dir_url(__FILE__));
 
-// Composer dependencies (currently just altcha-org/altcha, for
-// ContactForm\Altcha's sitewide spam protection) — vendor/ is committed to
-// the repo since this plugin has no build step, so no composer install is
-// required after checkout.
+// vendor/ is committed — no build step, so no composer install needed after checkout.
 if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     require_once __DIR__ . '/vendor/autoload.php';
 }

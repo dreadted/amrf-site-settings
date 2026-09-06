@@ -9,11 +9,8 @@ if (!defined('ABSPATH')) {
 /**
  * Class RetentionCron
  *
- * Daily cleanup of old FluentForm submissions — a real replacement for
- * FluentForm's own per-form "auto_delete_days" setting, which the free
- * plugin saves but never actually reads back to delete anything (confirmed
- * directly against its source: wp-content/plugins/fluentform, grepped for
- * every reference to that meta key — only ever written/removed).
+ * Daily cleanup of old FluentForm submissions — FluentForm's free tier
+ * saves its own per-form "auto_delete_days" setting but never acts on it.
  *
  * @package Antropomorf\ContactForm
  */
@@ -24,13 +21,9 @@ class RetentionCron
     public function __construct()
     {
         register_activation_hook(AMRF_ADMIN_PLUGIN_FILE, [self::class, 'scheduleOnActivation']);
-        // Also self-heal on every normal load, not just plugin activation —
-        // this codebase is routinely deployed by syncing files directly onto
-        // a running site (see docker-bind-mount-rm-danger memory) rather than
-        // through WordPress's own deactivate/activate cycle, so the
-        // activation hook alone silently leaves this cron unscheduled after
-        // a file-level restore or sync. wp_next_scheduled() guard keeps this
-        // a no-op on every request where the event is already scheduled.
+        // Also self-heal on 'init' in case files were deployed without a
+        // proper activation cycle — wp_next_scheduled() keeps this a no-op
+        // once the event exists.
         add_action('init', [self::class, 'scheduleOnActivation']);
         add_action(self::HOOK, [$this, 'run']);
     }
@@ -43,10 +36,9 @@ class RetentionCron
     }
 
     /**
-     * No-ops entirely if FluentForm is missing, no forms are configured, or
-     * the retention field is blank/0 — an empty setting means "keep
-     * forever", not "delete everything immediately", so this must fail safe
-     * toward doing nothing.
+     * No-ops if FluentForm is missing, no forms are configured, or the
+     * retention field is blank/0 — blank means "keep forever", not "delete
+     * everything".
      *
      * @return void
      */

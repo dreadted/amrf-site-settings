@@ -35,72 +35,56 @@ class FrontendHooks
 	public static function init(): void
 
 	{
-		// Set a cookie to identify that the user has just logged in
 		add_filter('auth_cookie', function ($cookie, $user_id, $expiration, $scheme, $token) {
 			set_transient('user_' . $user_id . '_logging_in', true, 60);
 			return $cookie;
 		}, 10, 5);
 
-		// Bail out if user is anonymous
 		if (! is_user_logged_in()) {
 			return;
 		}
 
 		$settings = Repository::getSettings();
 
-		// Add link to page editor if enabled
 		if (!empty($settings['add_page_editor_link'])) {
 			add_action('admin_menu', [self::class, 'addCustomPageToMenu']);
 		}
 
-		// Remove default dashboard widgets if enabled
 		if (!empty($settings['remove_dashboard_widgets'])) {
 			add_action('wp_dashboard_setup', [self::class, 'removeDashboardWidgets']);
 		}
 
-		// Password length enforcement
 		if (!empty($settings['minimum_password_length'])) {
 			add_action('user_profile_update_errors', [self::class, 'enforcePasswordLengthOnProfileUpdate'], 10, 3);
 			add_action('password_reset', [self::class, 'enforcePasswordLengthOnReset'], 10, 2);
 		}
 
-		// Prevent password changes for non-admins if enabled
 		if (!empty($settings['prevent_password_change'])) {
 			add_filter('show_password_fields', [self::class, 'filterShowPasswordFields'], 10, 2);
 			add_filter('allow_password_reset', [self::class, 'filterAllowPasswordReset'], 10, 2);
 		}
 
-		// Hide application passwords for non-admins if enabled
 		if (!empty($settings['hide_application_passwords'])) {
 			add_action('admin_init', [self::class, 'hideApplicationPasswords']);
 		}
 
-		// Remove admin bar items for non-admins if enabled
 		if (!empty($settings['remove_admin_bar_items'])) {
 			add_action('wp_before_admin_bar_render', [self::class, 'removeAdminBarItems'], 999);
 		}
 
-		// Hide FluentForm's own header/nav chrome (Forms/Settings/
-		// Integrations tabs etc.) for non-admins — irrelevant clutter once
-		// a role's own FluentForm access is scoped down to just Entries via
-		// fluentform_entries_access. Unconditional (no settings toggle):
-		// the selector only ever matches on FluentForm's own admin pages,
-		// so it's a no-op everywhere else.
+		// Unconditional — the selector only matches FluentForm's own admin
+		// pages, so it's a no-op elsewhere.
 		add_action('admin_head', [self::class, 'hideFluentFormsHeaderForNonAdmins']);
 
-		// Handle role specific settings
 		if (!empty($settings['user_group_settings'])) {
 			$user_group_settings = $settings['user_group_settings'];
 
 			add_action('admin_init', function () use ($user_group_settings) {
 				if (!current_user_can('administrator')) {
-
-					// Hide update nag
 					remove_action('admin_notices', 'update_nag', 3);
 
 					$user = wp_get_current_user();
 
-					// Login redirect or default admin page
 					$transient_key = 'user_' . $user->ID . '_logging_in';
 					$is_logging_in = get_transient($transient_key);
 
@@ -120,7 +104,6 @@ class FrontendHooks
 						}
 					}
 
-					// Adjust capabilites according to user group settings
 					self::setCapabilities($user, $user_group_settings, 'site_menus_cap');
 					self::setCapabilities($user, $user_group_settings, 'fluentform_entries_access');
 				}
@@ -351,7 +334,6 @@ class FrontendHooks
 
 			foreach ($nodes as $node) {
 				if (!in_array($node->id, $allowed, true)) {
-					// error_log('Removing admin bar node: ' . $node->id);
 					$wp_admin_bar->remove_node($node->id);
 				}
 			}
@@ -359,10 +341,8 @@ class FrontendHooks
 	}
 
 	/**
-	 * Hides FluentForm's own header bar (logo, Forms/Entries/Settings/
-	 * Integrations tab nav) for non-admins, so a role scoped down to just
-	 * Entries via fluentform_entries_access isn't shown navigation to pages
-	 * it can't actually open.
+	 * Hides FluentForm's header bar for non-admins, so a role scoped down
+	 * to just Entries isn't shown navigation it can't open.
 	 *
 	 * @return void
 	 */
@@ -404,14 +384,7 @@ class FrontendHooks
 	{
 		$capabilities =  [
 			'site_menus_cap' => ['edit_theme_options'],
-			// Matches FluentForm's own Acl::hasPermission(): dashboard_access
-			// is required just to make its admin menu register at all,
-			// entries_viewer to see the Entries page/pull entries via AJAX,
-			// manage_entries for the bulk actions (delete, mark read/unread,
-			// favorite, print) — none of FluentForm's broader caps
-			// (forms_manager, view/manage_payments, settings_manager) are
-			// granted, so this role can't touch form design or site-wide
-			// FluentForm settings, only its own entries.
+			// Just enough for the Entries page — no forms_manager/settings_manager.
 			'fluentform_entries_access' => [
 				'fluentform_dashboard_access',
 				'fluentform_entries_viewer',
@@ -438,17 +411,11 @@ class FrontendHooks
 		if ($enabled) {
 			foreach ($capabilities as $cap) {
 				$user->add_cap($cap);
-				// error_log('Adding ' . $cap . ' for ' . $user->user_login);
 			}
 		} else {
 			foreach ($capabilities as $cap) {
 				$user->remove_cap($cap);
-				// error_log('Removing ' . $cap . ' for ' . $user->user_login);
 			}
 		}
-
-
-		// error_log($key . ' is ' . ($enabled ? 'enabled' : 'disabled'));
-		// error_log(print_r($capabilities, true));
 	}
 }

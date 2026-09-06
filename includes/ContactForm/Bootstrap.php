@@ -9,13 +9,10 @@ if (!defined('ABSPATH')) {
 /**
  * Class Bootstrap
  *
- * Entry point for the Contact Form module, called once from amrf-site-settings.php
- * alongside the other modules' Bootstrap::register() calls. Covers the
- * "Contact Forms" and "GDPR" tabs on the shared "Forms" page (Forms\Menu) —
- * default form + consistency-CSS toggle on one, retention scope/duration on
- * the other — the sitewide "#kontakt" lightbox (Modal), and WordPress's own
- * personal-data export/erase tools and privacy-request emails (unchanged
- * from this module's original FluentFormPrivacy name).
+ * Entry point for the Contact Form module: the "Contact Forms" and "GDPR"
+ * tabs on the shared "Forms" page (Forms\Menu), the sitewide "#kontakt"
+ * lightbox (Modal), and WordPress's personal-data export/erase tools and
+ * privacy-request emails.
  *
  * @package Antropomorf\ContactForm
  */

@@ -9,14 +9,10 @@ if (!defined('ABSPATH')) {
 /**
  * Class FrontendProvider
  *
- * Sitewide "#swish" link handling — ported from ptsussis-theme's
- * blocks/cta/index.js, generalized: that version swapped a specific
- * data-swish-trigger button (a Gutenberg CTA block's own rendering);
- * amrf-theme has no block/CTA system to hang that off of, so this instead
- * scans the whole rendered page for plain <a href="#swish"> anywhere in
- * content/menus/widgets and swaps those. One global config object, not
- * per-element data attributes — there's only ever one Swish account per
- * site.
+ * Sitewide "#swish" link handling — scans the rendered page for plain
+ * `<a href="#swish">` anywhere in content/menus/widgets and swaps those.
+ * One global config object, not per-element attributes — there's only ever
+ * one Swish account per site.
  *
  * @package Antropomorf\Swish
  */

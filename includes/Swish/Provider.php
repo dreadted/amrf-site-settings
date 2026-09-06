@@ -25,10 +25,8 @@ class Provider
   {
     add_filter('amrf_forms_tabs', [$this, 'registerTab']);
 
-    // wp-admin/options.php hardcodes manage_options as the capability
-    // required to actually SAVE a Settings API form, regardless of what
-    // capability the page itself needed to be reached — see the identical
-    // fix/comment in SiteSettings\Provider and ContactForm\Provider.
+    // wp-admin/options.php hardcodes manage_options to save any Settings
+    // API form, regardless of what capability reached the page.
     add_filter('option_page_capability_' . self::OPTION_GROUP, function () {
       return 'edit_theme_options';
     });
@@ -97,9 +95,7 @@ class Provider
   }
 
   /**
-   * Amount + its own "editable after scanning" toggle, side by side — same
-   * .switch/.slider markup as every other toggle in this plugin (assets/css/
-   * amrf-admin-settings.css).
+   * Amount + its own "editable after scanning" toggle, side by side.
    *
    * @return void
    */
@@ -142,9 +138,7 @@ class Provider
   }
 
   /**
-   * The shared .switch/.slider toggle styles live in assets/css/amrf-
-   * admin-settings.css — enqueued unconditionally here too, same posture
-   * as every other module's identical method.
+   * Shared .switch/.slider styles, enqueued unconditionally.
    *
    * @return void
    */

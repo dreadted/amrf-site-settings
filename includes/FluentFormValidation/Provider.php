@@ -10,20 +10,10 @@ if (!defined('ABSPATH')) {
  * Class Provider
  *
  * Swedish Personal Identity Number (personnummer) validation/formatting for
- * FluentForm text fields — ported verbatim from amrf-theme's
- * includes/fluentform.php + the initPinValidation()/validatePIN()/
- * formatPIN() functions in assets/scripts.js.
- *
- * Identifies the field by a CSS class (self::CONTAINER_CLASS) on its
- * container, set by whoever builds the form (FluentForm's own "Container
- * Class" field setting) — NOT by field name/label. That's a deliberate
- * choice kept from the original: matching on a name like "personnummer"
- * would be language/spelling-fragile and risks false positives (a
- * plain-text field that happens to mention "personnummer" would get
- * hijacked into strict PIN-format validation). The container-class check
- * is cheap enough to run unconditionally on fluentform's global per-field
- * filters — no site-wide on/off setting needed, it already no-ops
- * instantly for every field that isn't marked.
+ * FluentForm text fields. Identifies the field by a CSS class
+ * (self::CONTAINER_CLASS) on its container, not by field name/label —
+ * matching on a name like "personnummer" would be language-fragile and
+ * risks false positives on unrelated text fields.
  *
  * @package Antropomorf\FluentFormValidation
  */

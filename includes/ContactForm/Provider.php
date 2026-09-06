@@ -10,16 +10,8 @@ if (!defined('ABSPATH')) {
  * Class Provider
  *
  * Registers the "Contact Forms" and "GDPR" tabs onto amrf_forms_tabs (see
- * Forms\Menu, the shared "Forms" page these tabs live under, formerly this
- * class's own single "Contact Forms" page — see Forms\Menu::PAGE_SLUG's
- * own docblock for why that page's admin menu slug is preserved unchanged
- * even though this stopped being its own page). Capability:
- * edit_theme_options, same as the menu's own default.
- *
- * Both tabs still share the SAME option (Repository::OPTION_NAME) via one
- * option_group — unchanged from when they were two sections stacked on one
- * page, just presented as two tabs now. See Modal's docblock and
- * Repository's docblock for the reasoning behind each field.
+ * Forms\Menu, the shared "Forms" page). Both tabs share one option
+ * (Repository::OPTION_NAME) via one option_group.
  *
  * @package Antropomorf\ContactForm
  */
@@ -27,12 +19,7 @@ class Provider
 {
   private const OPTION_GROUP = 'amrf_contact_form_group';
 
-  /**
-   * Internal Settings-API page slugs only — passed to do_settings_sections()/
-   * settings_fields(), never shown as a WP admin menu item, so unlike
-   * Forms\Menu::PAGE_SLUG these are free to be whatever's convenient; they
-   * don't participate in allowed_menu_items matching at all.
-   */
+  /** Internal Settings API page slugs — never shown as an admin menu item. */
   private const CONTACT_PAGE_SLUG = 'amrf-forms-contact';
   private const GDPR_PAGE_SLUG = 'amrf-forms-gdpr';
 
@@ -40,10 +27,8 @@ class Provider
   {
     add_filter('amrf_forms_tabs', [$this, 'registerTabs']);
 
-    // wp-admin/options.php hardcodes manage_options as the capability
-    // required to actually SAVE a Settings API form, regardless of what
-    // capability the page itself needed to be reached — see the identical
-    // fix/comment in SiteSettings\Provider for the full explanation.
+    // wp-admin/options.php hardcodes manage_options to save any Settings
+    // API form, regardless of what capability reached the page.
     add_filter('option_page_capability_' . self::OPTION_GROUP, function () {
       return 'edit_theme_options';
     });
@@ -52,11 +37,8 @@ class Provider
   }
 
   /**
-   * The shared .switch/.slider toggle styles live in assets/css/amrf-
-   * admin-settings.css, otherwise only loaded on the Admin Panel Settings/
-   * Site Settings/Hardening pages — enqueued here too, unconditionally,
-   * same posture as Hardening\Provider's own identical method (cheap,
-   * scoped class names, no per-page hook check needed).
+   * Shared .switch/.slider styles (assets/css/amrf-admin-settings.css),
+   * enqueued unconditionally — cheap, scoped class names.
    *
    * @return void
    */
@@ -94,12 +76,9 @@ class Provider
   }
 
   /**
-   * Called via the 'contact-forms' tab's 'register' callback
-   * (Forms\Menu::registerTabSettings(), on admin_init). register_setting()
-   * only actually needs calling once per option, but the Settings API
-   * doesn't care about a harmless repeat call — registerGdprFields() calls
-   * it too, since either tab can be the first one WordPress happens to
-   * touch depending on which tab is currently open.
+   * Called via the 'contact-forms' tab's 'register' callback, on admin_init.
+   * register_setting() is repeated in registerGdprFields() too — a harmless
+   * repeat call, and either tab can load first.
    *
    * @return void
    */
@@ -133,9 +112,7 @@ class Provider
   }
 
   /**
-   * Called via the 'gdpr' tab's 'register' callback, on admin_init — see
-   * registerContactFormsFields()'s own doc comment for why register_setting()
-   * is repeated here too.
+   * Called via the 'gdpr' tab's 'register' callback, on admin_init.
    *
    * @return void
    */
@@ -143,9 +120,7 @@ class Provider
   {
     register_setting(self::OPTION_GROUP, Repository::OPTION_NAME, [Repository::class, 'sanitize']);
 
-    // No section title needed here — the tab itself is already labeled
-    // "GDPR" (registerTabs()), unlike before when both sections shared one
-    // page and needed their own visible <h2> to tell them apart.
+    // No section title needed — the tab itself is already labeled "GDPR".
     add_settings_section('gdpr_section', '', '__return_false', self::GDPR_PAGE_SLUG);
 
     add_settings_field(
@@ -207,10 +182,7 @@ class Provider
   }
 
   /**
-   * Same .switch/.slider toggle markup as Settings\Manager::renderCheckbox()
-   * and Hardening\Provider::renderCheckbox() — amrf-admin-settings.css
-   * (already enqueued for this page, see registerPages()) styles it
-   * identically wherever it's used.
+   * Same .switch/.slider markup as Settings\Manager::renderCheckbox().
    *
    * @return void
    */
@@ -230,11 +202,8 @@ class Provider
   }
 
   /**
-   * On by default (Repository::getDefaults()) — this toggle exists only
-   * for a site that wants to run its own spam protection instead (or
-   * none at all), not to make ALTCHA opt-in. The signing secret itself
-   * (Repository::getAltchaHmacKey()) has no field here at all — see that
-   * method's own docblock for why.
+   * On by default — exists only to let a site opt out in favor of its own
+   * spam protection.
    *
    * @return void
    */
@@ -254,10 +223,8 @@ class Provider
   }
 
   /**
-   * Same "_submitted marker" + .menu-items-container/.menu-item-checkbox
-   * markup as SiteSettings\Provider::renderPageListField() — reusing the
-   * exact class names/structure gets an identical look for free (CSS
-   * already ships in assets/css/amrf-admin-settings.css).
+   * Same "_submitted" marker + checkbox-list markup as
+   * SiteSettings\Provider::renderPageListField().
    *
    * @return void
    */
@@ -291,10 +258,8 @@ class Provider
 
   public function renderRetentionDaysField(): void
   {
-    // Repository::getSettings()'s raw string, not getRetentionDays()'s
-    // absint() — an unset value must render as a blank field, not "0",
-    // the same distinction the option's own default ('') vs. an explicit
-    // 0 preserves.
+    // Raw string, not getRetentionDays()'s absint() — unset must render
+    // blank, not "0".
     $days = Repository::getSettings()['retention_days'];
     $id = Repository::OPTION_NAME . '_retention_days';
     $name = Repository::OPTION_NAME . '[retention_days]';

@@ -9,18 +9,11 @@ if (!defined('ABSPATH')) {
 /**
  * Class PrivacyRequests
  *
- * Registers FluentForm submissions with WordPress's own personal-data
- * export/erase tools (Tools > Export/Erase Personal Data) — FluentForm
- * never does this itself, confirmed by reading its source: it registers no
- * wp_privacy_personal_data_exporters/_erasers callback at all.
- *
- * Ported from ptsussis-theme's includes/gdpr.php, generalized: that version
- * read hardcoded response keys (email/names/subject/message) matching one
- * specific form's own field structure. A shared plugin can't assume every
- * FluentForm form uses the same field names, so this dumps every field a
- * submission actually contains (titleized for display) rather than a fixed
- * set of labels, and finds the matching email by scanning all field values
- * for anything email-shaped instead of a hardcoded 'email' key.
+ * Registers FluentForm submissions with WP's personal-data export/erase
+ * tools (Tools > Export/Erase Personal Data) — FluentForm doesn't register
+ * these itself. Since forms vary in field names, this dumps every field a
+ * submission contains (titleized) and finds the matching email by scanning
+ * all values for anything email-shaped, rather than assuming fixed keys.
  *
  * @package Antropomorf\ContactForm
  */

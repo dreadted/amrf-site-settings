@@ -9,34 +9,15 @@ if (!defined('ABSPATH')) {
 /**
  * Class Provider
  *
- * Generalized from amrf-theme's inline functions.php hardening/performance
- * snippets — reusable across projects rather than copy-pasted into every
- * new theme.
+ * Security/performance hardening, split into two groups:
  *
- * Split into two groups:
- *
- * - Unconditional, no setting: XML-RPC blocking, generic login error
- *   message, hiding the WP version generator tag, blocking a ?username=
- *   query param at login, and removing the /wp/v2/users REST endpoint.
- *   All near-universal security hardening with no real downside for any
- *   site — same posture as this plugin's existing unconditional update-nag
- *   removal (Hooks\FrontendHooks) and Support Genix promo-banner hiding
- *   (SupportGenix\Provider).
- * - Behind a toggle on the "Hardening" page (its own amrf_site_settings_pages
- *   entry, manage_options): disabling author archives, redirecting 404s to
- *   the homepage, removing jQuery Migrate, and disabling generated image
- *   sizes. These four actually change site behavior in ways that don't
- *   universally apply — a multi-author site wants author archives, an
- *   older plugin/theme's JS might depend on jQuery Migrate's compatibility
- *   shims, some sites want real 404 pages, some want WP's generated
- *   responsive image sizes. Defaulting to true (see Repository) matches
- *   the common case for the sites this plugin is actually built for, but
- *   any one of the four needs to be a per-site opt-out, not baked in.
- *
- * The old theme's force_website_schema_name() (WebSite JSON-LD in
- * wp_head) is deliberately NOT here — that belongs with the planned SEO
- * module's own enable_seo_output toggle, not a new one here, and avoids
- * duplicate structured data on a site that already runs Yoast/RankMath.
+ * - Unconditional: XML-RPC blocking, generic login error message, hiding
+ *   the WP version generator tag, blocking ?username= at login, and
+ *   removing the /wp/v2/users REST endpoint. Near-universal, no downside.
+ * - Toggleable, on the "Hardening" page (manage_options): disabling author
+ *   archives, redirecting 404s to the homepage, removing jQuery Migrate,
+ *   and disabling generated image sizes — these change behavior some sites
+ *   rely on, so each defaults to true but stays a per-site opt-out.
  *
  * @package Antropomorf\Hardening
  */
@@ -138,14 +119,8 @@ class Provider
       return;
     }
 
-    // WordPress's own /wp-sitemap.xml and friends report is_404() true
-    // internally even when they're about to render valid content -- a
-    // sitemap route never corresponds to a normal post/page/archive
-    // query, so WP flags it not-found before its own sitemap renderer
-    // (a later template_redirect callback) gets a chance to actually
-    // serve it. Redirecting those away here would break the sitemap for
-    // every anonymous visitor -- search engines included, which defeats
-    // the entire point of having one.
+    // WP's own sitemap routes report is_404() true before their own
+    // template_redirect renderer runs — don't redirect those away.
     if (get_query_var('sitemap') || get_query_var('sitemap-stylesheet')) {
       return;
     }
@@ -239,10 +214,7 @@ class Provider
   }
 
   /**
-   * Same .switch/.slider toggle markup as Settings\Manager::renderCheckbox()
-   * (Admin Panel Settings' own toggles), styled by assets/css/amrf-admin-
-   * settings.css — reused here rather than reinvented, so a Hardening
-   * toggle looks identical to every other toggle in the plugin.
+   * Same .switch/.slider markup as Settings\Manager::renderCheckbox().
    *
    * @param string $key
    * @param string $description
@@ -262,12 +234,8 @@ class Provider
   }
 
   /**
-   * The shared .switch/.slider toggle styles live in assets/css/amrf-
-   * admin-settings.css, otherwise only loaded on the Admin Panel Settings
-   * page (SettingsPage::enqueueAssets()) — enqueued here too,
-   * unconditionally, same posture as SupportGenix\Provider's own small
-   * shared-CSS enqueue (cheap, scoped class names, no per-page hook check
-   * needed).
+   * Shared .switch/.slider styles, enqueued unconditionally — cheap, scoped
+   * class names.
    *
    * @return void
    */

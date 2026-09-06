@@ -21,8 +21,6 @@ class MenuManager
     private array $roles;
 
     /**
-     * MenuManager constructor.
-     *
      * @param array $roles Roles to scan menu items for.
      */
     public function __construct(array $roles)
@@ -30,20 +28,13 @@ class MenuManager
         $this->roles = $roles;
     }
 
-    /**
-     * Scan menu items for configured roles and populate the menuItems property.
-     *
-     * @return void
-     */
     public function scan(): void
     {
         $this->menuItems = MenuScanner::scanMenuItems($this->roles);
     }
 
     /**
-     * Get the menu items scanned for each role.
-     *
-     * @return array Scanned menu items keyed by role.
+     * @return array Menu items keyed by role.
      */
     public function getMenuItems(): array
     {
