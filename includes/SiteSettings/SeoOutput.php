@@ -34,6 +34,12 @@ class SeoOutput
         // Independent of enable_seo_output: WP's built-in /wp-sitemap.xml
         // exists regardless of this plugin's meta output.
         add_filter('wp_sitemaps_posts_query_args', [$this, 'restrictSitemapQueryArgs'], 10, 2);
+
+        // Priority 5 — must run before WP core's own sitemap renderer
+        // (WP_Sitemaps::render_sitemaps(), template_redirect at the
+        // default priority 10) for rewriting the query vars here to have
+        // any effect on what it renders.
+        add_action('template_redirect', [$this, 'collapseSitemapIndex'], 5);
     }
 
     /**
@@ -60,6 +66,45 @@ class SeoOutput
         $args['post__in'] = $ids ?: [0];
 
         return $args;
+    }
+
+    /**
+     * /sitemap.xml and /wp-sitemap.xml both resolve to the sitemap index
+     * (?sitemap=index — see WP_Rewrite::rewrite_rules() for the bare
+     * "sitemap.xml" alias, a WP core convenience, not this plugin's own).
+     * An index only earns its keep once there's more than one sub-sitemap
+     * to point to — with exactly one (as on a site with no real content
+     * outside a handful of pages, once other post types/providers are
+     * excluded — see e.g. ptsussis-theme's own wp_sitemaps_post_types
+     * filter), rewrite the query vars to that one sub-sitemap's own
+     * before WP core's renderer runs, so the index URL just IS that
+     * content directly instead of a layer of indirection pointing to it.
+     *
+     * @return void
+     */
+    public function collapseSitemapIndex(): void
+    {
+        if ('index' !== get_query_var('sitemap')) {
+            return;
+        }
+
+        $server = wp_sitemaps_get_server();
+        $entries = $server->index->get_sitemap_list();
+
+        if (count($entries) !== 1) {
+            return;
+        }
+
+        $loc = $entries[0]['loc'] ?? '';
+
+        if (preg_match('#/wp-sitemap-([a-z]+)-([a-z0-9_-]+)-(\d+)\.xml$#', $loc, $matches)) {
+            set_query_var('sitemap', $matches[1]);
+            set_query_var('sitemap-subtype', $matches[2]);
+            set_query_var('paged', (int) $matches[3]);
+        } elseif (preg_match('#/wp-sitemap-([a-z]+)-(\d+)\.xml$#', $loc, $matches)) {
+            set_query_var('sitemap', $matches[1]);
+            set_query_var('paged', (int) $matches[2]);
+        }
     }
 
     /**

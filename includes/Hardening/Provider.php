@@ -16,7 +16,9 @@ if (!defined('ABSPATH')) {
  *   login, and removing the /wp/v2/users REST endpoint. Near-universal,
  *   no downside.
  * - Toggleable, on the "Hardening" page (manage_options): disabling author
- *   archives, redirecting 404s to the homepage, removing jQuery Migrate,
+ *   archives (and, tied to that same toggle, WP's own users sitemap —
+ *   pointless and actively leaks usernames once author archives are
+ *   gone), redirecting 404s to the homepage, removing jQuery Migrate,
  *   and disabling generated image sizes — these change behavior some sites
  *   rely on, so each defaults to true but stays a per-site opt-out.
  *
@@ -66,6 +68,9 @@ class Provider
 
     if ($settings['disable_author_archives']) {
       add_action('template_redirect', [$this, 'disableAuthorArchives']);
+      // A users sitemap only ever points at author archives — pointless,
+      // and actively leaks usernames, once those archives are disabled.
+      add_filter('wp_sitemaps_add_provider', [$this, 'removeUsersSitemapProvider'], 10, 2);
     }
 
     if ($settings['redirect_404_to_home']) {
@@ -113,6 +118,22 @@ class Provider
       wp_redirect(home_url());
       exit;
     }
+  }
+
+  /**
+   * Returning anything that isn't a WP_Sitemaps_Provider instance drops
+   * the provider entirely (see WP_Sitemaps_Registry::add_provider()) —
+   * /wp-sitemap-users-1.xml becomes a genuine 404 rather than just being
+   * hidden from the index, so there's nothing left to find by guessing
+   * the URL either.
+   *
+   * @param \WP_Sitemaps_Provider|null $provider
+   * @param string $name
+   * @return \WP_Sitemaps_Provider|null
+   */
+  public function removeUsersSitemapProvider($provider, string $name)
+  {
+    return $name === 'users' ? null : $provider;
   }
 
   /**
