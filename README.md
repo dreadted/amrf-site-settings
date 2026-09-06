@@ -15,7 +15,7 @@ A WordPress plugin with general site settings for
 
 ## Author
 
-Christofer Laurin ([@dreadted](https://github.com/dreadted/)), with prompt assitance from [@claude](https://github.com/claude/).
+Christofer Laurin ([@dreadted](https://github.com/dreadted/)), with prompt assistance from [@claude](https://github.com/claude/).
 
 ## Why this plugin exists
 
@@ -47,8 +47,7 @@ These feed the SEO structured data above and are reused wherever the site needs 
 
 #### Business & Contact
 
-- Business name and type
-  (schema.org)
+- Business name and type (schema.org)
 - Contact person
 - Email
 - Phone number
@@ -68,12 +67,9 @@ These feed the SEO structured data above and are reused wherever the site needs 
 
 #### Contact Forms
 
-- Default Contact Form:
-  select one of the pre-existing [Fluent Forms](https://fluentforms.com/) to open sitewide with links pointing to
-  the `#kontakt` anchor
+- Default Contact Form: select one of the pre-existing [Fluent Forms](https://fluentforms.com/) to open sitewide with links pointing to the `#kontakt` anchor
 - A toggle that overrides Fluent Forms' colors/border-radius/fonts with the site's own `theme.json` tokens
-- Enable/disable [ALTCHA](https://altcha.org/) proof-of-work spam
-  protection on every Fluent Form on the site — a self-hosted alternative honeypot with no settings, no external account, and no site key tied to a specific domain: the signing secret is generated and stored automatically the first time it's needed, so it works unchanged across dev/staging/production clones of a site.
+- Enable/disable [ALTCHA](https://altcha.org/) proof-of-work spam protection on every Fluent Form on the site — a self-hosted alternative honeypot with no settings, no external account, and no site key tied to a specific domain: the signing secret is generated and stored automatically the first time it's needed, so it works unchanged across dev/staging/production clones of a site.
 
 #### GDPR
 
@@ -82,17 +78,17 @@ These feed the SEO structured data above and are reused wherever the site needs 
 
 #### Swish
 
-- Generate a [Swish](https://www.swish.nu/) payment link to every link sitewide pointing to the `#swish` anchor:
+Generate a [Swish](https://www.swish.nu/) payment link to every link sitewide pointing to the `#swish` anchor:
 
-  #### Mobile devices
+##### Mobile devices
 
-  Generates a link to the Swish app, if installed, and otherwise to an app download page.
+Generates a link to the Swish app, if installed, and otherwise to an app download page.
 
-  #### Other devices
+##### Other devices
 
-  On devices without the ability to install the app, the link is replaced by a dynamically generated QR code.
+On devices without the ability to install the app, the link is replaced by a dynamically generated QR code.
 
-  All links can be customized with a pre-filled amount or message.
+All links can be customized with a pre-filled amount or message.
 
 ### Umami Settings
 
@@ -114,8 +110,7 @@ behavior changes that default to _on_ but can be switched off per site:
 
 #### General tab
 
-- Minimum password length for all
-  users
+- Minimum password length for all users
 - Optionally prevent non-admins from changing their own password
 - Hide the Application Passwords section from non-admins
 - Strip clutter (comments/new-content links) from the admin bar for non-admins
@@ -125,10 +120,8 @@ behavior changes that default to _on_ but can be switched off per site:
 #### One tab per WordPress user role (Editor, Author, …):
 
 - Where that role lands after login
-- Which admin page it sees by default when opening
-  `/wp-admin/`
-- A checklist of exactly which menu items the
-  role is allowed to see
+- Which admin page it sees by default when opening `/wp-admin/`
+- A checklist of exactly which menu items the role is allowed to see
 
 ### Optional integrations
 
@@ -137,15 +130,12 @@ otherwise they're inert:
 
 #### Fluent Forms
 
-- Adding Swedish personal identity number (personnummer)
-  validation and display formatting for any text field marked with the specific CSS class `ff-personnummer`, on top of the Contact Forms handling above.
+- Adding Swedish personal identity number (personnummer) validation and display formatting for any text field marked with the specific CSS class `ff-personnummer`, on top of the Contact Forms handling above.
 
 #### Support Genix Lite
 
-- Adds a "Support Tickets" admin menu (an iframe onto
-  the front-end ticket portal)
-- An "Apply Defaults" button on the Support Genix plugin's
-  own settings page to seed its default ticket categories, visibility/edit lockdown for non-administrators, and matching the portal's colors to the site's own brand colors.
+- Adds a "Support Tickets" admin menu (an iframe onto the front-end ticket portal)
+- An "Apply Defaults" button on the Support Genix plugin's own settings page to seed its default ticket categories, visibility/edit lockdown for non-administrators, and matching the portal's colors to the site's own brand colors.
 
 ## Requirements
 
