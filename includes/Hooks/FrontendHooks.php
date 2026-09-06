@@ -80,6 +80,14 @@ class FrontendHooks
 			add_action('wp_before_admin_bar_render', [self::class, 'removeAdminBarItems'], 999);
 		}
 
+		// Hide FluentForm's own header/nav chrome (Forms/Settings/
+		// Integrations tabs etc.) for non-admins — irrelevant clutter once
+		// a role's own FluentForm access is scoped down to just Entries via
+		// fluentform_entries_access. Unconditional (no settings toggle):
+		// the selector only ever matches on FluentForm's own admin pages,
+		// so it's a no-op everywhere else.
+		add_action('admin_head', [self::class, 'hideFluentFormsHeaderForNonAdmins']);
+
 		// Handle role specific settings
 		if (!empty($settings['user_group_settings'])) {
 			$user_group_settings = $settings['user_group_settings'];
@@ -348,6 +356,23 @@ class FrontendHooks
 				}
 			}
 		}
+	}
+
+	/**
+	 * Hides FluentForm's own header bar (logo, Forms/Entries/Settings/
+	 * Integrations tab nav) for non-admins, so a role scoped down to just
+	 * Entries via fluentform_entries_access isn't shown navigation to pages
+	 * it can't actually open.
+	 *
+	 * @return void
+	 */
+	public static function hideFluentFormsHeaderForNonAdmins(): void
+	{
+		if (current_user_can('administrator')) {
+			return;
+		}
+
+		echo '<style>#wpbody-content > div.ff_header { display: none; }</style>' . "\n";
 	}
 
 	/**
