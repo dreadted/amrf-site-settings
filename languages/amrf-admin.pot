@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-06T10:40:24+00:00\n"
+"POT-Creation-Date: 2026-09-06T11:05:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -19,7 +19,6 @@ msgstr ""
 #: includes/Admin/SettingsPage.php:76
 #: includes/Admin/SettingsPage.php:77
 #: includes/Hooks/AdminHooks.php:67
-#: includes/Hooks/AdminHooks.php:116
 msgid "Admin Panel Settings"
 msgstr ""
 
@@ -43,6 +42,7 @@ msgstr ""
 #: includes/Admin/SiteSettingsMenu.php:76
 #: includes/Admin/SiteSettingsMenu.php:89
 #: includes/Admin/SiteSettingsMenu.php:90
+#: includes/Hooks/AdminHooks.php:123
 msgid "Site Settings"
 msgstr ""
 

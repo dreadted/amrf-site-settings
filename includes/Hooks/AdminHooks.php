@@ -100,7 +100,15 @@ class AdminHooks
     }
 
     /**
-     * Show plugin version in the WordPress admin footer on the settings page.
+     * Show plugin version in the WordPress admin footer on every page under
+     * this plugin's own "Site Settings" top-level menu — not just the
+     * "Admin Panel Settings" submenu, which used to be the only page this
+     * checked for (a leftover from when that submenu was this plugin's only
+     * admin page, before Site Settings grew its own top-level menu with
+     * several submenus of its own). $screen->parent_base is WordPress's own
+     * "which top-level menu is this page under" value, true for the
+     * top-level page itself as well as every one of its submenus, so this
+     * covers all of them without listing each one's hook suffix by hand.
      *
      * @param string $footer_text Original footer text.
      * @return string Footer text with version appended for this plugin.
@@ -108,12 +116,11 @@ class AdminHooks
     public static function showVersionInFooter(string $footer_text): string
     {
         $screen = get_current_screen();
-        $hook = get_plugin_page_hookname('amrf-admin-settings', SiteSettingsMenu::MENU_SLUG);
-        if ($screen && $hook === $screen->id) {
+        if ($screen && $screen->parent_base === SiteSettingsMenu::MENU_SLUG) {
             $version = VersionHelper::getVersion();
             return sprintf(
                 '<strong>%s</strong> v%s',
-                esc_html__('Admin Panel Settings', 'amrf-admin'),
+                esc_html__('Site Settings', 'amrf-admin'),
                 esc_html($version)
             );
         }
