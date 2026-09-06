@@ -38,7 +38,7 @@ This plugin adds an admin panel menu item named **"Site Settings"** with the fol
 - Open Graph locale
 - Theme/background color
 
-All rendered as **meta tags** plus an
+All rendered as **meta tags**, plus an
 Organization+Person **JSON-LD block**. Also lets you restrict WordPress's own
 XML sitemap to a hand-picked list of published pages instead of listing
 everything.
@@ -67,7 +67,7 @@ These feed the SEO structured data above and are reused wherever the site needs 
 
 #### Contact Forms
 
-- Default Contact Form: select one of the pre-existing [Fluent Forms](https://fluentforms.com/) to open sitewide with links pointing to the `#kontakt` anchor
+- Default Contact Form: Select one of the pre-existing [Fluent Forms](https://fluentforms.com/) to open sitewide with links pointing to the `#kontakt` anchor
 - A toggle that overrides Fluent Forms' colors/border-radius/fonts with the site's own `theme.json` tokens
 - Enable/disable [ALTCHA](https://altcha.org/) proof-of-work spam protection on every Fluent Form on the site — a self-hosted alternative honeypot with no settings, no external account, and no site key tied to a specific domain: the signing secret is generated and stored automatically the first time it's needed, so it works unchanged across dev/staging/production clones of a site.
 
@@ -113,7 +113,7 @@ behavior changes that default to _on_ but can be switched off per site:
 - Remove the default dashboard widgets (Activity, Quick Draft, etc.)
 - Optionally add a "Page Editor" admin menu item pointing at a configurable front-end URL
 
-#### One tab per WordPress user role (Editor, Author, …):
+#### One tab per WordPress user role (Editor, Author, …)
 
 - Where that role lands after login
 - Which admin page it sees by default when opening `/wp-admin/`
@@ -150,7 +150,7 @@ otherwise they're inert:
 ### With wp-cli
 
 ```sh
-wp plugin install https://github.com/dreadted/amrf-site-settings.git --activate
+wp plugin install https://github.com/dreadted/amrf-site-settings/releases/latest/download/amrf-site-settings.zip --activate
 ```
 
 ## Frequently Asked Questions
