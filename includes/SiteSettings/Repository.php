@@ -135,6 +135,31 @@ class Repository
     }
 
     /**
+     * The active theme's own primary/secondary palette colors — the
+     * sensible default for the amrf_site_colors filter (Branding\
+     * Provider's console badge, SupportGenix\Provider's ticket-portal
+     * color shadowing), so both work for any theme out of the box instead
+     * of requiring it to hook that filter itself. '' for either slug the
+     * theme doesn't declare — callers fall back to their own default.
+     *
+     * @return array{primary: string, secondary: string}
+     */
+    public static function getThemeBrandColors(): array
+    {
+        if (!class_exists('WP_Theme_JSON_Resolver')) {
+            return ['primary' => '', 'secondary' => ''];
+        }
+
+        $palette = \WP_Theme_JSON_Resolver::get_merged_data()->get_settings()['color']['palette']['theme'] ?? [];
+        $by_slug = array_column($palette, 'color', 'slug');
+
+        return [
+            'primary' => $by_slug['primary'] ?? '',
+            'secondary' => $by_slug['secondary'] ?? '',
+        ];
+    }
+
+    /**
      * theme.json's styles.color.background is resolved as e.g.
      * "var(--wp--preset--color--base)" — translate that back to a hex value
      * since <input type="color"> rejects var() references.
