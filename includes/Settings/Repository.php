@@ -54,6 +54,7 @@ class Repository
                         'upload.php',
                     ],
                     'site_menus_cap' => false,
+                    'fluentform_entries_access' => false,
                 ],
             ],
         ];

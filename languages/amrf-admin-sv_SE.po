@@ -168,13 +168,13 @@ msgstr "Hindrar WordPress från att generera ytterligare (responsiva) bildstorle
 msgid "Settings"
 msgstr "Inställningar"
 
-#: includes/Hooks/FrontendHooks.php:185
+#: includes/Hooks/FrontendHooks.php:186
 msgid "Page Editor"
 msgstr "Redigera sida"
 
 #. translators: %d is the number indicating minimum password length
-#: includes/Hooks/FrontendHooks.php:236
-#: includes/Hooks/FrontendHooks.php:268
+#: includes/Hooks/FrontendHooks.php:237
+#: includes/Hooks/FrontendHooks.php:269
 #, php-format
 msgid "ERROR: Password must be at least %d characters long."
 msgstr "FEL: Lösenordet måste bestå av minst %d tecken."
@@ -226,83 +226,83 @@ msgstr "Inställningar för %s"
 msgid "Settings have been reset to defaults."
 msgstr "Inställningarna har återställts till standardvärden."
 
-#: includes/Settings/Manager.php:311
+#: includes/Settings/Manager.php:353
 msgid "Configure general admin panel settings."
 msgstr "Ange allmänna inställningar för adminpanelen."
 
-#: includes/Settings/Manager.php:321
+#: includes/Settings/Manager.php:363
 msgid "Configure settings for each user role."
 msgstr "Ange inställningar för respektive användarroll."
 
-#: includes/Settings/Manager.php:333
+#: includes/Settings/Manager.php:375
 msgid "Adds a link to the front page editor in the admin menu."
 msgstr "Lägger till länken \"Redigera sida\" i administratörsmenyn."
 
-#: includes/Settings/Manager.php:354
+#: includes/Settings/Manager.php:396
 msgid "The link the \"Page Editor\" admin menu item points to, relative to the site root."
 msgstr "Länken som menyalternativet \"Redigera sida\" pekar på, relativt sajtens rot."
 
-#: includes/Settings/Manager.php:372
+#: includes/Settings/Manager.php:414
 msgid "Minimum required characters for user passwords."
 msgstr "Minsta antal tillåtna tecken för användarnas lösenord."
 
-#: includes/Settings/Manager.php:383
+#: includes/Settings/Manager.php:425
 msgid "Prevents non-admin users from changing their passwords."
 msgstr "Tar bort möjligheten att byta lösenord för icke-administratörer."
 
-#: includes/Settings/Manager.php:393
+#: includes/Settings/Manager.php:435
 msgid "Hides application passwords section for non-admin users."
 msgstr "Döljer applikationslösenord för icke-administratörer."
 
-#: includes/Settings/Manager.php:403
+#: includes/Settings/Manager.php:445
 msgid "Removes comments and new content links from admin bar for non-admins."
 msgstr "Tar bort länkar till kommentarer och nytt innehåll från administrationsfältet för icke-administratörer."
 
-#: includes/Settings/Manager.php:413
+#: includes/Settings/Manager.php:455
 msgid "Removes default dashboard widgets (Activity, Quick Draft, etc.)."
 msgstr "Tar bort standardwidgetar (Aktivitet, Snabbutkast etc.)"
 
-#: includes/Settings/Manager.php:434
+#: includes/Settings/Manager.php:476
 msgid "Login Redirect"
 msgstr "Omdirigering efter inloggning"
 
-#: includes/Settings/Manager.php:437
+#: includes/Settings/Manager.php:479
 msgid "-- Select Redirect URL --"
 msgstr "-- Välj sida för omdirigering --"
 
-#: includes/Settings/Manager.php:438
+#: includes/Settings/Manager.php:480
 msgid "-- Front Page --"
 msgstr "-- Startsida --"
 
-#: includes/Settings/Manager.php:443
+#: includes/Settings/Manager.php:485
 msgid "URL to redirect this user role to after login."
 msgstr "Sida som skall visas för denna användarroll efter inloggning."
 
-#: includes/Settings/Manager.php:446
+#: includes/Settings/Manager.php:488
 msgid "Default Admin Page"
 msgstr "Startsida för adminpanelen"
 
-#: includes/Settings/Manager.php:451
+#: includes/Settings/Manager.php:493
 msgid "-- Select Default Page --"
 msgstr "-- Välj startsida --"
 
-#: includes/Settings/Manager.php:456
+#: includes/Settings/Manager.php:498
 msgid "Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below)."
 msgstr "Sida som visas när den här användarrollen besöker /wp-admin/ (måste finnas med bland tillåtna menyalternativ)."
 
-#: includes/Settings/Manager.php:459
+#: includes/Settings/Manager.php:511
 msgid "Site Menus Access"
 msgstr "Tillgång till Menyer"
 
-#: includes/Settings/Manager.php:460
+#: includes/Settings/Manager.php:512
 msgid "Enable to allow this user role to access and edit site menus."
 msgstr "Ge denna roll tillgång till att redigera sajtens menyer."
 
-#: includes/Settings/Manager.php:464
+#: includes/Settings/Manager.php:516
 msgid "Allowed Menu Items"
 msgstr "Tillåtna menyalternativ"
 
-#: includes/Settings/Manager.php:476
+#: includes/Settings/Manager.php:528
 msgid "Select which admin menu items should be visible to this user role."
 msgstr "Välj vilka menyalternativ som ska visas i administratörsmenyn för den här användarrollen."
 
@@ -565,3 +565,11 @@ msgstr ""
 #: assets/js/amrf-fluentform-validation.js:15
 msgid "Personal Identity Number is required"
 msgstr ""
+
+#: includes/Settings/Manager.php:505
+msgid "Form Entries Access"
+msgstr "Åtkomst till formulärposter"
+
+#: includes/Settings/Manager.php:506
+msgid "Enable to allow this user role to view and manage Fluent Forms entries (view, delete, mark read/unread, favorite) — not forms themselves or site-wide Fluent Forms settings."
+msgstr "Aktivera för att ge den här användarrollen behörighet att visa och hantera poster i Fluent Forms (visa, radera, markera läst/oläst, favorit) — inte formulären själva eller Fluent Forms sajtomfattande inställningar."

@@ -114,6 +114,7 @@ class FrontendHooks
 
 					// Adjust capabilites according to user group settings
 					self::setCapabilities($user, $user_group_settings, 'site_menus_cap');
+					self::setCapabilities($user, $user_group_settings, 'fluentform_entries_access');
 				}
 			});
 
@@ -377,7 +378,20 @@ class FrontendHooks
 	private static function getCapabilities(string $key): array
 	{
 		$capabilities =  [
-			'site_menus_cap' => ['edit_theme_options']
+			'site_menus_cap' => ['edit_theme_options'],
+			// Matches FluentForm's own Acl::hasPermission(): dashboard_access
+			// is required just to make its admin menu register at all,
+			// entries_viewer to see the Entries page/pull entries via AJAX,
+			// manage_entries for the bulk actions (delete, mark read/unread,
+			// favorite, print) — none of FluentForm's broader caps
+			// (forms_manager, view/manage_payments, settings_manager) are
+			// granted, so this role can't touch form design or site-wide
+			// FluentForm settings, only its own entries.
+			'fluentform_entries_access' => [
+				'fluentform_dashboard_access',
+				'fluentform_entries_viewer',
+				'fluentform_manage_entries',
+			],
 		];
 
 		return $capabilities[$key] ?? [];
