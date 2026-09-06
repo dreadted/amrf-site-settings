@@ -70,6 +70,18 @@ input:checked + .slider:before {
 }
 
 /*
+   Locked SEO Fields (Discourage Search Engines Toggle)
+
+   Dims every field below the "Discourage search engines" toggle while it's
+   on and search engines are being kept out — amrf-search-visibility-
+   toggle.js also disables those fields, this just makes the disabled state
+   visible before the cursor even reaches them.
+   ---------------------------------------------------------------------- */
+table.form-table.amrf-seo-locked tr:not(:first-child) {
+  opacity: 0.5;
+}
+
+/*
    User Role Settings Layout
 
    Wraps each role's settings panel with background, padding, border, and spacing.

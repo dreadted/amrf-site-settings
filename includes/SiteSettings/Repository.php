@@ -208,7 +208,31 @@ class Repository
 
     public static function isSeoOutputEnabled(): bool
     {
+        if (self::isSearchEngineDiscouraged()) {
+            return false;
+        }
+
         return !empty(self::getSettings()['enable_seo_output']);
+    }
+
+    /**
+     * WordPress's own "Discourage search engines from indexing this site"
+     * toggle (Settings > Reading), stored as the core blog_public option --
+     * NOT one of this plugin's own fields. Checked here (rather than left
+     * to WordPress's own noindex meta tag alone) because that tag is only
+     * ever a request compliant crawlers may honor; it does nothing to stop
+     * this plugin's own Open Graph/Twitter Card tags and Organization/
+     * Person JSON-LD (business name, address, phone, geo-coordinates) from
+     * still being emitted and picked up by link-preview scrapers that don't
+     * consult robots meta at all. Gating isSeoOutputEnabled() on this closes
+     * that gap without touching robots output itself, which core already
+     * owns.
+     *
+     * @return bool
+     */
+    public static function isSearchEngineDiscouraged(): bool
+    {
+        return '0' === (string) get_option('blog_public', '1');
     }
 
     /**
