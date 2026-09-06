@@ -70,6 +70,8 @@ class Modal
         [],
         filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/css/amrf-contact-form-styling.css')
       );
+
+      $this->inlineThemeButtonStyle();
     }
 
     wp_enqueue_script(
@@ -79,6 +81,31 @@ class Modal
       filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/js/amrf-contact-modal.js'),
       true
     );
+  }
+
+  /**
+   * Exposes the active theme's own button design (theme.json's
+   * styles.elements.button, see SiteSettings\Repository::
+   * getThemeButtonStyle()) as CSS custom properties, so
+   * amrf-contact-form-styling.css can style the submit button to match it
+   * instead of a generic default — no-ops if the theme doesn't declare
+   * that element at all.
+   *
+   * @return void
+   */
+  private function inlineThemeButtonStyle(): void
+  {
+    $vars = \Antropomorf\SiteSettings\Repository::getThemeButtonStyle();
+    if (!$vars) {
+      return;
+    }
+
+    $declarations = '';
+    foreach ($vars as $property => $value) {
+      $declarations .= $property . ':' . $value . ';';
+    }
+
+    wp_add_inline_style(self::STYLING_HANDLE, ':root{' . $declarations . '}');
   }
 
   /**

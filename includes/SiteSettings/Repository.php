@@ -174,6 +174,39 @@ class Repository
     }
 
     /**
+     * The active theme's own sitewide button design, straight from
+     * theme.json's styles.elements.button — whatever ptsussis-theme (or
+     * any theme declaring this standard schema) says its buttons look
+     * like, so a plugin-rendered button (the contact form's submit
+     * button) can match it without either side hardcoding the other's
+     * colors/fonts. Values are passed through as-is (var() references
+     * included) — unlike getThemeDefaultColors(), nothing here needs
+     * resolving to a literal hex, it only ever becomes CSS.
+     *
+     * @return array<string, string> CSS custom property name => value,
+     *                                 only for whatever the theme actually
+     *                                 declared.
+     */
+    public static function getThemeButtonStyle(): array
+    {
+        if (!class_exists('WP_Theme_JSON_Resolver')) {
+            return [];
+        }
+
+        $button = \WP_Theme_JSON_Resolver::get_merged_data()->get_raw_data()['styles']['elements']['button'] ?? [];
+
+        return array_filter([
+            '--amrf-button-background' => $button['color']['background'] ?? '',
+            '--amrf-button-text' => $button['color']['text'] ?? '',
+            '--amrf-button-font-family' => $button['typography']['fontFamily'] ?? '',
+            '--amrf-button-font-weight' => $button['typography']['fontWeight'] ?? '',
+            '--amrf-button-border-radius' => $button['border']['radius'] ?? '',
+            '--amrf-button-shadow' => $button['shadow'] ?? '',
+            '--amrf-button-hover-background' => $button[':hover']['color']['background'] ?? '',
+        ]);
+    }
+
+    /**
      * @return array<string, string>
      */
     public static function getSettings(): array
