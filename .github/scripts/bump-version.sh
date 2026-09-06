@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
-# Bumps the plugin version locally: updates amrf-admin.php/readme.txt/
-# changelog.txt, commits, tags, and pushes both — no CI round-trip needed.
-# The pushed tag (v*.*.*) triggers .github/workflows/badges.yml on its own,
-# since it's a normal push from your own credentials, not the
-# GITHUB_TOKEN a workflow-triggered push would use (which GitHub
-# deliberately never re-triggers other workflows from).
+# Bumps the plugin version locally: updates amrf-site-settings.php/
+# readme.txt/changelog.txt, commits, tags, and pushes both — no CI
+# round-trip needed. The pushed tag (v*.*.*) triggers
+# .github/workflows/badges.yml and release.yml on its own, since it's a
+# normal push from your own credentials, not the GITHUB_TOKEN a
+# workflow-triggered push would use (which GitHub deliberately never
+# re-triggers other workflows from).
 #
 # Usage:
 #   .github/scripts/bump-version.sh patch|minor|major
@@ -41,7 +42,7 @@ if [[ "$(git rev-parse HEAD)" != "$(git rev-parse "origin/$BRANCH")" ]]; then
   exit 1
 fi
 
-CURRENT_VERSION=$(grep -oP 'Version:\s*\K[0-9]+\.[0-9]+\.[0-9]+' amrf-admin.php)
+CURRENT_VERSION=$(grep -oP 'Version:\s*\K[0-9]+\.[0-9]+\.[0-9]+' amrf-site-settings.php)
 
 if [[ "$BUMP_TYPE" == "manual" ]]; then
   NEW_VERSION="$MANUAL_VERSION"
@@ -68,8 +69,8 @@ if [[ -z "$CHANGES" ]]; then
   CHANGES="- Maintenance release."
 fi
 
-# Update amrf-admin.php (matches "Version: X.X.X" and preserves spacing).
-sed -i "s/Version:[[:space:]]*[0-9.]*/Version:         $NEW_VERSION/" amrf-admin.php
+# Update amrf-site-settings.php (matches "Version: X.X.X" and preserves spacing).
+sed -i "s/Version:[[:space:]]*[0-9.]*/Version:         $NEW_VERSION/" amrf-site-settings.php
 
 # Update readme.txt.
 sed -i "s/Stable tag:[[:space:]]*[0-9.]*/Stable tag: $NEW_VERSION/" readme.txt
@@ -85,7 +86,7 @@ new_entry_file="$(mktemp)"
 sed -i "5r $new_entry_file" changelog.txt
 rm -f "$new_entry_file"
 
-git add amrf-admin.php readme.txt changelog.txt
+git add amrf-site-settings.php readme.txt changelog.txt
 git commit -m "Bump version to $NEW_VERSION"
 git tag "v$NEW_VERSION"
 
@@ -96,5 +97,5 @@ git push origin "v$NEW_VERSION"
 echo ""
 echo "Done. Pushed commit + tag v$NEW_VERSION — the badges workflow will run automatically."
 echo "Current version files:"
-grep -m1 'Version:' amrf-admin.php
+grep -m1 'Version:' amrf-site-settings.php
 grep -m1 'Stable tag:' readme.txt

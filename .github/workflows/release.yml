@@ -1,0 +1,36 @@
+name: Build Release Zip
+
+# Runs on the same v*.*.* tag .github/scripts/bump-version.sh pushes for
+# every release. Builds a zip with the plugin's own folder name inside it
+# (git archive --prefix, not GitHub's auto-generated "<repo>-<ref>" zip,
+# which would unpack as "amrf-site-settings-main" and break the plugin
+# once activated) and attaches it to that tag's GitHub Release, creating
+# the release if it doesn't exist yet.
+#
+# https://github.com/<owner>/amrf-site-settings/releases/latest/download/amrf-site-settings.zip
+# always resolves to the asset this uploads for the newest release, so
+# README/wp-cli installs never need to reference a specific version.
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build plugin zip
+        run: git archive --format=zip --prefix=amrf-site-settings/ --output=amrf-site-settings.zip HEAD
+
+      - name: Create/update GitHub Release with zip asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: amrf-site-settings.zip
