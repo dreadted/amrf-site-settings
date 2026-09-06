@@ -188,12 +188,30 @@ class SeoOutput
 <?php if ($image) : ?>
 <meta name="twitter:image" content="<?php echo esc_url($image); ?>" />
 <?php endif; ?>
-<?php if ($settings['x_handle']) :
-    $handle = '@' . ltrim($settings['x_handle'], '@');
+<?php $xHandle = self::extractXHandle($settings['x_url']);
+if ($xHandle) :
 ?>
-<meta name="twitter:site" content="<?php echo esc_attr($handle); ?>" />
-<meta name="twitter:creator" content="<?php echo esc_attr($handle); ?>" />
+<meta name="twitter:site" content="@<?php echo esc_attr($xHandle); ?>" />
+<meta name="twitter:creator" content="@<?php echo esc_attr($xHandle); ?>" />
 <?php endif;
+    }
+
+    /**
+     * Pulls the handle straight out of an X/Twitter profile URL instead of
+     * requiring it as a separate, easily-out-of-sync field — e.g.
+     * "https://x.com/example" or "https://twitter.com/example/" both yield
+     * "example".
+     *
+     * @return string Handle without the leading "@", or '' if $url doesn't
+     *                match a profile URL.
+     */
+    private static function extractXHandle(string $url): string
+    {
+        if (!preg_match('~^https?://(?:www\.)?(?:x|twitter)\.com/@?([A-Za-z0-9_]{1,15})(?:[/?#]|$)~i', $url, $matches)) {
+            return '';
+        }
+
+        return $matches[1];
     }
 
     /**
