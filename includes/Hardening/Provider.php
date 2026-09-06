@@ -12,8 +12,9 @@ if (!defined('ABSPATH')) {
  * Security/performance hardening, split into two groups:
  *
  * - Unconditional: XML-RPC blocking, generic login error message, hiding
- *   the WP version generator tag, blocking ?username= at login, and
- *   removing the /wp/v2/users REST endpoint. Near-universal, no downside.
+ *   the WP version generator tag and RSD link, blocking ?username= at
+ *   login, and removing the /wp/v2/users REST endpoint. Near-universal,
+ *   no downside.
  * - Toggleable, on the "Hardening" page (manage_options): disabling author
  *   archives, redirecting 404s to the homepage, removing jQuery Migrate,
  *   and disabling generated image sizes — these change behavior some sites
@@ -47,6 +48,10 @@ class Provider
     });
 
     remove_action('wp_head', 'wp_generator');
+
+    // EditURI advertises xmlrpc.php's existence even though xmlrpc_enabled
+    // blocks it above — no reason to point at it at all.
+    remove_action('wp_head', 'rsd_link');
 
     add_action('login_init', [$this, 'blockUsernameInLoginUrl']);
     add_filter('rest_endpoints', [$this, 'disableUsersRestEndpoint']);
