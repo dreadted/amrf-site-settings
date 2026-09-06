@@ -3,7 +3,7 @@
 /**
  * Plugin Name:       Admin Panel Settings
  * Description:       Customize admin panel settings for different user roles.
- * Version:           0.2.3
+ * Version:         0.3.0
  * Requires at least: 5.6
  * Requires PHP:      8.1
  * Author:            Christofer Laurin

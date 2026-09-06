@@ -4,6 +4,49 @@ Changelog
 All notable changes to this project will be documented in this file.
 
 
+0.3.0
+------
+- comments: trim verbose docblocks across the plugin, drop history/porting narration
+- admin-hooks: show plugin footer on every Site Settings page, not just Admin Panel Settings
+- site-settings: gate SEO output on WP's discourage-search-engines setting
+- settings: rename Site Menus Access to Site Settings Access, auto-allow its pages
+- frontend-hooks: hide FluentForm's header bar for non-admins
+- settings: apply Fluent Forms entries access changes immediately, not lazily
+- settings: add per-role Fluent Forms entries access toggle
+- readme: point wp-cli install at the release zip, fix punctuation nits
+- release: build a correctly-named plugin zip for GitHub Releases
+- readme: turn Swish's device headings into bullets
+- readme: join arbitrarily line-wrapped list items onto one line each
+- readme: fix Swish/GDPR TOC anchors, move badges above the TOC
+- readme: restructure feature list under real headings, fix wording/consistency
+- social: derive X handle from the profile URL instead of a separate field
+- readme: rewrite feature list as nested bullets, trim narrative prose
+- readme: bump Tested up to 7.1, matches the WP version used for dev
+- i18n: regenerate .pot and translate the new Forms/Swish strings
+- Swish: add a 10px gap between the number field and its QR preview
+- Swish: switch to SVG, recolor via DOM edit instead of Imagick
+- Swish: revert QR recoloring — crashed real site, IM6 vs IM7 mismatch
+- Swish: keep the colorful logo, only recolor the actual QR modules
+- Swish: recolor the QR code from Swish's brand gradient to plain black
+- Swish: fix infinite recursion between sanitize() and getSettings()
+- forms: add dynamic Swish CTA — generated QR, tabbed Forms page
+- docs: rename plugin title to AMRF Site Settings
+- rename: amrf-admin-panel-settings to amrf-site-settings
+- contact-form: whitelist the altcha field so FluentForm stops stripping it
+- contact-form: replace Cloudflare Turnstile with self-hosted, invisible ALTCHA
+- site-settings: derive theme/background color defaults from theme.json, use real color pickers
+- contact-form: fix hardcoded FluentForm border-radius/font, strip success-box chrome
+- contact-form: rename GDPR module, add default-form lightbox and consistency CSS
+- docs: rewrite README, correct WP/PHP version requirements, trim readme.txt
+- site-settings: only list published pages in the sitemap page picker
+- site-settings: match Allowed Menu Items styling for the sitemap page list
+- hardening: don't redirect WordPress's own sitemap routes to home
+- site-settings: add sitemap page-restriction toggle
+- site-settings: fix enable_seo_output toggle always saving as checked
+- site-settings: fix fatal from missing enqueueSwitchStyles() method
+- i18n: add translation for the new SEO output toggle
+- site-settings: add SEO output (title, meta, OG/Twitter, JSON-LD) + toggle
+
 0.2.3
 ------
 - languages: remove .gitignore
