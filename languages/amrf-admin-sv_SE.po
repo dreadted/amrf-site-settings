@@ -298,23 +298,23 @@ msgstr "Tillåtna menyalternativ"
 msgid "Select which admin menu items should be visible to this user role."
 msgstr "Välj vilka menyalternativ som ska visas i administratörsmenyn för den här användarrollen."
 
-#: includes/SiteSettings/Provider.php:253
+#: includes/SiteSettings/Provider.php:338
 msgid "No pages found."
 msgstr "Inga sidor hittades."
 
-#: includes/SiteSettings/Provider.php:296
+#: includes/SiteSettings/Provider.php:381
 msgid "Select image"
 msgstr "Välj bild"
 
-#: includes/SiteSettings/Provider.php:297
+#: includes/SiteSettings/Provider.php:382
 msgid "Use this image"
 msgstr "Använd denna bild"
 
-#: includes/SiteSettings/Provider.php:298
+#: includes/SiteSettings/Provider.php:383
 msgid "Choose image"
 msgstr "Välj bild"
 
-#: includes/SiteSettings/Provider.php:303
+#: includes/SiteSettings/Provider.php:388
 msgid "Remove image"
 msgstr "Ta bort bild"
 
@@ -573,3 +573,15 @@ msgstr "Åtkomst till webbplatsinställningar"
 #: includes/Settings/Manager.php:651
 msgid "Enable to give this user role access to the Site Settings menu (SEO, Business & Contact, Address, Social Media, Forms/GDPR/Swish) and to native theme menu/design editing (Appearance → Menus/Customize on a classic theme, or the Site Editor on a block theme)."
 msgstr "Aktivera för att ge den här användarrollen åtkomst till menyn Webbplatsinställningar (SEO, Företag & Kontakt, Adress, Sociala medier, Formulär/GDPR/Swish) samt till WordPress egen temameny-/designredigering (Utseende → Menyer/Anpassa i ett klassiskt tema, eller webbplatsredigeraren i ett blocktema)."
+
+#: includes/SiteSettings/Provider.php:124
+msgid "Discourage search engines from indexing this site"
+msgstr "Avskräck sökmotorer från att indexera den här webbplatsen"
+
+#: includes/SiteSettings/Provider.php:240
+msgid "Mirrors the \"Discourage search engines from indexing this site\" setting under Settings → Reading and applies immediately. While this is on, the rest of this tab is locked, since none of it has any effect until search engines are allowed back in."
+msgstr "Speglar inställningen \"Avskräck sökmotorer från att indexera den här webbplatsen\" under Inställningar → Läsning och tillämpas omedelbart. Så länge den är aktiverad är resten av fliken låst, eftersom inget av det har någon effekt förrän sökmotorer släpps in igen."
+
+#: includes/SiteSettings/Provider.php:263
+msgid "You are not allowed to change this setting."
+msgstr "Du har inte behörighet att ändra den här inställningen."

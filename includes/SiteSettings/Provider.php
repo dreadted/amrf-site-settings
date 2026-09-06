@@ -30,6 +30,16 @@ class Provider
   private const OPTION_GROUP = 'amrf_site_settings_group';
 
   /**
+   * Both the AJAX action name and its nonce action — the toggle rendered by
+   * renderDiscourageSearchEnginesField() writes straight to WordPress's own
+   * blog_public option via admin-ajax.php, not through this tab's normal
+   * Settings API save (see that method's docblock for why: it has to apply
+   * immediately, without a page reload, so the rest of the tab can lock/
+   * unlock right away).
+   */
+  private const AJAX_ACTION = 'amrf_toggle_search_engine_visibility';
+
+  /**
    * Guards register_setting()/add_settings_section()/add_settings_field()
    * against running once per tab (registerTabs() below returns 4 tabs that
    * all point at register() as their 'register' callback) — same pattern as
@@ -42,6 +52,8 @@ class Provider
     add_filter('amrf_site_settings_tabs', [$this, 'registerTabs']);
     add_action('admin_enqueue_scripts', [$this, 'enqueueMediaScript']);
     add_action('admin_enqueue_scripts', [$this, 'enqueueSwitchStyles']);
+    add_action('admin_enqueue_scripts', [$this, 'enqueueSearchVisibilityScript']);
+    add_action('wp_ajax_' . self::AJAX_ACTION, [$this, 'ajaxToggleSearchEngineVisibility']);
 
     // wp-admin/options.php (where every Settings API form posts to) hardcodes
     // manage_options as the capability required to actually SAVE, regardless
@@ -99,6 +111,22 @@ class Provider
       $page_slug = self::pageSlug($section_key);
       $section_id = 'site_settings_section_' . $section_key;
       add_settings_section($section_id, '', '__return_false', $page_slug);
+
+      // Rendered first, ahead of every field from getFields() below — this
+      // is WordPress's own site-wide "discourage search engines" setting
+      // (blog_public), not one of this plugin's fields, but it belongs at
+      // the top of the SEO tab specifically since it's what makes the rest
+      // of this tab's output meaningful or moot. See
+      // renderDiscourageSearchEnginesField()'s own docblock.
+      if ($section_key === 'seo') {
+        add_settings_field(
+          'site_settings_discourage_search_engines',
+          __('Discourage search engines from indexing this site', 'amrf-admin'),
+          [$this, 'renderDiscourageSearchEnginesField'],
+          $page_slug,
+          $section_id
+        );
+      }
 
       foreach (Repository::getFields() as $field_key => $field) {
         [$label, $type, $field_section] = $field;
@@ -182,6 +210,63 @@ class Provider
       esc_attr($field_name),
       esc_attr($value)
     );
+  }
+
+  /**
+   * Toggle for WordPress's own blog_public option (Settings > Reading's
+   * "Discourage search engines from indexing this site"), surfaced here
+   * too since it's what Repository::isSeoOutputEnabled() gates the rest of
+   * this tab's output on — a site owner flipping this on should see, right
+   * here, that everything else below just went inert, not discover it by
+   * noticing meta tags disappeared from view-source.
+   *
+   * Same .switch/.slider markup and label-wrapping as renderCheckboxField()
+   * so it's visually indistinguishable from Enable SEO Output, but it's
+   * deliberately NOT one of Repository::getFields() — it has no "name"
+   * attribute at all, so it never round-trips through $_POST/sanitize() on
+   * a normal Save. amrf-search-visibility-toggle.js drives it entirely via
+   * admin-ajax.php (ajaxToggleSearchEngineVisibility()), applying the
+   * change immediately and locking/unlocking every other field on this tab
+   * to match — no Save click needed, and no stale "saved" state possible.
+   *
+   * @return void
+   */
+  public function renderDiscourageSearchEnginesField(): void
+  {
+    printf(
+      '<label class="switch"><input type="checkbox" id="amrf-discourage-search-engines" %s /><span class="slider round"></span></label>',
+      checked(Repository::isSearchEngineDiscouraged(), true, false)
+    );
+    echo '<p class="description">' . esc_html__(
+      'Mirrors the "Discourage search engines from indexing this site" setting under Settings → Reading and applies immediately. While this is on, the rest of this tab is locked, since none of it has any effect until search engines are allowed back in.',
+      'amrf-admin'
+    ) . '</p>';
+  }
+
+  /**
+   * AJAX save target for renderDiscourageSearchEnginesField()'s toggle —
+   * writes straight to WordPress's own blog_public option instead of going
+   * through Repository::sanitize()/this tab's option_group, since this
+   * isn't one of this plugin's own settings. Same edit_theme_options gate
+   * as the rest of this tab (Provider's own option_page_capability filter),
+   * not manage_options as Settings > Reading itself requires, so a role
+   * granted access to this page doesn't hit a mismatched capability wall
+   * flipping the exact setting this tab tells them about.
+   *
+   * @return void
+   */
+  public function ajaxToggleSearchEngineVisibility(): void
+  {
+    check_ajax_referer(self::AJAX_ACTION, 'nonce');
+
+    if (!current_user_can('edit_theme_options')) {
+      wp_send_json_error(['message' => __('You are not allowed to change this setting.', 'amrf-admin')], 403);
+    }
+
+    $discourage = !empty($_POST['discourage']);
+    update_option('blog_public', $discourage ? '0' : '1');
+
+    wp_send_json_success(['discourage' => $discourage]);
   }
 
   /**
@@ -355,5 +440,41 @@ class Provider
       'amrf-admin-settings',
       AMRF_ADMIN_PLUGIN_URL . 'assets/css/amrf-admin-settings.css'
     );
+  }
+
+  /**
+   * Only the SEO tab has renderDiscourageSearchEnginesField()'s toggle (and
+   * only its fields need locking), so this checks $_GET['tab'] on top of
+   * enqueueMediaScript()'s hook-suffix check rather than reusing that
+   * method outright — every tab shares the same physical admin page/hook
+   * suffix (SettingsRenderer switches tabs via $_GET, not separate pages),
+   * so the hook check alone can't tell them apart.
+   *
+   * @param string $hook Current admin page hook suffix.
+   * @return void
+   */
+  public function enqueueSearchVisibilityScript(string $hook): void
+  {
+    if ($hook !== 'toplevel_page_amrf-site-settings') {
+      return;
+    }
+
+    $current_tab = isset($_GET['tab']) && is_string($_GET['tab']) ? sanitize_key(wp_unslash($_GET['tab'])) : array_key_first(Repository::getSections());
+    if ($current_tab !== 'seo') {
+      return;
+    }
+
+    wp_enqueue_script(
+      'amrf-search-visibility-toggle',
+      AMRF_ADMIN_PLUGIN_URL . 'assets/js/amrf-search-visibility-toggle.js',
+      ['jquery'],
+      filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/js/amrf-search-visibility-toggle.js'),
+      true
+    );
+
+    wp_localize_script('amrf-search-visibility-toggle', 'amrfSearchVisibility', [
+      'action' => self::AJAX_ACTION,
+      'nonce' => wp_create_nonce(self::AJAX_ACTION),
+    ]);
   }
 }

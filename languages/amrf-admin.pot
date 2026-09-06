@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-06T07:35:52+00:00\n"
+"POT-Creation-Date: 2026-09-06T10:40:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -332,23 +332,35 @@ msgstr ""
 msgid "Select which admin menu items should be visible to this user role."
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:253
+#: includes/SiteSettings/Provider.php:124
+msgid "Discourage search engines from indexing this site"
+msgstr ""
+
+#: includes/SiteSettings/Provider.php:240
+msgid "Mirrors the \"Discourage search engines from indexing this site\" setting under Settings → Reading and applies immediately. While this is on, the rest of this tab is locked, since none of it has any effect until search engines are allowed back in."
+msgstr ""
+
+#: includes/SiteSettings/Provider.php:263
+msgid "You are not allowed to change this setting."
+msgstr ""
+
+#: includes/SiteSettings/Provider.php:338
 msgid "No pages found."
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:296
+#: includes/SiteSettings/Provider.php:381
 msgid "Select image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:297
+#: includes/SiteSettings/Provider.php:382
 msgid "Use this image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:298
+#: includes/SiteSettings/Provider.php:383
 msgid "Choose image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:303
+#: includes/SiteSettings/Provider.php:388
 msgid "Remove image"
 msgstr ""
 
