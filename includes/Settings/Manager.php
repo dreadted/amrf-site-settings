@@ -250,6 +250,7 @@ class Manager
 				$current['user_group_settings'][$role]['site_menus_cap'] = isset($role_settings['site_menus_cap']);
 				$current['user_group_settings'][$role]['fluentform_entries_access'] = isset($role_settings['fluentform_entries_access']);
 				$this->syncFluentFormEntriesAllowedMenuItem($current, $role);
+				$this->applyFluentFormEntriesAccessToExistingUsers($role, $current['user_group_settings'][$role]['fluentform_entries_access']);
 			}
 		}
 		return $current;
@@ -341,6 +342,62 @@ class Manager
 		}
 
 		$current['user_group_settings'][$role]['allowed_menu_items'] = $allowed;
+	}
+
+	/**
+	 * Applies (or revokes) the fluentform_entries_access capabilities on
+	 * every EXISTING account in $role immediately, rather than relying
+	 * solely on FrontendHooks::setCapabilities()'s lazy per-account,
+	 * every-admin-request re-sync.
+	 *
+	 * That lazy sync alone leaves a real window open on toggle-OFF: it
+	 * only runs during a user's own admin_init, which — per WordPress's
+	 * own wp-admin/admin.php request order — fires AFTER the page-access
+	 * capability check for the very request that would land them on the
+	 * Entries page. If that user still has fluentform_dashboard_access
+	 * from before this save, WordPress's user_can_access_admin_page()
+	 * falls back to that PARENT menu capability (since our own
+	 * allowed_menu_items filter already stripped the specific Entries
+	 * submenu entry, and 'fluent_forms' — the "Forms" list — usually stays
+	 * allowed on its own) and grants the page anyway, one request too
+	 * early — confirmed live: get_admin_page_title() then can't find the
+	 * now-missing submenu entry and returns null, which
+	 * wp-admin/admin-header.php passes straight into strip_tags(),
+	 * producing a PHP deprecation notice and, once output has already
+	 * started, "headers already sent" warnings from whatever FluentForm
+	 * itself tries next — instead of the clean "not allowed" page this
+	 * toggle is supposed to produce.
+	 *
+	 * Saving here instead of lazily closes that window: every existing
+	 * account's capabilities are already correct before anyone's next
+	 * request, so WordPress's page-access check (and, for OFF, FluentForm's
+	 * own Menu::register() bailing out entirely) behaves the same way it
+	 * already does once state has fully settled. The lazy sync in
+	 * FrontendHooks stays in place too — it's still what catches accounts
+	 * created after this save.
+	 *
+	 * @param string $role    Role slug whose tab was just submitted.
+	 * @param bool   $enabled Whether fluentform_entries_access is now on.
+	 * @return void
+	 */
+	private function applyFluentFormEntriesAccessToExistingUsers(string $role, bool $enabled): void
+	{
+		$capabilities = [
+			'fluentform_dashboard_access',
+			'fluentform_entries_viewer',
+			'fluentform_manage_entries',
+		];
+
+		foreach (get_users(['role' => $role, 'fields' => 'ID']) as $userId) {
+			$user = new \WP_User($userId);
+			foreach ($capabilities as $cap) {
+				if ($enabled) {
+					$user->add_cap($cap);
+				} else {
+					$user->remove_cap($cap);
+				}
+			}
+		}
 	}
 
 	/**
