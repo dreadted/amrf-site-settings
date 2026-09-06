@@ -426,27 +426,23 @@ msgstr "Facebook-URL"
 msgid "Instagram URL"
 msgstr "Instagram-URL"
 
-#: includes/SiteSettings/Repository.php:78
+#: includes/SiteSettings/Repository.php:81
 msgid "X (Twitter) URL"
 msgstr "X (Twitter)-URL"
 
-#: includes/SiteSettings/Repository.php:79
-msgid "X (Twitter) handle"
-msgstr "X (Twitter)-användarnamn"
-
-#: includes/SiteSettings/Repository.php:89
+#: includes/SiteSettings/Repository.php:91
 msgid "SEO"
 msgstr "SEO"
 
-#: includes/SiteSettings/Repository.php:90
+#: includes/SiteSettings/Repository.php:92
 msgid "Business & Contact"
 msgstr "Företag & Kontakt"
 
-#: includes/SiteSettings/Repository.php:91
+#: includes/SiteSettings/Repository.php:93
 msgid "Address"
 msgstr "Adress"
 
-#: includes/SiteSettings/Repository.php:92
+#: includes/SiteSettings/Repository.php:94
 msgid "Social Media"
 msgstr "Sociala medier"
 

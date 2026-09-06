@@ -75,8 +75,10 @@ class Repository
 
             'facebook_url' => [__('Facebook URL', 'amrf-admin'), 'url', 'social'],
             'instagram_url' => [__('Instagram URL', 'amrf-admin'), 'url', 'social'],
+            // No separate handle field — SeoOutput::extractXHandle() pulls
+            // it straight out of the path segment after x.com/, so there's
+            // only one value to keep in sync per site instead of two.
             'x_url' => [__('X (Twitter) URL', 'amrf-admin'), 'url', 'social'],
-            'x_handle' => [__('X (Twitter) handle', 'amrf-admin'), 'text', 'social'],
         ];
     }
 
