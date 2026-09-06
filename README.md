@@ -80,13 +80,9 @@ These feed the SEO structured data above and are reused wherever the site needs 
 
 Generate a [Swish](https://www.swish.nu/) payment link to every link sitewide pointing to the `#swish` anchor:
 
-##### Mobile devices
+- **Mobile devices**: Generate a link to the Swish app, if installed, and otherwise to an app download page.
 
-Generates a link to the Swish app, if installed, and otherwise to an app download page.
-
-##### Other devices
-
-On devices without the ability to install the app, the link is replaced by a dynamically generated QR code.
+- **Other devices**: On devices lacking the ability to install the app, the link is replaced by a dynamically generated QR code.
 
 All links can be customized with a pre-filled amount or message.
 
