@@ -39,6 +39,15 @@
 }
 
 /**
+ * FluentForm's own default stylesheet only gives .ff-el-group a
+ * margin-bottom (20px) — even spacing above and below reads better
+ * between fields.
+ */
+.fluentform .ff-el-group {
+	margin-block: 2rem;
+}
+
+/**
  * FluentForm's own default stylesheet hardcodes .ff_btn_style's
  * border-radius (7px) and font-size (16px) rather than using
  * --fluentform-border-radius/inheriting, and form controls don't inherit
