@@ -45,6 +45,13 @@
   font-size: inherit;
 }
 
+/** Fallback for the block editor preview, where FluentForm's own inline reset on this <fieldset> gets stripped. */
+.fluentform fieldset {
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
 /**
  * Only Firefox honors :hover on <option> — Chromium/WebKit render the
  * dropdown's own native popup and ignore page CSS for its row highlight.
