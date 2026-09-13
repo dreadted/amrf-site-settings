@@ -29,22 +29,35 @@ class Modal
   {
     add_action('wp_enqueue_scripts', [$this, 'prerenderContactForm']);
     add_action('wp_footer', [$this, 'renderContactModal']);
-    add_action('enqueue_block_assets', [$this, 'maybeEnqueueEditorStyling']);
+    add_filter('block_editor_settings_all', [$this, 'addEditorStyles']);
   }
 
   /**
-   * enqueue_block_assets reaches the block editor's iframe canvas (unlike
-   * add_editor_style()), so any FluentForm preview inside a block — not
-   * just this class's own modal — matches the frontend's styling instead
-   * of FluentForm's raw defaults.
+   * The editor iframe only auto-copies stylesheets whose rules mention
+   * .wp-block or .editor-styles-wrapper (Gutenberg's own "compatibility
+   * styles" heuristic) — amrf-contact-form-styling.css matches neither, so
+   * enqueue_block_assets alone never reached it. Appending raw CSS to
+   * $settings['styles'] is the same channel WordPress itself uses to get
+   * theme.json's global styles into that iframe, and isn't selector-gated.
    *
-   * @return void
+   * @param array $settings
+   * @return array
    */
-  public function maybeEnqueueEditorStyling(): void
+  public function addEditorStyles(array $settings): array
   {
-    if (is_admin()) {
-      $this->enqueueConsistentStyling();
+    if (!Repository::isConsistentStylingEnabled()) {
+      return $settings;
     }
+
+    $css = file_get_contents(AMRF_ADMIN_PLUGIN_DIR . '/assets/css/amrf-contact-form-styling.css');
+    $declarations = $this->themeButtonDeclarations();
+    if ($declarations) {
+      $css .= ':root{' . $declarations . '}';
+    }
+
+    $settings['styles'][] = ['css' => $css];
+
+    return $settings;
   }
 
   /**
@@ -119,17 +132,20 @@ class Modal
    */
   private function inlineThemeButtonStyle(): void
   {
-    $vars = \Antropomorf\SiteSettings\Repository::getThemeButtonStyle();
-    if (!$vars) {
-      return;
+    $declarations = $this->themeButtonDeclarations();
+    if ($declarations) {
+      wp_add_inline_style(self::STYLING_HANDLE, ':root{' . $declarations . '}');
     }
+  }
 
+  private function themeButtonDeclarations(): string
+  {
+    $vars = \Antropomorf\SiteSettings\Repository::getThemeButtonStyle();
     $declarations = '';
     foreach ($vars as $property => $value) {
       $declarations .= $property . ':' . $value . ';';
     }
-
-    wp_add_inline_style(self::STYLING_HANDLE, ':root{' . $declarations . '}');
+    return $declarations;
   }
 
   /**
