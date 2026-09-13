@@ -52,6 +52,12 @@
   padding: 0;
 }
 
+/** Same editor-preview fallback, for this screen-reader-only <legend>'s inline height:0 reset. */
+.ff_screen_reader_title {
+  height: 0;
+  overflow: hidden;
+}
+
 /**
  * Only Firefox honors :hover on <option> — Chromium/WebKit render the
  * dropdown's own native popup and ignore page CSS for its row highlight.
