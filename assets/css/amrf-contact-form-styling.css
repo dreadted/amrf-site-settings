@@ -22,11 +22,8 @@
   );
   --fluentform-secondary: var(--wp--preset--color--contrast);
   --fluentform-danger: var(--wp--preset--color--accent-red);
-  --fluentform-border-color: color-mix(
-    in srgb,
-    var(--wp--preset--color--contrast) 25%,
-    transparent
-  );
+  --fluentform-border-color: var(--wp--preset--color--line);
+  --fluentform-hover-surface: var(--wp--preset--color--hover-surface, transparent);
   --fluentform-border-radius: var(
     --amrf-button-border-radius,
     var(--wp--custom--border-radius, var(--border-radius, 4px))
@@ -46,6 +43,14 @@
 .fluentform .ff-el-form-control {
   font-family: inherit;
   font-size: inherit;
+}
+
+/**
+ * Only Firefox honors :hover on <option> — Chromium/WebKit render the
+ * dropdown's own native popup and ignore page CSS for its row highlight.
+ */
+select.ff-el-form-control option:hover {
+  background-color: var(--fluentform-hover-surface);
 }
 
 /**
