@@ -29,6 +29,22 @@ class Modal
   {
     add_action('wp_enqueue_scripts', [$this, 'prerenderContactForm']);
     add_action('wp_footer', [$this, 'renderContactModal']);
+    add_action('enqueue_block_assets', [$this, 'maybeEnqueueEditorStyling']);
+  }
+
+  /**
+   * enqueue_block_assets reaches the block editor's iframe canvas (unlike
+   * add_editor_style()), so any FluentForm preview inside a block — not
+   * just this class's own modal — matches the frontend's styling instead
+   * of FluentForm's raw defaults.
+   *
+   * @return void
+   */
+  public function maybeEnqueueEditorStyling(): void
+  {
+    if (is_admin()) {
+      $this->enqueueConsistentStyling();
+    }
   }
 
   /**
@@ -63,16 +79,7 @@ class Modal
       filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/css/amrf-contact-modal.css')
     );
 
-    if (Repository::isConsistentStylingEnabled()) {
-      wp_enqueue_style(
-        self::STYLING_HANDLE,
-        AMRF_ADMIN_PLUGIN_URL . 'assets/css/amrf-contact-form-styling.css',
-        [],
-        filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/css/amrf-contact-form-styling.css')
-      );
-
-      $this->inlineThemeButtonStyle();
-    }
+    $this->enqueueConsistentStyling();
 
     wp_enqueue_script(
       self::SCRIPT_HANDLE,
@@ -81,6 +88,23 @@ class Modal
       filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/js/amrf-contact-modal.js'),
       true
     );
+  }
+
+  /** Shared by the frontend prerender and the editor-iframe hook above. */
+  private function enqueueConsistentStyling(): void
+  {
+    if (!Repository::isConsistentStylingEnabled()) {
+      return;
+    }
+
+    wp_enqueue_style(
+      self::STYLING_HANDLE,
+      AMRF_ADMIN_PLUGIN_URL . 'assets/css/amrf-contact-form-styling.css',
+      [],
+      filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/css/amrf-contact-form-styling.css')
+    );
+
+    $this->inlineThemeButtonStyle();
   }
 
   /**
