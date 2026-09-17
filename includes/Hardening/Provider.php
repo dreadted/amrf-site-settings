@@ -29,6 +29,10 @@ class Provider
 {
   private const PAGE_SLUG = 'amrf-site-settings-hardening';
   private const OPTION_GROUP = 'amrf_hardening_group';
+  private const UPLOAD_HASH_META_KEY = '_amrf_upload_hash';
+
+  // Set by optimizeNonAdminImageUpload(), consumed by recordUploadHash() on the same request.
+  private ?string $pendingUploadHash = null;
 
   public function __construct()
   {
@@ -90,7 +94,7 @@ class Provider
 
     if ($settings['disable_generated_image_sizes']) {
       add_filter('wp_img_tag_add_decoding_attr', '__return_false');
-      add_action('intermediate_image_sizes_advanced', fn () => []);
+      add_action('intermediate_image_sizes_advanced', fn() => []);
       add_filter('big_image_size_threshold', '__return_false');
     }
 
@@ -100,6 +104,7 @@ class Provider
 
     if ($settings['optimize_non_admin_image_uploads']) {
       add_filter('wp_handle_upload', [$this, 'optimizeNonAdminImageUpload'], 10, 2);
+      add_action('add_attachment', [$this, 'recordUploadHash']);
     }
   }
 
@@ -236,17 +241,65 @@ class Provider
       return $upload;
     }
 
+    // Hashed before any processing, so re-uploading the same source file is
+    // caught regardless of resize/quality settings changing later.
+    $hash = hash_file('sha256', $upload['file']);
+    $duplicate_id = $hash !== false ? $this->findAttachmentByHash($hash) : null;
+
+    if ($duplicate_id !== null) {
+      if (file_exists($upload['file'])) {
+        unlink($upload['file']);
+      }
+      $upload['error'] = sprintf(
+        // translators: %d is the existing attachment's post ID.
+        __('This image is identical to an existing upload (attachment #%d) and was not saved again.', 'amrf-admin'),
+        $duplicate_id
+      );
+      return $upload;
+    }
+
     $processed = $this->convertToOptimizedWebp($upload['file']);
 
     if ($processed === null) {
       return $upload;
     }
 
+    $this->pendingUploadHash = $hash !== false ? $hash : null;
+
     $upload['url'] = str_replace(basename($upload['file']), basename($processed), $upload['url']);
     $upload['file'] = $processed;
     $upload['type'] = 'image/webp';
 
     return $upload;
+  }
+
+  /**
+   * @return int|null Attachment ID with a matching stored hash, or null if none.
+   */
+  private function findAttachmentByHash(string $hash): ?int
+  {
+    $matches = get_posts([
+      'post_type' => 'attachment',
+      'post_status' => 'inherit',
+      'meta_key' => self::UPLOAD_HASH_META_KEY,
+      'meta_value' => $hash,
+      'fields' => 'ids',
+      'posts_per_page' => 1,
+      'no_found_rows' => true,
+    ]);
+
+    return $matches ? (int) $matches[0] : null;
+  }
+
+  // Fires right after wp_insert_attachment() — the only point where we have both the hash and the new attachment ID.
+  public function recordUploadHash(int $attachment_id): void
+  {
+    if ($this->pendingUploadHash === null) {
+      return;
+    }
+
+    update_post_meta($attachment_id, self::UPLOAD_HASH_META_KEY, $this->pendingUploadHash);
+    $this->pendingUploadHash = null;
   }
 
   private function convertToOptimizedWebp(string $file_path): ?string
@@ -265,7 +318,7 @@ class Provider
       $settings['optimize_non_admin_image_uploads_height'],
       false
     );
-    $editor->set_quality(80);
+    $editor->set_quality(60);
 
     $info = pathinfo($file_path);
     // wp_unique_filename avoids collisions with an existing file that
@@ -427,7 +480,7 @@ class Provider
       function () {
         $this->renderCheckbox(
           'optimize_non_admin_image_uploads',
-          __('Automatically shrinks oversized images and converts them to WebP for every image a non-administrator uploads. Administrators are unaffected.', 'amrf-admin')
+          __('Automatically shrinks oversized images and converts them to WebP for every image a non-administrator uploads, and blocks exact duplicates of an already-uploaded image. Administrators are unaffected.', 'amrf-admin')
         );
       },
       self::PAGE_SLUG,

@@ -114,44 +114,44 @@ msgstr "Tomt eller 0 = spara för alltid."
 msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)."
 msgstr "Ange ett giltigt svenskt personnummer (ÅÅMMDD-XXXX)."
 
-#: includes/Hardening/Provider.php:53
+#: includes/Hardening/Provider.php:54
 msgid "There is an error."
 msgstr "Ett fel har uppstått."
 
-#: includes/Hardening/Provider.php:411
-#: includes/Hardening/Provider.php:412
+#: includes/Hardening/Provider.php:446
+#: includes/Hardening/Provider.php:447
 msgid "Hardening"
 msgstr "Härdning"
 
-#: includes/Hardening/Provider.php:471
+#: includes/Hardening/Provider.php:506
 msgid "Disable author archives"
 msgstr "Inaktivera författararkiv"
 
-#: includes/Hardening/Provider.php:472
+#: includes/Hardening/Provider.php:507
 msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
 msgstr "Omdirigerar författararkivsidor till startsidan — användbart på sajter med en enda författare, eller för att undvika att användarnamn läcker via författar-URL:er."
 
-#: includes/Hardening/Provider.php:475
+#: includes/Hardening/Provider.php:510
 msgid "Redirect 404 pages to the homepage"
 msgstr "Omdirigera 404-sidor till startsidan"
 
-#: includes/Hardening/Provider.php:476
+#: includes/Hardening/Provider.php:511
 msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
 msgstr "Gäller bara utloggade besökare. Stäng av om sajten istället ska visa en riktig 404-sida."
 
-#: includes/Hardening/Provider.php:479
+#: includes/Hardening/Provider.php:514
 msgid "Remove jQuery Migrate"
 msgstr "Ta bort jQuery Migrate"
 
-#: includes/Hardening/Provider.php:480
+#: includes/Hardening/Provider.php:515
 msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
 msgstr "Stäng av om ett äldre plugin eller tema på sajten är beroende av jQuery Migrates kompatibilitetslager."
 
-#: includes/Hardening/Provider.php:483
+#: includes/Hardening/Provider.php:518
 msgid "Disable generated image sizes"
 msgstr "Inaktivera genererade bildstorlekar"
 
-#: includes/Hardening/Provider.php:484
+#: includes/Hardening/Provider.php:519
 msgid "Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress's own generated image sizes."
 msgstr "Hindrar WordPress från att generera ytterligare (responsiva) bildstorlekar och automatiskt skala stora uppladdningar. Stäng av om sajten är beroende av WordPress egna genererade bildstorlekar."
 
@@ -584,23 +584,23 @@ msgstr[1] "i högst %d dagar"
 msgid "General site settings — SEO, contact forms with GDPR tools, Swish payments, analytics, security hardening, and per-role admin panel control."
 msgstr ""
 
-#: includes/Hardening/Provider.php:164
+#: includes/Hardening/Provider.php:166
 msgid "You are not allowed to upload SVG files."
 msgstr "Du har inte behörighet att ladda upp SVG-filer."
 
-#: includes/Hardening/Provider.php:171
+#: includes/Hardening/Provider.php:173
 msgid "This file does not look like a valid SVG."
 msgstr "Den här filen verkar inte vara en giltig SVG."
 
-#: includes/Hardening/Provider.php:178
+#: includes/Hardening/Provider.php:180
 msgid "This SVG could not be sanitized and was rejected."
 msgstr "Den här SVG-filen kunde inte saneras och avvisades."
 
-#: includes/Hardening/Provider.php:467
+#: includes/Hardening/Provider.php:502
 msgid "Allow SVG uploads"
 msgstr "Tillåt SVG-uppladdning"
 
-#: includes/Hardening/Provider.php:468
+#: includes/Hardening/Provider.php:503
 msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
 msgstr "Låter administratörer ladda upp SVG-filer via Mediabiblioteket — varje fil saneras (skript, händelsehanterare och inbäddad HTML tas bort) innan den sparas."
 
@@ -624,34 +624,40 @@ msgstr "Ingen"
 msgid "The form the sitewide \"#contact\" link/button opens in a lightbox. \"None\" disables the lightbox sitewide."
 msgstr "Formuläret som sajtens länkar/knappar mot ankaret \"#contact\" öppnar i en lightbox. \"Ingen\" stänger av lightboxen på hela sajten."
 
-#: includes/Hardening/Provider.php:487
+#: includes/Hardening/Provider.php:522
 msgid "Disable site search"
 msgstr "Stäng av sajtsökning"
 
-#: includes/Hardening/Provider.php:488
+#: includes/Hardening/Provider.php:523
 msgid "Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn't expose a working search box yet."
 msgstr "Gör att WordPress inbyggda sökfunktion visar en 404-sida för alla besökare — användbart medan en sajt fortfarande byggs och inte ska visa en fungerande sökruta än."
 
-#: includes/Hardening/Provider.php:444
+#: includes/Hardening/Provider.php:479
 msgid "Optimize non-admin image uploads"
 msgstr "Optimera bilduppladdningar för icke-administratörer"
 
-#: includes/Hardening/Provider.php:448
-msgid "Automatically shrinks oversized images and converts them to WebP for every image a non-administrator uploads. Administrators are unaffected."
-msgstr "Skalar automatiskt ner för stora bilder och konverterar dem till WebP för varje bild en icke-administratör laddar upp. Administratörer påverkas inte."
-
-#: includes/Hardening/Provider.php:457
+#: includes/Hardening/Provider.php:492
 msgid "Max dimensions (px)"
 msgstr "Max mått (px)"
 
-#: includes/Hardening/Provider.php:536
+#: includes/Hardening/Provider.php:571
 msgid "Width"
 msgstr "Bredd"
 
-#: includes/Hardening/Provider.php:539
+#: includes/Hardening/Provider.php:574
 msgid "Height"
 msgstr "Höjd"
 
-#: includes/Hardening/Provider.php:541
+#: includes/Hardening/Provider.php:576
 msgid "Images larger than this, in either dimension, are scaled down proportionally (no cropping) before being converted to WebP."
 msgstr "Bilder som är större än detta, i endera dimensionen, skalas ner proportionellt (utan beskärning) innan de konverteras till WebP."
+
+#. translators: %d is the existing attachment's post ID.
+#: includes/Hardening/Provider.php:255
+#, php-format
+msgid "This image is identical to an existing upload (attachment #%d) and was not saved again."
+msgstr "Den här bilden är identisk med en befintlig uppladdning (bifogad fil #%d) och sparades inte igen."
+
+#: includes/Hardening/Provider.php:483
+msgid "Automatically shrinks oversized images and converts them to WebP for every image a non-administrator uploads, and blocks exact duplicates of an already-uploaded image. Administrators are unaffected."
+msgstr "Skalar automatiskt ner för stora bilder och konverterar dem till WebP för varje bild en icke-administratör laddar upp, och blockerar exakta dubbletter av en redan uppladdad bild. Administratörer påverkas inte."
