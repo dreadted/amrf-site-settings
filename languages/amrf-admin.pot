@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-17T11:38:03+00:00\n"
+"POT-Creation-Date: 2026-09-17T15:56:43+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -169,65 +169,73 @@ msgstr ""
 msgid "Forms"
 msgstr ""
 
-#: includes/Hardening/Provider.php:50
+#: includes/Hardening/Provider.php:51
 msgid "There is an error."
 msgstr ""
 
-#: includes/Hardening/Provider.php:153
+#: includes/Hardening/Provider.php:158
 msgid "You are not allowed to upload SVG files."
 msgstr ""
 
-#: includes/Hardening/Provider.php:160
+#: includes/Hardening/Provider.php:165
 msgid "This file does not look like a valid SVG."
 msgstr ""
 
-#: includes/Hardening/Provider.php:167
+#: includes/Hardening/Provider.php:172
 msgid "This SVG could not be sanitized and was rejected."
 msgstr ""
 
-#: includes/Hardening/Provider.php:309
-#: includes/Hardening/Provider.php:310
+#: includes/Hardening/Provider.php:335
+#: includes/Hardening/Provider.php:336
 msgid "Hardening"
 msgstr ""
 
-#: includes/Hardening/Provider.php:340
+#: includes/Hardening/Provider.php:366
 msgid "Allow SVG uploads"
 msgstr ""
 
-#: includes/Hardening/Provider.php:341
+#: includes/Hardening/Provider.php:367
 msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
 msgstr ""
 
-#: includes/Hardening/Provider.php:344
+#: includes/Hardening/Provider.php:370
 msgid "Disable author archives"
 msgstr ""
 
-#: includes/Hardening/Provider.php:345
+#: includes/Hardening/Provider.php:371
 msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
 msgstr ""
 
-#: includes/Hardening/Provider.php:348
+#: includes/Hardening/Provider.php:374
 msgid "Redirect 404 pages to the homepage"
 msgstr ""
 
-#: includes/Hardening/Provider.php:349
+#: includes/Hardening/Provider.php:375
 msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
 msgstr ""
 
-#: includes/Hardening/Provider.php:352
+#: includes/Hardening/Provider.php:378
 msgid "Remove jQuery Migrate"
 msgstr ""
 
-#: includes/Hardening/Provider.php:353
+#: includes/Hardening/Provider.php:379
 msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
 msgstr ""
 
-#: includes/Hardening/Provider.php:356
+#: includes/Hardening/Provider.php:382
 msgid "Disable generated image sizes"
 msgstr ""
 
-#: includes/Hardening/Provider.php:357
+#: includes/Hardening/Provider.php:383
 msgid "Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress's own generated image sizes."
+msgstr ""
+
+#: includes/Hardening/Provider.php:386
+msgid "Disable site search"
+msgstr ""
+
+#: includes/Hardening/Provider.php:387
+msgid "Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn't expose a working search box yet."
 msgstr ""
 
 #: includes/Hooks/AdminHooks.php:87
@@ -381,7 +389,7 @@ msgid "Select which admin menu items should be visible to this user role."
 msgstr ""
 
 #: includes/SiteSettings/ContactLinkShortcodes.php:61
-#: includes/SiteSettings/Repository.php:47
+#: includes/SiteSettings/Repository.php:44
 msgid "Email"
 msgstr ""
 
@@ -394,31 +402,27 @@ msgstr ""
 msgid "Discourage search engines from indexing this site"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:199
+#: includes/SiteSettings/Provider.php:194
 msgid "Mirrors the \"Discourage search engines from indexing this site\" setting under Settings → Reading and applies immediately. While this is on, the rest of this tab is locked, since none of it has any effect until search engines are allowed back in."
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:217
+#: includes/SiteSettings/Provider.php:212
 msgid "You are not allowed to change this setting."
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:272
-msgid "No pages found."
-msgstr ""
-
-#: includes/SiteSettings/Provider.php:312
+#: includes/SiteSettings/Provider.php:269
 msgid "Select image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:313
+#: includes/SiteSettings/Provider.php:270
 msgid "Use this image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:314
+#: includes/SiteSettings/Provider.php:271
 msgid "Choose image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:319
+#: includes/SiteSettings/Provider.php:276
 msgid "Remove image"
 msgstr ""
 
@@ -439,131 +443,119 @@ msgid "Share image"
 msgstr ""
 
 #: includes/SiteSettings/Repository.php:37
-msgid "Open Graph locale (e.g. sv_SE)"
-msgstr ""
-
-#: includes/SiteSettings/Repository.php:38
 msgid "Theme color"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:39
+#: includes/SiteSettings/Repository.php:38
 msgid "Background color"
 msgstr ""
 
 #: includes/SiteSettings/Repository.php:40
-msgid "Restrict Sitemap to Selected Pages"
-msgstr ""
-
-#: includes/SiteSettings/Repository.php:41
-msgid "Pages Included in Sitemap"
-msgstr ""
-
-#: includes/SiteSettings/Repository.php:43
 msgid "Business name"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:44
+#: includes/SiteSettings/Repository.php:41
 msgid "Business type (schema.org)"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:45
+#: includes/SiteSettings/Repository.php:42
 msgid "Person name"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:46
+#: includes/SiteSettings/Repository.php:43
 msgid "Job title"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:48
+#: includes/SiteSettings/Repository.php:45
 msgid "Phone"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:53
+#: includes/SiteSettings/Repository.php:50
 msgid "Street address"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:54
+#: includes/SiteSettings/Repository.php:51
 msgid "Postal code"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:55
+#: includes/SiteSettings/Repository.php:52
 msgid "City"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:56
+#: includes/SiteSettings/Repository.php:53
 msgid "Region"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:57
+#: includes/SiteSettings/Repository.php:54
 msgid "Country"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:58
+#: includes/SiteSettings/Repository.php:55
 msgid "Latitude"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:59
+#: includes/SiteSettings/Repository.php:56
 msgid "Longitude"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:61
+#: includes/SiteSettings/Repository.php:58
 msgid "Facebook URL"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:62
+#: includes/SiteSettings/Repository.php:59
 msgid "Instagram URL"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:65
+#: includes/SiteSettings/Repository.php:60
 msgid "X (Twitter) URL"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:75
+#: includes/SiteSettings/Repository.php:70
 msgid "SEO"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:76
+#: includes/SiteSettings/Repository.php:71
 msgid "Business & Contact"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:77
+#: includes/SiteSettings/Repository.php:72
 msgid "Address"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:78
+#: includes/SiteSettings/Repository.php:73
 msgid "Social Media"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:90
-#: includes/SupportGenix/Provider.php:91
+#: includes/SupportGenix/Provider.php:92
+#: includes/SupportGenix/Provider.php:93
 msgid "Support Tickets"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:138
+#: includes/SupportGenix/Provider.php:140
 msgid "Apply this site's default settings for Support Genix."
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:143
+#: includes/SupportGenix/Provider.php:145
 msgid "Apply Defaults"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:160
+#: includes/SupportGenix/Provider.php:162
 msgid "Security check failed"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:182
+#: includes/SupportGenix/Provider.php:184
 msgid "Support Genix defaults applied successfully!"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:184
+#: includes/SupportGenix/Provider.php:186
 msgid "There was an error applying the Support Genix defaults."
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:385
+#: includes/SupportGenix/Provider.php:387
 msgid "Ticket"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:474
+#: includes/SupportGenix/Provider.php:467
 msgid "You are not authorized to edit this page."
 msgstr ""
 

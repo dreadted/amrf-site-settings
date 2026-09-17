@@ -60,6 +60,8 @@ class Provider
         add_action('apbd-wps/action/portal-header', [$this, 'endColorShadow'], 100);
 
         add_action('admin_enqueue_scripts', [$this, 'enqueueAdminStyles']);
+
+        add_filter('the_seo_framework_sitemap_exclude_ids', [$this, 'excludeTicketPageFromSitemap']);
     }
 
     /**
@@ -424,30 +426,21 @@ class Provider
     }
 
     /**
-     * Keeps the ticket portal page out of WP's built-in /wp-sitemap.xml —
-     * it's a login/ticket-creation utility page, never wanted in search
-     * results. Unconditional, no settings toggle.
+     * Keeps the ticket portal page out of the sitemap (The SEO Framework's
+     * own exclude-ids filter) — it's a login/ticket-creation utility page,
+     * never wanted in search results. Unconditional, no settings toggle.
      *
-     * @param array $args WP_Query args for this sitemap's post type.
-     * @param string $post_type
-     * @return array
+     * @param int[] $excludedIds
+     * @return int[]
      */
-    public function excludeTicketPageFromSitemap(array $args, string $post_type): array
+    public function excludeTicketPageFromSitemap(array $excludedIds): array
     {
-        if ('page' !== $post_type) {
-            return $args;
-        }
-
         $page = get_page_by_path(self::TICKET_PAGE_SLUG);
-        if (!$page) {
-            return $args;
+        if ($page) {
+            $excludedIds[] = $page->ID;
         }
 
-        $exclude = isset($args['post__not_in']) && is_array($args['post__not_in']) ? $args['post__not_in'] : [];
-        $exclude[] = $page->ID;
-        $args['post__not_in'] = $exclude;
-
-        return $args;
+        return $excludedIds;
     }
 
     /**

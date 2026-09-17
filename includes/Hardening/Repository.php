@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
  * Class Repository
  *
  * Storage/defaults/sanitization for the behavior-changing hardening toggles
- * (see Provider). Defaults to true for all five — opt-out, not opt-in.
+ * (see Provider). Most default to true — opt-out, not opt-in; see getDefaults().
  *
  * @package Antropomorf\Hardening
  */
@@ -29,6 +29,7 @@ class Repository
       'redirect_404_to_home' => true,
       'remove_jquery_migrate' => true,
       'disable_generated_image_sizes' => true,
+      'disable_site_search' => false,
     ];
   }
 
