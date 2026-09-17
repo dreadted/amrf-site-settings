@@ -9,12 +9,9 @@ if (!defined('ABSPATH')) {
 /**
  * Class Provider
  *
- * Prints a stylized console.log badge (site host, theme version, author) on
- * every front-end page load. Colors default to the active theme's own
- * primary/secondary palette (SiteSettings\Repository::
- * getThemeBrandColors()) so this works for any theme automatically;
- * amrf_site_colors is still available for a theme that wants to override
- * that.
+ * Prints a stylized console.log badge on every front-end page load, colored
+ * with the viewer's own wp-admin color scheme (or the site admin's, if
+ * logged out); amrf_site_colors can override.
  *
  * @package Antropomorf\Branding
  */
@@ -41,10 +38,10 @@ class Provider
     );
 
     $theme = wp_get_theme();
-    $theme_colors = \Antropomorf\SiteSettings\Repository::getThemeBrandColors();
+    $admin_colors = \Antropomorf\SiteSettings\Repository::getAdminColorSchemeColors();
     $colors = apply_filters('amrf_site_colors', [
-      'primary' => $theme_colors['primary'] ?: '#1976d2',
-      'secondary' => $theme_colors['secondary'] ?: '#1976d2',
+      'primary' => $admin_colors['primary'] ?: '#1976d2',
+      'secondary' => $admin_colors['secondary'] ?: '#1976d2',
     ]);
 
     wp_localize_script(self::SCRIPT_HANDLE, 'amrfBranding', [

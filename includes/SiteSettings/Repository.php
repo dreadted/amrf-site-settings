@@ -130,28 +130,51 @@ class Repository
     }
 
     /**
-     * The active theme's own primary/secondary palette colors — the
-     * sensible default for the amrf_site_colors filter (Branding\
-     * Provider's console badge, SupportGenix\Provider's ticket-portal
-     * color shadowing), so both work for any theme out of the box instead
-     * of requiring it to hook that filter itself. '' for either slug the
-     * theme doesn't declare — callers fall back to their own default.
+     * The wp-admin color scheme picked in the viewer's own profile (site
+     * admin's if logged out) — a scheme's last two preview colors are its
+     * highlight/notification shades, per core's own colors.css.
      *
      * @return array{primary: string, secondary: string}
      */
-    public static function getThemeBrandColors(): array
+    public static function getAdminColorSchemeColors(): array
     {
-        if (!class_exists('WP_Theme_JSON_Resolver')) {
+        global $_wp_admin_css_colors;
+
+        // register_admin_color_schemes() only runs on admin_init, so the
+        // front end (where both callers render) needs it registered here.
+        if (empty($_wp_admin_css_colors)) {
+            if (!function_exists('register_admin_color_schemes')) {
+                return ['primary' => '', 'secondary' => ''];
+            }
+            register_admin_color_schemes();
+        }
+
+        $user_id = get_current_user_id();
+        if (!$user_id) {
+            $admin_ids = get_users([
+                'role' => 'administrator',
+                'number' => 1,
+                'orderby' => 'ID',
+                'order' => 'ASC',
+                'fields' => 'ID',
+            ]);
+            $user_id = $admin_ids[0] ?? 0;
+        }
+        if (!$user_id) {
             return ['primary' => '', 'secondary' => ''];
         }
 
-        $palette = \WP_Theme_JSON_Resolver::get_merged_data()->get_settings()['color']['palette']['theme'] ?? [];
-        $by_slug = array_column($palette, 'color', 'slug');
+        $scheme = get_user_option('admin_color', $user_id);
+        if (empty($_wp_admin_css_colors[$scheme])) {
+            return ['primary' => '', 'secondary' => ''];
+        }
 
-        return [
-            'primary' => $by_slug['primary'] ?? '',
-            'secondary' => $by_slug['secondary'] ?? '',
-        ];
+        $shades = array_slice($_wp_admin_css_colors[$scheme]->colors, -2);
+        if (count($shades) < 2) {
+            return ['primary' => '', 'secondary' => ''];
+        }
+
+        return ['primary' => $shades[0], 'secondary' => $shades[1]];
     }
 
     /**

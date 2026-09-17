@@ -477,15 +477,9 @@ class Provider
     }
 
     /**
-     * Replaces Support Genix Lite's own default brand colors in its
-     * buffered portal-header output — '#0bbc5c'/'#ff6e30' are its real,
-     * always-rendered values (get_primary_brand_color()/
-     * get_secondary_brand_color() in modules/Apbd_wps_settings.php, no
-     * filter of its own) — with the active theme's own primary/secondary
-     * palette colors (SiteSettings\Repository::getThemeBrandColors()),
-     * falling back to those same original values (a no-op replace) for a
-     * theme with no palette at all. amrf_site_colors is still available
-     * for a theme that wants to override that.
+     * Replaces Support Genix Lite's hardcoded '#0bbc5c'/'#ff6e30' (its only
+     * always-rendered brand colors, no filter of its own) with the viewer's
+     * own wp-admin color scheme, or the site admin's if logged out.
      *
      * @return void
      */
@@ -498,10 +492,10 @@ class Provider
             'secondary' => '#ff6e30',
         ];
 
-        $theme_colors = \Antropomorf\SiteSettings\Repository::getThemeBrandColors();
+        $admin_colors = \Antropomorf\SiteSettings\Repository::getAdminColorSchemeColors();
         $replacement_defaults = [
-            'primary' => $theme_colors['primary'] ?: $plugin_defaults['primary'],
-            'secondary' => $theme_colors['secondary'] ?: $plugin_defaults['secondary'],
+            'primary' => $admin_colors['primary'] ?: $plugin_defaults['primary'],
+            'secondary' => $admin_colors['secondary'] ?: $plugin_defaults['secondary'],
         ];
 
         $colors = apply_filters('amrf_site_colors', $replacement_defaults);
