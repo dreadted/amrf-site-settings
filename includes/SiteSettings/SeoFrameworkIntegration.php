@@ -22,6 +22,7 @@ class SeoFrameworkIntegration
         }
 
         add_action('update_option_' . Repository::OPTION_NAME, [$this, 'syncHomepageFields'], 10, 2);
+        add_action('update_option_' . Repository::OPTION_NAME, [$this, 'disableConflictingKnowledgeGraph'], 10, 2);
         add_filter('the_seo_framework_schema_graph_data', [$this, 'injectJsonLd']);
     }
 
@@ -43,6 +44,16 @@ class SeoFrameworkIntegration
             'homepage_social_image_url' => $imageUrl,
             'homepage_social_image_id' => $imageUrl ? attachment_url_to_postid($imageUrl) : 0,
         ]);
+    }
+
+    // TSF's own Organization/Person node always duplicates injectJsonLd()'s once this plugin's JSON-LD is on.
+    public function disableConflictingKnowledgeGraph(array $old, array $new): void
+    {
+        if (empty($new['enable_seo_output']) || !\The_SEO_Framework\Data\Plugin::get_option('knowledge_output')) {
+            return;
+        }
+
+        \The_SEO_Framework\Data\Plugin::update_option('knowledge_output', 0);
     }
 
     public function injectJsonLd(array $graph): array
