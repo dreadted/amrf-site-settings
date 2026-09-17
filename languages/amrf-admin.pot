@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-17T11:19:01+00:00\n"
+"POT-Creation-Date: 2026-09-17T11:27:47+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -111,35 +111,39 @@ msgid "Delete submissions after this many days"
 msgstr ""
 
 #: includes/ContactForm/Provider.php:174
-#: includes/ContactForm/Provider.php:273
+#: includes/ContactForm/Provider.php:274
 msgid "No FluentForm forms found."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:188
-msgid "The form the sitewide \"#kontakt\" link/button opens in a lightbox."
+#: includes/ContactForm/Provider.php:179
+msgid "None"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:207
+#: includes/ContactForm/Provider.php:189
+msgid "The form the sitewide \"#kontakt\" link/button opens in a lightbox. \"None\" disables the lightbox sitewide."
+msgstr ""
+
+#: includes/ContactForm/Provider.php:208
 msgid "Maps FluentForm's own color/border-radius variables to this site's theme colors and applies additional styling fixes, on every FluentForm on the site."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:228
+#: includes/ContactForm/Provider.php:229
 msgid "Adds invisible, no-configuration spam protection to every FluentForm on the site. Turn off if this site already handles spam protection another way (e.g. its own plugin)."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:242
+#: includes/ContactForm/Provider.php:243
 msgid "FluentForm is not active."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:253
+#: includes/ContactForm/Provider.php:254
 msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: disables IP logging, keeps form analytics on, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. A one-time action, not a saved setting — resets to off after saving."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:288
+#: includes/ContactForm/Provider.php:289
 msgid "The daily retention cleanup and personal-data export/erase requests only ever touch these forms."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:304
+#: includes/ContactForm/Provider.php:305
 msgid "Blank or 0 = keep forever."
 msgstr ""
 

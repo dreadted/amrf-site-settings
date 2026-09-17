@@ -94,23 +94,19 @@ msgid "Delete submissions after this many days"
 msgstr "Radera inskickade formulär efter så här många dagar"
 
 #: includes/ContactForm/Provider.php:174
-#: includes/ContactForm/Provider.php:273
+#: includes/ContactForm/Provider.php:274
 msgid "No FluentForm forms found."
 msgstr "Inga FluentForm-formulär hittades."
 
-#: includes/ContactForm/Provider.php:188
-msgid "The form the sitewide \"#kontakt\" link/button opens in a lightbox."
-msgstr "Formuläret som sajtens länkar/knappar mot ankaret \"#kontakt\" öppnar i en lightbox."
-
-#: includes/ContactForm/Provider.php:207
+#: includes/ContactForm/Provider.php:208
 msgid "Maps FluentForm's own color/border-radius variables to this site's theme colors and applies additional styling fixes, on every FluentForm on the site."
 msgstr "Kopplar FluentForms egna färg-/hörnradievariabler till sajtens temafärger och tillämpar ytterligare stiljusteringar, på samtliga FluentForm-formulär på sajten."
 
-#: includes/ContactForm/Provider.php:288
+#: includes/ContactForm/Provider.php:289
 msgid "The daily retention cleanup and personal-data export/erase requests only ever touch these forms."
 msgstr "Den dagliga rensningen och begäranden om export/radering av personuppgifter rör bara dessa formulär."
 
-#: includes/ContactForm/Provider.php:304
+#: includes/ContactForm/Provider.php:305
 msgid "Blank or 0 = keep forever."
 msgstr "Tomt eller 0 = spara för alltid."
 
@@ -504,7 +500,7 @@ msgstr "Spamverifieringen misslyckades, ladda om sidan och försök igen."
 msgid "Enable ALTCHA Spam Protection"
 msgstr "Aktivera ALTCHA-spamskydd"
 
-#: includes/ContactForm/Provider.php:228
+#: includes/ContactForm/Provider.php:229
 msgid "Adds invisible, no-configuration spam protection to every FluentForm on the site. Turn off if this site already handles spam protection another way (e.g. its own plugin)."
 msgstr "Lägger till osynligt spamskydd utan konfiguration på samtliga FluentForm-formulär på sajten. Stäng av om sajten redan hanterar spamskydd på annat sätt (t.ex. med ett eget plugin)."
 
@@ -628,10 +624,18 @@ msgstr "Låter administratörer ladda upp SVG-filer via Mediabiblioteket — var
 msgid "Apply Recommended FluentForm Settings"
 msgstr "Tillämpa rekommenderade FluentForm-inställningar"
 
-#: includes/ContactForm/Provider.php:242
+#: includes/ContactForm/Provider.php:243
 msgid "FluentForm is not active."
 msgstr "FluentForm är inte aktivt."
 
-#: includes/ContactForm/Provider.php:253
+#: includes/ContactForm/Provider.php:254
 msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: disables IP logging, keeps form analytics on, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. A one-time action, not a saved setting — resets to off after saving."
 msgstr "Skriver vid sparning över FluentForms egna Global Settings → Miscellaneous, oavsett nuvarande värden: stänger av IP-loggning, låter formuläranalys vara på, aktiverar honeypot och tokenbaserat spamskydd, stänger av klassiska redigerarknappen och automatisk tabbordning, samt aktiverar no-conflict-läge. En engångsåtgärd, inte en sparad inställning — återgår till avstängd efter sparning."
+
+#: includes/ContactForm/Provider.php:179
+msgid "None"
+msgstr "Ingen"
+
+#: includes/ContactForm/Provider.php:189
+msgid "The form the sitewide \"#kontakt\" link/button opens in a lightbox. \"None\" disables the lightbox sitewide."
+msgstr "Formuläret som sajtens länkar/knappar mot ankaret \"#kontakt\" öppnar i en lightbox. \"Ingen\" stänger av lightboxen på hela sajten."

@@ -176,6 +176,7 @@ class Provider
     }
 
     printf('<select id="%1$s" name="%2$s">', esc_attr($id), esc_attr($name));
+    printf('<option value="0" %1$s>%2$s</option>', selected($current, 0, false), esc_html__('None', 'amrf-admin'));
     foreach ($forms as $form) {
       printf(
         '<option value="%1$d" %2$s>%3$s (ID: %1$d)</option>',
@@ -185,7 +186,7 @@ class Provider
       );
     }
     echo '</select>';
-    echo '<p class="description">' . esc_html__('The form the sitewide "#kontakt" link/button opens in a lightbox.', 'amrf-admin') . '</p>';
+    echo '<p class="description">' . esc_html__('The form the sitewide "#kontakt" link/button opens in a lightbox. "None" disables the lightbox sitewide.', 'amrf-admin') . '</p>';
   }
 
   /**

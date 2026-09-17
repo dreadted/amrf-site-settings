@@ -22,8 +22,8 @@ class Bootstrap
     public static function register(): void
     {
         new Provider();
-        // Modal disconnected — every page now has its own inline contact form. Kept, not deleted.
-        // new Modal();
+        // No-ops itself sitewide whenever Default Contact Form is "None" (Repository::getDefaultContactFormId() === 0).
+        new Modal();
         new Altcha();
         new RetentionCron();
         new PrivacyRequests();

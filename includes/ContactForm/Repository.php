@@ -40,7 +40,8 @@ class Repository
     public static function getDefaults(): array
     {
         return [
-            'default_contact_form_id' => '1',
+            // '0' = "None" — Modal no-ops sitewide (see getDefaultContactFormId()).
+            'default_contact_form_id' => '0',
             'enable_consistent_styling' => false,
             // On by default; a site can opt out for its own spam protection.
             'altcha_enabled' => true,
