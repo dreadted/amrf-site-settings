@@ -170,12 +170,12 @@ class FrontendHooks
 
         $removeSeoColumn = function ($columns) use ($user_group_settings) {
           if (self::userLacksSeoFrameworkAccess($user_group_settings)) {
-            unset($columns['tsf-seo-bar']);
+            unset($columns['tsf-seo-bar-wrap']);
           }
           return $columns;
         };
-        add_filter('manage_post_posts_columns', $removeSeoColumn, 999);
-        add_filter('manage_page_posts_columns', $removeSeoColumn, 999);
+        add_filter('manage_edit-post_columns', $removeSeoColumn, 999);
+        add_filter('manage_edit-page_columns', $removeSeoColumn, 999);
       }
     }
   }
