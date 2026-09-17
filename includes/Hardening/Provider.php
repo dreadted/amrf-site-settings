@@ -2,6 +2,8 @@
 
 namespace Antropomorf\Hardening;
 
+use Antropomorf\Utilities\SettingsRenderer;
+
 if (!defined('ABSPATH')) {
   exit;
 }
@@ -28,18 +30,25 @@ if (!defined('ABSPATH')) {
 class Provider
 {
   private const PAGE_SLUG = 'amrf-site-settings-hardening';
-  private const OPTION_GROUP = 'amrf_hardening_group';
+  private const TABS_FILTER = 'amrf_hardening_tabs';
+  private const TAB_PAGE_SLUG_IMAGES = 'amrf-site-settings-hardening-images';
+  private const TAB_PAGE_SLUG_FRONTEND = 'amrf-site-settings-hardening-frontend';
   private const UPLOAD_HASH_META_KEY = '_amrf_upload_hash';
+
+  private SettingsRenderer $renderer;
 
   // Set by optimizeNonAdminImageUpload(), consumed by recordUploadHash() on the same request.
   private ?string $pendingUploadHash = null;
 
   public function __construct()
   {
+    $this->renderer = new SettingsRenderer(self::TABS_FILTER, self::PAGE_SLUG, __('Hardening', 'amrf-admin'));
+
     $this->registerUnconditionalHardening();
     $this->registerToggleableHardening();
 
     add_filter('amrf_site_settings_pages', [$this, 'registerPages']);
+    add_filter(self::TABS_FILTER, [$this, 'registerTabs']);
     add_action('admin_enqueue_scripts', [$this, 'enqueueSwitchStyles']);
   }
 
@@ -447,32 +456,58 @@ class Provider
       'menu_title' => __('Hardening', 'amrf-admin'),
       'capability' => 'manage_options',
       'menu_slug' => self::PAGE_SLUG,
-      'option_group' => self::OPTION_GROUP,
-      'page_slug' => self::PAGE_SLUG,
-      'show_reset' => false,
-      'register' => [$this, 'register'],
+      'register' => [$this, 'registerHardeningPage'],
+      'render' => [$this->renderer, 'render'],
     ];
 
     return $pages;
   }
 
+  public function registerTabs(array $tabs): array
+  {
+    $tabs['images'] = [
+      'label' => __('Images', 'amrf-admin'),
+      'option_group' => Repository::OPTION_GROUP_IMAGES,
+      'page_slug' => self::TAB_PAGE_SLUG_IMAGES,
+      'show_reset' => false,
+      'register' => [$this, 'registerImagesTab'],
+    ];
+
+    $tabs['frontend'] = [
+      'label' => __('Frontend', 'amrf-admin'),
+      'option_group' => Repository::OPTION_GROUP_FRONTEND,
+      'page_slug' => self::TAB_PAGE_SLUG_FRONTEND,
+      'show_reset' => false,
+      'register' => [$this, 'registerFrontendTab'],
+    ];
+
+    return $tabs;
+  }
+
+  // Dispatches to each tab's own 'register' callback — same pattern as SiteSettingsMenu::registerSettings().
+  public function registerHardeningPage(): void
+  {
+    foreach (apply_filters(self::TABS_FILTER, []) as $tab) {
+      if (!empty($tab['register']) && is_callable($tab['register'])) {
+        call_user_func($tab['register']);
+      }
+    }
+  }
+
   /**
-   * Called via this page's 'register' callback from the pages registry, on
-   * admin_init.
-   *
    * @return void
    */
-  public function register(): void
+  public function registerImagesTab(): void
   {
     register_setting(
-      self::OPTION_GROUP,
+      Repository::OPTION_GROUP_IMAGES,
       Repository::OPTION_NAME,
       [Repository::class, 'sanitize']
     );
 
-    add_settings_section('hardening_section', '', '__return_false', self::PAGE_SLUG);
+    add_settings_section('hardening_images_section', '', '__return_false', self::TAB_PAGE_SLUG_IMAGES);
 
-    // Registered first so it renders at the top of the page, ahead of the
+    // Registered first so it renders at the top of the tab, ahead of the
     // $fields loop below.
     add_settings_field(
       'optimize_non_admin_image_uploads',
@@ -483,8 +518,8 @@ class Provider
           __('Automatically shrinks oversized images and converts them to WebP for every image a non-administrator uploads, and blocks exact duplicates of an already-uploaded image. Administrators are unaffected.', 'amrf-admin')
         );
       },
-      self::PAGE_SLUG,
-      'hardening_section'
+      self::TAB_PAGE_SLUG_IMAGES,
+      'hardening_images_section'
     );
 
     add_settings_field(
@@ -493,8 +528,8 @@ class Provider
       function () {
         $this->renderImageUploadDimensionsFields();
       },
-      self::PAGE_SLUG,
-      'hardening_section'
+      self::TAB_PAGE_SLUG_IMAGES,
+      'hardening_images_section'
     );
 
     $fields = [
@@ -502,6 +537,29 @@ class Provider
         __('Allow SVG uploads', 'amrf-admin'),
         __('Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it\'s stored.', 'amrf-admin'),
       ],
+      'disable_generated_image_sizes' => [
+        __('Disable generated image sizes', 'amrf-admin'),
+        __('Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress\'s own generated image sizes.', 'amrf-admin'),
+      ],
+    ];
+
+    $this->registerCheckboxFields($fields, self::TAB_PAGE_SLUG_IMAGES, 'hardening_images_section');
+  }
+
+  /**
+   * @return void
+   */
+  public function registerFrontendTab(): void
+  {
+    register_setting(
+      Repository::OPTION_GROUP_FRONTEND,
+      Repository::OPTION_NAME,
+      [Repository::class, 'sanitize']
+    );
+
+    add_settings_section('hardening_frontend_section', '', '__return_false', self::TAB_PAGE_SLUG_FRONTEND);
+
+    $fields = [
       'disable_author_archives' => [
         __('Disable author archives', 'amrf-admin'),
         __('Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs.', 'amrf-admin'),
@@ -510,20 +568,21 @@ class Provider
         __('Redirect 404 pages to the homepage', 'amrf-admin'),
         __('Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead.', 'amrf-admin'),
       ],
-      'remove_jquery_migrate' => [
-        __('Remove jQuery Migrate', 'amrf-admin'),
-        __('Turn off if an older plugin or theme on this site depends on jQuery Migrate\'s compatibility shims.', 'amrf-admin'),
-      ],
-      'disable_generated_image_sizes' => [
-        __('Disable generated image sizes', 'amrf-admin'),
-        __('Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress\'s own generated image sizes.', 'amrf-admin'),
-      ],
       'disable_site_search' => [
         __('Disable site search', 'amrf-admin'),
         __('Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn\'t expose a working search box yet.', 'amrf-admin'),
       ],
+      'remove_jquery_migrate' => [
+        __('Remove jQuery Migrate', 'amrf-admin'),
+        __('Turn off if an older plugin or theme on this site depends on jQuery Migrate\'s compatibility shims.', 'amrf-admin'),
+      ],
     ];
 
+    $this->registerCheckboxFields($fields, self::TAB_PAGE_SLUG_FRONTEND, 'hardening_frontend_section');
+  }
+
+  private function registerCheckboxFields(array $fields, string $page_slug, string $section): void
+  {
     foreach ($fields as $key => [$label, $description]) {
       add_settings_field(
         $key,
@@ -531,8 +590,8 @@ class Provider
         function () use ($key, $description) {
           $this->renderCheckbox($key, $description);
         },
-        self::PAGE_SLUG,
-        'hardening_section'
+        $page_slug,
+        $section
       );
     }
   }

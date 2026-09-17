@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-17T18:33:00+00:00\n"
+"POT-Creation-Date: 2026-09-17T19:00:53+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -169,102 +169,111 @@ msgstr ""
 msgid "Forms"
 msgstr ""
 
-#: includes/Hardening/Provider.php:54
+#: includes/Hardening/Provider.php:45
+#: includes/Hardening/Provider.php:455
+#: includes/Hardening/Provider.php:456
+msgid "Hardening"
+msgstr ""
+
+#: includes/Hardening/Provider.php:63
 msgid "There is an error."
 msgstr ""
 
-#: includes/Hardening/Provider.php:166
+#: includes/Hardening/Provider.php:175
 msgid "You are not allowed to upload SVG files."
 msgstr ""
 
-#: includes/Hardening/Provider.php:173
+#: includes/Hardening/Provider.php:182
 msgid "This file does not look like a valid SVG."
 msgstr ""
 
-#: includes/Hardening/Provider.php:180
+#: includes/Hardening/Provider.php:189
 msgid "This SVG could not be sanitized and was rejected."
 msgstr ""
 
 #. translators: %d is the existing attachment's post ID.
-#: includes/Hardening/Provider.php:255
+#: includes/Hardening/Provider.php:264
 #, php-format
 msgid "This image is identical to an existing upload (attachment #%d) and was not saved again."
 msgstr ""
 
-#: includes/Hardening/Provider.php:446
-#: includes/Hardening/Provider.php:447
-msgid "Hardening"
+#: includes/Hardening/Provider.php:473
+msgid "Images"
 msgstr ""
 
-#: includes/Hardening/Provider.php:479
-msgid "Optimize non-admin image uploads"
-msgstr ""
-
-#: includes/Hardening/Provider.php:483
-msgid "Automatically shrinks oversized images and converts them to WebP for every image a non-administrator uploads, and blocks exact duplicates of an already-uploaded image. Administrators are unaffected."
-msgstr ""
-
-#: includes/Hardening/Provider.php:492
-msgid "Max dimensions (px)"
-msgstr ""
-
-#: includes/Hardening/Provider.php:502
-msgid "Allow SVG uploads"
-msgstr ""
-
-#: includes/Hardening/Provider.php:503
-msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
-msgstr ""
-
-#: includes/Hardening/Provider.php:506
-msgid "Disable author archives"
-msgstr ""
-
-#: includes/Hardening/Provider.php:507
-msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
-msgstr ""
-
-#: includes/Hardening/Provider.php:510
-msgid "Redirect 404 pages to the homepage"
-msgstr ""
-
-#: includes/Hardening/Provider.php:511
-msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
-msgstr ""
-
-#: includes/Hardening/Provider.php:514
-msgid "Remove jQuery Migrate"
-msgstr ""
-
-#: includes/Hardening/Provider.php:515
-msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
+#: includes/Hardening/Provider.php:481
+msgid "Frontend"
 msgstr ""
 
 #: includes/Hardening/Provider.php:518
-msgid "Disable generated image sizes"
-msgstr ""
-
-#: includes/Hardening/Provider.php:519
-msgid "Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress's own generated image sizes."
+msgid "Optimize non-admin image uploads"
 msgstr ""
 
 #: includes/Hardening/Provider.php:522
-msgid "Disable site search"
+msgid "Automatically shrinks oversized images and converts them to WebP for every image a non-administrator uploads, and blocks exact duplicates of an already-uploaded image. Administrators are unaffected."
 msgstr ""
 
-#: includes/Hardening/Provider.php:523
-msgid "Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn't expose a working search box yet."
+#: includes/Hardening/Provider.php:531
+msgid "Max dimensions (px)"
 msgstr ""
 
-#: includes/Hardening/Provider.php:571
-msgid "Width"
+#: includes/Hardening/Provider.php:541
+msgid "Allow SVG uploads"
 msgstr ""
 
-#: includes/Hardening/Provider.php:574
-msgid "Height"
+#: includes/Hardening/Provider.php:542
+msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
+msgstr ""
+
+#: includes/Hardening/Provider.php:545
+msgid "Disable generated image sizes"
+msgstr ""
+
+#: includes/Hardening/Provider.php:546
+msgid "Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress's own generated image sizes."
+msgstr ""
+
+#: includes/Hardening/Provider.php:568
+msgid "Disable author archives"
+msgstr ""
+
+#: includes/Hardening/Provider.php:569
+msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
+msgstr ""
+
+#: includes/Hardening/Provider.php:572
+msgid "Redirect 404 pages to the homepage"
+msgstr ""
+
+#: includes/Hardening/Provider.php:573
+msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
 msgstr ""
 
 #: includes/Hardening/Provider.php:576
+msgid "Disable site search"
+msgstr ""
+
+#: includes/Hardening/Provider.php:577
+msgid "Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn't expose a working search box yet."
+msgstr ""
+
+#: includes/Hardening/Provider.php:580
+msgid "Remove jQuery Migrate"
+msgstr ""
+
+#: includes/Hardening/Provider.php:581
+msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
+msgstr ""
+
+#: includes/Hardening/Provider.php:638
+msgid "Width"
+msgstr ""
+
+#: includes/Hardening/Provider.php:641
+msgid "Height"
+msgstr ""
+
+#: includes/Hardening/Provider.php:643
 msgid "Images larger than this, in either dimension, are scaled down proportionally (no cropping) before being converted to WebP."
 msgstr ""
 

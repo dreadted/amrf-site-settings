@@ -18,6 +18,10 @@ class Repository
 {
   public const OPTION_NAME = 'amrf_hardening';
 
+  // One shared option split across two Settings API groups (Hardening's "Images"/"Frontend" tabs).
+  public const OPTION_GROUP_IMAGES = 'amrf_hardening_images_group';
+  public const OPTION_GROUP_FRONTEND = 'amrf_hardening_frontend_group';
+
   // Sanitized as absint(), not bool — every other key in getDefaults() is a toggle.
   private const INT_KEYS = [
     'optimize_non_admin_image_uploads_width',
@@ -51,16 +55,31 @@ class Repository
     return wp_parse_args(is_array($stored) ? $stored : [], self::getDefaults());
   }
 
-  /**
-   * @param mixed $input Raw POSTed value for this option.
-   * @return array<string, bool|int>
-   */
+  // Merges into existing settings rather than overwriting — each tab's form only posts its own fields.
   public static function sanitize($input): array
   {
     $defaults = self::getDefaults();
-    $output = [];
+    $output = self::getSettings();
 
-    foreach (array_keys($defaults) as $key) {
+    $option_page = isset($_POST['option_page']) ? sanitize_key(wp_unslash($_POST['option_page'])) : '';
+    $scope = match ($option_page) {
+      self::OPTION_GROUP_IMAGES => [
+        'allow_svg_uploads',
+        'disable_generated_image_sizes',
+        'optimize_non_admin_image_uploads',
+        'optimize_non_admin_image_uploads_width',
+        'optimize_non_admin_image_uploads_height',
+      ],
+      self::OPTION_GROUP_FRONTEND => [
+        'disable_author_archives',
+        'redirect_404_to_home',
+        'disable_site_search',
+        'remove_jquery_migrate',
+      ],
+      default => array_keys($defaults),
+    };
+
+    foreach ($scope as $key) {
       if (in_array($key, self::INT_KEYS, true)) {
         $value = is_array($input) && isset($input[$key]) ? absint($input[$key]) : 0;
         $output[$key] = $value > 0 ? $value : $defaults[$key];
