@@ -109,6 +109,13 @@ class Provider
       self::CONTACT_PAGE_SLUG,
       'contact_form_section'
     );
+    add_settings_field(
+      'apply_fluentform_baseline',
+      __('Apply Recommended FluentForm Settings', 'amrf-admin'),
+      [$this, 'renderApplyFluentFormBaselineField'],
+      self::CONTACT_PAGE_SLUG,
+      'contact_form_section'
+    );
   }
 
   /**
@@ -219,6 +226,31 @@ class Provider
       esc_attr($name),
       checked($enabled, true, false),
       esc_html__('Adds invisible, no-configuration spam protection to every FluentForm on the site. Turn off if this site already handles spam protection another way (e.g. its own plugin).', 'amrf-admin')
+    );
+  }
+
+  /**
+   * One-shot action, not a persisted setting — always renders unchecked;
+   * checking it overwrites FluentForm's own Global Settings on save (see
+   * Repository::applyFluentFormBaseline()).
+   *
+   * @return void
+   */
+  public function renderApplyFluentFormBaselineField(): void
+  {
+    if (!shortcode_exists('fluentform')) {
+      echo '<p class="description">' . esc_html__('FluentForm is not active.', 'amrf-admin') . '</p>';
+      return;
+    }
+
+    $name = Repository::OPTION_NAME . '[apply_fluentform_baseline]';
+    $submitted_name = Repository::OPTION_NAME . '[apply_fluentform_baseline_submitted]';
+
+    printf('<input type="hidden" name="%s" value="1" />', esc_attr($submitted_name));
+    printf(
+      '<label class="switch"><input type="checkbox" name="%1$s" value="1" /><span class="slider round"></span></label><p class="description">%2$s</p>',
+      esc_attr($name),
+      esc_html__('Overwrites FluentForm\'s own Global Settings → Miscellaneous on save, regardless of their current values: disables IP logging, keeps form analytics on, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. A one-time action, not a saved setting — resets to off after saving.', 'amrf-admin')
     );
   }
 

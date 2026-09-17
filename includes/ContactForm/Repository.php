@@ -23,6 +23,17 @@ class Repository
 {
     public const OPTION_NAME = 'amrf_fluentform_privacy';
 
+    /** Site baseline for FluentForm's own _fluentform_global_form_settings['misc'], applied on demand (see applyFluentFormBaseline()). */
+    private const FLUENTFORM_BASELINE = [
+        'isIpLogingDisabled' => true,
+        'isAnalyticsDisabled' => false,
+        'honeypotStatus' => 'yes',
+        'tokenBasedProtectionStatus' => 'yes',
+        'classicEditorButton' => 'no',
+        'noConflictStatus' => 'yes',
+        'tabIndex' => 'no',
+    ];
+
     /**
      * @return array{default_contact_form_id: string, enable_consistent_styling: bool, altcha_enabled: bool, contact_form_ids: int[], retention_days: string}
      */
@@ -65,6 +76,11 @@ class Repository
     {
         $input = is_array($input) ? $input : [];
         $current = self::getSettings();
+
+        // One-shot action, not a stored setting — deliberately absent from $output below.
+        if (array_key_exists('apply_fluentform_baseline_submitted', $input) && !empty($input['apply_fluentform_baseline'])) {
+            self::applyFluentFormBaseline();
+        }
 
         $output = [
             'default_contact_form_id' => (string) absint($input['default_contact_form_id'] ?? $current['default_contact_form_id']),
@@ -142,5 +158,21 @@ class Repository
     public static function getRetentionDays(): int
     {
         return absint(self::getSettings()['retention_days']);
+    }
+
+    /**
+     * Overwrites FluentForm's own misc settings with this site's fixed
+     * baseline, regardless of their current values — a different option
+     * than self::OPTION_NAME, so this never re-enters this class's own
+     * sanitize() filter.
+     *
+     * @return void
+     */
+    public static function applyFluentFormBaseline(): void
+    {
+        $settings = get_option('_fluentform_global_form_settings', []);
+        $settings = is_array($settings) ? $settings : [];
+        $settings['misc'] = array_merge($settings['misc'] ?? [], self::FLUENTFORM_BASELINE);
+        update_option('_fluentform_global_form_settings', $settings);
     }
 }

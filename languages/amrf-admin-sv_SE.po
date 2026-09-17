@@ -41,16 +41,16 @@ msgstr ""
 msgid "Site Settings"
 msgstr "Webbplatsinställningar"
 
-#: includes/ContactForm/Modal.php:125
+#: includes/ContactForm/Modal.php:165
 msgid "Contact"
 msgstr "Kontakt"
 
-#: includes/ContactForm/Modal.php:126
+#: includes/ContactForm/Modal.php:166
 msgid "Close"
 msgstr "Stäng"
 
 #. translators: 1: opening <a> tag to the privacy policy (omitted if it isn't published yet), 2: closing </a> tag
-#: includes/ContactForm/Modal.php:138
+#: includes/ContactForm/Modal.php:178
 #, php-format
 msgid "We process your personal data to answer your message. Read more in our %1$sprivacy policy%2$s."
 msgstr "Vi behandlar dina personuppgifter för att kunna svara på ditt meddelande. Läs mer i vår %1$sintegritetspolicy%2$s."
@@ -85,32 +85,32 @@ msgstr "Tillämpa enhetlig formulärstil"
 msgid "GDPR"
 msgstr "GDPR"
 
-#: includes/ContactForm/Provider.php:128
+#: includes/ContactForm/Provider.php:135
 msgid "Contact Forms Subject to Retention"
 msgstr "Formulär som omfattas av rensningen"
 
-#: includes/ContactForm/Provider.php:135
+#: includes/ContactForm/Provider.php:142
 msgid "Delete submissions after this many days"
 msgstr "Radera inskickade formulär efter så här många dagar"
 
-#: includes/ContactForm/Provider.php:167
-#: includes/ContactForm/Provider.php:241
+#: includes/ContactForm/Provider.php:174
+#: includes/ContactForm/Provider.php:273
 msgid "No FluentForm forms found."
 msgstr "Inga FluentForm-formulär hittades."
 
-#: includes/ContactForm/Provider.php:181
+#: includes/ContactForm/Provider.php:188
 msgid "The form the sitewide \"#kontakt\" link/button opens in a lightbox."
 msgstr "Formuläret som sajtens länkar/knappar mot ankaret \"#kontakt\" öppnar i en lightbox."
 
-#: includes/ContactForm/Provider.php:200
+#: includes/ContactForm/Provider.php:207
 msgid "Maps FluentForm's own color/border-radius variables to this site's theme colors and applies additional styling fixes, on every FluentForm on the site."
 msgstr "Kopplar FluentForms egna färg-/hörnradievariabler till sajtens temafärger och tillämpar ytterligare stiljusteringar, på samtliga FluentForm-formulär på sajten."
 
-#: includes/ContactForm/Provider.php:256
+#: includes/ContactForm/Provider.php:288
 msgid "The daily retention cleanup and personal-data export/erase requests only ever touch these forms."
 msgstr "Den dagliga rensningen och begäranden om export/radering av personuppgifter rör bara dessa formulär."
 
-#: includes/ContactForm/Provider.php:272
+#: includes/ContactForm/Provider.php:304
 msgid "Blank or 0 = keep forever."
 msgstr "Tomt eller 0 = spara för alltid."
 
@@ -504,7 +504,7 @@ msgstr "Spamverifieringen misslyckades, ladda om sidan och försök igen."
 msgid "Enable ALTCHA Spam Protection"
 msgstr "Aktivera ALTCHA-spamskydd"
 
-#: includes/ContactForm/Provider.php:221
+#: includes/ContactForm/Provider.php:228
 msgid "Adds invisible, no-configuration spam protection to every FluentForm on the site. Turn off if this site already handles spam protection another way (e.g. its own plugin)."
 msgstr "Lägger till osynligt spamskydd utan konfiguration på samtliga FluentForm-formulär på sajten. Stäng av om sajten redan hanterar spamskydd på annat sätt (t.ex. med ett eget plugin)."
 
@@ -623,3 +623,15 @@ msgstr "Tillåt SVG-uppladdning"
 #: includes/Hardening/Provider.php:341
 msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
 msgstr "Låter administratörer ladda upp SVG-filer via Mediabiblioteket — varje fil saneras (skript, händelsehanterare och inbäddad HTML tas bort) innan den sparas."
+
+#: includes/ContactForm/Provider.php:114
+msgid "Apply Recommended FluentForm Settings"
+msgstr "Tillämpa rekommenderade FluentForm-inställningar"
+
+#: includes/ContactForm/Provider.php:242
+msgid "FluentForm is not active."
+msgstr "FluentForm är inte aktivt."
+
+#: includes/ContactForm/Provider.php:253
+msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: disables IP logging, keeps form analytics on, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. A one-time action, not a saved setting — resets to off after saving."
+msgstr "Skriver vid sparning över FluentForms egna Global Settings → Miscellaneous, oavsett nuvarande värden: stänger av IP-loggning, låter formuläranalys vara på, aktiverar honeypot och tokenbaserat spamskydd, stänger av klassiska redigerarknappen och automatisk tabbordning, samt aktiverar no-conflict-läge. En engångsåtgärd, inte en sparad inställning — återgår till avstängd efter sparning."

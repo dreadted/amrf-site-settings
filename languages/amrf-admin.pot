@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-07T17:09:16+00:00\n"
+"POT-Creation-Date: 2026-09-17T11:19:01+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -50,16 +50,16 @@ msgstr ""
 msgid "Spam verification failed, please reload the page and try again."
 msgstr ""
 
-#: includes/ContactForm/Modal.php:125
+#: includes/ContactForm/Modal.php:165
 msgid "Contact"
 msgstr ""
 
-#: includes/ContactForm/Modal.php:126
+#: includes/ContactForm/Modal.php:166
 msgid "Close"
 msgstr ""
 
 #. translators: 1: opening <a> tag to the privacy policy (omitted if it isn't published yet), 2: closing </a> tag
-#: includes/ContactForm/Modal.php:138
+#: includes/ContactForm/Modal.php:178
 #, php-format
 msgid "We process your personal data to answer your message. Read more in our %1$sprivacy policy%2$s."
 msgstr ""
@@ -98,36 +98,48 @@ msgstr ""
 msgid "Enable ALTCHA Spam Protection"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:128
-msgid "Contact Forms Subject to Retention"
+#: includes/ContactForm/Provider.php:114
+msgid "Apply Recommended FluentForm Settings"
 msgstr ""
 
 #: includes/ContactForm/Provider.php:135
+msgid "Contact Forms Subject to Retention"
+msgstr ""
+
+#: includes/ContactForm/Provider.php:142
 msgid "Delete submissions after this many days"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:167
-#: includes/ContactForm/Provider.php:241
+#: includes/ContactForm/Provider.php:174
+#: includes/ContactForm/Provider.php:273
 msgid "No FluentForm forms found."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:181
+#: includes/ContactForm/Provider.php:188
 msgid "The form the sitewide \"#kontakt\" link/button opens in a lightbox."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:200
+#: includes/ContactForm/Provider.php:207
 msgid "Maps FluentForm's own color/border-radius variables to this site's theme colors and applies additional styling fixes, on every FluentForm on the site."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:221
+#: includes/ContactForm/Provider.php:228
 msgid "Adds invisible, no-configuration spam protection to every FluentForm on the site. Turn off if this site already handles spam protection another way (e.g. its own plugin)."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:256
+#: includes/ContactForm/Provider.php:242
+msgid "FluentForm is not active."
+msgstr ""
+
+#: includes/ContactForm/Provider.php:253
+msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: disables IP logging, keeps form analytics on, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. A one-time action, not a saved setting — resets to off after saving."
+msgstr ""
+
+#: includes/ContactForm/Provider.php:288
 msgid "The daily retention cleanup and personal-data export/erase requests only ever touch these forms."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:272
+#: includes/ContactForm/Provider.php:304
 msgid "Blank or 0 = keep forever."
 msgstr ""
 
