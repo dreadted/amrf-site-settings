@@ -22,7 +22,8 @@ class Bootstrap
     public static function register(): void
     {
         new Provider();
-        new Modal();
+        // Modal disconnected — every page now has its own inline contact form. Kept, not deleted.
+        // new Modal();
         new Altcha();
         new RetentionCron();
         new PrivacyRequests();
