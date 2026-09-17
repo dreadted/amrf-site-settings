@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-17T15:56:43+00:00\n"
+"POT-Creation-Date: 2026-09-17T16:59:12+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -169,73 +169,97 @@ msgstr ""
 msgid "Forms"
 msgstr ""
 
-#: includes/Hardening/Provider.php:51
+#: includes/Hardening/Provider.php:53
 msgid "There is an error."
 msgstr ""
 
-#: includes/Hardening/Provider.php:158
+#: includes/Hardening/Provider.php:164
 msgid "You are not allowed to upload SVG files."
 msgstr ""
 
-#: includes/Hardening/Provider.php:165
+#: includes/Hardening/Provider.php:171
 msgid "This file does not look like a valid SVG."
 msgstr ""
 
-#: includes/Hardening/Provider.php:172
+#: includes/Hardening/Provider.php:178
 msgid "This SVG could not be sanitized and was rejected."
 msgstr ""
 
-#: includes/Hardening/Provider.php:335
-#: includes/Hardening/Provider.php:336
+#: includes/Hardening/Provider.php:411
+#: includes/Hardening/Provider.php:412
 msgid "Hardening"
 msgstr ""
 
-#: includes/Hardening/Provider.php:366
+#: includes/Hardening/Provider.php:444
+msgid "Optimize non-admin image uploads"
+msgstr ""
+
+#: includes/Hardening/Provider.php:448
+msgid "Automatically shrinks oversized images and converts them to WebP for every image a non-administrator uploads. Administrators are unaffected."
+msgstr ""
+
+#: includes/Hardening/Provider.php:457
+msgid "Max dimensions (px)"
+msgstr ""
+
+#: includes/Hardening/Provider.php:467
 msgid "Allow SVG uploads"
 msgstr ""
 
-#: includes/Hardening/Provider.php:367
+#: includes/Hardening/Provider.php:468
 msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
 msgstr ""
 
-#: includes/Hardening/Provider.php:370
+#: includes/Hardening/Provider.php:471
 msgid "Disable author archives"
 msgstr ""
 
-#: includes/Hardening/Provider.php:371
+#: includes/Hardening/Provider.php:472
 msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
 msgstr ""
 
-#: includes/Hardening/Provider.php:374
+#: includes/Hardening/Provider.php:475
 msgid "Redirect 404 pages to the homepage"
 msgstr ""
 
-#: includes/Hardening/Provider.php:375
+#: includes/Hardening/Provider.php:476
 msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
 msgstr ""
 
-#: includes/Hardening/Provider.php:378
+#: includes/Hardening/Provider.php:479
 msgid "Remove jQuery Migrate"
 msgstr ""
 
-#: includes/Hardening/Provider.php:379
+#: includes/Hardening/Provider.php:480
 msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
 msgstr ""
 
-#: includes/Hardening/Provider.php:382
+#: includes/Hardening/Provider.php:483
 msgid "Disable generated image sizes"
 msgstr ""
 
-#: includes/Hardening/Provider.php:383
+#: includes/Hardening/Provider.php:484
 msgid "Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress's own generated image sizes."
 msgstr ""
 
-#: includes/Hardening/Provider.php:386
+#: includes/Hardening/Provider.php:487
 msgid "Disable site search"
 msgstr ""
 
-#: includes/Hardening/Provider.php:387
+#: includes/Hardening/Provider.php:488
 msgid "Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn't expose a working search box yet."
+msgstr ""
+
+#: includes/Hardening/Provider.php:536
+msgid "Width"
+msgstr ""
+
+#: includes/Hardening/Provider.php:539
+msgid "Height"
+msgstr ""
+
+#: includes/Hardening/Provider.php:541
+msgid "Images larger than this, in either dimension, are scaled down proportionally (no cropping) before being converted to WebP."
 msgstr ""
 
 #: includes/Hooks/AdminHooks.php:87
@@ -526,36 +550,36 @@ msgstr ""
 msgid "Social Media"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:92
-#: includes/SupportGenix/Provider.php:93
+#: includes/SupportGenix/Provider.php:111
+#: includes/SupportGenix/Provider.php:112
 msgid "Support Tickets"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:140
+#: includes/SupportGenix/Provider.php:159
 msgid "Apply this site's default settings for Support Genix."
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:145
+#: includes/SupportGenix/Provider.php:164
 msgid "Apply Defaults"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:162
+#: includes/SupportGenix/Provider.php:181
 msgid "Security check failed"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:184
+#: includes/SupportGenix/Provider.php:203
 msgid "Support Genix defaults applied successfully!"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:186
+#: includes/SupportGenix/Provider.php:205
 msgid "There was an error applying the Support Genix defaults."
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:387
+#: includes/SupportGenix/Provider.php:406
 msgid "Ticket"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:467
+#: includes/SupportGenix/Provider.php:486
 msgid "You are not authorized to edit this page."
 msgstr ""
 

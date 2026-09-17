@@ -97,6 +97,10 @@ class Provider
     if ($settings['disable_site_search']) {
       add_action('parse_query', [$this, 'disableSiteSearch']);
     }
+
+    if ($settings['optimize_non_admin_image_uploads']) {
+      add_filter('wp_handle_upload', [$this, 'optimizeNonAdminImageUpload'], 10, 2);
+    }
   }
 
   /**
@@ -218,6 +222,67 @@ class Provider
     }
 
     return $doc->saveXML();
+  }
+
+  // Scoped to 'upload' context — sideloads are typically admin-triggered, not a direct non-admin action.
+  public function optimizeNonAdminImageUpload(array $upload, string $context = 'upload'): array
+  {
+    if (
+      current_user_can('manage_options')
+      || $context !== 'upload'
+      || empty($upload['type'])
+      || strpos($upload['type'], 'image/') !== 0
+    ) {
+      return $upload;
+    }
+
+    $processed = $this->convertToOptimizedWebp($upload['file']);
+
+    if ($processed === null) {
+      return $upload;
+    }
+
+    $upload['url'] = str_replace(basename($upload['file']), basename($processed), $upload['url']);
+    $upload['file'] = $processed;
+    $upload['type'] = 'image/webp';
+
+    return $upload;
+  }
+
+  private function convertToOptimizedWebp(string $file_path): ?string
+  {
+    $editor = wp_get_image_editor($file_path);
+    if (is_wp_error($editor)) {
+      return null;
+    }
+
+    $settings = Repository::getSettings();
+
+    // No-ops (keeps the original size) when the image already fits within
+    // these dimensions — resize() with $crop=false never upscales.
+    $editor->resize(
+      $settings['optimize_non_admin_image_uploads_width'],
+      $settings['optimize_non_admin_image_uploads_height'],
+      false
+    );
+    $editor->set_quality(80);
+
+    $info = pathinfo($file_path);
+    // wp_unique_filename avoids collisions with an existing file that
+    // already has this same base name but a different original extension.
+    $webp_filename = wp_unique_filename($info['dirname'], $info['filename'] . '.webp');
+    $webp_path = $info['dirname'] . '/' . $webp_filename;
+
+    $saved = $editor->save($webp_path, 'image/webp');
+    if (is_wp_error($saved)) {
+      return null;
+    }
+
+    if ($file_path !== $webp_path && file_exists($file_path)) {
+      unlink($file_path);
+    }
+
+    return $webp_path;
   }
 
   /**
@@ -354,6 +419,31 @@ class Provider
 
     add_settings_section('hardening_section', '', '__return_false', self::PAGE_SLUG);
 
+    // Registered first so it renders at the top of the page, ahead of the
+    // $fields loop below.
+    add_settings_field(
+      'optimize_non_admin_image_uploads',
+      __('Optimize non-admin image uploads', 'amrf-admin'),
+      function () {
+        $this->renderCheckbox(
+          'optimize_non_admin_image_uploads',
+          __('Automatically shrinks oversized images and converts them to WebP for every image a non-administrator uploads. Administrators are unaffected.', 'amrf-admin')
+        );
+      },
+      self::PAGE_SLUG,
+      'hardening_section'
+    );
+
+    add_settings_field(
+      'optimize_non_admin_image_uploads_dimensions',
+      __('Max dimensions (px)', 'amrf-admin'),
+      function () {
+        $this->renderImageUploadDimensionsFields();
+      },
+      self::PAGE_SLUG,
+      'hardening_section'
+    );
+
     $fields = [
       'allow_svg_uploads' => [
         __('Allow SVG uploads', 'amrf-admin'),
@@ -411,6 +501,26 @@ class Provider
       esc_attr($name),
       checked(!empty($settings[$key]), true, false),
       esc_html($description)
+    );
+  }
+
+  /**
+   * @return void
+   */
+  private function renderImageUploadDimensionsFields(): void
+  {
+    $settings = Repository::getSettings();
+
+    printf(
+      '<label>%1$s <input type="number" min="1" name="%2$s[optimize_non_admin_image_uploads_width]" value="%3$d" /></label> '
+        . '<label style="margin-left:1em;">%4$s <input type="number" min="1" name="%2$s[optimize_non_admin_image_uploads_height]" value="%5$d" /></label>'
+        . '<p class="description">%6$s</p>',
+      esc_html__('Width', 'amrf-admin'),
+      esc_attr(Repository::OPTION_NAME),
+      (int) $settings['optimize_non_admin_image_uploads_width'],
+      esc_html__('Height', 'amrf-admin'),
+      (int) $settings['optimize_non_admin_image_uploads_height'],
+      esc_html__('Images larger than this, in either dimension, are scaled down proportionally (no cropping) before being converted to WebP.', 'amrf-admin')
     );
   }
 

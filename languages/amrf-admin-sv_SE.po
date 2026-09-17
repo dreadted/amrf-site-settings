@@ -114,44 +114,44 @@ msgstr "Tomt eller 0 = spara för alltid."
 msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)."
 msgstr "Ange ett giltigt svenskt personnummer (ÅÅMMDD-XXXX)."
 
-#: includes/Hardening/Provider.php:51
+#: includes/Hardening/Provider.php:53
 msgid "There is an error."
 msgstr "Ett fel har uppstått."
 
-#: includes/Hardening/Provider.php:335
-#: includes/Hardening/Provider.php:336
+#: includes/Hardening/Provider.php:411
+#: includes/Hardening/Provider.php:412
 msgid "Hardening"
 msgstr "Härdning"
 
-#: includes/Hardening/Provider.php:370
+#: includes/Hardening/Provider.php:471
 msgid "Disable author archives"
 msgstr "Inaktivera författararkiv"
 
-#: includes/Hardening/Provider.php:371
+#: includes/Hardening/Provider.php:472
 msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
 msgstr "Omdirigerar författararkivsidor till startsidan — användbart på sajter med en enda författare, eller för att undvika att användarnamn läcker via författar-URL:er."
 
-#: includes/Hardening/Provider.php:374
+#: includes/Hardening/Provider.php:475
 msgid "Redirect 404 pages to the homepage"
 msgstr "Omdirigera 404-sidor till startsidan"
 
-#: includes/Hardening/Provider.php:375
+#: includes/Hardening/Provider.php:476
 msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
 msgstr "Gäller bara utloggade besökare. Stäng av om sajten istället ska visa en riktig 404-sida."
 
-#: includes/Hardening/Provider.php:378
+#: includes/Hardening/Provider.php:479
 msgid "Remove jQuery Migrate"
 msgstr "Ta bort jQuery Migrate"
 
-#: includes/Hardening/Provider.php:379
+#: includes/Hardening/Provider.php:480
 msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
 msgstr "Stäng av om ett äldre plugin eller tema på sajten är beroende av jQuery Migrates kompatibilitetslager."
 
-#: includes/Hardening/Provider.php:382
+#: includes/Hardening/Provider.php:483
 msgid "Disable generated image sizes"
 msgstr "Inaktivera genererade bildstorlekar"
 
-#: includes/Hardening/Provider.php:383
+#: includes/Hardening/Provider.php:484
 msgid "Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress's own generated image sizes."
 msgstr "Hindrar WordPress från att generera ytterligare (responsiva) bildstorlekar och automatiskt skala stora uppladdningar. Stäng av om sajten är beroende av WordPress egna genererade bildstorlekar."
 
@@ -414,36 +414,36 @@ msgstr "Adress"
 msgid "Social Media"
 msgstr "Sociala medier"
 
-#: includes/SupportGenix/Provider.php:92
-#: includes/SupportGenix/Provider.php:93
+#: includes/SupportGenix/Provider.php:111
+#: includes/SupportGenix/Provider.php:112
 msgid "Support Tickets"
 msgstr "Supportärenden"
 
-#: includes/SupportGenix/Provider.php:140
+#: includes/SupportGenix/Provider.php:159
 msgid "Apply this site's default settings for Support Genix."
 msgstr "Tillämpa sajtens standardinställningar för Support Genix."
 
-#: includes/SupportGenix/Provider.php:145
+#: includes/SupportGenix/Provider.php:164
 msgid "Apply Defaults"
 msgstr "Tillämpa standardvärden"
 
-#: includes/SupportGenix/Provider.php:162
+#: includes/SupportGenix/Provider.php:181
 msgid "Security check failed"
 msgstr "Säkerhetskontrollen misslyckades"
 
-#: includes/SupportGenix/Provider.php:184
+#: includes/SupportGenix/Provider.php:203
 msgid "Support Genix defaults applied successfully!"
 msgstr "Support Genix standardinställningar har tillämpats!"
 
-#: includes/SupportGenix/Provider.php:186
+#: includes/SupportGenix/Provider.php:205
 msgid "There was an error applying the Support Genix defaults."
 msgstr "Ett fel uppstod när Support Genix standardinställningar skulle tillämpas."
 
-#: includes/SupportGenix/Provider.php:387
+#: includes/SupportGenix/Provider.php:406
 msgid "Ticket"
 msgstr "Ärende"
 
-#: includes/SupportGenix/Provider.php:467
+#: includes/SupportGenix/Provider.php:486
 msgid "You are not authorized to edit this page."
 msgstr "Du har inte behörighet att redigera den här sidan."
 
@@ -584,23 +584,23 @@ msgstr[1] "i högst %d dagar"
 msgid "General site settings — SEO, contact forms with GDPR tools, Swish payments, analytics, security hardening, and per-role admin panel control."
 msgstr ""
 
-#: includes/Hardening/Provider.php:158
+#: includes/Hardening/Provider.php:164
 msgid "You are not allowed to upload SVG files."
 msgstr "Du har inte behörighet att ladda upp SVG-filer."
 
-#: includes/Hardening/Provider.php:165
+#: includes/Hardening/Provider.php:171
 msgid "This file does not look like a valid SVG."
 msgstr "Den här filen verkar inte vara en giltig SVG."
 
-#: includes/Hardening/Provider.php:172
+#: includes/Hardening/Provider.php:178
 msgid "This SVG could not be sanitized and was rejected."
 msgstr "Den här SVG-filen kunde inte saneras och avvisades."
 
-#: includes/Hardening/Provider.php:366
+#: includes/Hardening/Provider.php:467
 msgid "Allow SVG uploads"
 msgstr "Tillåt SVG-uppladdning"
 
-#: includes/Hardening/Provider.php:367
+#: includes/Hardening/Provider.php:468
 msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
 msgstr "Låter administratörer ladda upp SVG-filer via Mediabiblioteket — varje fil saneras (skript, händelsehanterare och inbäddad HTML tas bort) innan den sparas."
 
@@ -624,10 +624,34 @@ msgstr "Ingen"
 msgid "The form the sitewide \"#contact\" link/button opens in a lightbox. \"None\" disables the lightbox sitewide."
 msgstr "Formuläret som sajtens länkar/knappar mot ankaret \"#contact\" öppnar i en lightbox. \"Ingen\" stänger av lightboxen på hela sajten."
 
-#: includes/Hardening/Provider.php:386
+#: includes/Hardening/Provider.php:487
 msgid "Disable site search"
 msgstr "Stäng av sajtsökning"
 
-#: includes/Hardening/Provider.php:387
+#: includes/Hardening/Provider.php:488
 msgid "Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn't expose a working search box yet."
 msgstr "Gör att WordPress inbyggda sökfunktion visar en 404-sida för alla besökare — användbart medan en sajt fortfarande byggs och inte ska visa en fungerande sökruta än."
+
+#: includes/Hardening/Provider.php:444
+msgid "Optimize non-admin image uploads"
+msgstr "Optimera bilduppladdningar för icke-administratörer"
+
+#: includes/Hardening/Provider.php:448
+msgid "Automatically shrinks oversized images and converts them to WebP for every image a non-administrator uploads. Administrators are unaffected."
+msgstr "Skalar automatiskt ner för stora bilder och konverterar dem till WebP för varje bild en icke-administratör laddar upp. Administratörer påverkas inte."
+
+#: includes/Hardening/Provider.php:457
+msgid "Max dimensions (px)"
+msgstr "Max mått (px)"
+
+#: includes/Hardening/Provider.php:536
+msgid "Width"
+msgstr "Bredd"
+
+#: includes/Hardening/Provider.php:539
+msgid "Height"
+msgstr "Höjd"
+
+#: includes/Hardening/Provider.php:541
+msgid "Images larger than this, in either dimension, are scaled down proportionally (no cropping) before being converted to WebP."
+msgstr "Bilder som är större än detta, i endera dimensionen, skalas ner proportionellt (utan beskärning) innan de konverteras till WebP."
