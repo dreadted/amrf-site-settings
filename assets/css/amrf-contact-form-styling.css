@@ -23,7 +23,8 @@
   --fluentform-secondary: var(--wp--preset--color--contrast);
   --fluentform-danger: var(--wp--preset--color--accent-red);
   --fluentform-border-color: var(--wp--preset--color--line);
-  --fluentform-hover-surface: var(--wp--preset--color--hover-surface, transparent);
+  --fluentform-hover-surface: var(--amrf-button-hover-background),
+    var(--wp--preset--color--hover-surface);
   --fluentform-border-radius: var(
     --amrf-button-border-radius,
     var(--wp--custom--border-radius, var(--border-radius, 4px))
@@ -121,7 +122,7 @@ select.ff-el-form-control option:hover {
     var(--fluentform-primary)
   );
   border-color: var(--amrf-button-hover-background, var(--fluentform-primary));
-  opacity: 0.85;
+  opacity: 1;
 }
 
 .fluentform .ff_t_c {
