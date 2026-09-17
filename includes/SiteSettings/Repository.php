@@ -34,11 +34,8 @@ class Repository
             'seo_title' => [__('SEO title', 'amrf-admin'), 'text', 'seo'],
             'meta_description' => [__('Meta description', 'amrf-admin'), 'textarea', 'seo'],
             'share_image' => [__('Share image', 'amrf-admin'), 'media', 'seo'],
-            'og_locale' => [__('Open Graph locale (e.g. sv_SE)', 'amrf-admin'), 'text', 'seo'],
             'theme_color' => [__('Theme color', 'amrf-admin'), 'color', 'seo'],
             'background_color' => [__('Background color', 'amrf-admin'), 'color', 'seo'],
-            'restrict_sitemap' => [__('Restrict Sitemap to Selected Pages', 'amrf-admin'), 'checkbox', 'seo'],
-            'sitemap_page_ids' => [__('Pages Included in Sitemap', 'amrf-admin'), 'page_list', 'seo'],
 
             'business_name' => [__('Business name', 'amrf-admin'), 'text', 'business'],
             'business_type' => [__('Business type (schema.org)', 'amrf-admin'), 'text', 'business'],
@@ -60,8 +57,6 @@ class Repository
 
             'facebook_url' => [__('Facebook URL', 'amrf-admin'), 'url', 'social'],
             'instagram_url' => [__('Instagram URL', 'amrf-admin'), 'url', 'social'],
-            // No separate handle field — SeoOutput::extractXHandle() pulls
-            // it from the URL directly.
             'x_url' => [__('X (Twitter) URL', 'amrf-admin'), 'url', 'social'],
         ];
     }
@@ -304,17 +299,6 @@ class Repository
                 // disambiguates that from "tab not submitted".
                 if (is_array($input) && array_key_exists($key . '_submitted', $input)) {
                     $output[$key] = !empty($input[$key]) ? '1' : '';
-                }
-                continue;
-            }
-
-            if ($type === 'page_list') {
-                // Same _submitted-marker fix as checkbox — a
-                // deselect-everything save must actually clear the list.
-                if (is_array($input) && array_key_exists($key . '_submitted', $input)) {
-                    $ids = isset($input[$key]) && is_array($input[$key]) ? array_map('absint', $input[$key]) : [];
-                    $ids = array_values(array_unique(array_filter($ids)));
-                    $output[$key] = implode(',', $ids);
                 }
                 continue;
             }

@@ -289,23 +289,19 @@ msgstr "Tillåtna menyalternativ"
 msgid "Select which admin menu items should be visible to this user role."
 msgstr "Välj vilka menyalternativ som ska visas i administratörsmenyn för den här användarrollen."
 
-#: includes/SiteSettings/Provider.php:272
-msgid "No pages found."
-msgstr "Inga sidor hittades."
-
-#: includes/SiteSettings/Provider.php:312
+#: includes/SiteSettings/Provider.php:269
 msgid "Select image"
 msgstr "Välj bild"
 
-#: includes/SiteSettings/Provider.php:313
+#: includes/SiteSettings/Provider.php:270
 msgid "Use this image"
 msgstr "Använd denna bild"
 
-#: includes/SiteSettings/Provider.php:314
+#: includes/SiteSettings/Provider.php:271
 msgid "Choose image"
 msgstr "Välj bild"
 
-#: includes/SiteSettings/Provider.php:319
+#: includes/SiteSettings/Provider.php:276
 msgid "Remove image"
 msgstr "Ta bort bild"
 
@@ -326,47 +322,35 @@ msgid "Share image"
 msgstr "Delningsbild"
 
 #: includes/SiteSettings/Repository.php:37
-msgid "Open Graph locale (e.g. sv_SE)"
-msgstr "Open Graph-språkkod (t.ex. sv_SE)"
-
-#: includes/SiteSettings/Repository.php:38
 msgid "Theme color"
 msgstr "Temafärg"
 
-#: includes/SiteSettings/Repository.php:39
+#: includes/SiteSettings/Repository.php:38
 msgid "Background color"
 msgstr "Bakgrundsfärg"
 
 #: includes/SiteSettings/Repository.php:40
-msgid "Restrict Sitemap to Selected Pages"
-msgstr "Begränsa sitemap till valda sidor"
-
-#: includes/SiteSettings/Repository.php:41
-msgid "Pages Included in Sitemap"
-msgstr "Sidor som ingår i sitemap"
-
-#: includes/SiteSettings/Repository.php:43
 msgid "Business name"
 msgstr "Företagsnamn"
 
-#: includes/SiteSettings/Repository.php:44
+#: includes/SiteSettings/Repository.php:41
 msgid "Business type (schema.org)"
 msgstr "Verksamhetstyp (schema.org)"
 
-#: includes/SiteSettings/Repository.php:45
+#: includes/SiteSettings/Repository.php:42
 msgid "Person name"
 msgstr "Personnamn"
 
-#: includes/SiteSettings/Repository.php:46
+#: includes/SiteSettings/Repository.php:43
 msgid "Job title"
 msgstr "Titel"
 
 #: includes/SiteSettings/ContactLinkShortcodes.php:61
-#: includes/SiteSettings/Repository.php:47
+#: includes/SiteSettings/Repository.php:44
 msgid "Email"
 msgstr "E-post"
 
-#: includes/SiteSettings/Repository.php:48
+#: includes/SiteSettings/Repository.php:45
 msgid "Phone"
 msgstr "Telefon"
 
@@ -374,59 +358,59 @@ msgstr "Telefon"
 msgid "Swish number"
 msgstr "Swish-nummer"
 
-#: includes/SiteSettings/Repository.php:53
+#: includes/SiteSettings/Repository.php:50
 msgid "Street address"
 msgstr "Gatuadress"
 
-#: includes/SiteSettings/Repository.php:54
+#: includes/SiteSettings/Repository.php:51
 msgid "Postal code"
 msgstr "Postnummer"
 
-#: includes/SiteSettings/Repository.php:55
+#: includes/SiteSettings/Repository.php:52
 msgid "City"
 msgstr "Ort"
 
-#: includes/SiteSettings/Repository.php:56
+#: includes/SiteSettings/Repository.php:53
 msgid "Region"
 msgstr "Region"
 
-#: includes/SiteSettings/Repository.php:57
+#: includes/SiteSettings/Repository.php:54
 msgid "Country"
 msgstr "Land"
 
-#: includes/SiteSettings/Repository.php:58
+#: includes/SiteSettings/Repository.php:55
 msgid "Latitude"
 msgstr "Latitud"
 
-#: includes/SiteSettings/Repository.php:59
+#: includes/SiteSettings/Repository.php:56
 msgid "Longitude"
 msgstr "Longitud"
 
-#: includes/SiteSettings/Repository.php:61
+#: includes/SiteSettings/Repository.php:58
 msgid "Facebook URL"
 msgstr "Facebook-URL"
 
-#: includes/SiteSettings/Repository.php:62
+#: includes/SiteSettings/Repository.php:59
 msgid "Instagram URL"
 msgstr "Instagram-URL"
 
-#: includes/SiteSettings/Repository.php:65
+#: includes/SiteSettings/Repository.php:60
 msgid "X (Twitter) URL"
 msgstr "X (Twitter)-URL"
 
-#: includes/SiteSettings/Repository.php:75
+#: includes/SiteSettings/Repository.php:70
 msgid "SEO"
 msgstr "SEO"
 
-#: includes/SiteSettings/Repository.php:76
+#: includes/SiteSettings/Repository.php:71
 msgid "Business & Contact"
 msgstr "Företag & Kontakt"
 
-#: includes/SiteSettings/Repository.php:77
+#: includes/SiteSettings/Repository.php:72
 msgid "Address"
 msgstr "Adress"
 
-#: includes/SiteSettings/Repository.php:78
+#: includes/SiteSettings/Repository.php:73
 msgid "Social Media"
 msgstr "Sociala medier"
 
@@ -570,11 +554,11 @@ msgstr "Aktivera för att ge den här användarrollen åtkomst till menyn Webbpl
 msgid "Discourage search engines from indexing this site"
 msgstr "Avskräck sökmotorer från att indexera den här webbplatsen"
 
-#: includes/SiteSettings/Provider.php:199
+#: includes/SiteSettings/Provider.php:194
 msgid "Mirrors the \"Discourage search engines from indexing this site\" setting under Settings → Reading and applies immediately. While this is on, the rest of this tab is locked, since none of it has any effect until search engines are allowed back in."
 msgstr "Speglar inställningen \"Avskräck sökmotorer från att indexera den här webbplatsen\" under Inställningar → Läsning och tillämpas omedelbart. Så länge den är aktiverad är resten av fliken låst, eftersom inget av det har någon effekt förrän sökmotorer släpps in igen."
 
-#: includes/SiteSettings/Provider.php:217
+#: includes/SiteSettings/Provider.php:212
 msgid "You are not allowed to change this setting."
 msgstr "Du har inte behörighet att ändra den här inställningen."
 

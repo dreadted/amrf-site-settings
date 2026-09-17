@@ -165,11 +165,6 @@ class Provider
       return;
     }
 
-    if ($type === 'page_list') {
-      $this->renderPageListField($key, $field_name, $value);
-      return;
-    }
-
     $html_type = $type === 'url' ? 'text' : $type;
     printf(
       '<input type="%1$s" id="%2$s" name="%3$s" value="%4$s" class="regular-text" />',
@@ -248,44 +243,6 @@ class Provider
       esc_attr($field_name),
       checked($value, '1', false)
     );
-  }
-
-  /**
-   * A checkbox list of every published page (title + ID), same
-   * "{key}_submitted" marker mechanism as renderCheckboxField().
-   *
-   * @param string $key
-   * @param string $field_name
-   * @param string $value Comma-separated page IDs.
-   * @return void
-   */
-  private function renderPageListField(string $key, string $field_name, string $value): void
-  {
-    $selected = array_map('absint', array_filter(explode(',', $value)));
-    // Published only — WP's own sitemap always filters to publish anyway.
-    $pages = get_pages(['sort_column' => 'post_title', 'post_status' => 'publish']);
-    $submitted_name = Repository::OPTION_NAME . '[' . $key . '_submitted]';
-
-    printf('<input type="hidden" name="%s" value="1" />', esc_attr($submitted_name));
-
-    if (empty($pages)) {
-      echo '<p class="description">' . esc_html__('No pages found.', 'amrf-admin') . '</p>';
-      return;
-    }
-
-    // Same .menu-items-container/.menu-item-checkbox markup as Allowed
-    // Menu Items (Settings\Manager::userRoleSettingsCallback()).
-    echo '<div class="menu-items-container">';
-    foreach ($pages as $page) {
-      printf(
-        '<div class="menu-item-checkbox"><input type="checkbox" name="%1$s[]" value="%2$d" %3$s /><label>%4$s <code>(ID: %2$d)</code></label></div>',
-        esc_attr($field_name),
-        $page->ID,
-        checked(in_array($page->ID, $selected, true), true, false),
-        esc_html($page->post_title)
-      );
-    }
-    echo '</div>';
   }
 
   private function renderMediaField(string $field_id, string $field_name, string $value): void
