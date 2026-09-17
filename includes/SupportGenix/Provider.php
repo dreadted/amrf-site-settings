@@ -58,6 +58,7 @@ class Provider
 
         add_action('apbd-wps/action/portal-header', [$this, 'startColorShadow'], 1);
         add_action('apbd-wps/action/portal-header', [$this, 'endColorShadow'], 100);
+        add_action('apbd-wps/action/portal-header', [$this, 'printPortalStyles']);
 
         add_action('admin_enqueue_scripts', [$this, 'enqueueAdminStyles']);
 
@@ -78,6 +79,24 @@ class Provider
             AMRF_ADMIN_PLUGIN_URL . 'assets/css/amrf-support-genix.css',
             [],
             filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/css/amrf-support-genix.css')
+        );
+    }
+
+    /**
+     * The ticket portal (Apbd_wps_settings::portal_templates(), also what
+     * our own "Support Tickets" admin iframe points at) prints its own raw
+     * <html> document and never calls wp_head() — so amrf-support-genix.css,
+     * enqueued above via admin_enqueue_scripts, never reaches it on either
+     * surface. Link the same stylesheet directly into its one <head>
+     * extension point instead.
+     *
+     * @return void
+     */
+    public function printPortalStyles(): void
+    {
+        printf(
+            '<link rel="stylesheet" href="%s">',
+            esc_url(AMRF_ADMIN_PLUGIN_URL . 'assets/css/amrf-support-genix.css?v=' . filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/css/amrf-support-genix.css'))
         );
     }
 
