@@ -50,6 +50,7 @@ class Repository
                         'upload.php',
                     ],
                     'site_menus_cap' => false,
+                    'seo_framework_access' => false,
                     'fluentform_entries_access' => false,
                 ],
             ],

@@ -159,7 +159,36 @@ class FrontendHooks
           }
         }
       }, 999);
+
+      if (function_exists('tsf')) {
+        add_action('add_meta_boxes', function () use ($user_group_settings) {
+          if (self::userLacksSeoFrameworkAccess($user_group_settings)) {
+            remove_meta_box('tsf-inpost-box', 'post', 'normal');
+            remove_meta_box('tsf-inpost-box', 'page', 'normal');
+          }
+        }, 999);
+
+        $removeSeoColumn = function ($columns) use ($user_group_settings) {
+          if (self::userLacksSeoFrameworkAccess($user_group_settings)) {
+            unset($columns['tsf-seo-bar']);
+          }
+          return $columns;
+        };
+        add_filter('manage_post_posts_columns', $removeSeoColumn, 999);
+        add_filter('manage_page_posts_columns', $removeSeoColumn, 999);
+      }
     }
+  }
+
+  /** Whether the current user's role lacks the seo_framework_access toggle. */
+  private static function userLacksSeoFrameworkAccess(array $user_group_settings): bool
+  {
+    if (current_user_can('administrator')) {
+      return false;
+    }
+
+    $user = wp_get_current_user();
+    return !self::getUserSetting($user, $user_group_settings, 'seo_framework_access', false);
   }
 
   /**

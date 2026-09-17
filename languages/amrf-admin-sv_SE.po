@@ -124,35 +124,35 @@ msgstr "Ett fel har uppstått."
 msgid "Hardening"
 msgstr "Härdning"
 
-#: includes/Hardening/Provider.php:568
+#: includes/Hardening/Provider.php:564
 msgid "Disable author archives"
 msgstr "Inaktivera författararkiv"
 
-#: includes/Hardening/Provider.php:569
+#: includes/Hardening/Provider.php:565
 msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
 msgstr "Omdirigerar författararkivsidor till startsidan — användbart på sajter med en enda författare, eller för att undvika att användarnamn läcker via författar-URL:er."
 
-#: includes/Hardening/Provider.php:572
+#: includes/Hardening/Provider.php:568
 msgid "Redirect 404 pages to the homepage"
 msgstr "Omdirigera 404-sidor till startsidan"
 
-#: includes/Hardening/Provider.php:573
+#: includes/Hardening/Provider.php:569
 msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
 msgstr "Gäller bara utloggade besökare. Stäng av om sajten istället ska visa en riktig 404-sida."
 
-#: includes/Hardening/Provider.php:580
+#: includes/Hardening/Provider.php:576
 msgid "Remove jQuery Migrate"
 msgstr "Ta bort jQuery Migrate"
 
-#: includes/Hardening/Provider.php:581
+#: includes/Hardening/Provider.php:577
 msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
 msgstr "Stäng av om ett äldre plugin eller tema på sajten är beroende av jQuery Migrates kompatibilitetslager."
 
-#: includes/Hardening/Provider.php:545
+#: includes/Hardening/Provider.php:541
 msgid "Disable generated image sizes"
 msgstr "Inaktivera genererade bildstorlekar"
 
-#: includes/Hardening/Provider.php:546
+#: includes/Hardening/Provider.php:542
 msgid "Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress's own generated image sizes."
 msgstr "Hindrar WordPress från att generera ytterligare (responsiva) bildstorlekar och automatiskt skala stora uppladdningar. Stäng av om sajten är beroende av WordPress egna genererade bildstorlekar."
 
@@ -160,13 +160,13 @@ msgstr "Hindrar WordPress från att generera ytterligare (responsiva) bildstorle
 msgid "Settings"
 msgstr "Inställningar"
 
-#: includes/Hooks/FrontendHooks.php:181
+#: includes/Hooks/FrontendHooks.php:217
 msgid "Page Editor"
 msgstr "Redigera sida"
 
 #. translators: %d is the number indicating minimum password length
-#: includes/Hooks/FrontendHooks.php:232
-#: includes/Hooks/FrontendHooks.php:264
+#: includes/Hooks/FrontendHooks.php:268
+#: includes/Hooks/FrontendHooks.php:300
 #, php-format
 msgid "ERROR: Password must be at least %d characters long."
 msgstr "FEL: Lösenordet måste bestå av minst %d tecken."
@@ -218,75 +218,75 @@ msgstr "Inställningar för %s"
 msgid "Settings have been reset to defaults."
 msgstr "Inställningarna har återställts till standardvärden."
 
-#: includes/Settings/Manager.php:410
+#: includes/Settings/Manager.php:412
 msgid "Configure general admin panel settings."
 msgstr "Ange allmänna inställningar för adminpanelen."
 
-#: includes/Settings/Manager.php:420
+#: includes/Settings/Manager.php:422
 msgid "Configure settings for each user role."
 msgstr "Ange inställningar för respektive användarroll."
 
-#: includes/Settings/Manager.php:432
+#: includes/Settings/Manager.php:434
 msgid "Adds a link to the front page editor in the admin menu."
 msgstr "Lägger till länken \"Redigera sida\" i administratörsmenyn."
 
-#: includes/Settings/Manager.php:453
+#: includes/Settings/Manager.php:455
 msgid "The link the \"Page Editor\" admin menu item points to, relative to the site root."
 msgstr "Länken som menyalternativet \"Redigera sida\" pekar på, relativt sajtens rot."
 
-#: includes/Settings/Manager.php:471
+#: includes/Settings/Manager.php:473
 msgid "Minimum required characters for user passwords."
 msgstr "Minsta antal tillåtna tecken för användarnas lösenord."
 
-#: includes/Settings/Manager.php:482
+#: includes/Settings/Manager.php:484
 msgid "Prevents non-admin users from changing their passwords."
 msgstr "Tar bort möjligheten att byta lösenord för icke-administratörer."
 
-#: includes/Settings/Manager.php:492
+#: includes/Settings/Manager.php:494
 msgid "Hides application passwords section for non-admin users."
 msgstr "Döljer applikationslösenord för icke-administratörer."
 
-#: includes/Settings/Manager.php:502
+#: includes/Settings/Manager.php:504
 msgid "Removes comments and new content links from admin bar for non-admins."
 msgstr "Tar bort länkar till kommentarer och nytt innehåll från administrationsfältet för icke-administratörer."
 
-#: includes/Settings/Manager.php:512
+#: includes/Settings/Manager.php:514
 msgid "Removes default dashboard widgets (Activity, Quick Draft, etc.)."
 msgstr "Tar bort standardwidgetar (Aktivitet, Snabbutkast etc.)"
 
-#: includes/Settings/Manager.php:532
+#: includes/Settings/Manager.php:534
 msgid "Login Redirect"
 msgstr "Omdirigering efter inloggning"
 
-#: includes/Settings/Manager.php:535
+#: includes/Settings/Manager.php:537
 msgid "-- Select Redirect URL --"
 msgstr "-- Välj sida för omdirigering --"
 
-#: includes/Settings/Manager.php:536
+#: includes/Settings/Manager.php:538
 msgid "-- Front Page --"
 msgstr "-- Startsida --"
 
-#: includes/Settings/Manager.php:541
+#: includes/Settings/Manager.php:543
 msgid "URL to redirect this user role to after login."
 msgstr "Sida som skall visas för denna användarroll efter inloggning."
 
-#: includes/Settings/Manager.php:544
+#: includes/Settings/Manager.php:546
 msgid "Default Admin Page"
 msgstr "Startsida för adminpanelen"
 
-#: includes/Settings/Manager.php:549
+#: includes/Settings/Manager.php:551
 msgid "-- Select Default Page --"
 msgstr "-- Välj startsida --"
 
-#: includes/Settings/Manager.php:554
+#: includes/Settings/Manager.php:556
 msgid "Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below)."
 msgstr "Sida som visas när den här användarrollen besöker /wp-admin/ (måste finnas med bland tillåtna menyalternativ)."
 
-#: includes/Settings/Manager.php:570
+#: includes/Settings/Manager.php:579
 msgid "Allowed Menu Items"
 msgstr "Tillåtna menyalternativ"
 
-#: includes/Settings/Manager.php:582
+#: includes/Settings/Manager.php:591
 msgid "Select which admin menu items should be visible to this user role."
 msgstr "Välj vilka menyalternativ som ska visas i administratörsmenyn för den här användarrollen."
 
@@ -535,19 +535,19 @@ msgstr "Fyll i ett giltigt svenskt personnummer (ÅÅMMDD-XXXX)"
 msgid "Personal Identity Number is required"
 msgstr "Personnummer är obligatoriskt"
 
-#: includes/Settings/Manager.php:558
+#: includes/Settings/Manager.php:560
 msgid "Form Entries Access"
 msgstr "Åtkomst till formulärposter"
 
-#: includes/Settings/Manager.php:559
+#: includes/Settings/Manager.php:561
 msgid "Enable to allow this user role to view and manage Fluent Forms entries (view, delete, mark read/unread, favorite) — not forms themselves or site-wide Fluent Forms settings."
 msgstr "Aktivera för att ge den här användarrollen behörighet att visa och hantera poster i Fluent Forms (visa, radera, markera läst/oläst, favorit) — inte formulären själva eller Fluent Forms sajtomfattande inställningar."
 
-#: includes/Settings/Manager.php:565
+#: includes/Settings/Manager.php:567
 msgid "Site Settings Access"
 msgstr "Åtkomst till webbplatsinställningar"
 
-#: includes/Settings/Manager.php:566
+#: includes/Settings/Manager.php:568
 msgid "Enable to give this user role access to the Site Settings menu (SEO, Business & Contact, Address, Social Media, Forms/GDPR/Swish) and to native theme menu/design editing (Appearance → Menus/Customize on a classic theme, or the Site Editor on a block theme)."
 msgstr "Aktivera för att ge den här användarrollen åtkomst till menyn Webbplatsinställningar (SEO, Företag & Kontakt, Adress, Sociala medier, Formulär/GDPR/Swish) samt till WordPress egen temameny-/designredigering (Utseende → Menyer/Anpassa i ett klassiskt tema, eller webbplatsredigeraren i ett blocktema)."
 
@@ -597,11 +597,11 @@ msgstr "Den här filen verkar inte vara en giltig SVG."
 msgid "This SVG could not be sanitized and was rejected."
 msgstr "Den här SVG-filen kunde inte saneras och avvisades."
 
-#: includes/Hardening/Provider.php:541
+#: includes/Hardening/Provider.php:537
 msgid "Allow SVG uploads"
 msgstr "Tillåt SVG-uppladdning"
 
-#: includes/Hardening/Provider.php:542
+#: includes/Hardening/Provider.php:538
 msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
 msgstr "Låter administratörer ladda upp SVG-filer via Mediabiblioteket — varje fil saneras (skript, händelsehanterare och inbäddad HTML tas bort) innan den sparas."
 
@@ -625,31 +625,31 @@ msgstr "Ingen"
 msgid "The form the sitewide \"#contact\" link/button opens in a lightbox. \"None\" disables the lightbox sitewide."
 msgstr "Formuläret som sajtens länkar/knappar mot ankaret \"#contact\" öppnar i en lightbox. \"Ingen\" stänger av lightboxen på hela sajten."
 
-#: includes/Hardening/Provider.php:576
+#: includes/Hardening/Provider.php:572
 msgid "Disable site search"
 msgstr "Stäng av sajtsökning"
 
-#: includes/Hardening/Provider.php:577
+#: includes/Hardening/Provider.php:573
 msgid "Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn't expose a working search box yet."
 msgstr "Gör att WordPress inbyggda sökfunktion visar en 404-sida för alla besökare — användbart medan en sajt fortfarande byggs och inte ska visa en fungerande sökruta än."
 
-#: includes/Hardening/Provider.php:518
+#: includes/Hardening/Provider.php:514
 msgid "Optimize non-admin image uploads"
 msgstr "Optimera bilduppladdningar för icke-administratörer"
 
-#: includes/Hardening/Provider.php:531
+#: includes/Hardening/Provider.php:527
 msgid "Max dimensions (px)"
 msgstr "Max mått (px)"
 
-#: includes/Hardening/Provider.php:638
+#: includes/Hardening/Provider.php:630
 msgid "Width"
 msgstr "Bredd"
 
-#: includes/Hardening/Provider.php:641
+#: includes/Hardening/Provider.php:633
 msgid "Height"
 msgstr "Höjd"
 
-#: includes/Hardening/Provider.php:643
+#: includes/Hardening/Provider.php:635
 msgid "Images larger than this, in either dimension, are scaled down proportionally (no cropping) before being converted to WebP."
 msgstr "Bilder som är större än detta, i endera dimensionen, skalas ner proportionellt (utan beskärning) innan de konverteras till WebP."
 
@@ -659,14 +659,22 @@ msgstr "Bilder som är större än detta, i endera dimensionen, skalas ner propo
 msgid "This image is identical to an existing upload (attachment #%d) and was not saved again."
 msgstr "Den här bilden är identisk med en befintlig uppladdning (bifogad fil #%d) och sparades inte igen."
 
-#: includes/Hardening/Provider.php:522
+#: includes/Hardening/Provider.php:518
 msgid "Automatically shrinks oversized images and converts them to WebP for every image a non-administrator uploads, and blocks exact duplicates of an already-uploaded image. Administrators are unaffected."
 msgstr "Skalar automatiskt ner för stora bilder och konverterar dem till WebP för varje bild en icke-administratör laddar upp, och blockerar exakta dubbletter av en redan uppladdad bild. Administratörer påverkas inte."
 
-#: includes/Hardening/Provider.php:473
+#: includes/Hardening/Provider.php:469
 msgid "Images"
 msgstr "Bilder"
 
-#: includes/Hardening/Provider.php:481
+#: includes/Hardening/Provider.php:477
 msgid "Frontend"
 msgstr "Frontend"
+
+#: includes/Settings/Manager.php:573
+msgid "SEO Framework Access"
+msgstr "Åtkomst till SEO Framework"
+
+#: includes/Settings/Manager.php:574
+msgid "Enable to give this user role access to The SEO Framework's meta box on posts/pages and its SEO column in the post/page list."
+msgstr "Aktivera för att ge den här användarrollen åtkomst till The SEO Frameworks metabox på inlägg/sidor samt SEO-kolumnen i inläggs-/sidlistan."
