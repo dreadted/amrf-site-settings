@@ -41,16 +41,16 @@ msgstr ""
 msgid "Site Settings"
 msgstr "Webbplatsinställningar"
 
-#: includes/ContactForm/Modal.php:165
+#: includes/ContactForm/Modal.php:167
 msgid "Contact"
 msgstr "Kontakt"
 
-#: includes/ContactForm/Modal.php:166
+#: includes/ContactForm/Modal.php:168
 msgid "Close"
 msgstr "Stäng"
 
 #. translators: 1: opening <a> tag to the privacy policy (omitted if it isn't published yet), 2: closing </a> tag
-#: includes/ContactForm/Modal.php:178
+#: includes/ContactForm/Modal.php:180
 #, php-format
 msgid "We process your personal data to answer your message. Read more in our %1$sprivacy policy%2$s."
 msgstr "Vi behandlar dina personuppgifter för att kunna svara på ditt meddelande. Läs mer i vår %1$sintegritetspolicy%2$s."
@@ -637,5 +637,5 @@ msgid "None"
 msgstr "Ingen"
 
 #: includes/ContactForm/Provider.php:189
-msgid "The form the sitewide \"#kontakt\" link/button opens in a lightbox. \"None\" disables the lightbox sitewide."
-msgstr "Formuläret som sajtens länkar/knappar mot ankaret \"#kontakt\" öppnar i en lightbox. \"Ingen\" stänger av lightboxen på hela sajten."
+msgid "The form the sitewide \"#contact\" link/button opens in a lightbox. \"None\" disables the lightbox sitewide."
+msgstr "Formuläret som sajtens länkar/knappar mot ankaret \"#contact\" öppnar i en lightbox. \"Ingen\" stänger av lightboxen på hela sajten."

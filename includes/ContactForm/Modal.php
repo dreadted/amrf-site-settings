@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 /**
  * Class Modal
  *
- * Wires any `<a href="#kontakt">` (or element with data-contact-trigger,
+ * Wires any `<a href="#contact">` (or element with data-contact-trigger,
  * see assets/js/amrf-contact-modal.js) sitewide to a lightbox containing
  * the FluentForm configured via Repository::getDefaultContactFormId().
  * No-ops entirely if FluentForm is inactive or the configured form doesn't
@@ -74,6 +74,10 @@ class Modal
       return;
     }
 
+    // Applies to every FluentForm on the site, not just the modal's — enqueue
+    // regardless of whether a modal form is even configured.
+    $this->enqueueConsistentStyling();
+
     $form_id = Repository::getDefaultContactFormId();
     if ($form_id < 1) {
       return;
@@ -91,8 +95,6 @@ class Modal
       [],
       filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/css/amrf-contact-modal.css')
     );
-
-    $this->enqueueConsistentStyling();
 
     wp_enqueue_script(
       self::SCRIPT_HANDLE,

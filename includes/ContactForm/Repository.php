@@ -111,7 +111,7 @@ class Repository
 
     /**
      * @return int Positive form ID, or 0 if unset (no form to show in the
-     *             "#kontakt" lightbox).
+     *             "#contact" lightbox).
      */
     public static function getDefaultContactFormId(): int
     {

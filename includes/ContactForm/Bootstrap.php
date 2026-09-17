@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
  * Class Bootstrap
  *
  * Entry point for the Contact Form module: the "Contact Forms" and "GDPR"
- * tabs on the shared "Forms" page (Forms\Menu), the sitewide "#kontakt"
+ * tabs on the shared "Forms" page (Forms\Menu), the sitewide "#contact"
  * lightbox (Modal), WordPress's personal-data export/erase tools and
  * privacy-request emails, and the [amrf_contact_retention] shortcode for
  * quoting the GDPR tab's own retention setting in a Privacy Policy page.

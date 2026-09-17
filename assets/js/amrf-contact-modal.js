@@ -1,6 +1,6 @@
 /**
- * Modal for the sitewide "#kontakt" contact link — opens for any
- * `<a href="#kontakt">` or `[data-contact-trigger]` element. The form inside
+ * Modal for the sitewide "#contact" contact link — opens for any
+ * `<a href="#contact">` or `[data-contact-trigger]` element. The form inside
  * is FluentForm's own markup (Modal.php); this manages the modal shell
  * (open/close, focus trapping, auto-close after FluentForm's
  * "fluentform_submission_success" event) and pre-fills the form's Subject
@@ -121,7 +121,7 @@
 	}
 
 	document.addEventListener('click', function (event) {
-		var trigger = event.target.closest('a[href="#kontakt"], [data-contact-trigger]');
+		var trigger = event.target.closest('a[href="#contact"], [data-contact-trigger]');
 		if (!trigger) {
 			return;
 		}

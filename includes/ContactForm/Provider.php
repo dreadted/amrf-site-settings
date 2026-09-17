@@ -186,7 +186,7 @@ class Provider
       );
     }
     echo '</select>';
-    echo '<p class="description">' . esc_html__('The form the sitewide "#kontakt" link/button opens in a lightbox. "None" disables the lightbox sitewide.', 'amrf-admin') . '</p>';
+    echo '<p class="description">' . esc_html__('The form the sitewide "#contact" link/button opens in a lightbox. "None" disables the lightbox sitewide.', 'amrf-admin') . '</p>';
   }
 
   /**
