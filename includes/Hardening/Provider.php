@@ -93,6 +93,10 @@ class Provider
       add_action('intermediate_image_sizes_advanced', fn () => []);
       add_filter('big_image_size_threshold', '__return_false');
     }
+
+    if ($settings['disable_site_search']) {
+      add_action('parse_query', [$this, 'disableSiteSearch']);
+    }
   }
 
   /**
@@ -283,6 +287,21 @@ class Provider
     exit;
   }
 
+  // Turns every front-end search into a genuine 404 instead of real results.
+  public function disableSiteSearch($query): void
+  {
+    if (!$query->is_search() || is_admin()) {
+      return;
+    }
+
+    $query->is_search = false;
+    $query->query_vars['s'] = false;
+    $query->query['s'] = false;
+    $query->set_404();
+    status_header(404);
+    nocache_headers();
+  }
+
   /**
    * @param \WP_Scripts $scripts
    * @return void
@@ -355,6 +374,10 @@ class Provider
       'disable_generated_image_sizes' => [
         __('Disable generated image sizes', 'amrf-admin'),
         __('Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress\'s own generated image sizes.', 'amrf-admin'),
+      ],
+      'disable_site_search' => [
+        __('Disable site search', 'amrf-admin'),
+        __('Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn\'t expose a working search box yet.', 'amrf-admin'),
       ],
     ];
 
