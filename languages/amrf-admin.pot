@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-17T19:07:33+00:00\n"
+"POT-Creation-Date: 2026-09-17T19:43:32+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -170,8 +170,8 @@ msgid "Forms"
 msgstr ""
 
 #: includes/Hardening/Provider.php:45
-#: includes/Hardening/Provider.php:455
-#: includes/Hardening/Provider.php:456
+#: includes/Hardening/Provider.php:487
+#: includes/Hardening/Provider.php:488
 msgid "Hardening"
 msgstr ""
 
@@ -179,101 +179,109 @@ msgstr ""
 msgid "There is an error."
 msgstr ""
 
-#: includes/Hardening/Provider.php:175
+#: includes/Hardening/Provider.php:207
 msgid "You are not allowed to upload SVG files."
 msgstr ""
 
-#: includes/Hardening/Provider.php:182
+#: includes/Hardening/Provider.php:214
 msgid "This file does not look like a valid SVG."
 msgstr ""
 
-#: includes/Hardening/Provider.php:189
+#: includes/Hardening/Provider.php:221
 msgid "This SVG could not be sanitized and was rejected."
 msgstr ""
 
 #. translators: %d is the existing attachment's post ID.
-#: includes/Hardening/Provider.php:264
+#: includes/Hardening/Provider.php:296
 #, php-format
 msgid "This image is identical to an existing upload (attachment #%d) and was not saved again."
 msgstr ""
 
-#: includes/Hardening/Provider.php:469
+#: includes/Hardening/Provider.php:501
 msgid "Images"
 msgstr ""
 
-#: includes/Hardening/Provider.php:477
+#: includes/Hardening/Provider.php:509
 msgid "Frontend"
 msgstr ""
 
-#: includes/Hardening/Provider.php:514
+#: includes/Hardening/Provider.php:546
 msgid "Optimize non-admin image uploads"
 msgstr ""
 
-#: includes/Hardening/Provider.php:518
+#: includes/Hardening/Provider.php:550
 msgid "Automatically shrinks oversized images and converts them to WebP for every image a non-administrator uploads, and blocks exact duplicates of an already-uploaded image. Administrators are unaffected."
 msgstr ""
 
-#: includes/Hardening/Provider.php:527
+#: includes/Hardening/Provider.php:559
 msgid "Max dimensions (px)"
 msgstr ""
 
-#: includes/Hardening/Provider.php:537
-msgid "Allow SVG uploads"
-msgstr ""
-
-#: includes/Hardening/Provider.php:538
-msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
-msgstr ""
-
-#: includes/Hardening/Provider.php:541
-msgid "Disable generated image sizes"
-msgstr ""
-
-#: includes/Hardening/Provider.php:542
-msgid "Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress's own generated image sizes."
-msgstr ""
-
-#: includes/Hardening/Provider.php:564
-msgid "Disable author archives"
-msgstr ""
-
-#: includes/Hardening/Provider.php:565
-msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
-msgstr ""
-
-#: includes/Hardening/Provider.php:568
-msgid "Redirect 404 pages to the homepage"
-msgstr ""
-
 #: includes/Hardening/Provider.php:569
-msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
+msgid "Restrict media deletion"
 msgstr ""
 
-#: includes/Hardening/Provider.php:572
-msgid "Disable site search"
+#: includes/Hardening/Provider.php:570
+msgid "Non-administrators can only delete media library items they uploaded themselves. Without this, WordPress lets anyone who can upload files delete any attachment, regardless of who uploaded it."
 msgstr ""
 
 #: includes/Hardening/Provider.php:573
-msgid "Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn't expose a working search box yet."
+msgid "Allow SVG uploads"
 msgstr ""
 
-#: includes/Hardening/Provider.php:576
-msgid "Remove jQuery Migrate"
+#: includes/Hardening/Provider.php:574
+msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
 msgstr ""
 
 #: includes/Hardening/Provider.php:577
+msgid "Disable generated image sizes"
+msgstr ""
+
+#: includes/Hardening/Provider.php:578
+msgid "Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress's own generated image sizes."
+msgstr ""
+
+#: includes/Hardening/Provider.php:600
+msgid "Disable author archives"
+msgstr ""
+
+#: includes/Hardening/Provider.php:601
+msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
+msgstr ""
+
+#: includes/Hardening/Provider.php:604
+msgid "Redirect 404 pages to the homepage"
+msgstr ""
+
+#: includes/Hardening/Provider.php:605
+msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
+msgstr ""
+
+#: includes/Hardening/Provider.php:608
+msgid "Disable site search"
+msgstr ""
+
+#: includes/Hardening/Provider.php:609
+msgid "Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn't expose a working search box yet."
+msgstr ""
+
+#: includes/Hardening/Provider.php:612
+msgid "Remove jQuery Migrate"
+msgstr ""
+
+#: includes/Hardening/Provider.php:613
 msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
 msgstr ""
 
-#: includes/Hardening/Provider.php:630
+#: includes/Hardening/Provider.php:666
 msgid "Width"
 msgstr ""
 
-#: includes/Hardening/Provider.php:633
+#: includes/Hardening/Provider.php:669
 msgid "Height"
 msgstr ""
 
-#: includes/Hardening/Provider.php:635
+#: includes/Hardening/Provider.php:671
 msgid "Images larger than this, in either dimension, are scaled down proportionally (no cropping) before being converted to WebP."
 msgstr ""
 
@@ -281,13 +289,13 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: includes/Hooks/FrontendHooks.php:217
+#: includes/Hooks/FrontendHooks.php:210
 msgid "Page Editor"
 msgstr ""
 
 #. translators: %d is the number indicating minimum password length
-#: includes/Hooks/FrontendHooks.php:268
-#: includes/Hooks/FrontendHooks.php:300
+#: includes/Hooks/FrontendHooks.php:261
+#: includes/Hooks/FrontendHooks.php:293
 #, php-format
 msgid "ERROR: Password must be at least %d characters long."
 msgstr ""

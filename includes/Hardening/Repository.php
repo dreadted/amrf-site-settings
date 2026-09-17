@@ -34,6 +34,7 @@ class Repository
   public static function getDefaults(): array
   {
     return [
+      'restrict_media_deletion' => false,
       'allow_svg_uploads' => true,
       'disable_author_archives' => true,
       'redirect_404_to_home' => true,
@@ -64,6 +65,7 @@ class Repository
     $option_page = isset($_POST['option_page']) ? sanitize_key(wp_unslash($_POST['option_page'])) : '';
     $scope = match ($option_page) {
       self::OPTION_GROUP_IMAGES => [
+        'restrict_media_deletion',
         'allow_svg_uploads',
         'disable_generated_image_sizes',
         'optimize_non_admin_image_uploads',

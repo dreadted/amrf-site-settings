@@ -80,6 +80,10 @@ class Provider
   {
     $settings = Repository::getSettings();
 
+    if ($settings['restrict_media_deletion']) {
+      add_filter('map_meta_cap', [$this, 'restrictMediaDeletion'], 10, 4);
+    }
+
     if ($settings['allow_svg_uploads']) {
       add_filter('upload_mimes', [$this, 'allowSvgMimeType']);
       add_filter('wp_check_filetype_and_ext', [$this, 'checkSvgFiletype'], 10, 4);
@@ -115,6 +119,22 @@ class Provider
       add_filter('wp_handle_upload', [$this, 'optimizeNonAdminImageUpload'], 10, 2);
       add_action('add_attachment', [$this, 'recordUploadHash']);
     }
+  }
+
+  // WordPress ties attachment deletion to the generic 'delete_posts' cap, not post ownership.
+  public function restrictMediaDeletion(array $caps, string $cap, int $user_id, array $args): array
+  {
+    if ($cap !== 'delete_post' || user_can($user_id, 'manage_options')) {
+      return $caps;
+    }
+
+    $post = get_post($args[0] ?? 0);
+
+    if (!$post || $post->post_type !== 'attachment' || (int) $post->post_author === $user_id) {
+      return $caps;
+    }
+
+    return ['do_not_allow'];
   }
 
   /**
@@ -533,6 +553,10 @@ class Provider
     );
 
     $fields = [
+      'restrict_media_deletion' => [
+        __('Restrict media deletion', 'amrf-admin'),
+        __('Non-administrators can only delete media library items they uploaded themselves. Without this, WordPress lets anyone who can upload files delete any attachment, regardless of who uploaded it.', 'amrf-admin'),
+      ],
       'allow_svg_uploads' => [
         __('Allow SVG uploads', 'amrf-admin'),
         __('Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it\'s stored.', 'amrf-admin'),
