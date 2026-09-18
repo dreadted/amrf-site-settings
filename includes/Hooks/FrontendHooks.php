@@ -171,6 +171,9 @@ class FrontendHooks
         $removeSeoColumn = function ($columns) use ($user_group_settings) {
           if (self::userLacksSeoFrameworkAccess($user_group_settings)) {
             unset($columns['tsf-seo-bar-wrap']);
+            // TSF hangs its Quick Edit box off this dummy column; removing it
+            // stops quick_edit_custom_box from firing for tsf-quick-edit.
+            unset($columns['tsf-quick-edit']);
           }
           return $columns;
         };
