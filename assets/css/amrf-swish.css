@@ -8,12 +8,12 @@
  */
 .amrf-swish-qr-wrap {
   display: block;
-  width: 100%;
-  max-width: 12rem;
+  width: 10rem;
   margin-block: 1.5rem;
-  background: var(--wp--preset--color--base, #fff);
-  border-radius: var(--wp--custom--border-radius, 8px);
-  box-shadow: var(--wp--preset--shadow--card, 0 2px 10px rgba(0, 0, 0, 0.12));
+  background: var(--amrf-card-background, #fff);
+  border: var(--amrf-card-border);
+  border-radius: var(--amrf-card-border-radius, 8px);
+  box-shadow: var(--amrf-card-box-shadow, 0 2px 10px rgba(0, 0, 0, 0.12));
   overflow: hidden;
 }
 

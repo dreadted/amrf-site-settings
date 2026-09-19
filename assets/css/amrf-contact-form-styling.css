@@ -21,7 +21,7 @@
   --fluentform-secondary: var(--amrf-input-color),
     var(--wp--preset--color--neutral-900);
   --fluentform-danger: var(--amrf-danger-color);
-  --fluentform-border-color: var(--amrf-border-color);
+  --fluentform-border-color: var(--amrf-input-border-color);
   --fluentform-hover-surface: var(--amrf-button-hover-background),
     var(--wp--preset--color--secondary-500);
   --fluentform-border-radius: var(
