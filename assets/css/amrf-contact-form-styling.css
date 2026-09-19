@@ -16,16 +16,17 @@
 :root {
   --fluentform-primary: var(
     --amrf-button-background,
-    var(--wp--preset--color--primary)
+    var(--wp--preset--color--primary-500)
   );
-  --fluentform-secondary: var(--wp--preset--color--contrast);
-  --fluentform-danger: var(--wp--preset--color--accent-red);
-  --fluentform-border-color: var(--wp--preset--color--line);
+  --fluentform-secondary: var(--amrf-input-color),
+    var(--wp--preset--color--neutral-900);
+  --fluentform-danger: var(--amrf-danger-color);
+  --fluentform-border-color: var(--amrf-border-color);
   --fluentform-hover-surface: var(--amrf-button-hover-background),
-    var(--wp--preset--color--hover-surface);
+    var(--wp--preset--color--secondary-500);
   --fluentform-border-radius: var(
     --amrf-button-border-radius,
-    var(--wp--custom--border-radius, var(--border-radius, 4px))
+    var(--wp--custom--radius-sm, var(--wp--custom--radius-sm, 4px))
   );
 }
 
@@ -40,6 +41,7 @@
  * told to inherit too.
  */
 .fluentform .ff-el-form-control {
+  background: var(--amrf-input-background);
   font-family: inherit;
   font-size: inherit;
 }
@@ -136,10 +138,12 @@ select.ff-el-form-control option:hover {
 .ff-message-success {
   border: none;
   box-shadow: none;
+  margin: 0;
   padding: 0;
   border-radius: 0;
 }
 
+.ff-message-success h3,
 .ff-message-success p {
   margin: 0;
 }
@@ -149,6 +153,30 @@ select.ff-el-form-control option:hover {
   -webkit-appearance: none;
   border: 1px solid var(--fluentform-border-color);
   border-radius: 4px;
+}
+
+/**
+ * min-height matches the collapsed one-row height amrf-contact-form-styling.js
+ * sets inline; the transition is what makes that script's row expansion
+ * animate instead of snapping — CSS transitions don't fire on the `rows`
+ * attribute itself, only on an explicit pixel height.
+ */
+.fluentform textarea.ff-el-form-control {
+  line-height: 1.4;
+  min-height: 48px;
+  field-sizing: content;
+  resize: vertical;
+  transition: height 0.25s ease-in-out;
+}
+
+.fluentform textarea.ff-el-form-control.is-expanded {
+  min-height: 90px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fluentform textarea.ff-el-form-control {
+    transition: none;
+  }
 }
 
 .ff-default .ff-el-input--label label,

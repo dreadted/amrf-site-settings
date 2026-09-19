@@ -43,7 +43,7 @@
   position: relative;
   width: 100%;
   max-width: 28rem;
-  background: var(--wp--preset--color--paper);
+  background: var(--amrf-modal-background);
   border-radius: var(--wp--custom--radius-sm, 6px);
   box-shadow: var(--wp--preset--shadow--card);
   padding: 2rem;
@@ -77,10 +77,6 @@
   margin: 1rem 0 0;
   font-size: 0.8em;
   opacity: 0.7;
-}
-
-.amrf-contact-modal-privacy-note a {
-  color: inherit;
 }
 
 @media (prefers-reduced-motion: reduce) {
