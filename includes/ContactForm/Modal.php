@@ -71,16 +71,17 @@ class Modal
       return;
     }
 
+    // do_shortcode() below enqueues FluentForm's own default stylesheet as a
+    // side effect — resolved and rendered *before* enqueueConsistentStyling()
+    // so ours always queues after (and therefore overrides) FluentForm's,
+    // instead of depending on some other FluentForm block on the page having
+    // already triggered that enqueue earlier in the request.
+    $form_id = apply_filters('amrf_contact_modal_form_id', Repository::getDefaultContactFormId());
+    $this->formHtml = $form_id > 0 ? do_shortcode('[fluentform id="' . $form_id . '"]') : '';
+
     // Applies to every FluentForm on the site, not just the modal's — enqueue
     // regardless of whether a modal form is even configured.
     $this->enqueueConsistentStyling();
-
-    $form_id = apply_filters('amrf_contact_modal_form_id', Repository::getDefaultContactFormId());
-    if ($form_id < 1) {
-      return;
-    }
-
-    $this->formHtml = do_shortcode('[fluentform id="' . $form_id . '"]');
 
     if ($this->formHtml === '') {
       return;
