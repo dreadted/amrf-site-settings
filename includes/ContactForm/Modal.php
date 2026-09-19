@@ -10,10 +10,12 @@ if (!defined('ABSPATH')) {
  * Class Modal
  *
  * Wires any `<a href="#contact">` (or element with data-contact-trigger,
- * see assets/js/amrf-contact-modal.js) sitewide to a lightbox containing
- * the FluentForm configured via Repository::getDefaultContactFormId().
- * No-ops entirely if FluentForm is inactive or the configured form doesn't
- * exist.
+ * see assets/js/amrf-contact-modal.js) sitewide to a lightbox containing a
+ * FluentForm. Which form: the 'amrf_contact_modal_form_id' filter, seeded
+ * with Repository::getDefaultContactFormId() as the fallback when nothing
+ * filters it (e.g. a theme showing its own page-specific form there
+ * instead). No-ops entirely if FluentForm is inactive or the resolved form
+ * doesn't exist.
  *
  * @package Antropomorf\ContactForm
  */
@@ -50,11 +52,6 @@ class Modal
     }
 
     $css = file_get_contents(AMRF_ADMIN_PLUGIN_DIR . '/assets/css/amrf-contact-form-styling.css');
-    $declarations = $this->themeButtonDeclarations();
-    if ($declarations) {
-      $css .= ':root{' . $declarations . '}';
-    }
-
     $settings['styles'][] = ['css' => $css];
 
     return $settings;
@@ -78,7 +75,7 @@ class Modal
     // regardless of whether a modal form is even configured.
     $this->enqueueConsistentStyling();
 
-    $form_id = Repository::getDefaultContactFormId();
+    $form_id = apply_filters('amrf_contact_modal_form_id', Repository::getDefaultContactFormId());
     if ($form_id < 1) {
       return;
     }
@@ -118,36 +115,6 @@ class Modal
       [],
       filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/css/amrf-contact-form-styling.css')
     );
-
-    $this->inlineThemeButtonStyle();
-  }
-
-  /**
-   * Exposes the active theme's own button design (theme.json's
-   * styles.elements.button, see SiteSettings\Repository::
-   * getThemeButtonStyle()) as CSS custom properties, so
-   * amrf-contact-form-styling.css can style the submit button to match it
-   * instead of a generic default — no-ops if the theme doesn't declare
-   * that element at all.
-   *
-   * @return void
-   */
-  private function inlineThemeButtonStyle(): void
-  {
-    $declarations = $this->themeButtonDeclarations();
-    if ($declarations) {
-      wp_add_inline_style(self::STYLING_HANDLE, ':root{' . $declarations . '}');
-    }
-  }
-
-  private function themeButtonDeclarations(): string
-  {
-    $vars = \Antropomorf\SiteSettings\Repository::getThemeButtonStyle();
-    $declarations = '';
-    foreach ($vars as $property => $value) {
-      $declarations .= $property . ':' . $value . ';';
-    }
-    return $declarations;
   }
 
   /**

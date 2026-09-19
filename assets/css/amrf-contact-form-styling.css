@@ -8,12 +8,10 @@
  * consistently, opt-in per site rather than baked into one theme.
  *
  * The button-specific rules below prefer the --amrf-button-* variables
- * (Modal::inlineThemeButtonStyle(), read from the active theme's own
- * theme.json styles.elements.button) over the generic preset-color
- * fallbacks — a theme's actual button design and its abstract "primary"
- * color are two different things (ptsussis-theme's own button uses its
- * "secondary" color, for example), and a theme that declares the former
- * should win.
+ * (declared by the active theme itself, e.g. ptsussis-theme's tokens.css)
+ * over the generic preset-color fallbacks — a theme's actual button design
+ * and its abstract "primary" color are two different things, and a theme
+ * that declares the former should win.
  */
 :root {
   --fluentform-primary: var(
