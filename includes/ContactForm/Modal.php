@@ -116,6 +116,14 @@ class Modal
       [],
       filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/css/amrf-contact-form-styling.css')
     );
+
+    wp_enqueue_script(
+      self::STYLING_HANDLE,
+      AMRF_ADMIN_PLUGIN_URL . 'assets/js/amrf-contact-form-styling.js',
+      [],
+      filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/js/amrf-contact-form-styling.js'),
+      true
+    );
   }
 
   /**

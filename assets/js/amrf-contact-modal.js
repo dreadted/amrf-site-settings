@@ -17,8 +17,18 @@
 	var closeButton = modal.querySelector('[data-contact-close]');
 	var form = modal.querySelector('form');
 	// .ff-el-form-control is FluentForm's class for every visible input/textarea
-	// (not checkboxes/radios/hidden fields), so the first match is the first text field.
-	var firstTextField = form ? form.querySelector('input.ff-el-form-control, textarea.ff-el-form-control') : null;
+	// (not checkboxes/radios/hidden fields) — except its own honeypot field
+	// (.ff-hpsf-container), which carries the same class despite being
+	// display:none, so it has to be excluded explicitly or it wins as the
+	// first match and silently swallows the .focus() call below.
+	var firstTextField = form
+		? Array.prototype.find.call(
+				form.querySelectorAll('input.ff-el-form-control, textarea.ff-el-form-control'),
+				function (el) {
+					return !el.closest('.ff-hpsf-container');
+				}
+		  )
+		: null;
 	var lastFocused = null;
 	var autoCloseTimer;
 
