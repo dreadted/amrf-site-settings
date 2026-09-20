@@ -4,6 +4,65 @@ Changelog
 All notable changes to this project will be documented in this file.
 
 
+0.3.1
+------
+- docs: update plugin name
+- swish: adjust styling
+- contact-modal: fix focus on first field when opening
+- contact-modal: adjust styling and make textarea grow with content
+- contact-modal: render the form before enqueueing our styling, not after
+- contact-modal: resolve form via filter, drop button-style auto-derivation
+- hardening: remove SEO Framework Quick Edit form for non admins
+- hardening: add restrict media deletion toggle to Images tab
+- hardening: fix SEO Framework Access column removal hook and key
+- user-roles: add SEO Framework Access toggle per role
+- hardening: split Hardening page into Images/Frontend tabs
+- hardening: block duplicate non-admin image uploads by hash
+- hardening: optimize non-admin image uploads to WebP
+- support-genix: hide ticket portal's ant-menu nav row and reach portal head
+- support-genix: source brand colors from wp-admin color scheme instead of theme.json
+- hardening: add Disable site search toggle
+- seo: force off TSF's own Organization/Person node whenever ours is on
+- support-genix: wire ticket-page sitemap exclusion to TSF's own filter
+- seo: replace custom meta/OG/sitemap output with The SEO Framework integration
+- admin bar: allow edit and view buttons for non admins
+- contact-form: adjust background, button and radius
+- contact-form: decouple consistent styling CSS from the modal, retarget trigger to #contact
+- contact-form: gate the #kontakt lightbox by a "None" default-form option
+- contact-form: add one-shot action to apply recommended FluentForm settings
+- contact-form: disconnect sitewide #kontakt lightbox modal
+- contact-form-styling: reset the screen-reader-only legend's height too
+- contact-form-styling: reset the fieldset's browser-default border
+- contact-modal: fix editor styling delivery via block_editor_settings_all
+- contact-modal: load consistent form styling in the block editor too
+- contact-form-styling: hover-surface background on select option rows
+- contact-form: adjust margins & padding
+- i18n: regenerate catalog for the SVG upload toggle strings
+- hardening: add "Allow SVG uploads" toggle, moved from ptsussis-theme
+- plugin: rewrite description to cover its actual scope
+- i18n: regenerate catalog for the contact-link shortcodes
+- site-settings: add [amrf_email_link]/[amrf_phone_link] shortcodes
+- site-settings: add [amrf_site_setting] shortcode for identity/contact fields
+- i18n: regenerate catalog for the contact-retention shortcode strings
+- contact-form: add [amrf_contact_retention] shortcode for the Privacy Policy
+- swish-qr: adjust margins
+- i18n: regenerate catalog for the Swish QR "Copied!" string
+- swish-qr: wrap the QR image in a themed card, add copy-to-clipboard number
+- contact-form: adjust top padding
+- admin-menu: change icon from 'dashicons-admin-site-alt3' to 'dashicons-admin-generic'
+- admin-hooks: remove hardcoded edit-link exemption from admin bar stripping
+- branding: default amrf_site_colors to the active theme's own palette
+- frontend-hooks: redirect non-managers off FluentForm's main page
+- contact-form-styling: even margin-block spacing between field groups
+- sitemap: remove users provider, collapse index to a single sub-sitemap
+- contact-form-styling: fix wrong button class, add font-size, drop hover-lift
+- contact-form-styling: fix field/button font-size, add button hover lift
+- contact-form: read the theme's own button design generically
+- contact-modal: restore Subject prefill from the trigger's data-topic
+- swish: restore card styling on the QR image via theme tokens
+- swish: migrate swish_number from the theme's original option
+- site-settings: absorb favicon/manifest and rsd_link from ptsussis-theme
+
 0.3.0
 ------
 - comments: trim verbose docblocks across the plugin, drop history/porting narration
