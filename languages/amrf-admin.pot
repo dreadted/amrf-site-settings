@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the AMRF Site Settings plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: AMRF Site Settings 0.3.1\n"
+"Project-Id-Version: AMRF Site Settings 0.3.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/amrf-site-settings\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-21T10:45:13+00:00\n"
+"POT-Creation-Date: 2026-09-21T14:04:26+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -173,8 +173,8 @@ msgid "Forms"
 msgstr ""
 
 #: includes/Hardening/Provider.php:45
-#: includes/Hardening/Provider.php:475
-#: includes/Hardening/Provider.php:476
+#: includes/Hardening/Provider.php:495
+#: includes/Hardening/Provider.php:496
 msgid "Hardening"
 msgstr ""
 
@@ -182,109 +182,117 @@ msgstr ""
 msgid "There is an error."
 msgstr ""
 
-#: includes/Hardening/Provider.php:195
+#: includes/Hardening/Provider.php:199
 msgid "You are not allowed to upload SVG files."
 msgstr ""
 
-#: includes/Hardening/Provider.php:202
+#: includes/Hardening/Provider.php:206
 msgid "This file does not look like a valid SVG."
 msgstr ""
 
-#: includes/Hardening/Provider.php:209
+#: includes/Hardening/Provider.php:213
 msgid "This SVG could not be sanitized and was rejected."
 msgstr ""
 
 #. translators: %d is the existing attachment's post ID.
-#: includes/Hardening/Provider.php:284
+#: includes/Hardening/Provider.php:288
 #, php-format
 msgid "This image is identical to an existing upload (attachment #%d) and was not saved again."
 msgstr ""
 
-#: includes/Hardening/Provider.php:489
+#: includes/Hardening/Provider.php:509
 msgid "Images"
 msgstr ""
 
-#: includes/Hardening/Provider.php:497
+#: includes/Hardening/Provider.php:517
 msgid "Frontend"
 msgstr ""
 
-#: includes/Hardening/Provider.php:534
+#: includes/Hardening/Provider.php:554
 msgid "Optimize non-admin image uploads"
 msgstr ""
 
-#: includes/Hardening/Provider.php:538
+#: includes/Hardening/Provider.php:558
 msgid "Automatically shrinks oversized images and converts them to WebP for every image a non-administrator uploads, and blocks exact duplicates of an already-uploaded image. Administrators are unaffected."
 msgstr ""
 
-#: includes/Hardening/Provider.php:547
+#: includes/Hardening/Provider.php:567
 msgid "Max dimensions (px)"
 msgstr ""
 
-#: includes/Hardening/Provider.php:557
+#: includes/Hardening/Provider.php:577
 msgid "Restrict media deletion"
 msgstr ""
 
-#: includes/Hardening/Provider.php:558
+#: includes/Hardening/Provider.php:578
 msgid "Non-administrators can only delete media library items they uploaded themselves. Without this, WordPress lets anyone who can upload files delete any attachment, regardless of who uploaded it."
 msgstr ""
 
-#: includes/Hardening/Provider.php:561
+#: includes/Hardening/Provider.php:581
 msgid "Allow SVG uploads"
 msgstr ""
 
-#: includes/Hardening/Provider.php:562
+#: includes/Hardening/Provider.php:582
 msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
 msgstr ""
 
-#: includes/Hardening/Provider.php:565
+#: includes/Hardening/Provider.php:585
 msgid "Disable generated image sizes"
 msgstr ""
 
-#: includes/Hardening/Provider.php:566
+#: includes/Hardening/Provider.php:586
 msgid "Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress's own generated image sizes."
 msgstr ""
 
-#: includes/Hardening/Provider.php:588
+#: includes/Hardening/Provider.php:608
 msgid "Disable author archives"
 msgstr ""
 
-#: includes/Hardening/Provider.php:589
+#: includes/Hardening/Provider.php:609
 msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
 msgstr ""
 
-#: includes/Hardening/Provider.php:592
+#: includes/Hardening/Provider.php:612
 msgid "Redirect 404 pages to the homepage"
 msgstr ""
 
-#: includes/Hardening/Provider.php:593
+#: includes/Hardening/Provider.php:613
 msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
 msgstr ""
 
-#: includes/Hardening/Provider.php:596
+#: includes/Hardening/Provider.php:616
 msgid "Disable site search"
 msgstr ""
 
-#: includes/Hardening/Provider.php:597
+#: includes/Hardening/Provider.php:617
 msgid "Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn't expose a working search box yet."
 msgstr ""
 
-#: includes/Hardening/Provider.php:600
+#: includes/Hardening/Provider.php:620
+msgid "Restrict site to logged-in users"
+msgstr ""
+
+#: includes/Hardening/Provider.php:621
+msgid "Blocks every front-end page for logged-out visitors with a blank placeholder page — the WordPress admin and login screen stay reachable. Use this to preview a site privately before launch."
+msgstr ""
+
+#: includes/Hardening/Provider.php:624
 msgid "Remove jQuery Migrate"
 msgstr ""
 
-#: includes/Hardening/Provider.php:601
+#: includes/Hardening/Provider.php:625
 msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
 msgstr ""
 
-#: includes/Hardening/Provider.php:654
+#: includes/Hardening/Provider.php:678
 msgid "Width"
 msgstr ""
 
-#: includes/Hardening/Provider.php:657
+#: includes/Hardening/Provider.php:681
 msgid "Height"
 msgstr ""
 
-#: includes/Hardening/Provider.php:659
+#: includes/Hardening/Provider.php:683
 msgid "Images larger than this, in either dimension, are scaled down proportionally (no cropping) before being converted to WebP."
 msgstr ""
 

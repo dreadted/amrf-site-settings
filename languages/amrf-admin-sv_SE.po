@@ -117,40 +117,40 @@ msgid "There is an error."
 msgstr "Ett fel har uppstått."
 
 #: includes/Hardening/Provider.php:45
-#: includes/Hardening/Provider.php:475
-#: includes/Hardening/Provider.php:476
+#: includes/Hardening/Provider.php:495
+#: includes/Hardening/Provider.php:496
 msgid "Hardening"
 msgstr "Härdning"
 
-#: includes/Hardening/Provider.php:588
+#: includes/Hardening/Provider.php:608
 msgid "Disable author archives"
 msgstr "Inaktivera författararkiv"
 
-#: includes/Hardening/Provider.php:589
+#: includes/Hardening/Provider.php:609
 msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
 msgstr "Omdirigerar författararkivsidor till startsidan — användbart på sajter med en enda författare, eller för att undvika att användarnamn läcker via författar-URL:er."
 
-#: includes/Hardening/Provider.php:592
+#: includes/Hardening/Provider.php:612
 msgid "Redirect 404 pages to the homepage"
 msgstr "Omdirigera 404-sidor till startsidan"
 
-#: includes/Hardening/Provider.php:593
+#: includes/Hardening/Provider.php:613
 msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
 msgstr "Gäller bara utloggade besökare. Stäng av om sajten istället ska visa en riktig 404-sida."
 
-#: includes/Hardening/Provider.php:600
+#: includes/Hardening/Provider.php:624
 msgid "Remove jQuery Migrate"
 msgstr "Ta bort jQuery Migrate"
 
-#: includes/Hardening/Provider.php:601
+#: includes/Hardening/Provider.php:625
 msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
 msgstr "Stäng av om ett äldre plugin eller tema på sajten är beroende av jQuery Migrates kompatibilitetslager."
 
-#: includes/Hardening/Provider.php:565
+#: includes/Hardening/Provider.php:585
 msgid "Disable generated image sizes"
 msgstr "Inaktivera genererade bildstorlekar"
 
-#: includes/Hardening/Provider.php:566
+#: includes/Hardening/Provider.php:586
 msgid "Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress's own generated image sizes."
 msgstr "Hindrar WordPress från att generera ytterligare (responsiva) bildstorlekar och automatiskt skala stora uppladdningar. Stäng av om sajten är beroende av WordPress egna genererade bildstorlekar."
 
@@ -583,23 +583,23 @@ msgstr[1] "i högst %d dagar"
 msgid "General site settings — SEO, contact forms with GDPR tools, Swish payments, analytics, security hardening, and per-role admin panel control."
 msgstr ""
 
-#: includes/Hardening/Provider.php:195
+#: includes/Hardening/Provider.php:199
 msgid "You are not allowed to upload SVG files."
 msgstr "Du har inte behörighet att ladda upp SVG-filer."
 
-#: includes/Hardening/Provider.php:202
+#: includes/Hardening/Provider.php:206
 msgid "This file does not look like a valid SVG."
 msgstr "Den här filen verkar inte vara en giltig SVG."
 
-#: includes/Hardening/Provider.php:209
+#: includes/Hardening/Provider.php:213
 msgid "This SVG could not be sanitized and was rejected."
 msgstr "Den här SVG-filen kunde inte saneras och avvisades."
 
-#: includes/Hardening/Provider.php:561
+#: includes/Hardening/Provider.php:581
 msgid "Allow SVG uploads"
 msgstr "Tillåt SVG-uppladdning"
 
-#: includes/Hardening/Provider.php:562
+#: includes/Hardening/Provider.php:582
 msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
 msgstr "Låter administratörer ladda upp SVG-filer via Mediabiblioteket — varje fil saneras (skript, händelsehanterare och inbäddad HTML tas bort) innan den sparas."
 
@@ -615,49 +615,49 @@ msgstr "FluentForm är inte aktivt."
 msgid "None"
 msgstr "Ingen"
 
-#: includes/Hardening/Provider.php:596
+#: includes/Hardening/Provider.php:616
 msgid "Disable site search"
 msgstr "Stäng av sajtsökning"
 
-#: includes/Hardening/Provider.php:597
+#: includes/Hardening/Provider.php:617
 msgid "Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn't expose a working search box yet."
 msgstr "Gör att WordPress inbyggda sökfunktion visar en 404-sida för alla besökare — användbart medan en sajt fortfarande byggs och inte ska visa en fungerande sökruta än."
 
-#: includes/Hardening/Provider.php:534
+#: includes/Hardening/Provider.php:554
 msgid "Optimize non-admin image uploads"
 msgstr "Optimera bilduppladdningar för icke-administratörer"
 
-#: includes/Hardening/Provider.php:547
+#: includes/Hardening/Provider.php:567
 msgid "Max dimensions (px)"
 msgstr "Max mått (px)"
 
-#: includes/Hardening/Provider.php:654
+#: includes/Hardening/Provider.php:678
 msgid "Width"
 msgstr "Bredd"
 
-#: includes/Hardening/Provider.php:657
+#: includes/Hardening/Provider.php:681
 msgid "Height"
 msgstr "Höjd"
 
-#: includes/Hardening/Provider.php:659
+#: includes/Hardening/Provider.php:683
 msgid "Images larger than this, in either dimension, are scaled down proportionally (no cropping) before being converted to WebP."
 msgstr "Bilder som är större än detta, i endera dimensionen, skalas ner proportionellt (utan beskärning) innan de konverteras till WebP."
 
 #. translators: %d is the existing attachment's post ID.
-#: includes/Hardening/Provider.php:284
+#: includes/Hardening/Provider.php:288
 #, php-format
 msgid "This image is identical to an existing upload (attachment #%d) and was not saved again."
 msgstr "Den här bilden är identisk med en befintlig uppladdning (bifogad fil #%d) och sparades inte igen."
 
-#: includes/Hardening/Provider.php:538
+#: includes/Hardening/Provider.php:558
 msgid "Automatically shrinks oversized images and converts them to WebP for every image a non-administrator uploads, and blocks exact duplicates of an already-uploaded image. Administrators are unaffected."
 msgstr "Skalar automatiskt ner för stora bilder och konverterar dem till WebP för varje bild en icke-administratör laddar upp, och blockerar exakta dubbletter av en redan uppladdad bild. Administratörer påverkas inte."
 
-#: includes/Hardening/Provider.php:489
+#: includes/Hardening/Provider.php:509
 msgid "Images"
 msgstr "Bilder"
 
-#: includes/Hardening/Provider.php:497
+#: includes/Hardening/Provider.php:517
 msgid "Frontend"
 msgstr "Frontend"
 
@@ -669,11 +669,11 @@ msgstr "Åtkomst till SEO Framework"
 msgid "Enable to give this user role access to The SEO Framework's meta box on posts/pages and its SEO column in the post/page list."
 msgstr "Aktivera för att ge den här användarrollen åtkomst till The SEO Frameworks metabox på inlägg/sidor samt SEO-kolumnen i inläggs-/sidlistan."
 
-#: includes/Hardening/Provider.php:557
+#: includes/Hardening/Provider.php:577
 msgid "Restrict media deletion"
 msgstr "Begränsa borttagning av media"
 
-#: includes/Hardening/Provider.php:558
+#: includes/Hardening/Provider.php:578
 msgid "Non-administrators can only delete media library items they uploaded themselves. Without this, WordPress lets anyone who can upload files delete any attachment, regardless of who uploaded it."
 msgstr "Icke-administratörer kan bara ta bort mediefiler de själva har laddat upp. Utan detta låter WordPress alla som kan ladda upp filer ta bort vilken bilaga som helst, oavsett vem som laddade upp den."
 
@@ -709,3 +709,11 @@ msgstr "En CSS-selector per rad. Matchande element spåras automatiskt och namng
 #: includes/ContactForm/Provider.php:254
 msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: disables IP logging, keeps form analytics on, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. Also renames form ID 1 to \"Kontaktformulär\", replaces its fields with this site's baseline set (name, email, a required message field), and applies this site's baseline confirmation message and email notification to it. If FluentSMTP is active, also adds a baseline SMTP connection to Mailhog (port 1025) using this site's own domain as the sender address, and sets it as the default connection. A one-time action, not a saved setting — resets to off after saving."
 msgstr "Skriver vid sparning över FluentForms egna Global Settings → Miscellaneous, oavsett nuvarande värden: stänger av IP-loggning, låter formuläranalys vara på, aktiverar honeypot och tokenbaserat spamskydd, stänger av klassiska redigerarknappen och automatisk tabbordning, samt aktiverar no-conflict-läge. Byter också namn på formulär-ID 1 till \"Kontaktformulär\", ersätter dess fält med sajtens standarduppsättning (namn, e-post, ett obligatoriskt meddelandefält), och tillämpar sajtens standardbekräftelsemeddelande och e-postnotifiering på det. Om FluentSMTP är aktivt läggs även en standard-SMTP-anslutning till Mailhog (port 1025) till, med sajtens egen domän som avsändaradress, och sätts som standardanslutning. En engångsåtgärd, inte en sparad inställning — återgår till avstängd efter sparning."
+
+#: includes/Hardening/Provider.php:620
+msgid "Restrict site to logged-in users"
+msgstr "Begränsa sajten till inloggade användare"
+
+#: includes/Hardening/Provider.php:621
+msgid "Blocks every front-end page for logged-out visitors with a blank placeholder page — the WordPress admin and login screen stay reachable. Use this to preview a site privately before launch."
+msgstr "Blockerar alla sidor på frontend för utloggade besökare med en tom platshållarsida — WordPress adminpanel och inloggningssida förblir nåbara. Använd detta för att förhandsgranska en sajt privat inför lansering."

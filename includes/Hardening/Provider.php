@@ -115,6 +115,10 @@ class Provider
       add_action('parse_query', [$this, 'disableSiteSearch']);
     }
 
+    if ($settings['restrict_site_to_logged_in']) {
+      add_action('template_redirect', [$this, 'restrictSiteToLoggedIn'], 1);
+    }
+
     if ($settings['optimize_non_admin_image_uploads']) {
       add_filter('wp_handle_upload', [$this, 'optimizeNonAdminImageUpload'], 10, 2);
       add_action('add_attachment', [$this, 'recordUploadHash']);
@@ -434,6 +438,22 @@ class Provider
     exit;
   }
 
+  // Blank gray placeholder, same spirit as WP core's own .maintenance page — no
+  // markup/text to leak that the site exists behind it, just a 503 for crawlers.
+  public function restrictSiteToLoggedIn(): void
+  {
+    if (is_user_logged_in()) {
+      return;
+    }
+
+    status_header(503);
+    nocache_headers();
+    header('Content-Type: text/html; charset=utf-8');
+    header('X-Robots-Tag: noindex, nofollow');
+    echo '<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><title></title></head><body style="margin:0;min-height:100vh;background:#e5e5e5;"></body></html>';
+    exit;
+  }
+
   // Turns every front-end search into a genuine 404 instead of real results.
   public function disableSiteSearch($query): void
   {
@@ -595,6 +615,10 @@ class Provider
       'disable_site_search' => [
         __('Disable site search', 'amrf-admin'),
         __('Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn\'t expose a working search box yet.', 'amrf-admin'),
+      ],
+      'restrict_site_to_logged_in' => [
+        __('Restrict site to logged-in users', 'amrf-admin'),
+        __('Blocks every front-end page for logged-out visitors with a blank placeholder page — the WordPress admin and login screen stay reachable. Use this to preview a site privately before launch.', 'amrf-admin'),
       ],
       'remove_jquery_migrate' => [
         __('Remove jQuery Migrate', 'amrf-admin'),
