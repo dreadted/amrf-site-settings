@@ -4,6 +4,16 @@ Changelog
 All notable changes to this project will be documented in this file.
 
 
+0.3.3
+------
+- login: fix theme-color variables losing to core's admin-color-modern
+- login: pin admin theme-color CSS variables to default blue
+- login: fix logo flash and text fallback after link removal
+- login: replace WordPress logo/link with uploads favicon.svg
+- hardening: pin restrict-site toggle to top and give it an alert color
+- settings-renderer: resolve page titles lazily instead of at construction
+- hardening: add toggle to restrict frontend to logged-in users
+
 0.3.2
 ------
 - plugin-header: rename to AMRF Site Settings, raise PHP floor to 8.3
