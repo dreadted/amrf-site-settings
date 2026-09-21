@@ -7,12 +7,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Repository
- *
- * Storage/defaults/sanitization for Umami analytics configuration. Two
- * distinct fields despite the similar names: 'site' is the tracking
- * script's data-website-id, 'id' is the separate ID the Analytics
- * share-iframe URL uses.
+ * Storage/defaults/sanitization for Umami settings: 'host', 'site' (data-website-id), 'id' (share-iframe ID).
  *
  * @package Antropomorf\Umami
  */
@@ -24,12 +19,16 @@ class Repository
   private const LEGACY_SITE_OPTION = 'umami_site';
   private const LEGACY_ID_OPTION = 'umami_id';
 
+  /** Allowed 'host' values. Umami sends data to whichever host the tracker script loaded from. */
+  public const HOSTS = ['umami.antropomorf.se', 'eu.umami.is'];
+
   /**
    * @return array<string, string>
    */
   public static function getDefaults(): array
   {
     return [
+      'host' => 'umami.antropomorf.se',
       'site' => '',
       'id' => '',
     ];
@@ -50,7 +49,10 @@ class Repository
    */
   public static function sanitize($input): array
   {
+    $host = is_array($input) ? ($input['host'] ?? '') : '';
+
     return [
+      'host' => in_array($host, self::HOSTS, true) ? $host : self::getDefaults()['host'],
       'site' => sanitize_text_field(is_array($input) ? ($input['site'] ?? '') : ''),
       'id' => sanitize_text_field(is_array($input) ? ($input['id'] ?? '') : ''),
     ];

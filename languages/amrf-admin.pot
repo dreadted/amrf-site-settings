@@ -1,25 +1,22 @@
 # Copyright (C) 2026 Christofer Laurin
-# This file is distributed under the same license as the Admin Panel Settings plugin.
+# This file is distributed under the same license as the AMRF Site Settings plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Admin Panel Settings 0.3.0\n"
+"Project-Id-Version: AMRF Site Settings 0.3.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/amrf-site-settings\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-19T12:07:18+00:00\n"
+"POT-Creation-Date: 2026-09-21T09:23:41+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
 
 #. Plugin Name of the plugin
 #: amrf-site-settings.php
-#: includes/Admin/SettingsPage.php:66
-#: includes/Admin/SettingsPage.php:67
-#: includes/Hooks/AdminHooks.php:63
-msgid "Admin Panel Settings"
+msgid "AMRF Site Settings"
 msgstr ""
 
 #. Description of the plugin
@@ -37,6 +34,12 @@ msgstr ""
 msgid "https://github.com/dreadted/"
 msgstr ""
 
+#: includes/Admin/SettingsPage.php:66
+#: includes/Admin/SettingsPage.php:67
+#: includes/Hooks/AdminHooks.php:63
+msgid "Admin Panel Settings"
+msgstr ""
+
 #: includes/Admin/SiteSettingsMenu.php:40
 #: includes/Admin/SiteSettingsMenu.php:55
 #: includes/Admin/SiteSettingsMenu.php:56
@@ -50,16 +53,16 @@ msgstr ""
 msgid "Spam verification failed, please reload the page and try again."
 msgstr ""
 
-#: includes/ContactForm/Modal.php:134
+#: includes/ContactForm/Modal.php:143
 msgid "Contact"
 msgstr ""
 
-#: includes/ContactForm/Modal.php:135
+#: includes/ContactForm/Modal.php:144
 msgid "Close"
 msgstr ""
 
 #. translators: 1: opening <a> tag to the privacy policy (omitted if it isn't published yet), 2: closing </a> tag
-#: includes/ContactForm/Modal.php:147
+#: includes/ContactForm/Modal.php:156
 #, php-format
 msgid "We process your personal data to answer your message. Read more in our %1$sprivacy policy%2$s."
 msgstr ""
@@ -650,29 +653,41 @@ msgstr ""
 msgid "The Swish QR code could not be regenerated — the previous one (if any) is still in use. Try saving again."
 msgstr ""
 
-#: includes/Umami/Provider.php:42
 #: includes/Umami/Provider.php:43
+#: includes/Umami/Provider.php:44
 msgid "Analytics"
 msgstr ""
 
-#: includes/Umami/Provider.php:63
+#: includes/Umami/Provider.php:65
 msgid "Umami ID is not set. Please configure it in the settings."
 msgstr ""
 
-#: includes/Umami/Provider.php:85
+#: includes/Umami/Provider.php:87
 msgid "Umami Settings"
 msgstr ""
 
-#: includes/Umami/Provider.php:86
+#: includes/Umami/Provider.php:88
 msgid "Umami"
 msgstr ""
 
-#: includes/Umami/Provider.php:116
+#: includes/Umami/Provider.php:118
+msgid "Umami Server"
+msgstr ""
+
+#: includes/Umami/Provider.php:125
 msgid "Umami Site"
 msgstr ""
 
-#: includes/Umami/Provider.php:123
+#: includes/Umami/Provider.php:132
 msgid "Umami ID"
+msgstr ""
+
+#: includes/Umami/Provider.php:146
+msgid "Egen installation (umami.antropomorf.se)"
+msgstr ""
+
+#: includes/Umami/Provider.php:147
+msgid "Umami Cloud (eu.umami.is)"
 msgstr ""
 
 #: includes/Utilities/SettingsRenderer.php:85

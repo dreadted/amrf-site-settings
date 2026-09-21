@@ -50,14 +50,15 @@ class Provider
   }
 
   /**
-   * Renders an iframe onto Umami's own eu.umami.is/share analytics viewer
-   * for this site's umami_id.
+   * Renders an iframe onto the selected Umami server's /share analytics
+   * viewer for this site's umami_id.
    *
    * @return void
    */
   public function renderAnalyticsPage(): void
   {
-    $umami_id = Repository::getSettings()['id'];
+    $settings = Repository::getSettings();
+    $umami_id = $settings['id'];
 
     if (empty($umami_id)) {
       echo '<div class="notice notice-warning"><p>' . esc_html__('Umami ID is not set. Please configure it in the settings.', 'amrf-admin') . '</p></div>';
@@ -65,7 +66,7 @@ class Provider
     }
 
     $site_url = preg_replace('(^https?://)', '', site_url());
-    $umami_share_url = 'https://eu.umami.is/share/' . rawurlencode($umami_id) . '/' . rawurlencode($site_url);
+    $umami_share_url = 'https://' . $settings['host'] . '/share/' . rawurlencode($umami_id) . '/' . rawurlencode($site_url);
 
     echo '<div class="wrap" style="margin: 0;">';
     printf(
@@ -112,6 +113,13 @@ class Provider
     add_settings_section('umami_section', '', '__return_false', self::PAGE_SLUG);
 
     add_settings_field(
+      'host',
+      __('Umami Server', 'amrf-admin'),
+      [$this, 'renderHostField'],
+      self::PAGE_SLUG,
+      'umami_section'
+    );
+    add_settings_field(
       'site',
       __('Umami Site', 'amrf-admin'),
       [$this, 'renderSiteField'],
@@ -125,6 +133,29 @@ class Provider
       self::PAGE_SLUG,
       'umami_section'
     );
+  }
+
+  public function renderHostField(): void
+  {
+    $settings = Repository::getSettings();
+    $id = Repository::OPTION_NAME . '_host';
+    $name = Repository::OPTION_NAME . '[host]';
+
+    $labels = [
+      'umami.antropomorf.se' => __('Egen installation (umami.antropomorf.se)', 'amrf-admin'),
+      'eu.umami.is' => __('Umami Cloud (eu.umami.is)', 'amrf-admin'),
+    ];
+
+    printf('<select id="%1$s" name="%2$s">', esc_attr($id), esc_attr($name));
+    foreach (Repository::HOSTS as $host) {
+      printf(
+        '<option value="%1$s" %2$s>%3$s</option>',
+        esc_attr($host),
+        selected($settings['host'], $host, false),
+        esc_html($labels[$host])
+      );
+    }
+    echo '</select>';
   }
 
   public function renderSiteField(): void
@@ -173,6 +204,7 @@ class Provider
       wp_add_inline_script(
         self::SCRIPT_HANDLE,
         'const umamiSite = ' . wp_json_encode($settings['site']) . ';'
+        . 'const umamiScriptUrl = ' . wp_json_encode('https://' . $settings['host'] . '/script.js') . ';'
       );
     }
 

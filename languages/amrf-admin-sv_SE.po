@@ -14,8 +14,6 @@ msgstr ""
 "X-Generator: Poedit 3.9\n"
 "X-Domain: amrf-admin\n"
 
-#. Plugin Name of the plugin
-#: amrf-site-settings.php
 #: includes/Admin/SettingsPage.php:66
 #: includes/Admin/SettingsPage.php:67
 #: includes/Hooks/AdminHooks.php:63
@@ -41,16 +39,16 @@ msgstr ""
 msgid "Site Settings"
 msgstr "Webbplatsinställningar"
 
-#: includes/ContactForm/Modal.php:134
+#: includes/ContactForm/Modal.php:143
 msgid "Contact"
 msgstr "Kontakt"
 
-#: includes/ContactForm/Modal.php:135
+#: includes/ContactForm/Modal.php:144
 msgid "Close"
 msgstr "Stäng"
 
 #. translators: 1: opening <a> tag to the privacy policy (omitted if it isn't published yet), 2: closing </a> tag
-#: includes/ContactForm/Modal.php:147
+#: includes/ContactForm/Modal.php:156
 #, php-format
 msgid "We process your personal data to answer your message. Read more in our %1$sprivacy policy%2$s."
 msgstr "Vi behandlar dina personuppgifter för att kunna svara på ditt meddelande. Läs mer i vår %1$sintegritetspolicy%2$s."
@@ -448,28 +446,28 @@ msgstr "Ärende"
 msgid "You are not authorized to edit this page."
 msgstr "Du har inte behörighet att redigera den här sidan."
 
-#: includes/Umami/Provider.php:42
 #: includes/Umami/Provider.php:43
+#: includes/Umami/Provider.php:44
 msgid "Analytics"
 msgstr "Statistik"
 
-#: includes/Umami/Provider.php:63
+#: includes/Umami/Provider.php:65
 msgid "Umami ID is not set. Please configure it in the settings."
 msgstr "Umami-ID är inte inställt. Konfigurera det i inställningarna."
 
-#: includes/Umami/Provider.php:85
+#: includes/Umami/Provider.php:87
 msgid "Umami Settings"
 msgstr "Umami-inställningar"
 
-#: includes/Umami/Provider.php:86
+#: includes/Umami/Provider.php:88
 msgid "Umami"
 msgstr "Umami"
 
-#: includes/Umami/Provider.php:116
+#: includes/Umami/Provider.php:125
 msgid "Umami Site"
 msgstr "Umami-sajt"
 
-#: includes/Umami/Provider.php:123
+#: includes/Umami/Provider.php:132
 msgid "Umami ID"
 msgstr "Umami-ID"
 
@@ -686,3 +684,20 @@ msgstr "Icke-administratörer kan bara ta bort mediefiler de själva har laddat 
 #: includes/ContactForm/Provider.php:189
 msgid "The form the sitewide \"#contact\" link/button opens in a lightbox, on any page the active theme doesn't choose one for itself. \"None\" disables the lightbox on pages without such a choice."
 msgstr "Formuläret som sajtens länkar/knappar mot ankaret \"#contact\" öppnar i en lightbox, på sidor där det aktiva temat inte väljer ett eget. \"Ingen\" stänger av lightboxen på sidor utan ett sådant val."
+
+#. Plugin Name of the plugin
+#: amrf-site-settings.php
+msgid "AMRF Site Settings"
+msgstr ""
+
+#: includes/Umami/Provider.php:118
+msgid "Umami Server"
+msgstr "Umami-server"
+
+#: includes/Umami/Provider.php:146
+msgid "Egen installation (umami.antropomorf.se)"
+msgstr "Egen installation (umami.antropomorf.se)"
+
+#: includes/Umami/Provider.php:147
+msgid "Umami Cloud (eu.umami.is)"
+msgstr "Umami Cloud (eu.umami.is)"

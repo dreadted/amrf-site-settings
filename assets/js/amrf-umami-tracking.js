@@ -4,10 +4,12 @@ const addUmamiTracking = () => {
     if (
       !document.body.classList.contains("logged-in") &&
       typeof umamiSite !== "undefined" &&
-      umamiSite
+      umamiSite &&
+      typeof umamiScriptUrl !== "undefined" &&
+      umamiScriptUrl
     ) {
       let script = document.createElement("script");
-      script.src = "https://cloud.umami.is/script.js";
+      script.src = umamiScriptUrl;
       script.defer = true;
       script.setAttribute("data-website-id", umamiSite);
       script.onload = () => {
