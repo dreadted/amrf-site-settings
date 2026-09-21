@@ -77,26 +77,34 @@
 		}
 	}
 
+	// Returns true/false so the click handler below only suppresses the
+	// href="#contact" fallback once the modal has actually opened.
 	function openModal(trigger) {
-		clearTimeout(autoCloseTimer);
+		try {
+			clearTimeout(autoCloseTimer);
 
-		if (form) {
-			form.reset();
-			var subjectField = form.querySelector('[name="subject"]');
-			if (subjectField) {
-				subjectField.value = (trigger && trigger.dataset.topic) || '';
+			if (form) {
+				form.reset();
+				var subjectField = form.querySelector('[name="subject"]');
+				if (subjectField) {
+					subjectField.value = (trigger && trigger.dataset.topic) || '';
+				}
 			}
-		}
 
-		lastFocused = document.activeElement;
-		modal.hidden = false;
-		setBackgroundInert(true);
-		document.body.style.overflow = 'hidden';
-		requestAnimationFrame(function () {
-			modal.setAttribute('data-visible', '');
-		});
-		if (firstTextField) {
-			firstTextField.focus();
+			lastFocused = document.activeElement;
+			modal.hidden = false;
+			setBackgroundInert(true);
+			document.body.style.overflow = 'hidden';
+			requestAnimationFrame(function () {
+				modal.setAttribute('data-visible', '');
+			});
+			if (firstTextField) {
+				firstTextField.focus();
+			}
+			return true;
+		} catch (error) {
+			console.error('amrf-contact-modal: failed to open modal', error);
+			return false;
 		}
 	}
 
@@ -135,8 +143,9 @@
 		if (!trigger) {
 			return;
 		}
-		event.preventDefault();
-		openModal(trigger);
+		if (openModal(trigger)) {
+			event.preventDefault();
+		}
 	});
 
 	if (closeButton) {
