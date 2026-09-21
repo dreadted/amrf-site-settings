@@ -31,23 +31,36 @@ class LoginBranding
     }
 
     /**
+     * Attached via wp_add_inline_style() rather than a raw <style> echo,
+     * so it prints right after WP core's own login.css and reliably wins
+     * the cascade instead of flashing the WordPress logo first.
+     *
+     * Both '.login h1' and '.login h1 a' are targeted identically since
+     * stripHeaderLink() removes the <a> — the rule needs to still apply
+     * once that wrapper is gone.
+     *
      * @return void
      */
     public function renderStyles(): void
     {
         $uploadDir = wp_upload_dir();
-        $logo = trailingslashit($uploadDir['baseurl']) . 'favicon.svg';
-        ?>
-<style>
-    .login h1 a {
-        background-image: url(<?php echo esc_url($logo); ?>);
-        background-size: contain;
-        background-position: center;
-        width: 100%;
-        height: 84px;
-    }
-</style>
-        <?php
+        $logo = esc_url(trailingslashit($uploadDir['baseurl']) . 'favicon.svg');
+
+        wp_add_inline_style('login', "
+.login h1 a, .login h1 {
+    background-image: url({$logo});
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 25px;
+    padding: 0;
+    text-indent: -9999px;
+    overflow: hidden;
+    display: block;
+}
+");
     }
 
     /**
