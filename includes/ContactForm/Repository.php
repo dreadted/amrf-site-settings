@@ -296,6 +296,26 @@ class Repository
         'customUrl' => null,
     ];
 
+    /** Local part of the baseline FluentSMTP sender address — combined with this site's own domain at apply time. */
+    private const FLUENTSMTP_SENDER_LOCAL_PART = 'kontakt';
+
+    /** Site baseline for a FluentSMTP connection's provider_settings — minus sender_email, which is domain-dependent (see applyFluentSmtpBaseline()). */
+    private const FLUENTSMTP_CONNECTION_BASELINE = [
+        'provider' => 'smtp',
+        'sender_name' => 'Kontaktformulär',
+        'force_from_name' => 'yes',
+        'force_from_email' => 'yes',
+        'return_path' => 'yes',
+        'host' => 'mailhog',
+        'port' => '1025',
+        'auth' => 'no',
+        'username' => null,
+        'password' => null,
+        'auto_tls' => 'yes',
+        'encryption' => 'none',
+        'key_store' => 'db',
+    ];
+
     /** Site baseline for form CONTACT_FORM_ID's single email notification feed. */
     private const FLUENTFORM_NOTIFICATION_BASELINE = [
         'name' => 'Kontaktformulär',
@@ -470,6 +490,35 @@ class Repository
         update_option('_fluentform_global_form_settings', $settings);
 
         self::applyContactFormBaseline();
+
+        if (defined('FLUENTMAIL')) {
+            self::applyFluentSmtpBaseline();
+        }
+    }
+
+    /** Same one-shot, overwrite-regardless-of-current-values contract as applyFluentFormBaseline(); merges into existing connections rather than replacing them. */
+    private static function applyFluentSmtpBaseline(): void
+    {
+        $domain = wp_parse_url(home_url(), PHP_URL_HOST);
+        if (!$domain) {
+            return;
+        }
+
+        $senderEmail = self::FLUENTSMTP_SENDER_LOCAL_PART . '@' . $domain;
+        // Same key FluentSMTP itself derives for a connection — see Settings::generateUniqueKey().
+        $key = md5($senderEmail);
+
+        $settings = get_option('fluentmail-settings', []);
+        $settings = is_array($settings) ? $settings : [];
+
+        $settings['connections'][$key] = [
+            'title' => 'SMTP Server',
+            'provider_settings' => array_merge(self::FLUENTSMTP_CONNECTION_BASELINE, ['sender_email' => $senderEmail]),
+        ];
+        $settings['mappings'][$senderEmail] = $key;
+        $settings['misc'] = array_merge($settings['misc'] ?? [], ['default_connection' => $key]);
+
+        update_option('fluentmail-settings', $settings);
     }
 
     /** Same one-shot, overwrite-regardless-of-current-values contract as applyFluentFormBaseline(); no-ops if the form doesn't exist. */

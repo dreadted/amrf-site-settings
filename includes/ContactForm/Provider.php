@@ -251,7 +251,7 @@ class Provider
     printf(
       '<label class="switch"><input type="checkbox" name="%1$s" value="1" /><span class="slider round"></span></label><p class="description">%2$s</p>',
       esc_attr($name),
-      esc_html__('Overwrites FluentForm\'s own Global Settings → Miscellaneous on save, regardless of their current values: disables IP logging, keeps form analytics on, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. Also renames form ID 1 to "Kontaktformulär", replaces its fields with this site\'s baseline set (name, email, a required message field), and applies this site\'s baseline confirmation message and email notification to it. A one-time action, not a saved setting — resets to off after saving.', 'amrf-admin')
+      esc_html__('Overwrites FluentForm\'s own Global Settings → Miscellaneous on save, regardless of their current values: disables IP logging, keeps form analytics on, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. Also renames form ID 1 to "Kontaktformulär", replaces its fields with this site\'s baseline set (name, email, a required message field), and applies this site\'s baseline confirmation message and email notification to it. If FluentSMTP is active, also adds a baseline SMTP connection to Mailhog (port 1025) using this site\'s own domain as the sender address, and sets it as the default connection. A one-time action, not a saved setting — resets to off after saving.', 'amrf-admin')
     );
   }
 
