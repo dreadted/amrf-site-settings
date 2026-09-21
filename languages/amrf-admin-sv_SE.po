@@ -611,10 +611,6 @@ msgstr "Tillämpa rekommenderade FluentForm-inställningar"
 msgid "FluentForm is not active."
 msgstr "FluentForm är inte aktivt."
 
-#: includes/ContactForm/Provider.php:254
-msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: disables IP logging, keeps form analytics on, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. A one-time action, not a saved setting — resets to off after saving."
-msgstr "Skriver vid sparning över FluentForms egna Global Settings → Miscellaneous, oavsett nuvarande värden: stänger av IP-loggning, låter formuläranalys vara på, aktiverar honeypot och tokenbaserat spamskydd, stänger av klassiska redigerarknappen och automatisk tabbordning, samt aktiverar no-conflict-läge. En engångsåtgärd, inte en sparad inställning — återgår till avstängd efter sparning."
-
 #: includes/ContactForm/Provider.php:179
 msgid "None"
 msgstr "Ingen"
@@ -709,3 +705,7 @@ msgstr "Knapp-selektorer"
 #: includes/Umami/Provider.php:198
 msgid "One CSS selector per line. Matched elements are tracked automatically, named after their own visible text. Leave empty to use the built-in defaults."
 msgstr "En CSS-selector per rad. Matchande element spåras automatiskt och namnges efter sin egen synliga text. Lämna tomt för att använda standardlistan."
+
+#: includes/ContactForm/Provider.php:254
+msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: disables IP logging, keeps form analytics on, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. Also renames form ID 1 to \"Kontaktformulär\", replaces its fields with this site's baseline set (name, email, a required message field), and applies this site's baseline confirmation message and email notification to it. A one-time action, not a saved setting — resets to off after saving."
+msgstr "Skriver vid sparning över FluentForms egna Global Settings → Miscellaneous, oavsett nuvarande värden: stänger av IP-loggning, låter formuläranalys vara på, aktiverar honeypot och tokenbaserat spamskydd, stänger av klassiska redigerarknappen och automatisk tabbordning, samt aktiverar no-conflict-läge. Byter också namn på formulär-ID 1 till \"Kontaktformulär\", ersätter dess fält med sajtens standarduppsättning (namn, e-post, ett obligatoriskt meddelandefält), och tillämpar sajtens standardbekräftelsemeddelande och e-postnotifiering på det. En engångsåtgärd, inte en sparad inställning — återgår till avstängd efter sparning."

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-21T10:11:09+00:00\n"
+"POT-Creation-Date: 2026-09-21T10:34:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -139,7 +139,7 @@ msgid "FluentForm is not active."
 msgstr ""
 
 #: includes/ContactForm/Provider.php:254
-msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: disables IP logging, keeps form analytics on, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. A one-time action, not a saved setting — resets to off after saving."
+msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: disables IP logging, keeps form analytics on, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. Also renames form ID 1 to \"Kontaktformulär\", replaces its fields with this site's baseline set (name, email, a required message field), and applies this site's baseline confirmation message and email notification to it. A one-time action, not a saved setting — resets to off after saving."
 msgstr ""
 
 #: includes/ContactForm/Provider.php:289

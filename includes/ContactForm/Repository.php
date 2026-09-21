@@ -34,6 +34,299 @@ class Repository
         'tabIndex' => 'no',
     ];
 
+    /** The form this site baseline is written onto (see applyContactFormBaseline()). */
+    private const CONTACT_FORM_ID = 1;
+
+    private const CONTACT_FORM_TITLE = 'Kontaktformulär';
+
+    /** Site baseline for form CONTACT_FORM_ID's fields — excludes this site's own site-specific "interest" dropdown. */
+    private const FLUENTFORM_CONTACT_FORM_FIELDS = [
+        'fields' => [
+            [
+                'index' => 0,
+                'element' => 'input_name',
+                'attributes' => [
+                    'name' => 'names',
+                    'data-type' => 'name-element',
+                ],
+                'settings' => [
+                    'container_class' => '',
+                    'admin_field_label' => 'Namn',
+                    'conditional_logics' => [],
+                    'label_placement' => '',
+                ],
+                'fields' => [
+                    'first_name' => [
+                        'element' => 'input_text',
+                        'attributes' => [
+                            'type' => 'text',
+                            'name' => 'first_name',
+                            'value' => '',
+                            'id' => '',
+                            'class' => '',
+                            'placeholder' => '',
+                        ],
+                        'settings' => [
+                            'container_class' => '',
+                            'label' => 'Förnamn',
+                            'help_message' => '',
+                            'visible' => true,
+                            'validation_rules' => [
+                                'required' => [
+                                    'value' => true,
+                                    'message' => 'This field is required',
+                                    'global' => true,
+                                    'global_message' => 'This field is required',
+                                ],
+                            ],
+                            'conditional_logics' => [],
+                        ],
+                        'editor_options' => [
+                            'template' => 'inputText',
+                        ],
+                    ],
+                    'middle_name' => [
+                        'element' => 'input_text',
+                        'attributes' => [
+                            'type' => 'text',
+                            'name' => 'middle_name',
+                            'value' => '',
+                            'id' => '',
+                            'class' => '',
+                            'placeholder' => '',
+                            'required' => false,
+                        ],
+                        'settings' => [
+                            'container_class' => '',
+                            'label' => 'Middle Name',
+                            'help_message' => '',
+                            'error_message' => '',
+                            'visible' => false,
+                            'validation_rules' => [
+                                'required' => [
+                                    'value' => false,
+                                    'message' => 'This field is required',
+                                    'global' => false,
+                                    'global_message' => 'This field is required',
+                                ],
+                            ],
+                            'conditional_logics' => [],
+                        ],
+                        'editor_options' => [
+                            'template' => 'inputText',
+                        ],
+                    ],
+                    'last_name' => [
+                        'element' => 'input_text',
+                        'attributes' => [
+                            'type' => 'text',
+                            'name' => 'last_name',
+                            'value' => '',
+                            'id' => '',
+                            'class' => '',
+                            'placeholder' => '',
+                            'required' => false,
+                        ],
+                        'settings' => [
+                            'container_class' => '',
+                            'label' => 'Efternamn',
+                            'help_message' => '',
+                            'error_message' => '',
+                            'visible' => true,
+                            'validation_rules' => [
+                                'required' => [
+                                    'value' => false,
+                                    'message' => 'This field is required',
+                                    'global' => false,
+                                    'global_message' => 'This field is required',
+                                ],
+                            ],
+                            'conditional_logics' => [],
+                        ],
+                        'editor_options' => [
+                            'template' => 'inputText',
+                        ],
+                    ],
+                ],
+                'editor_options' => [
+                    'title' => 'Name Fields',
+                    'element' => 'name-fields',
+                    'icon_class' => 'ff-edit-name',
+                    'template' => 'nameFields',
+                ],
+                'uniqElKey' => 'el_1570866006692',
+            ],
+            [
+                'index' => 1,
+                'element' => 'input_email',
+                'attributes' => [
+                    'type' => 'email',
+                    'name' => 'email',
+                    'value' => '',
+                    'id' => '',
+                    'class' => '',
+                    'placeholder' => '',
+                ],
+                'settings' => [
+                    'container_class' => '',
+                    'label' => 'E-postadress',
+                    'label_placement' => '',
+                    'help_message' => '',
+                    'admin_field_label' => 'E-postadress',
+                    'validation_rules' => [
+                        'required' => [
+                            'value' => true,
+                            'message' => 'This field is required',
+                            'global' => true,
+                            'global_message' => 'This field is required',
+                        ],
+                        'email' => [
+                            'value' => true,
+                            'message' => 'This field must contain a valid email',
+                            'global' => false,
+                            'global_message' => 'This field must contain a valid email',
+                        ],
+                    ],
+                    'conditional_logics' => [],
+                    'is_unique' => 'no',
+                    'unique_validation_message' => 'Email address need to be unique.',
+                    'prefix_label' => '',
+                    'suffix_label' => '',
+                ],
+                'editor_options' => [
+                    'title' => 'Email Address',
+                    'icon_class' => 'ff-edit-email',
+                    'template' => 'inputText',
+                ],
+                'uniqElKey' => 'el_1570866012914',
+            ],
+            [
+                'index' => 3,
+                'element' => 'textarea',
+                'attributes' => [
+                    'name' => 'message',
+                    'value' => '',
+                    'id' => '',
+                    'class' => '',
+                    'placeholder' => '',
+                    'rows' => '1',
+                    'cols' => 2,
+                    'maxlength' => '',
+                ],
+                'settings' => [
+                    'container_class' => '',
+                    'label' => 'Meddelande',
+                    'admin_field_label' => 'Meddelande',
+                    'label_placement' => '',
+                    'help_message' => '',
+                    'validation_rules' => [
+                        'required' => [
+                            'value' => true,
+                            'message' => 'This field is required',
+                            'global' => true,
+                            'global_message' => 'This field is required',
+                        ],
+                    ],
+                    'conditional_logics' => [
+                        'type' => 'any',
+                        'status' => false,
+                        'conditions' => [
+                            ['field' => '', 'value' => '', 'operator' => ''],
+                        ],
+                    ],
+                    'prefix_label' => '',
+                    'suffix_label' => '',
+                ],
+                'editor_options' => [
+                    'title' => 'Text Area',
+                    'icon_class' => 'ff-edit-textarea',
+                    'template' => 'inputTextarea',
+                ],
+                'uniqElKey' => 'el_1570879001207',
+            ],
+        ],
+        'submitButton' => [
+            'uniqElKey' => 'el_1524065200616',
+            'element' => 'button',
+            'attributes' => [
+                'type' => 'submit',
+                'class' => '',
+            ],
+            'settings' => [
+                'align' => 'left',
+                'button_style' => 'default',
+                'container_class' => '',
+                'help_message' => '',
+                'background_color' => '#1a7efb',
+                'button_size' => 'md',
+                'color' => '#ffffff',
+                'button_ui' => [
+                    'type' => 'default',
+                    'text' => 'Skicka',
+                    'img_url' => '',
+                ],
+                'normal_styles' => [
+                    'backgroundColor' => '#1a7efb',
+                    'borderColor' => '#1a7efb',
+                    'color' => '#ffffff',
+                    'borderRadius' => '',
+                    'minWidth' => '',
+                ],
+                'hover_styles' => [
+                    'backgroundColor' => '#ffffff',
+                    'borderColor' => '#1a7efb',
+                    'color' => '#1a7efb',
+                    'borderRadius' => '',
+                    'minWidth' => '',
+                ],
+                'current_state' => 'normal_styles',
+            ],
+            'editor_options' => [
+                'title' => 'Submit Button',
+            ],
+        ],
+    ];
+
+    /** Site baseline for form CONTACT_FORM_ID's formSettings['confirmation']. */
+    private const FLUENTFORM_CONFIRMATION_BASELINE = [
+        'redirectTo' => 'samePage',
+        'messageToShow' => '<h3>Tack för ditt meddelande,<br />jag hör av mig snarast möjligt!</h3>',
+        'customPage' => null,
+        'samePageFormBehavior' => 'hide_form',
+        'customUrl' => null,
+    ];
+
+    /** Site baseline for form CONTACT_FORM_ID's single email notification feed. */
+    private const FLUENTFORM_NOTIFICATION_BASELINE = [
+        'name' => 'Kontaktformulär',
+        'sendTo' => [
+            'type' => 'email',
+            'email' => '{wp.admin_email}',
+            'field' => null,
+            'routing' => [
+                ['input_value' => '', 'field' => null, 'operator' => '=', 'value' => null],
+            ],
+        ],
+        'fromName' => '',
+        'fromEmail' => '',
+        'replyTo' => '',
+        'bcc' => '',
+        'subject' => 'Nytt meddelande från {inputs.email}',
+        'message' => '<p>{all_data}</p>',
+        'conditionals' => [
+            'status' => false,
+            'type' => 'all',
+            'conditions' => [
+                ['field' => null, 'operator' => '=', 'value' => null],
+            ],
+        ],
+        'enabled' => true,
+        'pdf_attachments' => [],
+        'attachments' => [],
+        'media_attachments' => [],
+        'feed_trigger_event' => 'payment_success',
+    ];
+
     /**
      * @return array{default_contact_form_id: string, enable_consistent_styling: bool, altcha_enabled: bool, contact_form_ids: int[], retention_days: string}
      */
@@ -175,5 +468,56 @@ class Repository
         $settings = is_array($settings) ? $settings : [];
         $settings['misc'] = array_merge($settings['misc'] ?? [], self::FLUENTFORM_BASELINE);
         update_option('_fluentform_global_form_settings', $settings);
+
+        self::applyContactFormBaseline();
+    }
+
+    /** Same one-shot, overwrite-regardless-of-current-values contract as applyFluentFormBaseline(); no-ops if the form doesn't exist. */
+    private static function applyContactFormBaseline(): void
+    {
+        global $wpdb;
+        $formsTable = $wpdb->prefix . 'fluentform_forms';
+        $metaTable = $wpdb->prefix . 'fluentform_form_meta';
+        $formId = self::CONTACT_FORM_ID;
+
+        if (!$wpdb->get_var($wpdb->prepare("SELECT id FROM {$formsTable} WHERE id = %d", $formId))) {
+            return;
+        }
+
+        $wpdb->update(
+            $formsTable,
+            [
+                'title' => self::CONTACT_FORM_TITLE,
+                'form_fields' => wp_json_encode(self::FLUENTFORM_CONTACT_FORM_FIELDS),
+            ],
+            ['id' => $formId]
+        );
+
+        $settingsRow = $wpdb->get_row($wpdb->prepare(
+            "SELECT id, value FROM {$metaTable} WHERE form_id = %d AND meta_key = 'formSettings' LIMIT 1",
+            $formId
+        ));
+        $formSettings = $settingsRow ? json_decode((string) $settingsRow->value, true) : null;
+        $formSettings = is_array($formSettings) ? $formSettings : [];
+        $formSettings['confirmation'] = self::FLUENTFORM_CONFIRMATION_BASELINE;
+        $encodedSettings = wp_json_encode($formSettings);
+
+        if ($settingsRow) {
+            $wpdb->update($metaTable, ['value' => $encodedSettings], ['id' => $settingsRow->id]);
+        } else {
+            $wpdb->insert($metaTable, ['form_id' => $formId, 'meta_key' => 'formSettings', 'value' => $encodedSettings]);
+        }
+
+        $notificationId = $wpdb->get_var($wpdb->prepare(
+            "SELECT id FROM {$metaTable} WHERE form_id = %d AND meta_key = 'notifications' LIMIT 1",
+            $formId
+        ));
+        $encodedNotification = wp_json_encode(self::FLUENTFORM_NOTIFICATION_BASELINE);
+
+        if ($notificationId) {
+            $wpdb->update($metaTable, ['value' => $encodedNotification], ['id' => $notificationId]);
+        } else {
+            $wpdb->insert($metaTable, ['form_id' => $formId, 'meta_key' => 'notifications', 'value' => $encodedNotification]);
+        }
     }
 }
