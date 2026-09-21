@@ -20,6 +20,7 @@ class Bootstrap
         new Provider();
         new SeoFrameworkIntegration();
         new Favicons();
+        new LoginBranding();
         new SettingShortcode();
         new ContactLinkShortcodes();
     }
