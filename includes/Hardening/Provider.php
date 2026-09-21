@@ -42,7 +42,7 @@ class Provider
 
   public function __construct()
   {
-    $this->renderer = new SettingsRenderer(self::TABS_FILTER, self::PAGE_SLUG, __('Hardening', 'amrf-admin'));
+    $this->renderer = new SettingsRenderer(self::TABS_FILTER, self::PAGE_SLUG, fn() => __('Hardening', 'amrf-admin'));
 
     $this->registerUnconditionalHardening();
     $this->registerToggleableHardening();

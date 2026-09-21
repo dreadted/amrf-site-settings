@@ -75,6 +75,6 @@ class Menu
    */
   public function render(): void
   {
-    (new SettingsRenderer(self::TABS_FILTER, self::PAGE_SLUG, __('Forms', 'amrf-admin')))->render();
+    (new SettingsRenderer(self::TABS_FILTER, self::PAGE_SLUG, fn() => __('Forms', 'amrf-admin')))->render();
   }
 }

@@ -37,7 +37,7 @@ class SiteSettingsMenu
 
   public function __construct()
   {
-    $this->renderer = new SettingsRenderer(self::TABS_FILTER, self::MENU_SLUG, __('Site Settings', 'amrf-admin'));
+    $this->renderer = new SettingsRenderer(self::TABS_FILTER, self::MENU_SLUG, fn() => __('Site Settings', 'amrf-admin'));
 
     add_action('admin_menu', [$this, 'addMenu']);
     add_action('admin_init', [$this, 'registerSettings']);

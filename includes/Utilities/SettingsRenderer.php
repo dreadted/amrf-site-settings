@@ -18,16 +18,27 @@ class SettingsRenderer
 {
   private string $tabsFilter;
   private string $menuSlug;
-  private string $pageTitle;
+
+  /** @var callable Resolved in render(), not in the constructor — see $pageTitle param doc. */
+  private $pageTitle;
 
   /**
-   * @param string $tabsFilter Filter to read this page's tabs from — each
-   *                            entry shaped like ['label', 'option_group',
-   *                            'page_slug', 'show_reset', 'register'].
-   * @param string $menuSlug   This page's own admin menu slug.
-   * @param string $pageTitle  Heading shown above the tab strip.
+   * @param string   $tabsFilter Filter to read this page's tabs from — each
+   *                              entry shaped like ['label', 'option_group',
+   *                              'page_slug', 'show_reset', 'register'].
+   * @param string   $menuSlug   This page's own admin menu slug.
+   * @param callable $pageTitle  Returns the heading shown above the tab strip.
+   *                              A callable, not a plain string: constructors
+   *                              across this plugin run once per request
+   *                              (some as early as plugin bootstrap), well
+   *                              before WordPress can resolve the logged-in
+   *                              user's own locale — an __() call made there
+   *                              gets cached in the site's default locale.
+   *                              Deferring the call to render() time, when
+   *                              this page is actually being displayed, is
+   *                              what lets it follow the viewing user.
    */
-  public function __construct(string $tabsFilter, string $menuSlug, string $pageTitle)
+  public function __construct(string $tabsFilter, string $menuSlug, callable $pageTitle)
   {
     $this->tabsFilter = $tabsFilter;
     $this->menuSlug = $menuSlug;
@@ -45,7 +56,7 @@ class SettingsRenderer
     $tab = $tabs[$current_tab];
 
     echo '<div class="wrap">';
-    echo '<h1>' . esc_html($this->pageTitle) . '</h1>';
+    echo '<h1>' . esc_html(call_user_func($this->pageTitle)) . '</h1>';
     echo '<h2 class="nav-tab-wrapper">';
     foreach ($tabs as $id => $tab_info) {
       printf(

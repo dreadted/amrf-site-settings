@@ -60,7 +60,7 @@ class AdminHooks
         // Priority 5 so General/role tabs always sort first.
         add_filter('amrf_admin_settings_tabs', [$settingsManager, 'registerTabs'], 5);
 
-        $renderer = new SettingsRenderer('amrf_admin_settings_tabs', 'amrf-admin-settings', __('Admin Panel Settings', 'amrf-admin'));
+        $renderer = new SettingsRenderer('amrf_admin_settings_tabs', 'amrf-admin-settings', fn() => __('Admin Panel Settings', 'amrf-admin'));
 
         // Must instantiate before SettingsPage: its add_menu_page() call
         // populates $admin_page_hooks for 'amrf-site-settings', which
