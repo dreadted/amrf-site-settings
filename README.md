@@ -149,7 +149,7 @@ otherwise they're inert:
 ## Requirements
 
 - [WordPress](https://wordpress.org/) 5.6 or later (tested up to 7.1)
-- [PHP](https://www.php.net/) 8.1 or later
+- [PHP](https://www.php.net/) 8.3 or later
 - [Fluent Forms](https://wordpress.org/plugins/fluentform/) and/or [Support Genix Lite](https://wordpress.org/plugins/support-genix-lite/), only if you want the optional integrations above — the plugin works fully without them.
 
 ## Installation
