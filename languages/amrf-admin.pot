@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-21T09:23:41+00:00\n"
+"POT-Creation-Date: 2026-09-21T10:11:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -653,41 +653,49 @@ msgstr ""
 msgid "The Swish QR code could not be regenerated — the previous one (if any) is still in use. Try saving again."
 msgstr ""
 
+#: includes/Umami/Provider.php:42
 #: includes/Umami/Provider.php:43
-#: includes/Umami/Provider.php:44
 msgid "Analytics"
 msgstr ""
 
-#: includes/Umami/Provider.php:65
+#: includes/Umami/Provider.php:64
 msgid "Umami ID is not set. Please configure it in the settings."
 msgstr ""
 
-#: includes/Umami/Provider.php:87
+#: includes/Umami/Provider.php:86
 msgid "Umami Settings"
 msgstr ""
 
-#: includes/Umami/Provider.php:88
+#: includes/Umami/Provider.php:87
 msgid "Umami"
 msgstr ""
 
-#: includes/Umami/Provider.php:118
+#: includes/Umami/Provider.php:117
 msgid "Umami Server"
 msgstr ""
 
-#: includes/Umami/Provider.php:125
+#: includes/Umami/Provider.php:124
 msgid "Umami Site"
 msgstr ""
 
-#: includes/Umami/Provider.php:132
+#: includes/Umami/Provider.php:131
 msgid "Umami ID"
 msgstr ""
 
-#: includes/Umami/Provider.php:146
+#: includes/Umami/Provider.php:138
+msgid "Button Selectors"
+msgstr ""
+
+#: includes/Umami/Provider.php:152
 msgid "Egen installation (umami.antropomorf.se)"
 msgstr ""
 
-#: includes/Umami/Provider.php:147
+#: includes/Umami/Provider.php:153
 msgid "Umami Cloud (eu.umami.is)"
+msgstr ""
+
+#: includes/Umami/Provider.php:198
+msgid "One CSS selector per line. Matched elements are tracked automatically, named after their own visible text. Leave empty to use the built-in defaults."
 msgstr ""
 
 #: includes/Utilities/SettingsRenderer.php:85

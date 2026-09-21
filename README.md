@@ -88,8 +88,21 @@ All links can be customized with a pre-filled amount or message.
 
 ### Umami Settings
 
-- Configure a site ID for [Umami](https://umami.is/) analytics tracking on the front end
+- Configure a site ID for [Umami](https://umami.is/) analytics tracking on the front end, and pick which Umami server (self-hosted or cloud) it's tracked/viewed on
 - Adds a separate "Analytics" menu that shows the Umami report in an admin iframe for whichever roles are allowed to see it
+- **Automatic button tracking:** elements matching the "Button Selectors" field (one CSS selector per line, defaults to the theme's `btn--*` classes, `.cta`, `.wp-element-button`, and FluentForm's `.ff-btn-submit`) are tracked automatically, named after their own visible text plus the current page title — no theme code required. Leaving the field empty reverts to the built-in defaults rather than disabling tracking.
+- **Naming a specific button explicitly:** a theme (or another plugin) can override the auto-generated name for one exact element via the `amrf_umami_tracked_buttons` filter, checked before the generic sweep above:
+
+  ```php
+  add_filter('amrf_umami_tracked_buttons', function (array $buttons): array {
+    $buttons[] = [
+      'selector' => '#contact .ff-btn-submit',
+      'name' => 'contact-form',
+    ];
+
+    return $buttons;
+  });
+  ```
 
 ### Hardening
 
@@ -135,7 +148,7 @@ otherwise they're inert:
 
 ## Requirements
 
-- [WordPress](https://wordpress.org/) 5.0 or later (tested up to 7.1)
+- [WordPress](https://wordpress.org/) 5.6 or later (tested up to 7.1)
 - [PHP](https://www.php.net/) 8.1 or later
 - [Fluent Forms](https://wordpress.org/plugins/fluentform/) and/or [Support Genix Lite](https://wordpress.org/plugins/support-genix-lite/), only if you want the optional integrations above — the plugin works fully without them.
 

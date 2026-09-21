@@ -11,8 +11,8 @@ if (!defined('ABSPATH')) {
  *
  * Registers "Umami Settings" onto the amrf_site_settings_pages registry
  * (manage_options), enqueues the front-end tracking script with the
- * umami_site value + amrf_umami_tracked_buttons filter injected, and
- * registers the "Analytics" iframe page as its own top-level menu (same
+ * umami_site value + button-tracking config injected, and registers the
+ * "Analytics" iframe page as its own top-level menu (same
  * edit_posts-vs-parent-capability reasoning as SupportGenix's ticket page).
  *
  * @package Antropomorf\Umami
@@ -133,6 +133,13 @@ class Provider
       self::PAGE_SLUG,
       'umami_section'
     );
+    add_settings_field(
+      'button_selectors',
+      __('Button Selectors', 'amrf-admin'),
+      [$this, 'renderButtonSelectorsField'],
+      self::PAGE_SLUG,
+      'umami_section'
+    );
   }
 
   public function renderHostField(): void
@@ -168,6 +175,29 @@ class Provider
     $this->renderField('id');
   }
 
+  /**
+   * One CSS selector per line, auto-tracked and named after each matched
+   * element's own visible text. Always shows the effective list (stored
+   * override, or DEFAULT_BUTTON_SELECTORS when empty) — clearing the field
+   * and saving reverts to the defaults rather than disabling tracking.
+   *
+   * @return void
+   */
+  public function renderButtonSelectorsField(): void
+  {
+    $id = Repository::OPTION_NAME . '_button_selectors';
+    $name = Repository::OPTION_NAME . '[button_selectors]';
+    $value = implode("\n", Repository::getButtonSelectors());
+
+    printf(
+      '<textarea id="%1$s" name="%2$s" rows="6" cols="50" class="large-text code">%3$s</textarea>',
+      esc_attr($id),
+      esc_attr($name),
+      esc_textarea($value)
+    );
+    echo '<p class="description">' . esc_html__('One CSS selector per line. Matched elements are tracked automatically, named after their own visible text. Leave empty to use the built-in defaults.', 'amrf-admin') . '</p>';
+  }
+
   private function renderField(string $key): void
   {
     $settings = Repository::getSettings();
@@ -201,14 +231,19 @@ class Provider
     );
 
     if (!empty($settings['site'])) {
+      // amrf_umami_tracked_buttons: optional {selector, name}[] override, checked
+      // before the generic button_selectors sweep — lets a theme pin an exact
+      // event name onto a specific element instead of relying on its own text.
+      $button_overrides = apply_filters('amrf_umami_tracked_buttons', []);
+
       wp_add_inline_script(
         self::SCRIPT_HANDLE,
         'const umamiSite = ' . wp_json_encode($settings['site']) . ';'
         . 'const umamiScriptUrl = ' . wp_json_encode('https://' . $settings['host'] . '/script.js') . ';'
+        . 'const amrfUmamiButtonSelectors = ' . wp_json_encode(Repository::getButtonSelectors()) . ';'
+        . 'const amrfUmamiButtonOverrides = ' . wp_json_encode($button_overrides) . ';'
+        . 'const amrfUmamiPageTitle = ' . wp_json_encode(wp_get_document_title()) . ';'
       );
     }
-
-    $buttons = apply_filters('amrf_umami_tracked_buttons', []);
-    wp_localize_script(self::SCRIPT_HANDLE, 'amrfUmamiButtons', $buttons);
   }
 }

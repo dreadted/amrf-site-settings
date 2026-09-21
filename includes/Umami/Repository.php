@@ -22,8 +22,18 @@ class Repository
   /** Allowed 'host' values. Umami sends data to whichever host the tracker script loaded from. */
   public const HOSTS = ['umami.antropomorf.se', 'eu.umami.is'];
 
+  /** Fallback used whenever 'button_selectors' is empty — see getButtonSelectors(). */
+  public const DEFAULT_BUTTON_SELECTORS = [
+    'a[class*="btn--"]',
+    'button[class*="btn--"]',
+    '.cta',
+    'a.wp-element-button',
+    'button.wp-element-button',
+    '.ff-btn-submit',
+  ];
+
   /**
-   * @return array<string, string>
+   * @return array<string, string|string[]>
    */
   public static function getDefaults(): array
   {
@@ -31,11 +41,12 @@ class Repository
       'host' => 'umami.antropomorf.se',
       'site' => '',
       'id' => '',
+      'button_selectors' => [],
     ];
   }
 
   /**
-   * @return array<string, string>
+   * @return array<string, string|string[]>
    */
   public static function getSettings(): array
   {
@@ -44,17 +55,37 @@ class Repository
   }
 
   /**
+   * Effective button-tracking selector list: the stored override if the
+   * admin has set one, otherwise DEFAULT_BUTTON_SELECTORS. Clearing the
+   * admin field back to empty reverts to the defaults, it does not disable
+   * auto-discovery.
+   *
+   * @return string[]
+   */
+  public static function getButtonSelectors(): array
+  {
+    $selectors = self::getSettings()['button_selectors'];
+    return !empty($selectors) ? $selectors : self::DEFAULT_BUTTON_SELECTORS;
+  }
+
+  /**
    * @param mixed $input Raw POSTed value for this option.
-   * @return array<string, string>
+   * @return array<string, string|string[]>
    */
   public static function sanitize($input): array
   {
     $host = is_array($input) ? ($input['host'] ?? '') : '';
+    $button_selectors_raw = is_array($input) ? ($input['button_selectors'] ?? '') : '';
+    $button_selectors = array_values(array_filter(array_map(
+      'sanitize_text_field',
+      preg_split('/\r\n|\r|\n/', (string) $button_selectors_raw)
+    ), fn ($line) => $line !== ''));
 
     return [
       'host' => in_array($host, self::HOSTS, true) ? $host : self::getDefaults()['host'],
       'site' => sanitize_text_field(is_array($input) ? ($input['site'] ?? '') : ''),
       'id' => sanitize_text_field(is_array($input) ? ($input['id'] ?? '') : ''),
+      'button_selectors' => $button_selectors,
     ];
   }
 

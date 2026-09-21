@@ -446,28 +446,28 @@ msgstr "Ärende"
 msgid "You are not authorized to edit this page."
 msgstr "Du har inte behörighet att redigera den här sidan."
 
+#: includes/Umami/Provider.php:42
 #: includes/Umami/Provider.php:43
-#: includes/Umami/Provider.php:44
 msgid "Analytics"
 msgstr "Statistik"
 
-#: includes/Umami/Provider.php:65
+#: includes/Umami/Provider.php:64
 msgid "Umami ID is not set. Please configure it in the settings."
 msgstr "Umami-ID är inte inställt. Konfigurera det i inställningarna."
 
-#: includes/Umami/Provider.php:87
+#: includes/Umami/Provider.php:86
 msgid "Umami Settings"
 msgstr "Umami-inställningar"
 
-#: includes/Umami/Provider.php:88
+#: includes/Umami/Provider.php:87
 msgid "Umami"
 msgstr "Umami"
 
-#: includes/Umami/Provider.php:125
+#: includes/Umami/Provider.php:124
 msgid "Umami Site"
 msgstr "Umami-sajt"
 
-#: includes/Umami/Provider.php:132
+#: includes/Umami/Provider.php:131
 msgid "Umami ID"
 msgstr "Umami-ID"
 
@@ -690,14 +690,22 @@ msgstr "Formuläret som sajtens länkar/knappar mot ankaret \"#contact\" öppnar
 msgid "AMRF Site Settings"
 msgstr ""
 
-#: includes/Umami/Provider.php:118
+#: includes/Umami/Provider.php:117
 msgid "Umami Server"
 msgstr "Umami-server"
 
-#: includes/Umami/Provider.php:146
+#: includes/Umami/Provider.php:152
 msgid "Egen installation (umami.antropomorf.se)"
 msgstr "Egen installation (umami.antropomorf.se)"
 
-#: includes/Umami/Provider.php:147
+#: includes/Umami/Provider.php:153
 msgid "Umami Cloud (eu.umami.is)"
 msgstr "Umami Cloud (eu.umami.is)"
+
+#: includes/Umami/Provider.php:138
+msgid "Button Selectors"
+msgstr "Knapp-selektorer"
+
+#: includes/Umami/Provider.php:198
+msgid "One CSS selector per line. Matched elements are tracked automatically, named after their own visible text. Leave empty to use the built-in defaults."
+msgstr "En CSS-selector per rad. Matchande element spåras automatiskt och namnges efter sin egen synliga text. Lämna tomt för att använda standardlistan."
