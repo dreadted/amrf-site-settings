@@ -37,6 +37,15 @@ class LoginBranding
      * so it prints right after WP core's own login.css and reliably wins
      * the cascade instead of flashing the WordPress logo first.
      *
+     * The theme-color variables are set on 'body.login' rather than
+     * ':root' — wp-login.php always hardcodes an 'admin-color-modern'
+     * body class (core's default scheme, regardless of login state),
+     * and 'body.admin-color-modern' in admin-schemes.css has higher
+     * specificity than ':root' so it would otherwise always win.
+     * 'body.login' matches that specificity and comes later in the
+     * cascade, since wp-base-styles (admin-schemes.css) is a dependency
+     * of the 'login' handle this is attached to.
+     *
      * Both '.login h1' and '.login h1 a' are targeted identically since
      * stripHeaderLink() removes the <a> — the rule needs to still apply
      * once that wrapper is gone.
@@ -49,7 +58,7 @@ class LoginBranding
         $logo = esc_url(trailingslashit($uploadDir['baseurl']) . 'favicon.svg');
 
         wp_add_inline_style('login', "
-:root {
+body.login {
     --wp-admin-theme-color: #2271b1;
     --wp-admin-theme-color-darker-10: #2271b1;
 }
