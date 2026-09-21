@@ -9,7 +9,9 @@ if (!defined('ABSPATH')) {
 /**
  * Replaces the WordPress logo on wp-login.php with the site's own
  * favicon.svg from the uploads directory, and removes the link back
- * to wordpress.org.
+ * to wordpress.org. Also pins the admin theme-color CSS variables to
+ * the default blue on the login page, since they're only otherwise
+ * set from the logged-in user's own color-scheme preference.
  *
  * @package Antropomorf\SiteSettings
  */
@@ -47,6 +49,10 @@ class LoginBranding
         $logo = esc_url(trailingslashit($uploadDir['baseurl']) . 'favicon.svg');
 
         wp_add_inline_style('login', "
+:root {
+    --wp-admin-theme-color: #2271b1;
+    --wp-admin-theme-color-darker-10: #2271b1;
+}
 .login h1 a, .login h1 {
     background-image: url({$logo});
     background-position: center center;
