@@ -4,6 +4,14 @@ Changelog
 All notable changes to this project will be documented in this file.
 
 
+0.3.2
+------
+- plugin-header: rename to AMRF Site Settings, raise PHP floor to 8.3
+- contact-form: add FluentSMTP connection baseline to the same button
+- contact-form: extend FluentForm baseline button to cover form fields, confirmation, and notification
+- umami: auto-track buttons and outbound tel/mailto exclusion
+- umami: add dropdown to choose tracking/analytics server
+
 0.3.1
 ------
 - docs: update plugin name
