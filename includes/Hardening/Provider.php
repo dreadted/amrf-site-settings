@@ -603,6 +603,23 @@ class Provider
 
     add_settings_section('hardening_frontend_section', '', '__return_false', self::TAB_PAGE_SLUG_FRONTEND);
 
+    // Registered first, ahead of the $fields loop below, and styled with the
+    // alert-colored switch — this one takes the whole site offline for
+    // logged-out visitors, a much bigger consequence than the rest of this tab.
+    add_settings_field(
+      'restrict_site_to_logged_in',
+      __('Restrict site to logged-in users', 'amrf-admin'),
+      function () {
+        $this->renderCheckbox(
+          'restrict_site_to_logged_in',
+          __('Blocks every front-end page for logged-out visitors with a blank placeholder page — the WordPress admin and login screen stay reachable. Use this to preview a site privately before launch.', 'amrf-admin'),
+          true
+        );
+      },
+      self::TAB_PAGE_SLUG_FRONTEND,
+      'hardening_frontend_section'
+    );
+
     $fields = [
       'disable_author_archives' => [
         __('Disable author archives', 'amrf-admin'),
@@ -615,10 +632,6 @@ class Provider
       'disable_site_search' => [
         __('Disable site search', 'amrf-admin'),
         __('Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn\'t expose a working search box yet.', 'amrf-admin'),
-      ],
-      'restrict_site_to_logged_in' => [
-        __('Restrict site to logged-in users', 'amrf-admin'),
-        __('Blocks every front-end page for logged-out visitors with a blank placeholder page — the WordPress admin and login screen stay reachable. Use this to preview a site privately before launch.', 'amrf-admin'),
       ],
       'remove_jquery_migrate' => [
         __('Remove jQuery Migrate', 'amrf-admin'),
@@ -649,15 +662,19 @@ class Provider
    *
    * @param string $key
    * @param string $description
+   * @param bool   $alert Renders the slider in the alert color once checked —
+   *                       for toggles with consequences big enough to want a
+   *                       visual warning when left on.
    * @return void
    */
-  private function renderCheckbox(string $key, string $description): void
+  private function renderCheckbox(string $key, string $description, bool $alert = false): void
   {
     $settings = Repository::getSettings();
     $name = Repository::OPTION_NAME . '[' . $key . ']';
 
     printf(
-      '<label class="switch"><input type="checkbox" name="%1$s" value="1" %2$s /><span class="slider round"></span></label><p class="description">%3$s</p>',
+      '<label class="switch%1$s"><input type="checkbox" name="%2$s" value="1" %3$s /><span class="slider round"></span></label><p class="description">%4$s</p>',
+      $alert ? ' switch-alert' : '',
       esc_attr($name),
       checked(!empty($settings[$key]), true, false),
       esc_html($description)

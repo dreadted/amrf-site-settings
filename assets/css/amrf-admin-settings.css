@@ -48,6 +48,15 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
+/* For toggles with big enough consequences to warrant a visual warning once on */
+.switch-alert input:checked + .slider {
+  background-color: #d63638;
+}
+
+.switch-alert input:focus + .slider {
+  box-shadow: 0 0 1px #d63638;
+}
+
 .slider.round {
   border-radius: 34px;
 }
