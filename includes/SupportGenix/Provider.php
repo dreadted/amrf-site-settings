@@ -22,6 +22,9 @@ if (!defined('ABSPATH')) {
  * - An "Apply Defaults" button injected onto Support Genix Lite's OWN
  *   settings page — seeds its ticket categories/assignment rule/settings once.
  * - Ticket page visibility/edit-access lockdown for non-administrators.
+ * - Dequeues the docs/knowledge-base styles and script Support Genix Lite
+ *   always loads on the front end, even though this site never shows that
+ *   content to logged-out visitors.
  * - Brand-color shadowing on the plugin's portal header output via
  *   apply_filters('amrf_site_colors', [...]) — named generally since other
  *   consumers may want the same site colors.
@@ -58,6 +61,16 @@ class Provider
     'support-genix-docs-modern-grid',
   ];
 
+  /**
+   * The docs/knowledge-base script handle — registered as
+   * "{$assetsSlug}-docs-modern" (modules/Apbd_wps_knowledge_base.php:793),
+   * confusingly inside that module's ClientStyle() method alongside the
+   * style handles above, not a separate ClientScript() method. It's a
+   * SCRIPT handle, so it needs wp_dequeue_script(), not wp_dequeue_style()
+   * — see dequeueGuestDocsScript().
+   */
+  private const UNUSED_DOCS_SCRIPT_HANDLE = 'support-genix-docs-modern';
+
   public function __construct()
   {
     add_action('admin_menu', [$this, 'addMenu']);
@@ -66,12 +79,14 @@ class Provider
     add_action('admin_init', [$this, 'handleApplyDefaults']);
     add_action('admin_notices', [$this, 'showDefaultsNotice']);
 
-    // Support Genix Lite registers these styles on its own 'wp_print_styles'
-    // callback at priority 998 (core/secondary_helper.php), not on
-    // 'wp_enqueue_scripts' — a dequeue on wp_enqueue_scripts, however late,
-    // would run before the styles exist and silently do nothing. Priority
-    // 999 on the same action, front-end only, guarantees it runs right after.
+    // Support Genix Lite registers these styles (and, confusingly, the docs
+    // script below) on its own 'wp_print_styles' callback at priority 998
+    // (core/secondary_helper.php), not on 'wp_enqueue_scripts' — a dequeue
+    // on wp_enqueue_scripts, however late, would run before they exist and
+    // silently do nothing. Priority 999 on the same action, front-end only,
+    // guarantees it runs right after.
     add_action('wp_print_styles', [$this, 'dequeueUnusedDocsStyles'], 999);
+    add_action('wp_print_styles', [$this, 'dequeueGuestDocsScript'], 999);
 
     add_action('pre_get_posts', [$this, 'hideTicketPageFromNonAdmins']);
     add_action('current_screen', [$this, 'preventTicketPageEditAccess']);
@@ -132,6 +147,22 @@ class Provider
     foreach (self::UNUSED_DOCS_STYLE_HANDLES as $handle) {
       wp_dequeue_style($handle);
     }
+  }
+
+  /**
+   * Dequeues the docs/knowledge-base script (self::UNUSED_DOCS_SCRIPT_HANDLE)
+   * for logged-out visitors only — unlike the styles above, logged-in users
+   * (e.g. staff browsing the docs while signed in) still get it.
+   *
+   * @return void
+   */
+  public function dequeueGuestDocsScript(): void
+  {
+    if (is_user_logged_in()) {
+      return;
+    }
+
+    wp_dequeue_script(self::UNUSED_DOCS_SCRIPT_HANDLE);
   }
 
   /**
