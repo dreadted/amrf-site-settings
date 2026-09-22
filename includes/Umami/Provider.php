@@ -268,7 +268,14 @@ class Provider
         return $tag;
       }
 
-      return str_replace('<script ', '<script data-website-id="' . esc_attr($settings['site']) . '" ', $tag);
+      // Without data-host-url, Umami infers its /api/send target from the
+      // script tag's own src — breaks if a cache plugin rewrites src to a
+      // same-origin copy (e.g. LiteSpeed's JS localization).
+      return str_replace(
+        '<script ',
+        '<script data-website-id="' . esc_attr($settings['site']) . '" data-host-url="https://' . esc_attr($settings['host']) . '" ',
+        $tag
+      );
     }, 10, 2);
   }
 }
