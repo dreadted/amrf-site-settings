@@ -37,7 +37,7 @@ class Provider
 
   private SettingsRenderer $renderer;
 
-  // Set by optimizeNonAdminImageUpload(), consumed by recordUploadHash() on the same request.
+  // Set by convertImageUploadToWebp(), consumed by recordUploadHash() on the same request.
   private ?string $pendingUploadHash = null;
 
   public function __construct()
@@ -80,6 +80,12 @@ class Provider
   {
     $settings = Repository::getSettings();
 
+    // Unconditional: forces every image editor call (uploads, wp_generate_attachment_metadata(),
+    // wp media regenerate, …) to output WebP at the configured quality, regardless of the
+    // toggles below — a no-op when nothing is actually generated.
+    add_filter('image_editor_output_format', [$this, 'forceWebpOutputFormat'], 10, 3);
+    add_filter('wp_editor_set_quality', [$this, 'applyWebpQuality'], 10, 2);
+
     if ($settings['restrict_media_deletion']) {
       add_filter('map_meta_cap', [$this, 'restrictMediaDeletion'], 10, 4);
     }
@@ -119,8 +125,8 @@ class Provider
       add_action('template_redirect', [$this, 'restrictSiteToLoggedIn'], 1);
     }
 
-    if ($settings['optimize_non_admin_image_uploads']) {
-      add_filter('wp_handle_upload', [$this, 'optimizeNonAdminImageUpload'], 10, 2);
+    if ($settings['convert_uploads_to_webp']) {
+      add_filter('wp_handle_upload', [$this, 'convertImageUploadToWebp'], 10, 2);
       add_action('add_attachment', [$this, 'recordUploadHash']);
     }
   }
@@ -262,20 +268,19 @@ class Provider
     return $doc->saveXML();
   }
 
-  // Scoped to 'upload' context — sideloads are typically admin-triggered, not a direct non-admin action.
-  public function optimizeNonAdminImageUpload(array $upload, string $context = 'upload'): array
+  // Scoped to 'upload' context — sideloads are typically admin-triggered, not a direct user action.
+  public function convertImageUploadToWebp(array $upload, string $context = 'upload'): array
   {
     if (
-      current_user_can('manage_options')
-      || $context !== 'upload'
+      $context !== 'upload'
       || empty($upload['type'])
       || strpos($upload['type'], 'image/') !== 0
     ) {
       return $upload;
     }
 
-    // Hashed before any processing, so re-uploading the same source file is
-    // caught regardless of resize/quality settings changing later.
+    // Hashed before any processing (and before the webp-skip below), so re-uploading
+    // the same source file is caught regardless of its format.
     $hash = hash_file('sha256', $upload['file']);
     $duplicate_id = $hash !== false ? $this->findAttachmentByHash($hash) : null;
 
@@ -291,13 +296,18 @@ class Provider
       return $upload;
     }
 
-    $processed = $this->convertToOptimizedWebp($upload['file']);
+    $this->pendingUploadHash = $hash !== false ? $hash : null;
+
+    // Already webp — nothing to convert, but the dedup hash above still applies.
+    if ($upload['type'] === 'image/webp') {
+      return $upload;
+    }
+
+    $processed = $this->convertToWebp($upload['file']);
 
     if ($processed === null) {
       return $upload;
     }
-
-    $this->pendingUploadHash = $hash !== false ? $hash : null;
 
     $upload['url'] = str_replace(basename($upload['file']), basename($processed), $upload['url']);
     $upload['file'] = $processed;
@@ -335,23 +345,19 @@ class Provider
     $this->pendingUploadHash = null;
   }
 
-  private function convertToOptimizedWebp(string $file_path): ?string
+  // Full resolution preserved — only the format changes here. The smaller variants
+  // actually served on the front end come from the theme's add_image_size()
+  // registrations, generated via wp_generate_attachment_metadata() (see
+  // forceWebpOutputFormat()/applyWebpQuality() below).
+  private function convertToWebp(string $file_path): ?string
   {
     $editor = wp_get_image_editor($file_path);
     if (is_wp_error($editor)) {
+      error_log('amrf-site-settings: could not load image editor for ' . $file_path . ': ' . $editor->get_error_message());
       return null;
     }
 
-    $settings = Repository::getSettings();
-
-    // No-ops (keeps the original size) when the image already fits within
-    // these dimensions — resize() with $crop=false never upscales.
-    $editor->resize(
-      $settings['optimize_non_admin_image_uploads_width'],
-      $settings['optimize_non_admin_image_uploads_height'],
-      false
-    );
-    $editor->set_quality(60);
+    $editor->set_quality(Repository::getSettings()['webp_quality']);
 
     $info = pathinfo($file_path);
     // wp_unique_filename avoids collisions with an existing file that
@@ -361,6 +367,7 @@ class Provider
 
     $saved = $editor->save($webp_path, 'image/webp');
     if (is_wp_error($saved)) {
+      error_log('amrf-site-settings: could not save webp for ' . $file_path . ': ' . $saved->get_error_message());
       return null;
     }
 
@@ -369,6 +376,28 @@ class Provider
     }
 
     return $webp_path;
+  }
+
+  /**
+   * Forces every raster size WP_Image_Editor generates — uploads, regenerated
+   * attachment metadata, `wp media regenerate` — to be saved as WebP.
+   *
+   * @param array<string, string> $output_format
+   * @return array<string, string>
+   */
+  // $filename is null on some WP_Image_Editor code paths (e.g. make_subsize()) — unused here regardless.
+  public function forceWebpOutputFormat(array $output_format, ?string $filename, string $mime_type): array
+  {
+    if ($mime_type !== 'image/webp') {
+      $output_format[$mime_type] = 'image/webp';
+    }
+
+    return $output_format;
+  }
+
+  public function applyWebpQuality(int $quality, string $mime_type): int
+  {
+    return $mime_type === 'image/webp' ? Repository::getSettings()['webp_quality'] : $quality;
   }
 
   /**
@@ -550,12 +579,12 @@ class Provider
     // Registered first so it renders at the top of the tab, ahead of the
     // $fields loop below.
     add_settings_field(
-      'optimize_non_admin_image_uploads',
-      __('Optimize non-admin image uploads', 'amrf-admin'),
+      'convert_uploads_to_webp',
+      __('Convert uploads to WebP', 'amrf-admin'),
       function () {
         $this->renderCheckbox(
-          'optimize_non_admin_image_uploads',
-          __('Automatically shrinks oversized images and converts them to WebP for every image a non-administrator uploads, and blocks exact duplicates of an already-uploaded image. Administrators are unaffected.', 'amrf-admin')
+          'convert_uploads_to_webp',
+          __('Automatically converts every non-WebP image upload to WebP at the quality below, and blocks exact duplicates of an already-uploaded image.', 'amrf-admin')
         );
       },
       self::TAB_PAGE_SLUG_IMAGES,
@@ -563,10 +592,10 @@ class Provider
     );
 
     add_settings_field(
-      'optimize_non_admin_image_uploads_dimensions',
-      __('Max dimensions (px)', 'amrf-admin'),
+      'webp_quality',
+      __('WebP quality', 'amrf-admin'),
       function () {
-        $this->renderImageUploadDimensionsFields();
+        $this->renderWebpQualityField();
       },
       self::TAB_PAGE_SLUG_IMAGES,
       'hardening_images_section'
@@ -684,20 +713,16 @@ class Provider
   /**
    * @return void
    */
-  private function renderImageUploadDimensionsFields(): void
+  private function renderWebpQualityField(): void
   {
     $settings = Repository::getSettings();
 
     printf(
-      '<label>%1$s <input type="number" min="1" name="%2$s[optimize_non_admin_image_uploads_width]" value="%3$d" /></label> '
-        . '<label style="margin-left:1em;">%4$s <input type="number" min="1" name="%2$s[optimize_non_admin_image_uploads_height]" value="%5$d" /></label>'
-        . '<p class="description">%6$s</p>',
-      esc_html__('Width', 'amrf-admin'),
+      '<input type="number" min="1" max="100" name="%1$s[webp_quality]" value="%2$d" />'
+        . '<p class="description">%3$s</p>',
       esc_attr(Repository::OPTION_NAME),
-      (int) $settings['optimize_non_admin_image_uploads_width'],
-      esc_html__('Height', 'amrf-admin'),
-      (int) $settings['optimize_non_admin_image_uploads_height'],
-      esc_html__('Images larger than this, in either dimension, are scaled down proportionally (no cropping) before being converted to WebP.', 'amrf-admin')
+      (int) $settings['webp_quality'],
+      esc_html__('Applies to both the WebP format conversion above and every automatically generated responsive image size (1–100).', 'amrf-admin')
     );
   }
 

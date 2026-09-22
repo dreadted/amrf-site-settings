@@ -24,8 +24,7 @@ class Repository
 
   // Sanitized as absint(), not bool — every other key in getDefaults() is a toggle.
   private const INT_KEYS = [
-    'optimize_non_admin_image_uploads_width',
-    'optimize_non_admin_image_uploads_height',
+    'webp_quality',
   ];
 
   /**
@@ -39,12 +38,11 @@ class Repository
       'disable_author_archives' => true,
       'redirect_404_to_home' => true,
       'remove_jquery_migrate' => true,
-      'disable_generated_image_sizes' => true,
+      'disable_generated_image_sizes' => false,
       'disable_site_search' => false,
       'restrict_site_to_logged_in' => false,
-      'optimize_non_admin_image_uploads' => false,
-      'optimize_non_admin_image_uploads_width' => 1200,
-      'optimize_non_admin_image_uploads_height' => 1200,
+      'convert_uploads_to_webp' => false,
+      'webp_quality' => 82,
     ];
   }
 
@@ -69,9 +67,8 @@ class Repository
         'restrict_media_deletion',
         'allow_svg_uploads',
         'disable_generated_image_sizes',
-        'optimize_non_admin_image_uploads',
-        'optimize_non_admin_image_uploads_width',
-        'optimize_non_admin_image_uploads_height',
+        'convert_uploads_to_webp',
+        'webp_quality',
       ],
       self::OPTION_GROUP_FRONTEND => [
         'disable_author_archives',
@@ -86,7 +83,7 @@ class Repository
     foreach ($scope as $key) {
       if (in_array($key, self::INT_KEYS, true)) {
         $value = is_array($input) && isset($input[$key]) ? absint($input[$key]) : 0;
-        $output[$key] = $value > 0 ? $value : $defaults[$key];
+        $output[$key] = $value > 0 ? min(100, $value) : $defaults[$key];
         continue;
       }
 
