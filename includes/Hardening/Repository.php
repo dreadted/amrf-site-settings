@@ -38,7 +38,7 @@ class Repository
       'disable_author_archives' => true,
       'redirect_404_to_home' => true,
       'remove_jquery_migrate' => true,
-      'disable_generated_image_sizes' => false,
+      'disable_generated_image_sizes' => true,
       'disable_site_search' => false,
       'restrict_site_to_logged_in' => false,
       'convert_uploads_to_webp' => false,

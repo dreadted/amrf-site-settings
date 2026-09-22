@@ -34,6 +34,8 @@ class Provider
   private const TAB_PAGE_SLUG_IMAGES = 'amrf-site-settings-hardening-images';
   private const TAB_PAGE_SLUG_FRONTEND = 'amrf-site-settings-hardening-frontend';
   private const UPLOAD_HASH_META_KEY = '_amrf_upload_hash';
+  // WordPress's own built-in sizes — a theme's own add_image_size() registrations are left alone.
+  private const CORE_DEFAULT_IMAGE_SIZES = ['thumbnail', 'medium', 'medium_large', 'large', '1536x1536', '2048x2048'];
 
   private SettingsRenderer $renderer;
 
@@ -113,8 +115,7 @@ class Provider
 
     if ($settings['disable_generated_image_sizes']) {
       add_filter('wp_img_tag_add_decoding_attr', '__return_false');
-      add_action('intermediate_image_sizes_advanced', fn() => []);
-      add_filter('big_image_size_threshold', '__return_false');
+      add_filter('intermediate_image_sizes_advanced', [$this, 'removeCoreDefaultImageSizes']);
     }
 
     if ($settings['disable_site_search']) {
@@ -379,6 +380,19 @@ class Provider
   }
 
   /**
+   * @param array<string, array<string, mixed>> $sizes
+   * @return array<string, array<string, mixed>>
+   */
+  public function removeCoreDefaultImageSizes(array $sizes): array
+  {
+    foreach (self::CORE_DEFAULT_IMAGE_SIZES as $name) {
+      unset($sizes[$name]);
+    }
+
+    return $sizes;
+  }
+
+  /**
    * Forces every raster size WP_Image_Editor generates — uploads, regenerated
    * attachment metadata, `wp media regenerate` — to be saved as WebP.
    *
@@ -612,7 +626,7 @@ class Provider
       ],
       'disable_generated_image_sizes' => [
         __('Disable generated image sizes', 'amrf-admin'),
-        __('Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress\'s own generated image sizes.', 'amrf-admin'),
+        __('Stops WordPress from generating its own default image sizes (thumbnail, medium, medium_large, large, 1536x1536, 2048x2048). Sizes a theme registers itself are unaffected.', 'amrf-admin'),
       ],
     ];
 
