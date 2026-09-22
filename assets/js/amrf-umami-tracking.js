@@ -1,20 +1,3 @@
-// Loads Umami's tracker for logged-out visitors only.
-const addUmamiTracking = () => {
-  if (
-    !document.body.classList.contains("logged-in") &&
-    typeof umamiSite !== "undefined" &&
-    umamiSite &&
-    typeof umamiScriptUrl !== "undefined" &&
-    umamiScriptUrl
-  ) {
-    let script = document.createElement("script");
-    script.src = umamiScriptUrl;
-    script.defer = true;
-    script.setAttribute("data-website-id", umamiSite);
-    document.head.appendChild(script);
-  }
-};
-
 // Wires matched elements to umami.track() via a real click listener, not
 // Umami's own data-umami-event auto-tracking — for an <a>, that auto-tracking
 // calls preventDefault() and manually navigates to its href once the tracking
@@ -86,7 +69,6 @@ const trackOutboundLinks = () => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  addUmamiTracking();
   trackButtons();
   trackOutboundLinks();
 });

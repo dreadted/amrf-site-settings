@@ -22,6 +22,7 @@ class Provider
   private const PAGE_SLUG = 'amrf-site-settings-umami';
   private const OPTION_GROUP = 'amrf_umami_group';
   private const SCRIPT_HANDLE = 'amrf-umami-tracking';
+  private const TRACKER_HANDLE = 'amrf-umami-tracker';
   private const ANALYTICS_MENU_SLUG = 'umami-analytics';
 
   public function __construct()
@@ -213,8 +214,16 @@ class Provider
   }
 
   /**
-   * Front-end only. Skips the inline script entirely when umami_site is
-   * empty, avoiding an empty-string data-website-id attribute.
+   * Front-end only. Skips self::TRACKER_HANDLE entirely when umami_site is
+   * empty (avoiding an empty-string data-website-id) or the visitor is
+   * logged in.
+   *
+   * The tracker is enqueued as a real <script defer> tag rather than
+   * injected via JS after DOMContentLoaded — that used to arrive so late
+   * that the theme's <link rel="preconnect"> to this same host went unused
+   * (connection long idle by the time the request happened). A real tag
+   * lets the browser's preload scanner find it during initial HTML parsing,
+   * close enough to the preconnect for it to matter.
    *
    * @return void
    */
@@ -230,20 +239,36 @@ class Provider
       ['strategy' => 'defer', 'in_footer' => true]
     );
 
-    if (!empty($settings['site'])) {
-      // amrf_umami_tracked_buttons: optional {selector, name}[] override, checked
-      // before the generic button_selectors sweep — lets a theme pin an exact
-      // event name onto a specific element instead of relying on its own text.
-      $button_overrides = apply_filters('amrf_umami_tracked_buttons', []);
+    // amrf_umami_tracked_buttons: optional {selector, name}[] override, checked
+    // before the generic button_selectors sweep — lets a theme pin an exact
+    // event name onto a specific element instead of relying on its own text.
+    $button_overrides = apply_filters('amrf_umami_tracked_buttons', []);
 
-      wp_add_inline_script(
-        self::SCRIPT_HANDLE,
-        'const umamiSite = ' . wp_json_encode($settings['site']) . ';'
-        . 'const umamiScriptUrl = ' . wp_json_encode('https://' . $settings['host'] . '/script.js') . ';'
-        . 'const amrfUmamiButtonSelectors = ' . wp_json_encode(Repository::getButtonSelectors()) . ';'
-        . 'const amrfUmamiButtonOverrides = ' . wp_json_encode($button_overrides) . ';'
-        . 'const amrfUmamiPageTitle = ' . wp_json_encode(wp_get_document_title()) . ';'
-      );
+    wp_add_inline_script(
+      self::SCRIPT_HANDLE,
+      'const amrfUmamiButtonSelectors = ' . wp_json_encode(Repository::getButtonSelectors()) . ';'
+      . 'const amrfUmamiButtonOverrides = ' . wp_json_encode($button_overrides) . ';'
+      . 'const amrfUmamiPageTitle = ' . wp_json_encode(wp_get_document_title()) . ';'
+    );
+
+    if (empty($settings['site']) || is_user_logged_in()) {
+      return;
     }
+
+    wp_enqueue_script(
+      self::TRACKER_HANDLE,
+      'https://' . $settings['host'] . '/script.js',
+      [],
+      null,
+      ['strategy' => 'defer', 'in_footer' => false]
+    );
+
+    add_filter('script_loader_tag', function (string $tag, string $handle) use ($settings): string {
+      if ($handle !== self::TRACKER_HANDLE) {
+        return $tag;
+      }
+
+      return str_replace('<script ', '<script data-website-id="' . esc_attr($settings['site']) . '" ', $tag);
+    }, 10, 2);
   }
 }
