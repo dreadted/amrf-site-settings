@@ -14,10 +14,7 @@
  * that declares the former should win.
  */
 :root {
-  --fluentform-primary: var(
-    --amrf-button-background,
-    var(--wp--preset--color--primary-500)
-  );
+  --fluentform-primary: var(--amrf-button-background);
   --fluentform-secondary: var(--amrf-input-color),
     var(--wp--preset--color--neutral-900);
   --fluentform-danger: var(--amrf-danger-color);
@@ -48,6 +45,7 @@
 
 /** Fallback for the block editor preview, where FluentForm's own inline reset on this <fieldset> gets stripped. */
 .fluentform fieldset {
+  --focus-ring-color: var(--amrf-focus-ring-color);
   margin: 0;
   border: none;
   padding: 0;
@@ -107,7 +105,11 @@ select.ff-el-form-control option:hover {
  */
 .ff-default .ff-btn-primary:not(.ff_btn_no_style),
 .ff-default .ff-btn-submit:not(.ff_btn_no_style) {
-  background-color: var(--fluentform-primary);
+  background: linear-gradient(
+    to right bottom,
+    var(--wp--preset--color--primary-400),
+    var(--wp--preset--color--primary-500)
+  );
   border-color: var(--fluentform-primary);
   color: var(--amrf-button-text, #fff);
   box-shadow: var(--amrf-button-shadow, none);
@@ -150,6 +152,7 @@ select.ff-el-form-control option:hover {
 
 .fluentform input[type="checkbox"],
 .fluentform input[type="radio"] {
+  appearance: none;
   -webkit-appearance: none;
   border: 1px solid var(--fluentform-border-color);
   border-radius: 4px;
