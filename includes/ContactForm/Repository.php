@@ -183,7 +183,7 @@ class Repository
                         'email' => [
                             'value' => true,
                             'message' => 'This field must contain a valid email',
-                            'global' => false,
+                            'global' => true,
                             'global_message' => 'This field must contain a valid email',
                         ],
                     ],
@@ -487,6 +487,10 @@ class Repository
         $settings = get_option('_fluentform_global_form_settings', []);
         $settings = is_array($settings) ? $settings : [];
         $settings['misc'] = array_merge($settings['misc'] ?? [], self::FLUENTFORM_BASELINE);
+        $messages = self::getSiteLocaleDefaultMessages();
+        if ($messages) {
+            $settings['default_messages'] = $messages;
+        }
         update_option('_fluentform_global_form_settings', $settings);
 
         self::applyContactFormBaseline();
@@ -494,6 +498,28 @@ class Repository
         if (defined('FLUENTMAIL')) {
             self::applyFluentSmtpBaseline();
         }
+    }
+
+    /**
+     * FluentForm's default validation messages translated into the site locale,
+     * since its saved copies otherwise freeze the saving admin's own locale.
+     *
+     * @return array<string, string> Keyed like FluentForm's default_messages; [] if FluentForm is missing.
+     */
+    private static function getSiteLocaleDefaultMessages(): array
+    {
+        $helper = '\FluentForm\App\Helpers\Helper';
+        if (!method_exists($helper, 'globalDefaultMessageSettingFields')) {
+            return [];
+        }
+
+        $switched = switch_to_locale(get_locale());
+        $messages = wp_list_pluck($helper::globalDefaultMessageSettingFields(), 'value');
+        if ($switched) {
+            restore_previous_locale();
+        }
+
+        return $messages;
     }
 
     /** Same one-shot, overwrite-regardless-of-current-values contract as applyFluentFormBaseline(); merges into existing connections rather than replacing them. */

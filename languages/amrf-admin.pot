@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the AMRF Site Settings plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: AMRF Site Settings 0.3.2\n"
+"Project-Id-Version: AMRF Site Settings 0.3.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/amrf-site-settings\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-21T14:04:26+00:00\n"
+"POT-Creation-Date: 2026-09-23T03:40:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -139,7 +139,7 @@ msgid "FluentForm is not active."
 msgstr ""
 
 #: includes/ContactForm/Provider.php:254
-msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: disables IP logging, keeps form analytics on, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. Also renames form ID 1 to \"Kontaktformulär\", replaces its fields with this site's baseline set (name, email, a required message field), and applies this site's baseline confirmation message and email notification to it. If FluentSMTP is active, also adds a baseline SMTP connection to Mailhog (port 1025) using this site's own domain as the sender address, and sets it as the default connection. A one-time action, not a saved setting — resets to off after saving."
+msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: disables IP logging, keeps form analytics on, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. Also writes FluentForm's default validation messages (e.g. \"This field is required\") in the site language, so they no longer follow the saving admin's own language. Also renames form ID 1 to \"Kontaktformulär\", replaces its fields with this site's baseline set (name, email, a required message field), and applies this site's baseline confirmation message and email notification to it. If FluentSMTP is active, also adds a baseline SMTP connection to Mailhog (port 1025) using this site's own domain as the sender address, and sets it as the default connection. A one-time action, not a saved setting — resets to off after saving."
 msgstr ""
 
 #: includes/ContactForm/Provider.php:289
@@ -172,128 +172,120 @@ msgstr ""
 msgid "Forms"
 msgstr ""
 
-#: includes/Hardening/Provider.php:45
-#: includes/Hardening/Provider.php:495
-#: includes/Hardening/Provider.php:496
+#: includes/Hardening/Provider.php:47
+#: includes/Hardening/Provider.php:538
+#: includes/Hardening/Provider.php:539
 msgid "Hardening"
 msgstr ""
 
-#: includes/Hardening/Provider.php:63
+#: includes/Hardening/Provider.php:65
 msgid "There is an error."
 msgstr ""
 
-#: includes/Hardening/Provider.php:199
+#: includes/Hardening/Provider.php:206
 msgid "You are not allowed to upload SVG files."
 msgstr ""
 
-#: includes/Hardening/Provider.php:206
+#: includes/Hardening/Provider.php:213
 msgid "This file does not look like a valid SVG."
 msgstr ""
 
-#: includes/Hardening/Provider.php:213
+#: includes/Hardening/Provider.php:220
 msgid "This SVG could not be sanitized and was rejected."
 msgstr ""
 
 #. translators: %d is the existing attachment's post ID.
-#: includes/Hardening/Provider.php:288
+#: includes/Hardening/Provider.php:294
 #, php-format
 msgid "This image is identical to an existing upload (attachment #%d) and was not saved again."
 msgstr ""
 
-#: includes/Hardening/Provider.php:509
+#: includes/Hardening/Provider.php:552
 msgid "Images"
 msgstr ""
 
-#: includes/Hardening/Provider.php:517
+#: includes/Hardening/Provider.php:560
 msgid "Frontend"
 msgstr ""
 
-#: includes/Hardening/Provider.php:554
-msgid "Optimize non-admin image uploads"
+#: includes/Hardening/Provider.php:597
+msgid "Convert uploads to WebP"
 msgstr ""
 
-#: includes/Hardening/Provider.php:558
-msgid "Automatically shrinks oversized images and converts them to WebP for every image a non-administrator uploads, and blocks exact duplicates of an already-uploaded image. Administrators are unaffected."
+#: includes/Hardening/Provider.php:601
+msgid "Automatically converts every non-WebP image upload to WebP at the quality below, and blocks exact duplicates of an already-uploaded image."
 msgstr ""
 
-#: includes/Hardening/Provider.php:567
-msgid "Max dimensions (px)"
-msgstr ""
-
-#: includes/Hardening/Provider.php:577
-msgid "Restrict media deletion"
-msgstr ""
-
-#: includes/Hardening/Provider.php:578
-msgid "Non-administrators can only delete media library items they uploaded themselves. Without this, WordPress lets anyone who can upload files delete any attachment, regardless of who uploaded it."
-msgstr ""
-
-#: includes/Hardening/Provider.php:581
-msgid "Allow SVG uploads"
-msgstr ""
-
-#: includes/Hardening/Provider.php:582
-msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
-msgstr ""
-
-#: includes/Hardening/Provider.php:585
-msgid "Disable generated image sizes"
-msgstr ""
-
-#: includes/Hardening/Provider.php:586
-msgid "Stops WordPress from generating additional (responsive) image sizes and auto-scaling large uploads. Turn off if this site relies on WordPress's own generated image sizes."
-msgstr ""
-
-#: includes/Hardening/Provider.php:608
-msgid "Disable author archives"
-msgstr ""
-
-#: includes/Hardening/Provider.php:609
-msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
-msgstr ""
-
-#: includes/Hardening/Provider.php:612
-msgid "Redirect 404 pages to the homepage"
-msgstr ""
-
-#: includes/Hardening/Provider.php:613
-msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
-msgstr ""
-
-#: includes/Hardening/Provider.php:616
-msgid "Disable site search"
-msgstr ""
-
-#: includes/Hardening/Provider.php:617
-msgid "Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn't expose a working search box yet."
+#: includes/Hardening/Provider.php:610
+msgid "WebP quality"
 msgstr ""
 
 #: includes/Hardening/Provider.php:620
-msgid "Restrict site to logged-in users"
+msgid "Restrict media deletion"
 msgstr ""
 
 #: includes/Hardening/Provider.php:621
-msgid "Blocks every front-end page for logged-out visitors with a blank placeholder page — the WordPress admin and login screen stay reachable. Use this to preview a site privately before launch."
+msgid "Non-administrators can only delete media library items they uploaded themselves. Without this, WordPress lets anyone who can upload files delete any attachment, regardless of who uploaded it."
 msgstr ""
 
 #: includes/Hardening/Provider.php:624
-msgid "Remove jQuery Migrate"
+msgid "Allow SVG uploads"
 msgstr ""
 
 #: includes/Hardening/Provider.php:625
-msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
+msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
 msgstr ""
 
-#: includes/Hardening/Provider.php:678
-msgid "Width"
+#: includes/Hardening/Provider.php:628
+msgid "Disable generated image sizes"
+msgstr ""
+
+#: includes/Hardening/Provider.php:629
+msgid "Stops WordPress from generating its own default image sizes (thumbnail, medium, medium_large, large, 1536x1536, 2048x2048). Sizes a theme registers itself are unaffected."
+msgstr ""
+
+#: includes/Hardening/Provider.php:654
+msgid "Restrict site to logged-in users"
+msgstr ""
+
+#: includes/Hardening/Provider.php:658
+msgid "Blocks every front-end page for logged-out visitors with a blank placeholder page — the WordPress admin and login screen stay reachable. Use this to preview a site privately before launch."
+msgstr ""
+
+#: includes/Hardening/Provider.php:668
+msgid "Disable author archives"
+msgstr ""
+
+#: includes/Hardening/Provider.php:669
+msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
+msgstr ""
+
+#: includes/Hardening/Provider.php:672
+msgid "Redirect 404 pages to the homepage"
+msgstr ""
+
+#: includes/Hardening/Provider.php:673
+msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
+msgstr ""
+
+#: includes/Hardening/Provider.php:676
+msgid "Disable site search"
+msgstr ""
+
+#: includes/Hardening/Provider.php:677
+msgid "Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn't expose a working search box yet."
+msgstr ""
+
+#: includes/Hardening/Provider.php:680
+msgid "Remove jQuery Migrate"
 msgstr ""
 
 #: includes/Hardening/Provider.php:681
-msgid "Height"
+msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
 msgstr ""
 
-#: includes/Hardening/Provider.php:683
-msgid "Images larger than this, in either dimension, are scaled down proportionally (no cropping) before being converted to WebP."
+#: includes/Hardening/Provider.php:739
+msgid "Applies to both the WebP format conversion above and every automatically generated responsive image size (1–100)."
 msgstr ""
 
 #: includes/Hooks/AdminHooks.php:87
@@ -592,36 +584,36 @@ msgstr ""
 msgid "Social Media"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:111
-#: includes/SupportGenix/Provider.php:112
+#: includes/SupportGenix/Provider.php:176
+#: includes/SupportGenix/Provider.php:177
 msgid "Support Tickets"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:159
+#: includes/SupportGenix/Provider.php:224
 msgid "Apply this site's default settings for Support Genix."
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:164
+#: includes/SupportGenix/Provider.php:229
 msgid "Apply Defaults"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:181
+#: includes/SupportGenix/Provider.php:246
 msgid "Security check failed"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:203
+#: includes/SupportGenix/Provider.php:268
 msgid "Support Genix defaults applied successfully!"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:205
+#: includes/SupportGenix/Provider.php:270
 msgid "There was an error applying the Support Genix defaults."
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:406
+#: includes/SupportGenix/Provider.php:471
 msgid "Ticket"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:486
+#: includes/SupportGenix/Provider.php:551
 msgid "You are not authorized to edit this page."
 msgstr ""
 
@@ -661,52 +653,52 @@ msgstr ""
 msgid "The Swish QR code could not be regenerated — the previous one (if any) is still in use. Try saving again."
 msgstr ""
 
-#: includes/Umami/Provider.php:42
 #: includes/Umami/Provider.php:43
+#: includes/Umami/Provider.php:44
 msgid "Analytics"
 msgstr ""
 
-#: includes/Umami/Provider.php:64
+#: includes/Umami/Provider.php:65
 msgid "Umami ID is not set. Please configure it in the settings."
 msgstr ""
 
-#: includes/Umami/Provider.php:86
+#: includes/Umami/Provider.php:87
 msgid "Umami Settings"
 msgstr ""
 
-#: includes/Umami/Provider.php:87
+#: includes/Umami/Provider.php:88
 msgid "Umami"
 msgstr ""
 
-#: includes/Umami/Provider.php:117
+#: includes/Umami/Provider.php:118
 msgid "Umami Server"
 msgstr ""
 
-#: includes/Umami/Provider.php:124
+#: includes/Umami/Provider.php:125
 msgid "Umami Site"
 msgstr ""
 
-#: includes/Umami/Provider.php:131
+#: includes/Umami/Provider.php:132
 msgid "Umami ID"
 msgstr ""
 
-#: includes/Umami/Provider.php:138
+#: includes/Umami/Provider.php:139
 msgid "Button Selectors"
 msgstr ""
 
-#: includes/Umami/Provider.php:152
+#: includes/Umami/Provider.php:153
 msgid "Egen installation (umami.antropomorf.se)"
 msgstr ""
 
-#: includes/Umami/Provider.php:153
+#: includes/Umami/Provider.php:154
 msgid "Umami Cloud (eu.umami.is)"
 msgstr ""
 
-#: includes/Umami/Provider.php:198
+#: includes/Umami/Provider.php:199
 msgid "One CSS selector per line. Matched elements are tracked automatically, named after their own visible text. Leave empty to use the built-in defaults."
 msgstr ""
 
-#: includes/Utilities/SettingsRenderer.php:85
+#: includes/Utilities/SettingsRenderer.php:96
 msgid "Reset to Defaults"
 msgstr ""
 
