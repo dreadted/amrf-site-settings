@@ -199,3 +199,9 @@ input.ff_gdpr_field:focus {
   font-size: 1rem;
   font-weight: bold;
 }
+
+@media (min-width: 768px) {
+  .frm-fluent-form .ff-name-field-wrapper .ff-t-cell {
+    justify-content: flex-start;
+  }
+}

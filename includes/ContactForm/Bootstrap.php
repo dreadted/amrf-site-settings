@@ -31,5 +31,6 @@ class Bootstrap
         new PrivacyRequests();
         new EmailSignoff();
         new RetentionShortcode();
+        new DefaultMessages();
     }
 }
