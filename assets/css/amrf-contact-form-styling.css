@@ -110,7 +110,7 @@ select.ff-el-form-control option:hover {
     var(--wp--preset--color--primary-400),
     var(--wp--preset--color--primary-500)
   );
-  border-color: var(--fluentform-primary);
+  border-color: var(--wp--preset--color--accent-500);
   color: var(--amrf-button-text, #fff);
   box-shadow: var(--amrf-button-shadow, none);
 }
@@ -123,7 +123,7 @@ select.ff-el-form-control option:hover {
     --amrf-button-hover-background,
     var(--fluentform-primary)
   );
-  border-color: var(--amrf-button-hover-background, var(--fluentform-primary));
+  border-color: var(--wp--preset--color--accent-500);
   opacity: 1;
 }
 
