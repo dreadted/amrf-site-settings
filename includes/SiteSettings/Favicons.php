@@ -52,13 +52,16 @@ class Favicons
     public function renderLinkTags(): void
     {
         $images = get_stylesheet_directory_uri() . '/assets/images';
-        $themeColor = Repository::getSettings()['theme_color'];
+        $settings = Repository::getSettings();
+        $themeColor = $settings['theme_color'];
+        $shortName = $settings['business_name'] ?: get_bloginfo('name');
         ?>
 <link rel="icon" type="image/svg+xml" href="<?php echo esc_url($images . '/favicon.svg'); ?>" />
 <link rel="icon" href="<?php echo esc_url($images . '/favicon.ico'); ?>" />
 <link rel="icon" type="image/png" sizes="192x192" href="<?php echo esc_url($images . '/icon-192.png'); ?>" />
 <link rel="manifest" href="<?php echo esc_url(home_url('/site.webmanifest')); ?>" />
 <meta name="theme-color" content="<?php echo esc_attr($themeColor); ?>" />
+<meta name="apple-mobile-web-app-title" content="<?php echo esc_attr($shortName); ?>" />
         <?php
     }
 
