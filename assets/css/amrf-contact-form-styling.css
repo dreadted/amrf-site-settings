@@ -14,17 +14,12 @@
  * that declares the former should win.
  */
 :root {
-  --fluentform-primary: var(--amrf-button-background);
-  --fluentform-secondary: var(--amrf-input-color),
-    var(--wp--preset--color--neutral-900);
+  --fluentform-primary: var(--amrf-form-primary);
+  --fluentform-secondary: var(--amrf-form-secondary);
   --fluentform-danger: var(--amrf-danger-color);
   --fluentform-border-color: var(--amrf-input-border-color);
-  --fluentform-hover-surface: var(--amrf-button-hover-background),
-    var(--wp--preset--color--secondary-500);
-  --fluentform-border-radius: var(
-    --amrf-button-border-radius,
-    var(--wp--custom--radius-sm, var(--wp--custom--radius-sm, 4px))
-  );
+  --fluentform-hover-surface: var(--amrf-button-hover-background);
+  --fluentform-border-radius: var(--amrf-button-border-radius);
 }
 
 /**
@@ -107,10 +102,10 @@ select.ff-el-form-control option:hover {
 .ff-default .ff-btn-submit:not(.ff_btn_no_style) {
   background: linear-gradient(
     to right bottom,
-    var(--wp--preset--color--primary-400),
-    var(--wp--preset--color--primary-500)
+    var(--amrf-button-primary),
+    var(--amrf-button-secondary)
   );
-  border-color: var(--wp--preset--color--accent-500);
+  border-color: var(--amrf-button-border-color);
   color: var(--amrf-button-text, #fff);
   box-shadow: var(--amrf-button-shadow, none);
 }
@@ -123,7 +118,7 @@ select.ff-el-form-control option:hover {
     --amrf-button-hover-background,
     var(--fluentform-primary)
   );
-  border-color: var(--wp--preset--color--accent-500);
+  border-color: var(--amrf-button-border-color);
   opacity: 1;
 }
 
