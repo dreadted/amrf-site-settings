@@ -56,18 +56,27 @@ class Favicons
         ?>
 <link rel="icon" type="image/svg+xml" href="<?php echo esc_url($images . '/favicon.svg'); ?>" />
 <link rel="icon" href="<?php echo esc_url($images . '/favicon.ico'); ?>" />
-<link rel="apple-touch-icon" href="<?php echo esc_url($images . '/apple-touch-icon.png'); ?>" />
+<link rel="icon" type="image/png" sizes="192x192" href="<?php echo esc_url($images . '/icon-192.png'); ?>" />
 <link rel="manifest" href="<?php echo esc_url(home_url('/site.webmanifest')); ?>" />
 <meta name="theme-color" content="<?php echo esc_attr($themeColor); ?>" />
         <?php
     }
 
     /**
+     * Non-index.php targets go to .htaccess, served without PHP. The touch icon
+     * is root-only: linked in <head>, Android picks it as the tab icon.
+     *
      * @return void
      */
     public function registerRewriteRule(): void
     {
         add_rewrite_rule('^site\.webmanifest$', 'index.php?' . self::QUERY_VAR . '=1', 'top');
+
+        $homePath = trailingslashit((string) wp_parse_url(home_url(), PHP_URL_PATH));
+        $themePath = (string) wp_parse_url(get_stylesheet_directory_uri(), PHP_URL_PATH);
+        $images = substr($themePath, strlen($homePath)) . '/assets/images';
+        add_rewrite_rule('favicon\.ico$', $images . '/favicon.ico', 'top');
+        add_rewrite_rule('apple-touch-icon(-precomposed)?\.png$', $images . '/apple-touch-icon.png', 'top');
     }
 
     /**
