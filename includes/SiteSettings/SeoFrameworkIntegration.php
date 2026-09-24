@@ -2,11 +2,13 @@
 
 namespace Antropomorf\SiteSettings;
 
+use The_SEO_Framework\Helper\Query;
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
-// Feeds this plugin's data into The SEO Framework, which owns all meta/OG/canonical/sitemap output. No-ops if TSF isn't active.
+// Site Settings as front-page fallback for The SEO Framework; any value filled in within TSF wins. No-ops if TSF isn't active.
 class SeoFrameworkIntegration
 {
     public function __construct()
@@ -21,29 +23,64 @@ class SeoFrameworkIntegration
             return;
         }
 
-        add_action('update_option_' . Repository::OPTION_NAME, [$this, 'syncHomepageFields'], 10, 2);
         add_action('update_option_' . Repository::OPTION_NAME, [$this, 'disableConflictingKnowledgeGraph'], 10, 2);
         add_filter('the_seo_framework_schema_graph_data', [$this, 'injectJsonLd']);
+        add_filter('the_seo_framework_title_from_custom_field', [$this, 'fallbackTitle'], 10, 2);
+        add_filter('the_seo_framework_custom_field_description', [$this, 'fallbackDescription'], 10, 2);
+        add_filter('the_seo_framework_generated_image_details', [$this, 'fallbackImage'], 10, 4);
     }
 
-    public function syncHomepageFields(array $old, array $new): void
+    public function fallbackTitle($title, $args = null): string
     {
-        if (
-            ($old['seo_title'] ?? '') === ($new['seo_title'] ?? '')
-            && ($old['meta_description'] ?? '') === ($new['meta_description'] ?? '')
-            && ($old['share_image'] ?? '') === ($new['share_image'] ?? '')
-        ) {
-            return;
+        return $this->fallback((string) $title, 'seo_title', $args);
+    }
+
+    public function fallbackDescription($desc, $args = null): string
+    {
+        return $this->fallback((string) $desc, 'meta_description', $args);
+    }
+
+    // Generated (not custom) so TSF's own custom image still wins; prepended so it beats the featured image.
+    public function fallbackImage($details, $args = null, $single = false, $context = 'social'): array
+    {
+        $details = (array) $details;
+        if ('organization' === $context || !Repository::isSeoOutputEnabled() || !$this->isFrontPage($args)) {
+            return $details;
         }
 
-        $imageUrl = $new['share_image'] ?? '';
+        $url = Repository::getSettings()['share_image'];
+        if (!$url) {
+            return $details;
+        }
 
-        \The_SEO_Framework\Data\Plugin::update_option([
-            'homepage_title' => $new['seo_title'] ?? '',
-            'homepage_description' => $new['meta_description'] ?? '',
-            'homepage_social_image_url' => $imageUrl,
-            'homepage_social_image_id' => $imageUrl ? attachment_url_to_postid($imageUrl) : 0,
-        ]);
+        $image = ['url' => $url, 'id' => attachment_url_to_postid($url)];
+        $src = $image['id'] ? wp_get_attachment_image_src($image['id'], 'full') : false;
+        if ($src) {
+            $image['width'] = $src[1];
+            $image['height'] = $src[2];
+            $image['alt'] = (string) get_post_meta($image['id'], '_wp_attachment_image_alt', true);
+        }
+
+        return $single ? [$image] : [$image, ...$details];
+    }
+
+    private function fallback(string $value, string $key, $args): string
+    {
+        if ('' !== $value || !Repository::isSeoOutputEnabled() || !$this->isFrontPage($args)) {
+            return $value;
+        }
+
+        return Repository::getSettings()[$key];
+    }
+
+    private function isFrontPage($args): bool
+    {
+        if (!is_array($args)) {
+            return Query::is_real_front_page();
+        }
+
+        return empty($args['tax']) && empty($args['pta'])
+            && Query::is_real_front_page_by_id((int) ($args['id'] ?? 0));
     }
 
     // TSF's own Organization/Person node always duplicates injectJsonLd()'s once this plugin's JSON-LD is on.
@@ -62,99 +99,6 @@ class SeoFrameworkIntegration
             return $graph;
         }
 
-        return array_merge($graph, $this->buildJsonLdNodes(Repository::getSettings()));
-    }
-
-    // Zero, one, or two Schema.org entities (Organization/Person).
-    private function buildJsonLdNodes(array $settings): array
-    {
-        $orgId = home_url('/') . '#organization';
-        $personId = home_url('/') . '#person';
-
-        $hasOrg = $settings['business_name'] && $settings['business_type'];
-        $hasPerson = (bool) $settings['person_name'];
-
-        if (!$hasOrg && !$hasPerson) {
-            return [];
-        }
-
-        $sameAs = array_values(array_filter([
-            $settings['facebook_url'],
-            $settings['instagram_url'],
-            $settings['x_url'],
-        ]));
-
-        $organization = null;
-        if ($hasOrg) {
-            $organization = [
-                '@type' => $settings['business_type'],
-                '@id' => $orgId,
-                'name' => $settings['business_name'],
-                'url' => home_url('/'),
-            ];
-
-            $imageUrl = $this->resolveImageUrl($settings);
-            if ($imageUrl) {
-                $organization['image'] = $imageUrl;
-            }
-            if ($settings['street'] && $settings['city']) {
-                $organization['address'] = [
-                    '@type' => 'PostalAddress',
-                    'streetAddress' => $settings['street'],
-                    'postalCode' => $settings['postal_code'],
-                    'addressLocality' => $settings['city'],
-                    'addressRegion' => $settings['region'],
-                    'addressCountry' => $settings['country'],
-                ];
-            }
-            if ($settings['latitude'] && $settings['longitude']) {
-                $organization['geo'] = [
-                    '@type' => 'GeoCoordinates',
-                    'latitude' => (float) $settings['latitude'],
-                    'longitude' => (float) $settings['longitude'],
-                ];
-            }
-            if ($settings['phone']) {
-                $organization['telephone'] = $settings['phone'];
-            }
-            // No 'email' -- it's obfuscated everywhere else it's displayed,
-            // shouldn't leak in plain text here.
-            if ($sameAs) {
-                $organization['sameAs'] = $sameAs;
-            }
-            if ($hasPerson) {
-                $organization['founder'] = ['@id' => $personId];
-            }
-        }
-
-        $person = null;
-        if ($hasPerson) {
-            $person = [
-                '@type' => 'Person',
-                '@id' => $personId,
-                'name' => $settings['person_name'],
-            ];
-
-            if ($settings['job_title']) {
-                $person['jobTitle'] = $settings['job_title'];
-            }
-            if ($hasOrg) {
-                $person['worksFor'] = ['@id' => $orgId];
-            }
-        }
-
-        return array_values(array_filter([$organization, $person]));
-    }
-
-    private function resolveImageUrl(array $settings): string
-    {
-        if (is_singular() && has_post_thumbnail()) {
-            $thumbnail = get_the_post_thumbnail_url(null, 'large');
-            if ($thumbnail) {
-                return $thumbnail;
-            }
-        }
-
-        return $settings['share_image'];
+        return array_merge($graph, JsonLd::buildNodes(Repository::getSettings()));
     }
 }

@@ -19,6 +19,7 @@ class Bootstrap
 
         new Provider();
         new SeoFrameworkIntegration();
+        new SeoOutput();
         new Favicons();
         new LoginBranding();
         new SettingShortcode();
