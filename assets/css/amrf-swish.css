@@ -8,9 +8,10 @@
  */
 .amrf-swish-qr-wrap {
   display: block;
+  background: var(--amrf-card-background, #fff);
+  color: var(--amrf-card-text, #111);
   width: 10rem;
   margin-block: 1.5rem;
-  background: var(--amrf-card-background, #fff);
   border: var(--amrf-card-border);
   border-radius: var(--amrf-card-border-radius, 8px);
   box-shadow: var(--amrf-card-box-shadow, 0 2px 10px rgba(0, 0, 0, 0.12));
