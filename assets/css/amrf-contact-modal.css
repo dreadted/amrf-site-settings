@@ -88,6 +88,6 @@
 
 @media (max-width: 24rem) {
   .amrf-contact-modal {
-    padding: 1rem;
+    padding: 1rem 1rem 3rem;
   }
 }
