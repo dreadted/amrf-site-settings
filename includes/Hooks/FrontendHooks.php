@@ -341,6 +341,7 @@ class FrontendHooks
 
   /**
    * Remove all admin bar items except specific allowed ones for non-admin users.
+   * Themes/plugins can keep their own nodes via the amrf_admin_bar_allowed_nodes filter.
    *
    * @return void
    */
@@ -368,6 +369,7 @@ class FrontendHooks
         'view-site',
         'wp-logo',
       ];
+      $allowed = (array) apply_filters('amrf_admin_bar_allowed_nodes', $allowed);
 
       foreach ($nodes as $node) {
         if (!in_array($node->id, $allowed, true)) {
