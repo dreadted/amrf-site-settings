@@ -33,6 +33,16 @@ function amrf_get_swish_settings(): array
 }
 
 /**
+ * The form chosen as Default Contact Form, or 0 for "None".
+ *
+ * @return int
+ */
+function amrf_get_default_contact_form_id(): int
+{
+    return \Antropomorf\ContactForm\Repository::getDefaultContactFormId();
+}
+
+/**
  * Swish's own deep-link URL, or '' if no number is set.
  *
  * @param string $swish_number
