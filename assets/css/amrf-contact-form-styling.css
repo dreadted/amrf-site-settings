@@ -100,11 +100,7 @@ select.ff-el-form-control option:hover {
  */
 .ff-default .ff-btn-primary:not(.ff_btn_no_style),
 .ff-default .ff-btn-submit:not(.ff_btn_no_style) {
-  background: linear-gradient(
-    to right bottom,
-    var(--amrf-button-primary),
-    var(--amrf-button-secondary)
-  );
+  background: var(--amrf-button-background);
   border-color: var(--amrf-button-border-color);
   color: var(--amrf-button-text, #fff);
   box-shadow: var(--amrf-button-shadow, none);
