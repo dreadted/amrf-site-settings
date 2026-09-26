@@ -477,7 +477,14 @@ class Provider
       return;
     }
 
-    wp_safe_redirect(home_url(), 301);
+    // Machine-read files (RFC 8615): a probe must get a real 404, not homepage HTML.
+    $path = (string) wp_parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+    if (str_starts_with($path, '/.well-known/')) {
+      return;
+    }
+
+    // Not 301: browsers cache it, so a republished page would keep redirecting.
+    wp_safe_redirect(home_url(), 302);
     exit;
   }
 
