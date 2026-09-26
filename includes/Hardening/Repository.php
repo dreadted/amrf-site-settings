@@ -36,6 +36,8 @@ class Repository
       'restrict_media_deletion' => false,
       'allow_svg_uploads' => true,
       'disable_author_archives' => true,
+      'disable_posts' => true,
+      'disable_comments' => true,
       'redirect_404_to_home' => true,
       'remove_jquery_migrate' => true,
       'disable_generated_image_sizes' => true,
@@ -72,6 +74,8 @@ class Repository
       ],
       self::OPTION_GROUP_FRONTEND => [
         'disable_author_archives',
+        'disable_posts',
+        'disable_comments',
         'redirect_404_to_home',
         'disable_site_search',
         'restrict_site_to_logged_in',

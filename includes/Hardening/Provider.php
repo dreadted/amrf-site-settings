@@ -105,6 +105,27 @@ class Provider
       add_filter('wp_sitemaps_add_provider', [$this, 'removeUsersSitemapProvider'], 10, 2);
     }
 
+    // Priority 1: the 404 must be set before redirect404ToHome() runs at 10.
+    if ($settings['disable_posts']) {
+      add_action('template_redirect', [$this, 'disablePostRequests'], 1);
+      add_filter('feed_links_show_posts_feed', '__return_false');
+      add_filter('feed_links_extra_show_category_feed', '__return_false');
+      add_filter('feed_links_extra_show_tag_feed', '__return_false');
+      add_filter('feed_links_extra_show_author_feed', '__return_false');
+      add_filter('feed_links_extra_show_search_feed', '__return_false');
+      add_filter('wp_sitemaps_post_types', [$this, 'removePostsFromSitemaps']);
+      add_filter('wp_sitemaps_taxonomies', [$this, 'removePostTaxonomiesFromSitemaps']);
+    }
+
+    if ($settings['disable_comments']) {
+      add_action('template_redirect', [$this, 'disableCommentFeeds'], 1);
+      add_filter('comments_open', '__return_false', 20);
+      add_filter('pings_open', '__return_false', 20);
+      add_filter('comments_array', '__return_empty_array', 20);
+      add_filter('feed_links_show_comments_feed', '__return_false');
+      add_filter('feed_links_extra_show_post_comments_feed', '__return_false');
+    }
+
     if ($settings['redirect_404_to_home']) {
       add_action('template_redirect', [$this, 'redirect404ToHome']);
     }
@@ -462,6 +483,55 @@ class Provider
     return $name === 'users' ? null : $provider;
   }
 
+  public function disablePostRequests(): void
+  {
+    $is_posts_page = is_home() && !is_front_page();
+    // /feed/ matches neither is_home() nor any archive, so posts feeds are matched by exclusion.
+    $is_posts_feed = is_feed() && !is_comment_feed() && !is_post_type_archive() && !is_tax();
+
+    if (is_singular('post') || is_category() || is_tag() || is_date() || $is_posts_page || $is_posts_feed) {
+      $this->force404();
+    }
+  }
+
+  public function disableCommentFeeds(): void
+  {
+    if (is_comment_feed()) {
+      $this->force404();
+    }
+  }
+
+  private function force404(): void
+  {
+    global $wp_query;
+
+    $wp_query->set_404();
+    // set_404() keeps is_feed, which would still let template-loader.php call do_feed().
+    $wp_query->is_feed = false;
+    status_header(404);
+    nocache_headers();
+  }
+
+  /**
+   * @param array<string, \WP_Post_Type> $post_types
+   * @return array<string, \WP_Post_Type>
+   */
+  public function removePostsFromSitemaps(array $post_types): array
+  {
+    unset($post_types['post']);
+    return $post_types;
+  }
+
+  /**
+   * @param array<string, \WP_Taxonomy> $taxonomies
+   * @return array<string, \WP_Taxonomy>
+   */
+  public function removePostTaxonomiesFromSitemaps(array $taxonomies): array
+  {
+    unset($taxonomies['category'], $taxonomies['post_tag']);
+    return $taxonomies;
+  }
+
   /**
    * @return void
    */
@@ -674,6 +744,14 @@ class Provider
       'disable_author_archives' => [
         __('Disable author archives', 'amrf-admin'),
         __('Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs.', 'amrf-admin'),
+      ],
+      'disable_posts' => [
+        __('Disable blog posts', 'amrf-admin'),
+        __('For sites built from pages only. Posts, category, tag and date archives, and the RSS feeds return a 404 (then redirect to the homepage if "Redirect 404 pages to the homepage" is on), and posts are left out of the WordPress sitemap. Existing posts and the admin are unaffected.', 'amrf-admin'),
+      ],
+      'disable_comments' => [
+        __('Disable comments', 'amrf-admin'),
+        __('Closes comments, pingbacks and trackbacks on all content regardless of each page\'s discussion settings, hides already approved comments, and turns the comment feeds into a 404.', 'amrf-admin'),
       ],
       'redirect_404_to_home' => [
         __('Redirect 404 pages to the homepage', 'amrf-admin'),
