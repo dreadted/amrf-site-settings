@@ -80,6 +80,10 @@ class FrontendHooks
     // below make it a no-op for admins/actual form managers.
     add_action('admin_init', [self::class, 'redirectFluentFormsMainPageForNonManagers']);
 
+    add_filter('litespeed_bypass_metabox', function ($bypass) {
+      return $bypass || !current_user_can('administrator');
+    });
+
     if (!empty($settings['user_group_settings'])) {
       $user_group_settings = $settings['user_group_settings'];
 
