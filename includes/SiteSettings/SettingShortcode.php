@@ -16,6 +16,7 @@ if (!defined('ABSPATH')) {
  * Restricted to the identity/contact fields a page's body content would
  * plausibly reference — never the SEO/social fields (getFields()'s "seo"/
  * "social" sections), which aren't meant to appear as inline prose.
+ * field="domain" gives the site's own host name (e.g. "example.se").
  *
  * @package Antropomorf\SiteSettings
  */
@@ -46,6 +47,10 @@ class SettingShortcode
     {
         $atts = shortcode_atts(['field' => ''], $atts);
         $field = (string) $atts['field'];
+
+        if ($field === 'domain') {
+            return esc_html(preg_replace('/^www\./', '', (string) wp_parse_url(home_url(), PHP_URL_HOST)));
+        }
 
         if (!in_array($field, self::ALLOWED_FIELDS, true)) {
             return '';
