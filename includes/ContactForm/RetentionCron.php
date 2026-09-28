@@ -2,6 +2,8 @@
 
 namespace Antropomorf\ContactForm;
 
+use FluentForm\App\Services\Submission\SubmissionService;
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -9,8 +11,9 @@ if (!defined('ABSPATH')) {
 /**
  * Class RetentionCron
  *
- * Daily cleanup of old FluentForm submissions — FluentForm's free tier
+ * Daily cleanup of old FluentForm submissions and form-view statistics — FluentForm's free tier
  * saves its own per-form "auto_delete_days" setting but never acts on it.
+ * Newsletter consent is logged in FluentCRM, so opt-in submissions expire too.
  *
  * @package Antropomorf\ContactForm
  */
@@ -44,7 +47,7 @@ class RetentionCron
      */
     public function run(): void
     {
-        if (!shortcode_exists('fluentform')) {
+        if (!class_exists(SubmissionService::class)) {
             return;
         }
 
@@ -61,8 +64,25 @@ class RetentionCron
         global $wpdb;
         $placeholders = implode(',', array_fill(0, count($form_ids), '%d'));
 
+        $rows = $wpdb->get_results($wpdb->prepare(
+            "SELECT id, form_id FROM {$wpdb->prefix}fluentform_submissions WHERE form_id IN ($placeholders) AND created_at < DATE_SUB(NOW(), INTERVAL %d DAY)",
+            array_merge($form_ids, [$days])
+        ));
+
+        $expired = [];
+        foreach ($rows as $row) {
+            $expired[(int) $row->form_id][] = (int) $row->id;
+        }
+
+        // Also clears entry_details, submission_meta and logs, which hold copies of the email.
+        $submissions = new SubmissionService();
+        foreach ($expired as $form_id => $ids) {
+            $submissions->deleteEntries($ids, $form_id);
+        }
+
+        // Form-view statistics log every visitor's IP, whether they submit or not.
         $wpdb->query($wpdb->prepare(
-            "DELETE FROM {$wpdb->prefix}fluentform_submissions WHERE form_id IN ($placeholders) AND created_at < DATE_SUB(NOW(), INTERVAL %d DAY)",
+            "DELETE FROM {$wpdb->prefix}fluentform_form_analytics WHERE form_id IN ($placeholders) AND created_at < DATE_SUB(NOW(), INTERVAL %d DAY)",
             array_merge($form_ids, [$days])
         ));
     }
