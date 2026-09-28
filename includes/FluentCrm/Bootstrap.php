@@ -18,5 +18,9 @@ class Bootstrap
     new Provider();
     new PublicStyles();
     new AdminAccess();
+    new ConsentLog();
+    new ContactReducer();
+    new DoNotContact();
+    new PrivacyEraser();
   }
 }
