@@ -2,6 +2,8 @@
 
 namespace Antropomorf\ContactForm;
 
+use FluentForm\App\Services\Submission\SubmissionService;
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -154,25 +156,27 @@ class PrivacyRequests
      * — nothing about a private contact-form entry needs a public presence
      * to survive an erasure request the way, say, a comment thread might.
      *
+     * Scans every submission in one call: paging with OFFSET while deleting
+     * would shift rows past the next page's offset and skip them.
+     *
      * @return array{items_removed: bool, items_retained: bool, messages: array, done: bool}
      */
     public function erasePersonalData(string $email_address, int $page = 1): array
     {
         $form_ids = Repository::getContactFormIds();
-        if (empty($form_ids)) {
+        if (empty($form_ids) || !class_exists(SubmissionService::class)) {
             return ['items_removed' => false, 'items_retained' => false, 'messages' => [], 'done' => true];
         }
 
         global $wpdb;
-        $offset = ($page - 1) * self::PER_PAGE;
         $placeholders = implode(',', array_fill(0, count($form_ids), '%d'));
 
         $rows = $wpdb->get_results($wpdb->prepare(
-            "SELECT id, response FROM {$wpdb->prefix}fluentform_submissions WHERE form_id IN ($placeholders) ORDER BY id ASC LIMIT %d OFFSET %d",
-            array_merge($form_ids, [self::PER_PAGE, $offset])
+            "SELECT id, form_id, response FROM {$wpdb->prefix}fluentform_submissions WHERE form_id IN ($placeholders)",
+            $form_ids
         ));
 
-        $items_removed = false;
+        $matches = [];
         foreach ($rows as $row) {
             $data = $this->decodeResponse($row->response);
             if (!$data) {
@@ -180,19 +184,22 @@ class PrivacyRequests
             }
 
             $found_email = $this->findEmail($data);
-            if ($found_email === null || strcasecmp($found_email, $email_address) !== 0) {
-                continue;
+            if ($found_email !== null && strcasecmp($found_email, $email_address) === 0) {
+                $matches[(int) $row->form_id][] = (int) $row->id;
             }
+        }
 
-            $wpdb->delete("{$wpdb->prefix}fluentform_submissions", ['id' => $row->id], ['%d']);
-            $items_removed = true;
+        // Also clears entry_details, submission_meta and logs, which hold copies of the email.
+        $submissions = new SubmissionService();
+        foreach ($matches as $form_id => $ids) {
+            $submissions->deleteEntries($ids, $form_id);
         }
 
         return [
-            'items_removed' => $items_removed,
+            'items_removed' => !empty($matches),
             'items_retained' => false,
             'messages' => [],
-            'done' => count($rows) < self::PER_PAGE,
+            'done' => true,
         ];
     }
 }
