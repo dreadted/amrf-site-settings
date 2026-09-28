@@ -196,6 +196,12 @@ triggered and nothing happens.
 This plugin is fully **translation-ready**. The `.pot` file is in the
 `languages` folder, alongside a complete Swedish (`sv_SE`) translation.
 
+It also bundles its own Swedish translations for **Fluent Forms** (complete)
+and **FluentCRM** (the visitor-facing pages plus contacts, lists, tags and
+campaigns). They're loaded straight from this plugin's `languages` folder and
+take precedence over any wordpress.org language pack — no files need to be
+copied into `wp-content/languages`.
+
 ## License
 
 This plugin is licensed under the GNU General Public License v2.0 or later.

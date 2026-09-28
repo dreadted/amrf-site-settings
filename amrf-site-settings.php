@@ -66,6 +66,7 @@ use Antropomorf\Umami\Bootstrap as UmamiBootstrap;
 use Antropomorf\Branding\Bootstrap as BrandingBootstrap;
 use Antropomorf\FluentFormValidation\Bootstrap as FluentFormValidationBootstrap;
 use Antropomorf\FluentCrm\Bootstrap as FluentCrmBootstrap;
+use Antropomorf\Translations\Bootstrap as TranslationsBootstrap;
 use Antropomorf\Hardening\Bootstrap as HardeningBootstrap;
 
 AdminHooks::register();
@@ -79,4 +80,5 @@ UmamiBootstrap::register();
 BrandingBootstrap::register();
 FluentFormValidationBootstrap::register();
 FluentCrmBootstrap::register();
+TranslationsBootstrap::register();
 HardeningBootstrap::register();
