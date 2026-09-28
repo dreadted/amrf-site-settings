@@ -177,7 +177,16 @@ wp plugin install https://github.com/dreadted/amrf-site-settings/releases/latest
 Yes. Each role's tab under **Admin Panel Settings** shows every admin menu
 item currently registered on the site (scanned live, so it stays accurate
 as other plugins add their own menus) as a checklist — check the ones that
-role should see.
+role should see. Submenu items are listed individually, including those of
+plugins such as FluentCRM or Fluent Forms, so a role can get only part of a
+plugin's menu.
+
+A checked item is an upper limit, not a grant: it only shows up if the
+plugin itself also lets that role see it. For plugins whose submenu items
+are in-app routes (`page#/…`, e.g. FluentCRM), unchecking only hides the
+link — the plugin's own permissions decide what the role can open.
+Menu items tied to an access toggle on the same tab (Site Settings Access,
+Form Entries Access) follow that toggle and aren't listed as checkboxes.
 
 ### Do I have to configure every Site Settings tab?
 

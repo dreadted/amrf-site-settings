@@ -17,6 +17,10 @@ use Antropomorf\Utilities\MenuScanner;
  */
 class Manager
 {
+	/** Menu slugs added/removed by an access toggle on save, so not offered as checkboxes. */
+	private const SITE_SETTINGS_MENU_SLUGS = ['amrf-site-settings', 'amrf-site-settings-gdpr'];
+	private const FLUENTFORM_ENTRIES_MENU_SLUG = 'fluent_forms_all_entries';
+
 	private array $roles;
 	private array $menuItems;
 
@@ -309,7 +313,7 @@ class Manager
 	 */
 	private function syncSiteSettingsAllowedMenuItems(array &$current, string $role): void
 	{
-		$menuSlugs = ['amrf-site-settings', 'amrf-site-settings-gdpr'];
+		$menuSlugs = self::SITE_SETTINGS_MENU_SLUGS;
 		$allowed = $current['user_group_settings'][$role]['allowed_menu_items'];
 
 		if (!empty($current['user_group_settings'][$role]['site_menus_cap'])) {
@@ -356,7 +360,7 @@ class Manager
 	 */
 	private function syncFluentFormEntriesAllowedMenuItem(array &$current, string $role): void
 	{
-		$menuSlug = 'fluent_forms_all_entries';
+		$menuSlug = self::FLUENTFORM_ENTRIES_MENU_SLUG;
 		$allowed = $current['user_group_settings'][$role]['allowed_menu_items'];
 
 		if (!empty($current['user_group_settings'][$role]['fluentform_entries_access'])) {
@@ -577,7 +581,11 @@ class Manager
 
 		// Allowed Menu Items
 		echo '<div class="setting-row"><h4>' . esc_html__('Allowed Menu Items', 'amrf-admin') . '</h4><div class="menu-items-container">';
+		$toggleOwned = [...self::SITE_SETTINGS_MENU_SLUGS, self::FLUENTFORM_ENTRIES_MENU_SLUG];
 		foreach ($this->menuItems[$role]['menu_items'] as $item) {
+			if (in_array($item['slug'], $toggleOwned, true)) {
+				continue;
+			}
 			$checked = in_array($item['slug'], $allowed, true) ? 'checked' : '';
 			printf(
 				'<div class="menu-item-checkbox"><input type="checkbox" name="%1$s[user_group_settings][%2$s][allowed_menu_items][]" value="%3$s" %4$s /><label>%5$s <code>%3$s</code></label></div>',

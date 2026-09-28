@@ -51,21 +51,24 @@ class MenuScanner
 							continue;
 						}
 
-						// Core WP pages (.php slugs) and this plugin's own submenus only —
-						// excludes third-party plugins' custom tabs/settings pages.
-						if (strpos($item[2], '.php') === false && strpos($item[2], 'amrf-') !== 0) continue;
+						$parent_name = '';
+						foreach ($menu as $top) {
+							if (! empty($top[2]) && $top[2] === $parent) {
+								$parent_name = self::getCleanMenuName($top[0]);
+								break;
+							}
+						}
 
-							$subname = self::getCleanMenuName($item[0]);
-							$parent_name = '';
-							foreach ($menu as $top) {
-								if (! empty($top[2]) && $top[2] === $parent) {
-									$parent_name = self::getCleanMenuName($top[0]);
-									break;
-								}
-							}
-							if ($parent_name !== '') {
-								$subname = $parent_name . ' / ' . $subname;
-							}
+						// Third-party entries: only admin pages under a visible top-level menu, not external (upsell) links.
+						$is_core_or_own = strpos($item[2], '.php') !== false || strpos($item[2], 'amrf-') === 0;
+						if (!$is_core_or_own && ($parent_name === '' || preg_match('#^https?://#i', $item[2]))) {
+							continue;
+						}
+
+						$subname = self::getCleanMenuName($item[0]);
+						if ($parent_name !== '') {
+							$subname = $parent_name . ' / ' . $subname;
+						}
 
 						$exists = false;
 						foreach ($all[$role_slug]['menu_items'] as $existing) {
