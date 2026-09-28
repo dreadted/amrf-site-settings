@@ -11,7 +11,7 @@ A WordPress plugin with general site settings for
 - [Analytics tracking with Umami](#umami-settings)
 - [Security hardening](#hardening)
 - [Customizing admin panels for user roles](#per-role-admin-panel-control)
-- [Optional integrations for Fluent Forms & Support Genix Lite](#optional-integrations)
+- [Optional integrations for Fluent Forms, FluentCRM & Support Genix Lite](#optional-integrations)
 
 ## Author
 
@@ -141,6 +141,10 @@ otherwise they're inert:
 
 - Adding Swedish personal identity number (personnummer) validation and display formatting for any text field marked with the specific CSS class `ff-personnummer`, on top of the Contact Forms handling above.
 
+#### FluentCRM
+
+- Blocks FluentCRM's visitor identification cookies (`fc_hash_secure`, `fc_cid`), including the ones its unsubscribe, confirmation and manage-subscription pages set regardless of its own `fluent_crm/will_use_cookie` filter.
+
 #### Support Genix Lite
 
 - Adds a "Support Tickets" admin menu (an iframe onto the front-end ticket portal)
@@ -150,7 +154,7 @@ otherwise they're inert:
 
 - [WordPress](https://wordpress.org/) 5.6 or later (tested up to 7.1)
 - [PHP](https://www.php.net/) 8.3 or later
-- [Fluent Forms](https://wordpress.org/plugins/fluentform/) and/or [Support Genix Lite](https://wordpress.org/plugins/support-genix-lite/), only if you want the optional integrations above — the plugin works fully without them.
+- [Fluent Forms](https://wordpress.org/plugins/fluentform/), [FluentCRM](https://wordpress.org/plugins/fluent-crm/) and/or [Support Genix Lite](https://wordpress.org/plugins/support-genix-lite/), only if you want the optional integrations above — the plugin works fully without them.
 
 ## Installation
 
@@ -181,7 +185,7 @@ No. Each tab/page saves independently and most start in a safe, inert
 state (SEO output is off by default, for example) — turn on only what a
 given site needs.
 
-### Will this break a site that doesn't use Fluent Forms or Support Genix Lite?
+### Will this break a site that doesn't use Fluent Forms, FluentCRM or Support Genix Lite?
 
 No. The integrations for those plugins hook onto filters/actions those
 plugins define — if the plugin isn't installed, the hook is simply never

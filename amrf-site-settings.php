@@ -65,6 +65,7 @@ use Antropomorf\SupportGenix\Bootstrap as SupportGenixBootstrap;
 use Antropomorf\Umami\Bootstrap as UmamiBootstrap;
 use Antropomorf\Branding\Bootstrap as BrandingBootstrap;
 use Antropomorf\FluentFormValidation\Bootstrap as FluentFormValidationBootstrap;
+use Antropomorf\FluentCrm\Bootstrap as FluentCrmBootstrap;
 use Antropomorf\Hardening\Bootstrap as HardeningBootstrap;
 
 AdminHooks::register();
@@ -77,4 +78,5 @@ SupportGenixBootstrap::register();
 UmamiBootstrap::register();
 BrandingBootstrap::register();
 FluentFormValidationBootstrap::register();
+FluentCrmBootstrap::register();
 HardeningBootstrap::register();
