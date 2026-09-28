@@ -73,6 +73,10 @@ select.ff-el-form-control option:hover {
   margin-top: 0;
 }
 
+.fluentform .ff-el-group.ff_submit_btn_wrapper {
+  margin-block: 0;
+}
+
 /**
  * FluentForm's own default stylesheet hardcodes .ff_btn_style's
  * border-radius (7px) and font-size (16px) rather than using

@@ -145,20 +145,6 @@ class Modal
           <span aria-hidden="true">&times;</span>
         </button>
         <?php echo $this->formHtml; ?>
-        <p class="amrf-contact-modal-privacy-note">
-          <?php
-          // Only returns a URL once the privacy policy page is published.
-          $policy_url = get_privacy_policy_url();
-          $link_open = $policy_url ? '<a href="' . esc_url($policy_url) . '">' : '';
-          $link_close = $policy_url ? '</a>' : '';
-          printf(
-            /* translators: 1: opening <a> tag to the privacy policy (omitted if it isn't published yet), 2: closing </a> tag */
-            esc_html__('We process your personal data to answer your message. Read more in our %1$sprivacy policy%2$s.', 'amrf-admin'),
-            $link_open,
-            $link_close
-          );
-          ?>
-        </p>
       </div>
     </div>
 <?php
