@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Fluent Forms 6.2.13\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/fluentform\n"
 "POT-Creation-Date: 2026-09-23T03:28:32+00:00\n"
-"PO-Revision-Date: 2026-09-23 12:00+0200\n"
+"PO-Revision-Date: 2026-09-28 08:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -13,6 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: fluentform\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #. Plugin Name of the plugin
 #: fluentform.php app/Modules/Registerer/AdminBar.php:112
@@ -22,7 +23,7 @@ msgstr ""
 #: app/Modules/Widgets/FluentFormWidget.php:100
 #: app/Modules/Widgets/OxygenWidget.php:41
 msgid "Fluent Forms"
-msgstr "Fluent Forms"
+msgstr "Formulär"
 
 #. Plugin URI of the plugin
 #: fluentform.php
@@ -1488,7 +1489,7 @@ msgstr ""
 
 #. translators: %activeStep% is the current step number, %totalStep% is the total number of steps, %stepTitle% is the step title
 #: app/Modules/Component/Component.php:628
-#, php-format
+#, no-php-format
 msgid "Step %activeStep% of %totalStep% - %stepTitle%"
 msgstr "Steg %activeStep% av %totalStep% - %stepTitle%"
 

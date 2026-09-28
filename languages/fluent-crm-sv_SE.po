@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FluentCRM - Marketing Automation For WordPress 3.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/fluent-crm\n"
+"POT-Creation-Date: 2026-09-28T03:45:34+00:00\n"
+"PO-Revision-Date: 2026-09-28 08:13+0200\n"
 "Last-Translator: Christofer Laurin\n"
 "Language-Team: Swedish\n"
+"Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-28T03:45:34+00:00\n"
-"PO-Revision-Date: 2026-09-28 03:49+0000\n"
-"Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Domain: fluent-crm\n"
 
 #. Plugin Name of the plugin
@@ -41,61 +41,45 @@ msgstr ""
 msgid "The '%s' doesn't exist in FluentCrmApi."
 msgstr ""
 
-#: app/Functions/helpers.php:589
-#: app/Functions/helpers.php:640
+#: app/Functions/helpers.php:589 app/Functions/helpers.php:640
 #: app/Services/Funnel/Triggers/FluentFormSubscriptionCancelledTrigger.php:54
-#: app/Services/Helper.php:3366
-#: app/Services/TransStrings.php:2524
+#: app/Services/Helper.php:3366 app/Services/TransStrings.php:2524
 #: app/Services/TransStrings.php:3151
 msgid "Subscribed"
 msgstr "Prenumererar"
 
-#: app/Functions/helpers.php:590
-#: app/Functions/helpers.php:641
+#: app/Functions/helpers.php:590 app/Functions/helpers.php:641
 #: app/Services/Funnel/Triggers/FluentFormSubscriptionCancelledTrigger.php:58
-#: app/Services/Helper.php:2280
-#: app/Services/Helper.php:3367
-#: app/Services/TransStrings.php:1847
-#: app/Services/TransStrings.php:3115
+#: app/Services/Helper.php:2280 app/Services/Helper.php:3367
+#: app/Services/TransStrings.php:1847 app/Services/TransStrings.php:3115
 msgid "Pending"
 msgstr "Väntande"
 
-#: app/Functions/helpers.php:591
-#: app/Functions/helpers.php:642
-#: app/Hooks/Handlers/ExternalPages.php:723
-#: app/Services/Helper.php:3368
-#: app/Services/TransStrings.php:2704
-#: app/Services/TransStrings.php:3179
+#: app/Functions/helpers.php:591 app/Functions/helpers.php:642
+#: app/Hooks/Handlers/ExternalPages.php:723 app/Services/Helper.php:3368
+#: app/Services/TransStrings.php:2704 app/Services/TransStrings.php:3179
 msgid "Unsubscribed"
 msgstr "Avregistrerad"
 
-#: app/Functions/helpers.php:592
-#: app/Functions/helpers.php:643
-#: app/Services/Helper.php:3369
-#: app/Services/TransStrings.php:2661
+#: app/Functions/helpers.php:592 app/Functions/helpers.php:643
+#: app/Services/Helper.php:3369 app/Services/TransStrings.php:2661
 msgid "Transactional"
 msgstr "Transaktionell"
 
-#: app/Functions/helpers.php:593
-#: app/Functions/helpers.php:644
-#: app/Services/Helper.php:3370
-#: app/Services/TransStrings.php:375
+#: app/Functions/helpers.php:593 app/Functions/helpers.php:644
+#: app/Services/Helper.php:3370 app/Services/TransStrings.php:375
 #: app/Services/TransStrings.php:2983
 msgid "Bounced"
 msgstr "Studsad"
 
-#: app/Functions/helpers.php:594
-#: app/Functions/helpers.php:645
-#: app/Services/Helper.php:3371
-#: app/Services/TransStrings.php:574
+#: app/Functions/helpers.php:594 app/Functions/helpers.php:645
+#: app/Services/Helper.php:3371 app/Services/TransStrings.php:574
 #: app/Services/TransStrings.php:2997
 msgid "Complained"
 msgstr "Klagomål"
 
-#: app/Functions/helpers.php:595
-#: app/Functions/helpers.php:646
-#: app/Services/Helper.php:3372
-#: app/Services/TransStrings.php:2489
+#: app/Functions/helpers.php:595 app/Functions/helpers.php:646
+#: app/Services/Helper.php:3372 app/Services/TransStrings.php:2489
 msgid "Spammed"
 msgstr "Markerad som skräppost"
 
@@ -108,8 +92,7 @@ msgstr ""
 msgid "Customer"
 msgstr "Kund"
 
-#: app/Functions/helpers.php:730
-#: app/Services/TransStrings.php:1788
+#: app/Functions/helpers.php:730 app/Services/TransStrings.php:1788
 msgid "Note"
 msgstr "Anteckning"
 
@@ -117,14 +100,11 @@ msgstr "Anteckning"
 msgid "Call"
 msgstr ""
 
-#: app/Functions/helpers.php:732
-#: app/Hooks/Handlers/PrefFormHandler.php:74
-#: app/Hooks/Handlers/PrefFormHandler.php:497
-#: app/Models/Subscriber.php:767
+#: app/Functions/helpers.php:732 app/Hooks/Handlers/PrefFormHandler.php:74
+#: app/Hooks/Handlers/PrefFormHandler.php:497 app/Models/Subscriber.php:767
 #: app/Modules/AbandonCart/Drivers/FluentCart/FluentCartAutomationTrigger.php:162
 #: app/Services/Funnel/Actions/SendEmailAction.php:27
-#: app/Services/Funnel/FunnelHelper.php:219
-#: app/Services/Helper.php:1859
+#: app/Services/Funnel/FunnelHelper.php:219 app/Services/Helper.php:1859
 #: app/Services/TransStrings.php:1016
 msgid "Email"
 msgstr "E-post"
@@ -187,36 +167,28 @@ msgstr "Livstidsvärde"
 msgid "Please update FluentCRM Pro to latest version"
 msgstr ""
 
-#: app/Hooks/CLI/Commands.php:26
-#: app/Hooks/Handlers/AdminMenu.php:361
+#: app/Hooks/CLI/Commands.php:26 app/Hooks/Handlers/AdminMenu.php:361
 #: app/Services/TransStrings.php:225
 msgid "All Contacts"
 msgstr "Alla kontakter"
 
-#: app/Hooks/CLI/Commands.php:30
-#: app/Services/TransStrings.php:2528
+#: app/Hooks/CLI/Commands.php:30 app/Services/TransStrings.php:2528
 msgid "Subscribers"
 msgstr "Prenumeranter"
 
-#: app/Hooks/CLI/Commands.php:34
-#: app/Hooks/Handlers/AdminMenu.php:130
-#: app/Hooks/Handlers/AdminMenu.php:131
-#: app/Hooks/Handlers/AdminMenu.php:432
-#: app/Services/Stats.php:38
-#: app/Services/TransStrings.php:469
+#: app/Hooks/CLI/Commands.php:34 app/Hooks/Handlers/AdminMenu.php:130
+#: app/Hooks/Handlers/AdminMenu.php:131 app/Hooks/Handlers/AdminMenu.php:432
+#: app/Services/Stats.php:38 app/Services/TransStrings.php:469
 msgid "Campaigns"
 msgstr "Utskick"
 
-#: app/Hooks/CLI/Commands.php:38
-#: app/Hooks/Handlers/AdminMenu.php:182
-#: app/Hooks/Handlers/AdminMenu.php:183
-#: app/Hooks/Handlers/AdminMenu.php:509
+#: app/Hooks/CLI/Commands.php:38 app/Hooks/Handlers/AdminMenu.php:182
+#: app/Hooks/Handlers/AdminMenu.php:183 app/Hooks/Handlers/AdminMenu.php:509
 #: app/Services/TransStrings.php:338
 msgid "Automations"
 msgstr "Automatiseringar"
 
-#: app/Hooks/CLI/Commands.php:42
-#: app/Services/TransStrings.php:229
+#: app/Hooks/CLI/Commands.php:42 app/Services/TransStrings.php:229
 msgid "All Emails"
 msgstr "Alla mejl"
 
@@ -234,16 +206,13 @@ msgstr ""
 
 #: app/Hooks/CLI/Commands.php:138
 #: app/Modules/AbandonCart/Drivers/FluentCart/FluentCartDriver.php:243
-#: app/Services/Helper.php:3374
-#: app/Services/TransStrings.php:579
+#: app/Services/Helper.php:3374 app/Services/TransStrings.php:579
 msgid "Completed"
 msgstr "Slutförd"
 
-#: app/Hooks/CLI/Commands.php:144
-#: app/Http/Controllers/UsersController.php:96
+#: app/Hooks/CLI/Commands.php:144 app/Http/Controllers/UsersController.php:96
 #: app/Modules/AbandonCart/Drivers/FluentCart/FluentCartDriver.php:244
-#: app/Services/Helper.php:3378
-#: app/Services/TransStrings.php:1968
+#: app/Services/Helper.php:3378 app/Services/TransStrings.php:1968
 msgid "Processing"
 msgstr "Bearbetas"
 
@@ -255,46 +224,35 @@ msgstr ""
 msgid "Customer Counts"
 msgstr ""
 
-#: app/Hooks/CLI/Commands.php:162
-#: app/Hooks/CLI/Commands.php:396
-#: app/Hooks/CLI/Commands.php:610
-#: app/Hooks/Handlers/AdminMenu.php:118
-#: app/Hooks/Handlers/AdminMenu.php:119
-#: app/Hooks/Handlers/AdminMenu.php:384
+#: app/Hooks/CLI/Commands.php:162 app/Hooks/CLI/Commands.php:396
+#: app/Hooks/CLI/Commands.php:610 app/Hooks/Handlers/AdminMenu.php:118
+#: app/Hooks/Handlers/AdminMenu.php:119 app/Hooks/Handlers/AdminMenu.php:384
 #: app/Hooks/Handlers/EventTrackingHandler.php:279
 #: app/Modules/AbandonCart/Drivers/FluentCart/FluentCartAutomationTrigger.php:192
 #: app/Services/ExternalIntegrations/FluentCart/CustomerWidget.php:196
-#: app/Services/Helper.php:1959
-#: app/Services/TransStrings.php:2560
+#: app/Services/Helper.php:1959 app/Services/TransStrings.php:2560
 msgid "Tags"
 msgstr "Taggar"
 
-#: app/Hooks/CLI/Commands.php:166
-#: app/Hooks/CLI/Commands.php:400
-#: app/Hooks/CLI/Commands.php:614
-#: app/Hooks/Handlers/AdminMenu.php:109
-#: app/Hooks/Handlers/AdminMenu.php:110
-#: app/Hooks/Handlers/AdminMenu.php:375
+#: app/Hooks/CLI/Commands.php:166 app/Hooks/CLI/Commands.php:400
+#: app/Hooks/CLI/Commands.php:614 app/Hooks/Handlers/AdminMenu.php:109
+#: app/Hooks/Handlers/AdminMenu.php:110 app/Hooks/Handlers/AdminMenu.php:375
 #: app/Hooks/Handlers/EventTrackingHandler.php:287
 #: app/Modules/AbandonCart/Drivers/FluentCart/FluentCartAutomationTrigger.php:200
 #: app/Services/ExternalIntegrations/FluentCart/CustomerWidget.php:195
-#: app/Services/Helper.php:1968
-#: app/Services/TransStrings.php:1567
+#: app/Services/Helper.php:1968 app/Services/TransStrings.php:1567
 msgid "Lists"
 msgstr "Listor"
 
-#: app/Hooks/CLI/Commands.php:170
-#: app/Hooks/CLI/Commands.php:404
-#: app/Hooks/CLI/Commands.php:618
-#: app/Hooks/Handlers/FormSubmissions.php:120
+#: app/Hooks/CLI/Commands.php:170 app/Hooks/CLI/Commands.php:404
+#: app/Hooks/CLI/Commands.php:618 app/Hooks/Handlers/FormSubmissions.php:120
 #: app/Hooks/Handlers/PurchaseHistory.php:188
 #: app/Hooks/Handlers/PurchaseHistory.php:414
 #: app/Hooks/Handlers/PurchaseHistory.php:772
 #: app/Http/Controllers/CampaignAnalyticsController.php:360
 #: app/Services/ExternalIntegrations/FluentCart/FluentCart.php:182
 #: app/Services/ExternalIntegrations/FluentForm/Bootstrap.php:263
-#: app/Services/Helper.php:761
-#: app/Services/Helper.php:1941
+#: app/Services/Helper.php:761 app/Services/Helper.php:1941
 #: app/Services/TransStrings.php:2504
 msgid "Status"
 msgstr "Status"
@@ -311,8 +269,7 @@ msgstr ""
 msgid "Every 5 Minutes (FluentCRM)"
 msgstr ""
 
-#: app/Hooks/Handlers/AdminBar.php:75
-#: app/Hooks/Handlers/AdminBar.php:88
+#: app/Hooks/Handlers/AdminBar.php:75 app/Hooks/Handlers/AdminBar.php:88
 msgid "Search Contacts"
 msgstr ""
 
@@ -324,8 +281,7 @@ msgstr ""
 msgid "Type to search contacts"
 msgstr ""
 
-#: app/Hooks/Handlers/AdminBar.php:78
-#: app/Services/TransStrings.php:1999
+#: app/Hooks/Handlers/AdminBar.php:78 app/Services/TransStrings.php:1999
 msgid "Quick Links"
 msgstr "Snabblänkar"
 
@@ -337,13 +293,11 @@ msgstr ""
 msgid "Load More"
 msgstr ""
 
-#: app/Hooks/Handlers/AdminBar.php:81
-#: app/Services/TransStrings.php:537
+#: app/Hooks/Handlers/AdminBar.php:81 app/Services/TransStrings.php:537
 msgid "Close"
 msgstr "Stäng"
 
-#: app/Hooks/Handlers/AdminMenu.php:59
-#: app/Modules/MCP/MCPInit.php:44
+#: app/Hooks/Handlers/AdminMenu.php:59 app/Modules/MCP/MCPInit.php:44
 #: app/Services/ExternalIntegrations/BricksBuilderIntegration.php:21
 #: app/Services/ExternalIntegrations/FluentForm/Bootstrap.php:27
 #: app/Views/emails/block_editor/Template.php:116
@@ -353,92 +307,72 @@ msgstr "Stäng"
 #: app/Views/emails/simple/Template.php:92
 #: app/Views/emails/web_preview/Template.php:14
 msgid "FluentCRM"
-msgstr "FluentCRM"
+msgstr "Nyhetsbrev"
 
 #: app/Hooks/Handlers/AdminMenu.php:61
 msgid "FluentCRM Pro"
 msgstr "FluentCRM Pro"
 
-#: app/Hooks/Handlers/AdminMenu.php:75
-#: app/Hooks/Handlers/AdminMenu.php:76
-#: app/Hooks/Handlers/AdminMenu.php:347
-#: app/Services/TransStrings.php:818
+#: app/Hooks/Handlers/AdminMenu.php:75 app/Hooks/Handlers/AdminMenu.php:76
+#: app/Hooks/Handlers/AdminMenu.php:347 app/Services/TransStrings.php:818
 msgid "Dashboard"
 msgstr "Översikt"
 
-#: app/Hooks/Handlers/AdminMenu.php:87
-#: app/Hooks/Handlers/AdminMenu.php:88
-#: app/Hooks/Handlers/AdminMenu.php:355
-#: app/Hooks/Handlers/AdminMenu.php:537
-#: app/Services/Helper.php:2982
-#: app/Services/TransStrings.php:656
+#: app/Hooks/Handlers/AdminMenu.php:87 app/Hooks/Handlers/AdminMenu.php:88
+#: app/Hooks/Handlers/AdminMenu.php:355 app/Hooks/Handlers/AdminMenu.php:537
+#: app/Services/Helper.php:2982 app/Services/TransStrings.php:656
 msgid "Contacts"
 msgstr "Kontakter"
 
-#: app/Hooks/Handlers/AdminMenu.php:99
-#: app/Hooks/Handlers/AdminMenu.php:100
-#: app/Hooks/Handlers/AdminMenu.php:395
-#: app/Services/TransStrings.php:547
+#: app/Hooks/Handlers/AdminMenu.php:99 app/Hooks/Handlers/AdminMenu.php:100
+#: app/Hooks/Handlers/AdminMenu.php:395 app/Services/TransStrings.php:547
 msgid "Companies"
 msgstr "Företag"
 
-#: app/Hooks/Handlers/AdminMenu.php:139
-#: app/Hooks/Handlers/AdminMenu.php:140
-#: app/Hooks/Handlers/AdminMenu.php:441
-#: app/Services/Stats.php:95
+#: app/Hooks/Handlers/AdminMenu.php:139 app/Hooks/Handlers/AdminMenu.php:140
+#: app/Hooks/Handlers/AdminMenu.php:441 app/Services/Stats.php:95
 #: app/Services/TransStrings.php:2054
 msgid "Recurring Campaigns"
 msgstr "Återkommande utskick"
 
-#: app/Hooks/Handlers/AdminMenu.php:148
-#: app/Hooks/Handlers/AdminMenu.php:149
-#: app/Services/Stats.php:100
-#: app/Services/TransStrings.php:1057
+#: app/Hooks/Handlers/AdminMenu.php:148 app/Hooks/Handlers/AdminMenu.php:149
+#: app/Services/Stats.php:100 app/Services/TransStrings.php:1057
 msgid "Email Sequences"
 msgstr "Mejlsekvenser"
 
-#: app/Hooks/Handlers/AdminMenu.php:160
-#: app/Hooks/Handlers/AdminMenu.php:161
+#: app/Hooks/Handlers/AdminMenu.php:160 app/Hooks/Handlers/AdminMenu.php:161
 #: app/Services/TransStrings.php:1066
 msgid "Email Templates"
 msgstr "Mejlmallar"
 
-#: app/Hooks/Handlers/AdminMenu.php:171
-#: app/Hooks/Handlers/AdminMenu.php:172
-#: app/Hooks/Handlers/AdminMenu.php:501
-#: app/Services/Helper.php:502
+#: app/Hooks/Handlers/AdminMenu.php:171 app/Hooks/Handlers/AdminMenu.php:172
+#: app/Hooks/Handlers/AdminMenu.php:501 app/Services/Helper.php:502
 #: app/Services/TransStrings.php:1302
 msgid "Forms"
 msgstr "Formulär"
 
-#: app/Hooks/Handlers/AdminMenu.php:196
-#: app/Hooks/Handlers/AdminMenu.php:197
-#: app/Hooks/Handlers/AdminMenu.php:554
-#: app/Services/TransStrings.php:2401
+#: app/Hooks/Handlers/AdminMenu.php:196 app/Hooks/Handlers/AdminMenu.php:197
+#: app/Hooks/Handlers/AdminMenu.php:554 app/Services/TransStrings.php:2401
 msgid "Settings"
 msgstr "Inställningar"
 
-#: app/Hooks/Handlers/AdminMenu.php:205
-#: app/Hooks/Handlers/AdminMenu.php:206
+#: app/Hooks/Handlers/AdminMenu.php:205 app/Hooks/Handlers/AdminMenu.php:206
 #: app/Hooks/Handlers/AdminMenu.php:531
 #: app/Modules/AbandonCart/AbandonCart.php:75
 #: app/Services/TransStrings.php:2097
 msgid "Reports"
 msgstr "Rapporter"
 
-#: app/Hooks/Handlers/AdminMenu.php:214
-#: app/Hooks/Handlers/AdminMenu.php:215
+#: app/Hooks/Handlers/AdminMenu.php:214 app/Hooks/Handlers/AdminMenu.php:215
 #: app/Services/TransStrings.php:176
 msgid "Addons"
 msgstr "Tillägg"
 
-#: app/Hooks/Handlers/AdminMenu.php:225
-#: app/Hooks/Handlers/AdminMenu.php:226
+#: app/Hooks/Handlers/AdminMenu.php:225 app/Hooks/Handlers/AdminMenu.php:226
 msgid "SMTP"
 msgstr "SMTP"
 
-#: assets/guten-editor/index.js:1
-#: app/Hooks/Handlers/AdminMenu.php:236
+#: assets/guten-editor/index.js:1 app/Hooks/Handlers/AdminMenu.php:236
 #: app/Hooks/Handlers/AdminMenu.php:237
 msgid "Help"
 msgstr "Hjälp"
@@ -458,8 +392,7 @@ msgstr "Hjälp"
 #: app/Http/Controllers/DashboardController.php:221
 #: app/Http/Controllers/DashboardController.php:229
 #: app/Http/Controllers/DashboardController.php:242
-#: app/Services/TransStrings.php:2735
-#: fluent-crm.php:71
+#: app/Services/TransStrings.php:2735 fluent-crm.php:71
 msgid "Upgrade to Pro"
 msgstr "Uppgradera till Pro"
 
@@ -491,8 +424,7 @@ msgstr "Bläddra bland och hantera taggarna som är kopplade till kontakter"
 msgid "Browse and Manage contact business/companies"
 msgstr "Bläddra bland och hantera kontakters företag"
 
-#: app/Hooks/Handlers/AdminMenu.php:406
-#: app/Services/TransStrings.php:2231
+#: app/Hooks/Handlers/AdminMenu.php:406 app/Services/TransStrings.php:2231
 msgid "Segments"
 msgstr "Segment"
 
@@ -500,10 +432,8 @@ msgstr "Segment"
 msgid "Manage your dynamic contact segments"
 msgstr "Hantera dina dynamiska kontaktsegment"
 
-#: app/Hooks/Handlers/AdminMenu.php:424
-#: app/Hooks/Handlers/AdminMenu.php:545
-#: app/Services/Helper.php:486
-#: app/Services/TransStrings.php:1094
+#: app/Hooks/Handlers/AdminMenu.php:424 app/Hooks/Handlers/AdminMenu.php:545
+#: app/Services/Helper.php:486 app/Services/TransStrings.php:1094
 msgid "Emails"
 msgstr "Mejl"
 
@@ -515,8 +445,7 @@ msgstr "Skicka ett utskick till valda prenumeranter utifrån taggar, listor elle
 msgid "Send automated daily or weekly emails of your dynamic data like new blog posts"
 msgstr "Skicka automatiska dagliga eller veckovisa mejl med dynamiskt innehåll, t.ex. nya blogginlägg"
 
-#: app/Hooks/Handlers/AdminMenu.php:450
-#: app/Services/TransStrings.php:2376
+#: app/Hooks/Handlers/AdminMenu.php:450 app/Services/TransStrings.php:2376
 msgid "Sequences"
 msgstr "Sekvenser"
 
@@ -524,8 +453,7 @@ msgstr "Sekvenser"
 msgid "Create Multiple Emails and Send in order as a Drip Email Campaign"
 msgstr "Skapa flera mejl och skicka dem i ordning som en droppkampanj"
 
-#: app/Hooks/Handlers/AdminMenu.php:459
-#: app/Services/TransStrings.php:2572
+#: app/Hooks/Handlers/AdminMenu.php:459 app/Services/TransStrings.php:2572
 msgid "Templates"
 msgstr "Mallar"
 
@@ -533,8 +461,7 @@ msgstr "Mallar"
 msgid "Browse reusable email templates for your emails"
 msgstr "Bläddra bland återanvändbara mejlmallar"
 
-#: app/Hooks/Handlers/AdminMenu.php:468
-#: app/Services/TransStrings.php:1843
+#: app/Hooks/Handlers/AdminMenu.php:468 app/Services/TransStrings.php:1843
 msgid "Patterns"
 msgstr "Mönster"
 
@@ -542,8 +469,7 @@ msgstr "Mönster"
 msgid "Create reusable email sections to use across your campaigns and templates"
 msgstr "Skapa återanvändbara mejlsektioner att använda i utskick och mallar"
 
-#: app/Hooks/Handlers/AdminMenu.php:477
-#: app/Services/TransStrings.php:222
+#: app/Hooks/Handlers/AdminMenu.php:477 app/Services/TransStrings.php:222
 msgid "All Activities"
 msgstr "Alla aktiviteter"
 
@@ -564,8 +490,7 @@ msgstr ""
 msgid "The campaign has been locked and not deletable due to it's current status"
 msgstr ""
 
-#: app/Hooks/Handlers/Cleanup.php:212
-#: app/Hooks/Handlers/Cleanup.php:236
+#: app/Hooks/Handlers/Cleanup.php:212 app/Hooks/Handlers/Cleanup.php:236
 msgid "FluentCRM Data"
 msgstr ""
 
@@ -1582,10 +1507,8 @@ msgstr ""
 msgid "Contact Segment"
 msgstr ""
 
-#: app/Hooks/Handlers/EventTrackingHandler.php:270
-#: app/Models/Company.php:57
-#: app/Services/Helper.php:1950
-#: app/Services/Helper.php:3037
+#: app/Hooks/Handlers/EventTrackingHandler.php:270 app/Models/Company.php:57
+#: app/Services/Helper.php:1950 app/Services/Helper.php:3037
 #: app/Services/TransStrings.php:2674
 msgid "Type"
 msgstr "Typ"
@@ -1682,8 +1605,7 @@ msgstr "Avsluta prenumeration"
 msgid "We're sorry to see you go!"
 msgstr "Tråkigt att du vill lämna oss!"
 
-#: app/Hooks/Handlers/ExternalPages.php:382
-#: app/Services/TransStrings.php:2922
+#: app/Hooks/Handlers/ExternalPages.php:382 app/Services/TransStrings.php:2922
 #: app/Views/external/manage_subscription_form.php:9
 #: app/Views/external/manage_subscription_request_form.php:38
 #: app/Views/external/unsubscribe_request_form.php:38
@@ -1887,8 +1809,7 @@ msgid "Thumbnail"
 msgstr ""
 
 #: app/Hooks/Handlers/FluentBlockEditorHandler.php:2321
-#: app/Services/Helper.php:1279
-#: app/Services/TransStrings.php:1642
+#: app/Services/Helper.php:1279 app/Services/TransStrings.php:1642
 msgid "Medium"
 msgstr "Medium"
 
@@ -2021,8 +1942,7 @@ msgstr ""
 msgid "Submitted At"
 msgstr ""
 
-#: app/Hooks/Handlers/FormSubmissions.php:129
-#: app/Services/TransStrings.php:68
+#: app/Hooks/Handlers/FormSubmissions.php:129 app/Services/TransStrings.php:68
 msgid "Action"
 msgstr "Åtgärd"
 
@@ -2060,114 +1980,84 @@ msgid "Invalid Data"
 msgstr ""
 
 #: app/Hooks/Handlers/PrefFormHandler.php:71
-#: app/Hooks/Handlers/PrefFormHandler.php:456
-#: app/Models/Subscriber.php:764
+#: app/Hooks/Handlers/PrefFormHandler.php:456 app/Models/Subscriber.php:764
 #: app/Modules/AbandonCart/Drivers/FluentCart/FluentCartAutomationTrigger.php:152
 #: app/Services/CrmMigrator/BaseMigrator.php:25
 #: app/Services/ExternalIntegrations/FluentForm/Bootstrap.php:148
-#: app/Services/Funnel/FunnelHelper.php:211
-#: app/Services/Helper.php:749
-#: app/Services/Helper.php:1849
-#: app/Services/TransStrings.php:1253
+#: app/Services/Funnel/FunnelHelper.php:211 app/Services/Helper.php:749
+#: app/Services/Helper.php:1849 app/Services/TransStrings.php:1253
 #: app/Views/external/manage_subscription_form.php:14
 #: app/Views/external/manage_subscription_form.php:16
 msgid "First Name"
 msgstr "Förnamn"
 
 #: app/Hooks/Handlers/PrefFormHandler.php:72
-#: app/Hooks/Handlers/PrefFormHandler.php:471
-#: app/Models/Subscriber.php:765
+#: app/Hooks/Handlers/PrefFormHandler.php:471 app/Models/Subscriber.php:765
 #: app/Modules/AbandonCart/Drivers/FluentCart/FluentCartAutomationTrigger.php:157
 #: app/Services/CrmMigrator/BaseMigrator.php:26
 #: app/Services/ExternalIntegrations/FluentForm/Bootstrap.php:152
-#: app/Services/Funnel/FunnelHelper.php:215
-#: app/Services/Helper.php:750
-#: app/Services/Helper.php:1854
-#: app/Services/TransStrings.php:1513
+#: app/Services/Funnel/FunnelHelper.php:215 app/Services/Helper.php:750
+#: app/Services/Helper.php:1854 app/Services/TransStrings.php:1513
 #: app/Views/external/manage_subscription_form.php:20
 #: app/Views/external/manage_subscription_form.php:21
 msgid "Last Name"
 msgstr "Efternamn"
 
-#: app/Hooks/Handlers/PrefFormHandler.php:73
-#: app/Services/Helper.php:3054
+#: app/Hooks/Handlers/PrefFormHandler.php:73 app/Services/Helper.php:3054
 #: app/Services/TransStrings.php:2618
 msgid "Title"
 msgstr "Titel"
 
-#: app/Hooks/Handlers/PrefFormHandler.php:75
-#: app/Services/TransStrings.php:1859
+#: app/Hooks/Handlers/PrefFormHandler.php:75 app/Services/TransStrings.php:1859
 msgid "Phone/Mobile"
 msgstr "Telefon/mobil"
 
-#: app/Hooks/Handlers/PrefFormHandler.php:76
-#: app/Services/Helper.php:762
-#: app/Services/Helper.php:1919
-#: app/Services/TransStrings.php:835
+#: app/Hooks/Handlers/PrefFormHandler.php:76 app/Services/Helper.php:762
+#: app/Services/Helper.php:1919 app/Services/TransStrings.php:835
 msgid "Date of Birth"
 msgstr "Födelsedatum"
 
 #: app/Hooks/Handlers/PrefFormHandler.php:77
-#: app/Hooks/Handlers/PrefFormHandler.php:568
-#: app/Models/Company.php:60
-#: app/Models/Subscriber.php:770
-#: app/Services/CrmMigrator/BaseMigrator.php:36
-#: app/Services/Funnel/FunnelHelper.php:233
-#: app/Services/Helper.php:754
-#: app/Services/Helper.php:1863
-#: app/Services/TransStrings.php:182
+#: app/Hooks/Handlers/PrefFormHandler.php:568 app/Models/Company.php:60
+#: app/Models/Subscriber.php:770 app/Services/CrmMigrator/BaseMigrator.php:36
+#: app/Services/Funnel/FunnelHelper.php:233 app/Services/Helper.php:754
+#: app/Services/Helper.php:1863 app/Services/TransStrings.php:182
 msgid "Address Line 1"
 msgstr "Adressrad 1"
 
 #: app/Hooks/Handlers/PrefFormHandler.php:78
-#: app/Hooks/Handlers/PrefFormHandler.php:579
-#: app/Models/Company.php:61
-#: app/Models/Subscriber.php:771
-#: app/Services/CrmMigrator/BaseMigrator.php:37
-#: app/Services/Funnel/FunnelHelper.php:237
-#: app/Services/Helper.php:755
-#: app/Services/Helper.php:1868
-#: app/Services/TransStrings.php:183
+#: app/Hooks/Handlers/PrefFormHandler.php:579 app/Models/Company.php:61
+#: app/Models/Subscriber.php:771 app/Services/CrmMigrator/BaseMigrator.php:37
+#: app/Services/Funnel/FunnelHelper.php:237 app/Services/Helper.php:755
+#: app/Services/Helper.php:1868 app/Services/TransStrings.php:183
 msgid "Address Line 2"
 msgstr "Adressrad 2"
 
 #: app/Hooks/Handlers/PrefFormHandler.php:79
-#: app/Hooks/Handlers/PrefFormHandler.php:590
-#: app/Models/Company.php:63
-#: app/Models/Subscriber.php:772
-#: app/Services/CrmMigrator/BaseMigrator.php:39
-#: app/Services/Funnel/FunnelHelper.php:245
-#: app/Services/Helper.php:756
-#: app/Services/Helper.php:1873
-#: app/Services/TransStrings.php:521
+#: app/Hooks/Handlers/PrefFormHandler.php:590 app/Models/Company.php:63
+#: app/Models/Subscriber.php:772 app/Services/CrmMigrator/BaseMigrator.php:39
+#: app/Services/Funnel/FunnelHelper.php:245 app/Services/Helper.php:756
+#: app/Services/Helper.php:1873 app/Services/TransStrings.php:521
 msgid "City"
 msgstr "Ort"
 
 #: app/Hooks/Handlers/PrefFormHandler.php:80
-#: app/Hooks/Handlers/PrefFormHandler.php:601
-#: app/Models/Company.php:64
-#: app/Models/Subscriber.php:773
-#: app/Services/CrmMigrator/BaseMigrator.php:40
-#: app/Services/Funnel/FunnelHelper.php:249
-#: app/Services/Helper.php:757
-#: app/Services/Helper.php:1878
-#: app/Services/TransStrings.php:2502
+#: app/Hooks/Handlers/PrefFormHandler.php:601 app/Models/Company.php:64
+#: app/Models/Subscriber.php:773 app/Services/CrmMigrator/BaseMigrator.php:40
+#: app/Services/Funnel/FunnelHelper.php:249 app/Services/Helper.php:757
+#: app/Services/Helper.php:1878 app/Services/TransStrings.php:2502
 msgid "State"
 msgstr "Län/region"
 
-#: app/Hooks/Handlers/PrefFormHandler.php:81
-#: app/Services/TransStrings.php:2939
+#: app/Hooks/Handlers/PrefFormHandler.php:81 app/Services/TransStrings.php:2939
 msgid "ZIP Code"
 msgstr "Postnummer"
 
-#: app/Hooks/Handlers/PrefFormHandler.php:82
-#: app/Models/Company.php:65
+#: app/Hooks/Handlers/PrefFormHandler.php:82 app/Models/Company.php:65
 #: app/Models/Subscriber.php:775
 #: app/Modules/AbandonCart/Drivers/FluentCart/FluentCartAutomationTrigger.php:167
-#: app/Services/CrmMigrator/BaseMigrator.php:41
-#: app/Services/Helper.php:759
-#: app/Services/Helper.php:1888
-#: app/Services/TransStrings.php:695
+#: app/Services/CrmMigrator/BaseMigrator.php:41 app/Services/Helper.php:759
+#: app/Services/Helper.php:1888 app/Services/TransStrings.php:695
 msgid "Country"
 msgstr "Land"
 
@@ -2177,8 +2067,7 @@ msgstr "Land"
 msgid "Update info"
 msgstr "Uppdatera uppgifter"
 
-#: app/Hooks/Handlers/PrefFormHandler.php:84
-#: app/Services/TransStrings.php:181
+#: app/Hooks/Handlers/PrefFormHandler.php:84 app/Services/TransStrings.php:181
 msgid "Address Information"
 msgstr "Adressuppgifter"
 
@@ -2189,8 +2078,7 @@ msgstr "Nyhetsbrev och listor"
 
 #: app/Hooks/Handlers/PrefFormHandler.php:86
 #: app/Modules/AbandonCart/Drivers/FluentCart/FluentCartAutomationTrigger.php:260
-#: app/Services/Helper.php:783
-#: app/Services/Helper.php:2143
+#: app/Services/Helper.php:783 app/Services/Helper.php:2143
 #: app/Services/TransStrings.php:791
 msgid "Custom Fields"
 msgstr "Anpassade fält"
@@ -2212,12 +2100,10 @@ msgstr "Fyll i alla obligatoriska fält"
 msgid "Your information has been updated"
 msgstr "Dina uppgifter har uppdaterats"
 
-#: app/Hooks/Handlers/PrefFormHandler.php:512
-#: app/Models/Subscriber.php:777
+#: app/Hooks/Handlers/PrefFormHandler.php:512 app/Models/Subscriber.php:777
 #: app/Modules/AbandonCart/Drivers/FluentCart/FluentCartAutomationTrigger.php:176
 #: app/Services/CrmMigrator/BaseMigrator.php:28
-#: app/Services/Funnel/FunnelHelper.php:257
-#: app/Services/Helper.php:1897
+#: app/Services/Funnel/FunnelHelper.php:257 app/Services/Helper.php:1897
 #: app/Services/TransStrings.php:1856
 msgid "Phone"
 msgstr "Telefon"
@@ -2235,8 +2121,7 @@ msgstr "Välj land"
 #: app/Hooks/Handlers/PurchaseHistory.php:58
 #: app/Hooks/Handlers/PurchaseHistory.php:67
 #: app/Hooks/Handlers/PurchaseHistory.php:100
-#: app/Hooks/Handlers/PurchaseHistory.php:519
-#: app/Services/TransStrings.php:804
+#: app/Hooks/Handlers/PurchaseHistory.php:519 app/Services/TransStrings.php:804
 msgid "Customer Summary"
 msgstr ""
 
@@ -2277,8 +2162,7 @@ msgid "Order"
 msgstr ""
 
 #: app/Hooks/Handlers/PurchaseHistory.php:425
-#: app/Hooks/Handlers/PurchaseHistory.php:787
-#: app/Services/TransStrings.php:72
+#: app/Hooks/Handlers/PurchaseHistory.php:787 app/Services/TransStrings.php:72
 msgid "Actions"
 msgstr "Åtgärder"
 
@@ -2343,13 +2227,11 @@ msgstr ""
 msgid "Please enter an OpenRouter API key first."
 msgstr ""
 
-#: app/Http/Controllers/AiController.php:159
-#: app/Services/TransStrings.php:1901
+#: app/Http/Controllers/AiController.php:159 app/Services/TransStrings.php:1901
 msgid "Please select a provider and model first."
 msgstr ""
 
-#: app/Http/Controllers/AiController.php:178
-#: app/Services/TransStrings.php:1882
+#: app/Http/Controllers/AiController.php:178 app/Services/TransStrings.php:1882
 msgid "Please enter an API key."
 msgstr ""
 
@@ -2507,8 +2389,7 @@ msgid "View"
 msgstr "Visa"
 
 #: app/Http/Controllers/CampaignAnalyticsController.php:366
-#: app/Models/Subscriber.php:778
-#: app/Services/Helper.php:1915
+#: app/Models/Subscriber.php:778 app/Services/Helper.php:1915
 #: app/Services/TransStrings.php:2487
 msgid "Source"
 msgstr "Källa"
@@ -2537,10 +2418,8 @@ msgstr "j M Y"
 msgid "(customer missing)"
 msgstr "(kund saknas)"
 
-#: app/Http/Controllers/CampaignController.php:175
-#: app/Models/Campaign.php:855
-#: app/Models/CampaignUrlMetric.php:232
-#: app/Services/TransStrings.php:2123
+#: app/Http/Controllers/CampaignController.php:175 app/Models/Campaign.php:855
+#: app/Models/CampaignUrlMetric.php:232 app/Services/TransStrings.php:2123
 msgid "Revenue"
 msgstr "Intäkter"
 
@@ -3002,8 +2881,7 @@ msgstr "Ge din community-webbplats mer kraft med FluentCRM Pro"
 msgid "Get FluentHub from GitHub"
 msgstr ""
 
-#: app/Http/Controllers/DocsController.php:67
-#: app/Services/TransStrings.php:77
+#: app/Http/Controllers/DocsController.php:67 app/Services/TransStrings.php:77
 msgid "Activate FluentHub"
 msgstr ""
 
@@ -3012,8 +2890,7 @@ msgstr ""
 msgid "Install FluentHub"
 msgstr ""
 
-#: app/Http/Controllers/DocsController.php:77
-#: app/Services/TransStrings.php:74
+#: app/Http/Controllers/DocsController.php:77 app/Services/TransStrings.php:74
 msgid "Activate Fluent Forms"
 msgstr "Aktivera Fluent Forms"
 
@@ -3474,8 +3351,7 @@ msgstr "Nästa [Granska data]"
 msgid "Import Users Now"
 msgstr "Importera användare nu"
 
-#: app/Http/Controllers/ImporterController.php:304
-#: app/Services/Helper.php:2371
+#: app/Http/Controllers/ImporterController.php:304 app/Services/Helper.php:2371
 msgid "LifterLMS"
 msgstr ""
 
@@ -3483,8 +3359,7 @@ msgstr ""
 msgid "Import LifterLMS students by course and groups then segment by associate tags. This is a pro feature. Please upgrade to activate this feature"
 msgstr ""
 
-#: app/Http/Controllers/ImporterController.php:313
-#: app/Services/Helper.php:2314
+#: app/Http/Controllers/ImporterController.php:313 app/Services/Helper.php:2314
 msgid "LearnDash"
 msgstr ""
 
@@ -3500,8 +3375,7 @@ msgstr ""
 msgid "Import TutorLMS students by course then segment by associate tags. This is a pro feature. Please upgrade to activate this feature"
 msgstr ""
 
-#: app/Http/Controllers/ImporterController.php:331
-#: app/Services/Helper.php:1192
+#: app/Http/Controllers/ImporterController.php:331 app/Services/Helper.php:1192
 msgid "Paid Membership Pro"
 msgstr ""
 
@@ -4412,8 +4286,7 @@ msgstr ""
 msgid "Successfully deleted the webhook"
 msgstr ""
 
-#: app/Models/CampaignEmail.php:51
-#: app/Services/TransStrings.php:323
+#: app/Models/CampaignEmail.php:51 app/Services/TransStrings.php:323
 msgid "Automation"
 msgstr ""
 
@@ -4421,18 +4294,15 @@ msgstr ""
 msgid "Recurring Campaign"
 msgstr ""
 
-#: app/Models/CampaignEmail.php:53
-#: app/Models/CustomEmailCampaign.php:26
+#: app/Models/CampaignEmail.php:53 app/Models/CustomEmailCampaign.php:26
 msgid "Custom Email"
 msgstr ""
 
-#: app/Models/CampaignEmail.php:54
-#: app/Services/TransStrings.php:443
+#: app/Models/CampaignEmail.php:54 app/Services/TransStrings.php:443
 msgid "Campaign"
 msgstr "Utskick"
 
-#: app/Models/CampaignEmail.php:55
-#: app/Services/TransStrings.php:2371
+#: app/Models/CampaignEmail.php:55 app/Services/TransStrings.php:2371
 msgid "Sequence"
 msgstr "Sekvens"
 
@@ -4470,8 +4340,7 @@ msgstr ""
 msgid "Owner Name"
 msgstr ""
 
-#: app/Models/Company.php:54
-#: app/Services/TransStrings.php:1455
+#: app/Models/Company.php:54 app/Services/TransStrings.php:1455
 msgid "Industry"
 msgstr "Bransch"
 
@@ -4483,8 +4352,7 @@ msgstr ""
 msgid "Company Logo URL"
 msgstr ""
 
-#: app/Models/Company.php:58
-#: app/Services/TransStrings.php:551
+#: app/Models/Company.php:58 app/Services/TransStrings.php:551
 msgid "Company Email"
 msgstr ""
 
@@ -4492,13 +4360,10 @@ msgstr ""
 msgid "Company Phone"
 msgstr ""
 
-#: app/Models/Company.php:62
-#: app/Models/Subscriber.php:774
+#: app/Models/Company.php:62 app/Models/Subscriber.php:774
 #: app/Services/CrmMigrator/BaseMigrator.php:38
-#: app/Services/Funnel/FunnelHelper.php:241
-#: app/Services/Helper.php:758
-#: app/Services/Helper.php:1883
-#: app/Services/TransStrings.php:1922
+#: app/Services/Funnel/FunnelHelper.php:241 app/Services/Helper.php:758
+#: app/Services/Helper.php:1883 app/Services/TransStrings.php:1922
 msgid "Postal Code"
 msgstr "Postnummer"
 
@@ -4518,8 +4383,7 @@ msgstr ""
 msgid "Twitter URL"
 msgstr ""
 
-#: app/Models/Company.php:70
-#: app/Services/TransStrings.php:3186
+#: app/Models/Company.php:70 app/Services/TransStrings.php:3186
 msgid "Website URL"
 msgstr ""
 
@@ -4559,8 +4423,7 @@ msgstr ""
 msgid "Date and Time"
 msgstr ""
 
-#: app/Models/CustomContactField.php:245
-#: app/Services/TransStrings.php:795
+#: app/Models/CustomContactField.php:245 app/Services/TransStrings.php:795
 msgid "Custom Profile Data"
 msgstr "Anpassade profiluppgifter"
 
@@ -4572,23 +4435,19 @@ msgstr ""
 msgid "Email Sent From Funnel"
 msgstr ""
 
-#: app/Models/Subscriber.php:763
-#: app/Services/CrmMigrator/BaseMigrator.php:24
-#: app/Services/Funnel/FunnelHelper.php:229
-#: app/Services/Helper.php:748
+#: app/Models/Subscriber.php:763 app/Services/CrmMigrator/BaseMigrator.php:24
+#: app/Services/Funnel/FunnelHelper.php:229 app/Services/Helper.php:748
 #: app/Services/TransStrings.php:1679
 msgid "Name Prefix"
 msgstr ""
 
-#: app/Models/Subscriber.php:766
-#: app/Services/CrmMigrator/BaseMigrator.php:27
+#: app/Models/Subscriber.php:766 app/Services/CrmMigrator/BaseMigrator.php:27
 #: app/Services/ExternalIntegrations/FluentForm/Bootstrap.php:156
 #: app/Services/Helper.php:747
 msgid "Full Name"
 msgstr ""
 
-#: app/Models/Subscriber.php:768
-#: app/Services/TransStrings.php:650
+#: app/Models/Subscriber.php:768 app/Services/TransStrings.php:650
 msgid "Contact Type"
 msgstr "Kontakttyp"
 
@@ -4596,8 +4455,7 @@ msgstr "Kontakttyp"
 msgid "Timezone"
 msgstr ""
 
-#: app/Models/Subscriber.php:776
-#: app/Services/TransStrings.php:1396
+#: app/Models/Subscriber.php:776 app/Services/TransStrings.php:1396
 msgid "IP Address"
 msgstr ""
 
@@ -4605,14 +4463,12 @@ msgstr ""
 msgid "Date of Birth (Y-m-d Format only)"
 msgstr ""
 
-#: app/Models/Subscriber.php:783
-#: app/Services/TransStrings.php:1952
+#: app/Models/Subscriber.php:783 app/Services/TransStrings.php:1952
 msgid "Primary Company"
 msgstr "Primärt företag"
 
 #: app/Modules/AbandonCart/AbandonCart.php:62
-#: app/Modules/AbandonCart/AbandonCart.php:81
-#: app/Services/TransStrings.php:63
+#: app/Modules/AbandonCart/AbandonCart.php:81 app/Services/TransStrings.php:63
 msgid "Abandoned Carts"
 msgstr ""
 
@@ -4762,15 +4618,13 @@ msgid "Match the product categories on the cart"
 msgstr ""
 
 #: app/Modules/AbandonCart/Drivers/FluentCart/FluentCartAutomationTrigger.php:148
-#: app/Services/Helper.php:719
-#: app/Services/Helper.php:1841
+#: app/Services/Helper.php:719 app/Services/Helper.php:1841
 #: app/Services/TransStrings.php:631
 msgid "Contact"
 msgstr "Kontakt"
 
 #: app/Modules/AbandonCart/Drivers/FluentCart/FluentCartAutomationTrigger.php:181
-#: app/Services/Helper.php:1929
-#: app/Services/TransStrings.php:767
+#: app/Services/Helper.php:1929 app/Services/TransStrings.php:767
 msgid "Created At"
 msgstr "Skapad"
 
@@ -5004,8 +4858,7 @@ msgstr ""
 msgid "Batch create/update up to 500 contacts. Returns per-row {created, updated, skipped, invalid}. auto_create defaults to true here (matches CSV-import expectations) — opposite of upsert-contact."
 msgstr ""
 
-#: app/Modules/MCP/AbilitiesRegistrar.php:426
-#: app/Services/TransStrings.php:874
+#: app/Modules/MCP/AbilitiesRegistrar.php:426 app/Services/TransStrings.php:874
 msgid "Delete Contact"
 msgstr "Radera kontakt"
 
@@ -5603,8 +5456,7 @@ msgstr ""
 msgid "Classic"
 msgstr ""
 
-#: app/Modules/MCP/Tools/ContextTools.php:631
-#: app/Services/Helper.php:995
+#: app/Modules/MCP/Tools/ContextTools.php:631 app/Services/Helper.php:995
 #: app/Services/TransStrings.php:2008
 msgid "Raw HTML"
 msgstr "Ren HTML"
@@ -5800,8 +5652,7 @@ msgstr ""
 msgid "User Signup Optin Settings"
 msgstr ""
 
-#: app/Services/AutoSubscribe.php:31
-#: app/Services/AutoSubscribe.php:37
+#: app/Services/AutoSubscribe.php:31 app/Services/AutoSubscribe.php:37
 msgid "Automatically add your new user signups as subscriber in FluentCRM"
 msgstr ""
 
@@ -5809,17 +5660,13 @@ msgstr ""
 msgid "Enable Create new contacts in FluentCRM when users register in WordPress"
 msgstr ""
 
-#: app/Services/AutoSubscribe.php:43
-#: app/Services/AutoSubscribe.php:132
-#: app/Services/AutoSubscribe.php:292
-#: app/Services/AutoSubscribe.php:451
+#: app/Services/AutoSubscribe.php:43 app/Services/AutoSubscribe.php:132
+#: app/Services/AutoSubscribe.php:292 app/Services/AutoSubscribe.php:451
 msgid "Assign List"
 msgstr ""
 
-#: app/Services/AutoSubscribe.php:47
-#: app/Services/AutoSubscribe.php:135
-#: app/Services/AutoSubscribe.php:295
-#: app/Services/AutoSubscribe.php:454
+#: app/Services/AutoSubscribe.php:47 app/Services/AutoSubscribe.php:135
+#: app/Services/AutoSubscribe.php:295 app/Services/AutoSubscribe.php:454
 #: app/Services/TransStrings.php:2238
 msgid "Select Assign List"
 msgstr ""
@@ -5828,17 +5675,13 @@ msgstr ""
 msgid "Select the list that will be assigned for new user registration in your site"
 msgstr ""
 
-#: app/Services/AutoSubscribe.php:57
-#: app/Services/AutoSubscribe.php:145
-#: app/Services/AutoSubscribe.php:305
-#: app/Services/AutoSubscribe.php:464
+#: app/Services/AutoSubscribe.php:57 app/Services/AutoSubscribe.php:145
+#: app/Services/AutoSubscribe.php:305 app/Services/AutoSubscribe.php:464
 msgid "Assign Tags"
 msgstr ""
 
-#: app/Services/AutoSubscribe.php:61
-#: app/Services/AutoSubscribe.php:148
-#: app/Services/AutoSubscribe.php:308
-#: app/Services/AutoSubscribe.php:467
+#: app/Services/AutoSubscribe.php:61 app/Services/AutoSubscribe.php:148
+#: app/Services/AutoSubscribe.php:308 app/Services/AutoSubscribe.php:467
 msgid "Select Assign Tag"
 msgstr ""
 
@@ -5846,18 +5689,14 @@ msgstr ""
 msgid "Select the tags that will be assigned for new user registration in your site"
 msgstr ""
 
-#: app/Services/AutoSubscribe.php:71
-#: app/Services/AutoSubscribe.php:182
-#: app/Services/AutoSubscribe.php:342
-#: app/Services/AutoSubscribe.php:501
+#: app/Services/AutoSubscribe.php:71 app/Services/AutoSubscribe.php:182
+#: app/Services/AutoSubscribe.php:342 app/Services/AutoSubscribe.php:501
 #: app/Services/TransStrings.php:947
 msgid "Double Opt-In"
 msgstr ""
 
-#: app/Services/AutoSubscribe.php:72
-#: app/Services/AutoSubscribe.php:183
-#: app/Services/AutoSubscribe.php:343
-#: app/Services/AutoSubscribe.php:502
+#: app/Services/AutoSubscribe.php:72 app/Services/AutoSubscribe.php:183
+#: app/Services/AutoSubscribe.php:343 app/Services/AutoSubscribe.php:502
 #: app/Services/TransStrings.php:1115
 msgid "Enable Double-Optin Email Confirmation"
 msgstr "Aktivera bekräftelsemejl för dubbel opt-in"
@@ -5874,13 +5713,11 @@ msgstr ""
 msgid "Enable Create new contacts in FluentCRM when a visitor add a comment in your comment form"
 msgstr ""
 
-#: app/Services/AutoSubscribe.php:118
-#: app/Services/TransStrings.php:192
+#: app/Services/AutoSubscribe.php:118 app/Services/TransStrings.php:192
 msgid "Automatically add your site commenter as subscriber in FluentCRM"
 msgstr ""
 
-#: app/Services/AutoSubscribe.php:121
-#: app/Services/AutoSubscribe.php:123
+#: app/Services/AutoSubscribe.php:121 app/Services/AutoSubscribe.php:123
 msgid "Checkbox Label for Comment Form"
 msgstr ""
 
@@ -5924,8 +5761,7 @@ msgstr ""
 msgid "When enabled, deleting a WordPress user will also permanently delete the associated FluentCRM contact record"
 msgstr ""
 
-#: app/Services/AutoSubscribe.php:243
-#: app/Services/AutoSubscribe.php:366
+#: app/Services/AutoSubscribe.php:243 app/Services/AutoSubscribe.php:366
 #: app/Services/ExternalIntegrations/FluentCart/CheckoutSubscription.php:73
 msgid "Sign me up for the newsletter!"
 msgstr ""
@@ -5946,30 +5782,24 @@ msgstr ""
 msgid "Enable Subscription Checkbox to WooCommerce Checkout Page"
 msgstr ""
 
-#: app/Services/AutoSubscribe.php:281
-#: app/Services/AutoSubscribe.php:283
-#: app/Services/AutoSubscribe.php:440
-#: app/Services/AutoSubscribe.php:442
+#: app/Services/AutoSubscribe.php:281 app/Services/AutoSubscribe.php:283
+#: app/Services/AutoSubscribe.php:440 app/Services/AutoSubscribe.php:442
 msgid "Checkbox Label for Checkout checkbox"
 msgstr ""
 
-#: app/Services/AutoSubscribe.php:296
-#: app/Services/AutoSubscribe.php:455
+#: app/Services/AutoSubscribe.php:296 app/Services/AutoSubscribe.php:455
 msgid "Select the list that will be assigned when checkbox checked"
 msgstr ""
 
-#: app/Services/AutoSubscribe.php:309
-#: app/Services/AutoSubscribe.php:468
+#: app/Services/AutoSubscribe.php:309 app/Services/AutoSubscribe.php:468
 msgid "Select the tags that will be assigned when checkbox checked"
 msgstr ""
 
-#: app/Services/AutoSubscribe.php:319
-#: app/Services/AutoSubscribe.php:478
+#: app/Services/AutoSubscribe.php:319 app/Services/AutoSubscribe.php:478
 msgid "Enable auto checked status on checkout page checkbox"
 msgstr ""
 
-#: app/Services/AutoSubscribe.php:331
-#: app/Services/AutoSubscribe.php:490
+#: app/Services/AutoSubscribe.php:331 app/Services/AutoSubscribe.php:490
 msgid "Do not show the checkbox if current user already in subscribed state"
 msgstr ""
 
@@ -6553,15 +6383,13 @@ msgstr ""
 
 #: app/Services/ExternalIntegrations/FluentCart/FluentCart.php:326
 #: app/Services/ExternalIntegrations/FluentCart/FluentCart.php:461
-#: app/Services/Helper.php:2256
-#: app/Services/TransStrings.php:2897
+#: app/Services/Helper.php:2256 app/Services/TransStrings.php:2897
 msgid "Yes"
 msgstr "Ja"
 
 #: app/Services/ExternalIntegrations/FluentCart/FluentCart.php:327
 #: app/Services/ExternalIntegrations/FluentCart/FluentCart.php:462
-#: app/Services/Helper.php:2257
-#: app/Services/TransStrings.php:1706
+#: app/Services/Helper.php:2257 app/Services/TransStrings.php:1706
 msgid "No"
 msgstr "Nej"
 
@@ -6757,8 +6585,7 @@ msgid "Customer-related smart codes"
 msgstr ""
 
 #: app/Services/ExternalIntegrations/FluentCart/SmartCode/SmartCodeRegister.php:38
-#: app/Services/Helper.php:753
-#: app/Services/TransStrings.php:2771
+#: app/Services/Helper.php:753 app/Services/TransStrings.php:2771
 msgid "User ID"
 msgstr ""
 
@@ -8056,8 +7883,7 @@ msgstr ""
 msgid "Tickets"
 msgstr ""
 
-#: app/Services/Helper.php:527
-#: app/Services/TransStrings.php:1791
+#: app/Services/Helper.php:527 app/Services/TransStrings.php:1791
 msgid "Notes"
 msgstr "Anteckningar"
 
@@ -8069,18 +7895,15 @@ msgstr ""
 msgid "Contact ID"
 msgstr ""
 
-#: app/Services/Helper.php:760
-#: app/Services/TransStrings.php:1857
+#: app/Services/Helper.php:760 app/Services/TransStrings.php:1857
 msgid "Phone Number"
 msgstr ""
 
-#: app/Services/Helper.php:767
-#: app/Services/TransStrings.php:558
+#: app/Services/Helper.php:767 app/Services/TransStrings.php:558
 msgid "Company Name"
 msgstr ""
 
-#: app/Services/Helper.php:768
-#: app/Services/TransStrings.php:554
+#: app/Services/Helper.php:768 app/Services/TransStrings.php:554
 msgid "Company Industry"
 msgstr ""
 
@@ -8092,8 +7915,7 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: app/Services/Helper.php:813
-#: app/Services/TransStrings.php:384
+#: app/Services/Helper.php:813 app/Services/TransStrings.php:384
 msgid "Business Name"
 msgstr ""
 
@@ -8105,8 +7927,7 @@ msgstr ""
 msgid "Admin Email"
 msgstr ""
 
-#: app/Services/Helper.php:816
-#: app/Services/TransStrings.php:2445
+#: app/Services/Helper.php:816 app/Services/TransStrings.php:2445
 msgid "Site URL"
 msgstr ""
 
@@ -8154,13 +7975,11 @@ msgstr ""
 msgid "Plain Left"
 msgstr ""
 
-#: app/Services/Helper.php:986
-#: app/Services/TransStrings.php:522
+#: app/Services/Helper.php:986 app/Services/TransStrings.php:522
 msgid "Classic Editor"
 msgstr "Klassisk redigerare"
 
-#: app/Services/Helper.php:1007
-#: app/Services/TransStrings.php:2822
+#: app/Services/Helper.php:1007 app/Services/TransStrings.php:2822
 msgid "Visual Builder"
 msgstr "Visuell byggare"
 
@@ -8184,8 +8003,7 @@ msgstr ""
 msgid "Woocommerce Purchase History"
 msgstr ""
 
-#: app/Services/Helper.php:1171
-#: app/Services/Helper.php:2153
+#: app/Services/Helper.php:1171 app/Services/Helper.php:2153
 msgid "WooCommerce"
 msgstr ""
 
@@ -8273,8 +8091,7 @@ msgstr ""
 msgid "Name Prefix (Title)"
 msgstr ""
 
-#: app/Services/Helper.php:1924
-#: app/Services/TransStrings.php:1508
+#: app/Services/Helper.php:1924 app/Services/TransStrings.php:1508
 msgid "Last Activity"
 msgstr "Senaste aktivitet"
 
@@ -8326,8 +8143,7 @@ msgstr ""
 msgid "You can filter your contacts based on activity in a specific email sequences."
 msgstr ""
 
-#: app/Services/Helper.php:2067
-#: app/Services/TransStrings.php:549
+#: app/Services/Helper.php:2067 app/Services/TransStrings.php:549
 msgid "Company"
 msgstr ""
 
@@ -8339,8 +8155,7 @@ msgstr ""
 msgid "Company - Type"
 msgstr ""
 
-#: app/Services/Helper.php:2158
-#: app/Services/Helper.php:2212
+#: app/Services/Helper.php:2158 app/Services/Helper.php:2212
 msgid "Total Order Count (Pro Required)"
 msgstr ""
 
@@ -8348,18 +8163,15 @@ msgstr ""
 msgid "Total Order value (Pro Required)"
 msgstr ""
 
-#: app/Services/Helper.php:2170
-#: app/Services/Helper.php:2224
+#: app/Services/Helper.php:2170 app/Services/Helper.php:2224
 msgid "Last Order Date (Pro Required)"
 msgstr ""
 
-#: app/Services/Helper.php:2176
-#: app/Services/Helper.php:2230
+#: app/Services/Helper.php:2176 app/Services/Helper.php:2230
 msgid "First Order Date (Pro Required)"
 msgstr ""
 
-#: app/Services/Helper.php:2182
-#: app/Services/Helper.php:2236
+#: app/Services/Helper.php:2182 app/Services/Helper.php:2236
 msgid "Purchased Products (Pro Required)"
 msgstr ""
 
@@ -8391,13 +8203,11 @@ msgstr ""
 msgid "Status (Pro Required)"
 msgstr ""
 
-#: app/Services/Helper.php:2278
-#: app/Services/TransStrings.php:78
+#: app/Services/Helper.php:2278 app/Services/TransStrings.php:78
 msgid "Active"
 msgstr "Aktiv"
 
-#: app/Services/Helper.php:2279
-#: app/Services/TransStrings.php:1442
+#: app/Services/Helper.php:2279 app/Services/TransStrings.php:1442
 msgid "Inactive"
 msgstr "Inaktiv"
 
@@ -8417,18 +8227,15 @@ msgstr ""
 msgid "Last Payout Date (Pro Required)"
 msgstr ""
 
-#: app/Services/Helper.php:2319
-#: app/Services/Helper.php:2376
+#: app/Services/Helper.php:2319 app/Services/Helper.php:2376
 msgid "Last Enrollment Date (Pro Required)"
 msgstr ""
 
-#: app/Services/Helper.php:2325
-#: app/Services/Helper.php:2382
+#: app/Services/Helper.php:2325 app/Services/Helper.php:2382
 msgid "First Enrollment Date (Pro Required)"
 msgstr ""
 
-#: app/Services/Helper.php:2331
-#: app/Services/Helper.php:2388
+#: app/Services/Helper.php:2331 app/Services/Helper.php:2388
 msgid "Enrollment Courses (Pro Required)"
 msgstr ""
 
@@ -8436,13 +8243,11 @@ msgstr ""
 msgid "Enrollment Groups (Pro Required)"
 msgstr ""
 
-#: app/Services/Helper.php:2349
-#: app/Services/Helper.php:2405
+#: app/Services/Helper.php:2349 app/Services/Helper.php:2405
 msgid "Enrollment Categories (Pro Required)"
 msgstr ""
 
-#: app/Services/Helper.php:2358
-#: app/Services/Helper.php:2414
+#: app/Services/Helper.php:2358 app/Services/Helper.php:2414
 msgid "Enrollment Tags (Pro Required)"
 msgstr ""
 
@@ -8468,28 +8273,23 @@ msgstr ""
 msgid "Custom email to %s"
 msgstr ""
 
-#: app/Services/Helper.php:2987
-#: app/Services/TransStrings.php:1792
+#: app/Services/Helper.php:2987 app/Services/TransStrings.php:1792
 msgid "Notes & Activities"
 msgstr ""
 
-#: app/Services/Helper.php:3046
-#: app/Services/TransStrings.php:833
+#: app/Services/Helper.php:3046 app/Services/TransStrings.php:833
 msgid "Date Time"
 msgstr "Datum och tid"
 
-#: app/Services/Helper.php:3049
-#: app/Services/TransStrings.php:3085
+#: app/Services/Helper.php:3049 app/Services/TransStrings.php:3085
 msgid "keep blank for current time"
 msgstr ""
 
-#: app/Services/Helper.php:3056
-#: app/Services/TransStrings.php:2925
+#: app/Services/Helper.php:3056 app/Services/TransStrings.php:2925
 msgid "Your Note Title"
 msgstr ""
 
-#: app/Services/Helper.php:3061
-#: app/Services/TransStrings.php:902
+#: app/Services/Helper.php:3061 app/Services/TransStrings.php:902
 msgid "Description"
 msgstr ""
 
@@ -8497,8 +8297,7 @@ msgstr ""
 msgid "Checkout Draft"
 msgstr ""
 
-#: app/Services/Helper.php:3375
-#: app/Services/TransStrings.php:575
+#: app/Services/Helper.php:3375 app/Services/TransStrings.php:575
 msgid "Complete"
 msgstr ""
 
@@ -8506,8 +8305,7 @@ msgstr ""
 msgid "On Draft"
 msgstr ""
 
-#: app/Services/Helper.php:3377
-#: app/Services/TransStrings.php:478
+#: app/Services/Helper.php:3377 app/Services/TransStrings.php:478
 msgid "Cancelled"
 msgstr "Avbruten"
 
@@ -8515,8 +8313,7 @@ msgstr "Avbruten"
 msgid "Paid"
 msgstr ""
 
-#: app/Services/Helper.php:3380
-#: app/Services/TransStrings.php:2535
+#: app/Services/Helper.php:3380 app/Services/TransStrings.php:2535
 msgid "Success"
 msgstr "Klart"
 
@@ -8551,8 +8348,7 @@ msgstr ""
 msgid "No options available"
 msgstr ""
 
-#: app/Services/Libs/FileSystem.php:107
-#: app/Services/Libs/FileSystem.php:118
+#: app/Services/Libs/FileSystem.php:107 app/Services/Libs/FileSystem.php:118
 msgid "Invalid CSV import file."
 msgstr ""
 
@@ -8649,8 +8445,7 @@ msgstr ""
 msgid "WP User Role Based Tag Mapping"
 msgstr ""
 
-#: app/Services/RoleBasedTagging.php:46
-#: app/Services/RoleBasedTagging.php:52
+#: app/Services/RoleBasedTagging.php:46 app/Services/RoleBasedTagging.php:52
 msgid "Assign or remove tags when a contact is assigned to a user role."
 msgstr ""
 
@@ -8678,13 +8473,11 @@ msgstr ""
 msgid "Active Contacts"
 msgstr "Aktiva kontakter"
 
-#: app/Services/Stats.php:45
-#: app/Services/TransStrings.php:1096
+#: app/Services/Stats.php:45 app/Services/TransStrings.php:1096
 msgid "Emails Sent"
 msgstr "Skickade mejl"
 
-#: app/Services/Stats.php:52
-#: app/Services/TransStrings.php:79
+#: app/Services/Stats.php:52 app/Services/TransStrings.php:79
 msgid "Active Automations"
 msgstr "Aktiva automatiseringar"
 
@@ -8696,8 +8489,7 @@ msgstr "Väntande mejl"
 msgid "Contact Segments"
 msgstr "Kontaktsegment"
 
-#: app/Services/Stats.php:105
-#: app/Services/TransStrings.php:1595
+#: app/Services/Stats.php:105 app/Services/TransStrings.php:1595
 msgid "MCP for AI Agents"
 msgstr "MCP för AI-agenter"
 
@@ -8713,8 +8505,7 @@ msgstr "Videoguider (gratis)"
 msgid "Create a Tag"
 msgstr "Skapa en tagg"
 
-#: app/Services/Stats.php:161
-#: app/Services/TransStrings.php:1412
+#: app/Services/Stats.php:161 app/Services/TransStrings.php:1412
 #: app/Services/TransStrings.php:1419
 msgid "Import Contacts"
 msgstr "Importera kontakter"
@@ -8723,13 +8514,11 @@ msgstr "Importera kontakter"
 msgid "Create a Campaign"
 msgstr "Skapa ett utskick"
 
-#: app/Services/Stats.php:175
-#: app/Services/TransStrings.php:745
+#: app/Services/Stats.php:175 app/Services/TransStrings.php:745
 msgid "Create an Automation"
 msgstr "Skapa en automatisering"
 
-#: app/Services/Stats.php:182
-#: app/Services/TransStrings.php:736
+#: app/Services/Stats.php:182 app/Services/TransStrings.php:736
 msgid "Create a Form"
 msgstr "Skapa ett formulär"
 
@@ -8839,8 +8628,7 @@ msgstr "AI-sammanfattning"
 msgid "AI Summary of %s"
 msgstr "AI-sammanfattning av %s"
 
-#: assets/guten-editor/index.js:1
-#: app/Services/TransStrings.php:36
+#: assets/guten-editor/index.js:1 app/Services/TransStrings.php:36
 msgid "AI Writing"
 msgstr "AI-skrivhjälp"
 
@@ -8868,13 +8656,11 @@ msgstr ""
 msgid "This subject will not be used to send emails. Please set A/B testing subjects"
 msgstr "Den här ämnesraden används inte när mejlen skickas. Ange ämnesrader för A/B-testet"
 
-#: app/Services/TransStrings.php:44
-#: app/Services/TransStrings.php:481
+#: app/Services/TransStrings.php:44 app/Services/TransStrings.php:481
 msgid "In how many minutes will the cart be recoverable"
 msgstr ""
 
-#: app/Services/TransStrings.php:45
-#: app/Services/TransStrings.php:517
+#: app/Services/TransStrings.php:45 app/Services/TransStrings.php:517
 #: app/Services/TransStrings.php:930
 msgid "Choose the user roles for which you want to disable cart tracking"
 msgstr ""
@@ -8883,14 +8669,12 @@ msgstr ""
 msgid "Show GDPR consent message on the checkout page to inform customers about cart data tracking."
 msgstr ""
 
-#: app/Services/TransStrings.php:47
-#: app/Services/TransStrings.php:107
+#: app/Services/TransStrings.php:47 app/Services/TransStrings.php:107
 #: app/Services/TransStrings.php:2335
 msgid "Selected lists(s) will be added when cart is marked as abandoned (starting the target automation). These will be automatically removed on successful order"
 msgstr ""
 
-#: app/Services/TransStrings.php:48
-#: app/Services/TransStrings.php:109
+#: app/Services/TransStrings.php:48 app/Services/TransStrings.php:109
 #: app/Services/TransStrings.php:2336
 msgid "Selected lists(s) will be added when cart is lost. These will be automatically removed on successful order"
 msgstr ""
@@ -8907,14 +8691,12 @@ msgstr ""
 msgid "AbCart_Opt_Out_Help_Suffix"
 msgstr ""
 
-#: app/Services/TransStrings.php:52
-#: app/Services/TransStrings.php:136
+#: app/Services/TransStrings.php:52 app/Services/TransStrings.php:136
 #: app/Services/TransStrings.php:2337
 msgid "Selected tag(s) will be added when cart is marked as abandoned (starting the target automation). These will be automatically removed on successful order"
 msgstr ""
 
-#: app/Services/TransStrings.php:53
-#: app/Services/TransStrings.php:138
+#: app/Services/TransStrings.php:53 app/Services/TransStrings.php:138
 #: app/Services/TransStrings.php:2338
 msgid "Selected tag(s) will be added when cart is lost. These will be automatically removed on successful order"
 msgstr ""
@@ -9279,8 +9061,7 @@ msgstr ""
 msgid "Add new Manager"
 msgstr ""
 
-#: app/Services/TransStrings.php:158
-#: app/Services/TransStrings.php:1252
+#: app/Services/TransStrings.php:158 app/Services/TransStrings.php:1252
 msgid "Add new filter to narrow down your contacts based on different properties"
 msgstr "Lägg till ett filter för att avgränsa kontakterna utifrån olika egenskaper"
 
@@ -9296,8 +9077,7 @@ msgstr ""
 msgid "Add sticky note"
 msgstr ""
 
-#: app/Services/TransStrings.php:162
-#: app/Services/TransStrings.php:164
+#: app/Services/TransStrings.php:162 app/Services/TransStrings.php:164
 msgid "Add to Sequence"
 msgstr ""
 
@@ -9313,8 +9093,7 @@ msgstr ""
 msgid "Add to this Sequence"
 msgstr ""
 
-#: app/Services/TransStrings.php:167
-#: app/Services/TransStrings.php:410
+#: app/Services/TransStrings.php:167 app/Services/TransStrings.php:410
 msgid "Add/Remove Tag of your Contacts based on email interaction"
 msgstr "Lägg till/ta bort taggar på kontakter utifrån hur de interagerat med mejlet"
 
@@ -9398,8 +9177,7 @@ msgstr ""
 msgid "Enable or Disable AI Integration on Visual Builder"
 msgstr ""
 
-#: app/Services/TransStrings.php:193
-#: app/Services/TransStrings.php:567
+#: app/Services/TransStrings.php:193 app/Services/TransStrings.php:567
 msgid "Try to get company logo automatically from the given website url"
 msgstr ""
 
@@ -9431,8 +9209,7 @@ msgstr ""
 msgid "Please make sure your server meets the following requirements for optimal performance."
 msgstr ""
 
-#: app/Services/TransStrings.php:201
-#: app/Services/TransStrings.php:468
+#: app/Services/TransStrings.php:201 app/Services/TransStrings.php:468
 msgid "Use the following shortcode in a page/post to show the list of past campaigns"
 msgstr ""
 
@@ -9654,8 +9431,7 @@ msgstr ""
 msgid "An error occurred"
 msgstr "Ett fel inträffade"
 
-#: assets/guten-editor/index.js:1
-#: app/Services/TransStrings.php:260
+#: assets/guten-editor/index.js:1 app/Services/TransStrings.php:260
 msgid "An error occurred. Please try again."
 msgstr "Ett fel inträffade. Försök igen."
 
@@ -9843,8 +9619,7 @@ msgstr "Vill du verkligen skicka mejlet igen? Kontakten får då mejlet en gång
 msgid "Are you sure you want to send this SMS?"
 msgstr ""
 
-#: app/Services/TransStrings.php:308
-#: app/Services/TransStrings.php:3129
+#: app/Services/TransStrings.php:308 app/Services/TransStrings.php:3129
 msgid "Are you sure, you want to reset the CRM Database?"
 msgstr ""
 
@@ -10313,8 +10088,7 @@ msgstr "Välj prenumeranter som öppnat mejlen"
 msgid "Select URLS that where clicked (Will Match for any Selected URLs)"
 msgstr "Välj URL:er som klickats på (matchar vilken som helst av de valda)"
 
-#: app/Services/TransStrings.php:434
-#: app/Services/TransStrings.php:2183
+#: app/Services/TransStrings.php:434 app/Services/TransStrings.php:2183
 msgid "Are you sure to proceed?"
 msgstr "Vill du fortsätta?"
 
@@ -10334,8 +10108,7 @@ msgstr "Skicka eller schemalägg utskickets mejl"
 msgid "Sorry no links found that contacts clicked"
 msgstr "Inga länkar som kontakter klickat på hittades"
 
-#: app/Services/TransStrings.php:439
-#: app/Services/TransStrings.php:3156
+#: app/Services/TransStrings.php:439 app/Services/TransStrings.php:3156
 msgid "Type custom email to send test or leave blank to send current user email"
 msgstr "Ange en e-postadress för testmejlet, eller lämna tomt för att skicka till din egen adress"
 
@@ -10992,8 +10765,7 @@ msgstr ""
 msgid "Congratulations"
 msgstr ""
 
-#: app/Services/TransStrings.php:625
-#: app/Services/TransStrings.php:1538
+#: app/Services/TransStrings.php:625 app/Services/TransStrings.php:1538
 msgid "Congratulations! Your License Key is Valid & Activated"
 msgstr ""
 
@@ -11674,8 +11446,7 @@ msgstr ""
 msgid "DD/MM/YYYY"
 msgstr "DD/MM/ÅÅÅÅ"
 
-#: app/Services/TransStrings.php:809
-#: app/Services/TransStrings.php:949
+#: app/Services/TransStrings.php:809 app/Services/TransStrings.php:949
 msgid "Double Opt-in Email Settings Details"
 msgstr ""
 
@@ -11687,8 +11458,7 @@ msgstr ""
 msgid "When selected, subscribers added to this list will follow the list-specific double opt-in configuration. If no list-specific settings are configured, the global double opt-in settings will apply."
 msgstr ""
 
-#: app/Services/TransStrings.php:812
-#: app/Services/TransStrings.php:2758
+#: app/Services/TransStrings.php:812 app/Services/TransStrings.php:2758
 msgid "Use List Specific Double Opt-in Settings"
 msgstr ""
 
@@ -11804,8 +11574,7 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: assets/guten-editor/index.js:1
-#: app/Services/TransStrings.php:847
+#: assets/guten-editor/index.js:1 app/Services/TransStrings.php:847
 msgid "Default (Gutenberg)"
 msgstr "Standard (Gutenberg)"
 
@@ -12160,8 +11929,7 @@ msgstr "Starta inte automatiseringar (händelser för taggar och listor)"
 msgid "Do another Action"
 msgstr "Gör en annan åtgärd"
 
-#: app/Services/TransStrings.php:939
-#: app/Services/TransStrings.php:1783
+#: app/Services/TransStrings.php:939 app/Services/TransStrings.php:1783
 msgid "Do not import segment from untrusted sources."
 msgstr ""
 
@@ -12169,8 +11937,7 @@ msgstr ""
 msgid "Do you want to update the companies data"
 msgstr ""
 
-#: app/Services/TransStrings.php:941
-#: app/Services/TransStrings.php:2975
+#: app/Services/TransStrings.php:941 app/Services/TransStrings.php:2975
 msgid "and we will be happy to answer your questions and assist you with any problems."
 msgstr ""
 
@@ -12182,8 +11949,7 @@ msgstr ""
 msgid "Does not include (in any)"
 msgstr "Innehåller inte (någon av)"
 
-#: app/Services/TransStrings.php:944
-#: app/Services/TransStrings.php:3027
+#: app/Services/TransStrings.php:944 app/Services/TransStrings.php:3027
 msgid "Don't have a license key?"
 msgstr ""
 
@@ -12441,13 +12207,11 @@ msgstr ""
 msgid "Products that the coupon will be applied to, or that need to be in the cart in order for the \"Fixed cart discount\" to be applied."
 msgstr ""
 
-#: app/Services/TransStrings.php:1011
-#: app/Services/TransStrings.php:1082
+#: app/Services/TransStrings.php:1011 app/Services/TransStrings.php:1082
 msgid "Use ##crm.manage_subscription_url##, ##crm.unsubscribe_url## shortcode to fetch the Unsubscribe URL and Manage Email Subscriptions URL."
 msgstr ""
 
-#: app/Services/TransStrings.php:1012
-#: app/Services/TransStrings.php:1083
+#: app/Services/TransStrings.php:1012 app/Services/TransStrings.php:1083
 msgid "Use smartcodes: {{crm.business_name}} to fetch Your Business Name and {{crm.business_address}} to fetch Your Business Address anywhere inside your email."
 msgstr ""
 
@@ -12583,8 +12347,7 @@ msgstr "Förhandstext"
 msgid "Email Preference Settings"
 msgstr ""
 
-#: app/Services/TransStrings.php:1050
-#: app/Services/TransStringsGuten.php:18
+#: app/Services/TransStrings.php:1050 app/Services/TransStringsGuten.php:18
 msgid "Email Preview"
 msgstr "Förhandsvisning av mejl"
 
@@ -12696,13 +12459,11 @@ msgstr ""
 msgid "Business Name, Business Address, and Unsubscribe URL are mandatory to comply with the CAN-SPAM Act Guidelines. Without these, your emails may end up in the spam folder. It is also ideal to have the Manage Email Subscriptions URL in the email footer. These are added here by default."
 msgstr ""
 
-#: app/Services/TransStrings.php:1084
-#: app/Services/TransStrings.php:2595
+#: app/Services/TransStrings.php:1084 app/Services/TransStrings.php:2595
 msgid "This email footer text will be used to all your email"
 msgstr ""
 
-#: app/Services/TransStrings.php:1085
-#: app/Services/TransStrings.php:1984
+#: app/Services/TransStrings.php:1085 app/Services/TransStrings.php:1984
 msgid "Provide Valid Email Address that will be used to send emails"
 msgstr ""
 
@@ -13386,8 +13147,7 @@ msgstr ""
 msgid "Fluent Forms Integration"
 msgstr ""
 
-#: app/Services/TransStrings.php:1260
-#: app/Services/TransStrings.php:1294
+#: app/Services/TransStrings.php:1260 app/Services/TransStrings.php:1294
 #: app/Services/TransStrings.php:1303
 msgid "Fluent Forms that are connected with your CRM"
 msgstr ""
@@ -13512,8 +13272,7 @@ msgstr ""
 msgid "For the most accurate preview, send a test email using the Quick Test button."
 msgstr "Skicka ett testmejl med knappen Snabbtest för den mest exakta förhandsvisningen."
 
-#: app/Services/TransStrings.php:1295
-#: app/Services/TransStrings.php:1378
+#: app/Services/TransStrings.php:1295 app/Services/TransStrings.php:1378
 msgid "Grow Your Audience by Opt-in Forms"
 msgstr ""
 
@@ -13709,8 +13468,7 @@ msgstr ""
 msgid "Get Request Status"
 msgstr ""
 
-#: app/Services/TransStrings.php:1349
-#: fluent-crm.php:66
+#: app/Services/TransStrings.php:1349 fluent-crm.php:66
 msgid "Get Support"
 msgstr ""
 
@@ -13898,8 +13656,7 @@ msgstr "Identifiera de betalda sökorden"
 msgid "If you use"
 msgstr ""
 
-#: app/Services/TransStrings.php:1400
-#: app/Services/TransStrings.php:2464
+#: app/Services/TransStrings.php:1400 app/Services/TransStrings.php:2464
 msgid "If you use Amazon SES for sending your WordPress emails. This section is for you"
 msgstr ""
 
@@ -13991,8 +13748,7 @@ msgstr ""
 msgid "Import only active subscribers from"
 msgstr "Importera bara aktiva prenumeranter från"
 
-#: app/Services/TransStrings.php:1427
-#: app/Services/TransStrings.php:1428
+#: app/Services/TransStrings.php:1427 app/Services/TransStrings.php:1428
 msgid "Import your exported dynamic segment JSON file here. Please upload your JSON file."
 msgstr ""
 
@@ -14152,8 +13908,7 @@ msgstr ""
 msgid "Please do not close this window or navigate to other page"
 msgstr ""
 
-#: app/Services/TransStrings.php:1471
-#: app/Services/TransStrings.php:1480
+#: app/Services/TransStrings.php:1471 app/Services/TransStrings.php:1480
 msgid "A double opt-in email will be sent automatically"
 msgstr ""
 
@@ -14189,13 +13944,11 @@ msgstr "Intern underrubrik"
 msgid "Internal Title"
 msgstr ""
 
-#: app/Services/TransStrings.php:1481
-#: app/Services/TransStrings.php:1750
+#: app/Services/TransStrings.php:1481 app/Services/TransStrings.php:1750
 msgid "No integrations found matching your search or filter."
 msgstr ""
 
-#: app/Services/TransStrings.php:1482
-#: app/Services/TransStrings.php:3053
+#: app/Services/TransStrings.php:1482 app/Services/TransStrings.php:3053
 msgid "FluentCRM has integrations with all of your favorite plugins. This settings will be available based on your plugin installed. These integrations are only available on the"
 msgstr ""
 
@@ -14351,8 +14104,7 @@ msgstr ""
 msgid "Layout"
 msgstr "Layout"
 
-#: assets/guten-editor/index.js:1
-#: app/Services/TransStrings.php:1527
+#: assets/guten-editor/index.js:1 app/Services/TransStrings.php:1527
 msgid "Learn More"
 msgstr "Läs mer"
 
@@ -14364,8 +14116,7 @@ msgstr ""
 msgid "LearnDash Integration:"
 msgstr ""
 
-#: app/Services/TransStrings.php:1530
-#: app/Services/TransStrings.php:1565
+#: app/Services/TransStrings.php:1530 app/Services/TransStrings.php:1565
 msgid "Leave blank if you do not want to filter campaigns"
 msgstr ""
 
@@ -14709,8 +14460,7 @@ msgstr ""
 msgid "March"
 msgstr "mars"
 
-#: app/Services/TransStrings.php:1621
-#: app/Services/TransStrings.php:1626
+#: app/Services/TransStrings.php:1621 app/Services/TransStrings.php:1626
 msgid "Mark Cart as Recovered when WooCommerce Order Status Changes to:"
 msgstr ""
 
@@ -14981,8 +14731,7 @@ msgstr ""
 msgid "New Subscriber Status"
 msgstr "Ny status för prenumeranten"
 
-#: app/Services/TransStrings.php:1695
-#: app/Services/TransStringsGuten.php:21
+#: app/Services/TransStrings.php:1695 app/Services/TransStringsGuten.php:21
 msgid "Next"
 msgstr "Nästa"
 
@@ -15018,8 +14767,7 @@ msgstr "Nästa steg"
 msgid "Next [Map Columns]"
 msgstr "Nästa [Mappa kolumner]"
 
-#: app/Services/TransStrings.php:1705
-#: app/Services/TransStringsGuten.php:22
+#: app/Services/TransStrings.php:1705 app/Services/TransStringsGuten.php:22
 msgid "Next step"
 msgstr ""
 
@@ -15434,8 +15182,7 @@ msgstr "Öppningsfrekvens:"
 msgid "Open the frontend portal"
 msgstr ""
 
-#: app/Services/TransStrings.php:1818
-#: app/Services/TransStrings.php:3110
+#: app/Services/TransStrings.php:1818 app/Services/TransStrings.php:3110
 msgid "Open rate is estimated based on pixel loads. it may not show the correct analytics as many email clients load or block tracking regardless of the actual email open"
 msgstr "Öppningsfrekvensen uppskattas utifrån laddade spårningspixlar. Den kan vara missvisande, eftersom många e-postprogram laddar eller blockerar spårning oavsett om mejlet faktiskt öppnas"
 
@@ -15863,8 +15610,7 @@ msgstr "Tryck Enter för att öppna det valda resultatet"
 msgid "Prev step"
 msgstr ""
 
-#: app/Services/TransStrings.php:1935
-#: app/Services/TransStringsGuten.php:23
+#: app/Services/TransStrings.php:1935 app/Services/TransStringsGuten.php:23
 msgid "Preview"
 msgstr "Förhandsvisning"
 
@@ -15944,8 +15690,7 @@ msgstr "Prioritet (%)"
 msgid "Privacy Reminder"
 msgstr ""
 
-#: app/Services/TransStrings.php:1957
-#: app/Views/admin/menu_page.php:15
+#: app/Services/TransStrings.php:1957 app/Views/admin/menu_page.php:15
 #: app/Views/admin/new_menu_page.php:31
 msgid "Pro"
 msgstr "Pro"
@@ -16443,8 +16188,7 @@ msgstr "Ersätt värde"
 msgid "Reply To Email"
 msgstr "Svarsadress"
 
-#: app/Services/TransStrings.php:2089
-#: app/Services/TransStrings.php:2095
+#: app/Services/TransStrings.php:2089 app/Services/TransStrings.php:2095
 msgid "This name will appear as the sender in recipient inboxes"
 msgstr ""
 
@@ -16708,8 +16452,7 @@ msgstr ""
 msgid "SMS sending on process..."
 msgstr ""
 
-#: app/Services/TransStrings.php:2158
-#: app/Services/TransStrings.php:2299
+#: app/Services/TransStrings.php:2158 app/Services/TransStrings.php:2299
 msgid "Select a provider for reliable, compliant message delivery"
 msgstr ""
 
@@ -16729,8 +16472,7 @@ msgstr "Försäljning"
 msgid "Saturday"
 msgstr "lördag"
 
-#: app/Services/TransStrings.php:2164
-#: app/Services/TransStringsGuten.php:14
+#: app/Services/TransStrings.php:2164 app/Services/TransStringsGuten.php:14
 msgid "Save"
 msgstr "Spara"
 
@@ -16766,8 +16508,7 @@ msgstr "Spara som dynamiskt segment"
 msgid "Save as template"
 msgstr "Spara som mall"
 
-#: app/Services/TransStrings.php:2173
-#: app/Services/TransStringsGuten.php:15
+#: app/Services/TransStrings.php:2173 app/Services/TransStringsGuten.php:15
 msgid "Saved"
 msgstr ""
 
@@ -16775,8 +16516,7 @@ msgstr ""
 msgid "Saved Summary"
 msgstr "Sparad sammanfattning"
 
-#: app/Services/TransStrings.php:2175
-#: app/Services/TransStringsGuten.php:13
+#: app/Services/TransStrings.php:2175 app/Services/TransStringsGuten.php:13
 msgid "Saving..."
 msgstr ""
 
@@ -16945,8 +16685,7 @@ msgstr "Sök listor"
 msgid "Search managers..."
 msgstr ""
 
-#: assets/guten-editor/index.js:1
-#: app/Services/TransStrings.php:2219
+#: assets/guten-editor/index.js:1 app/Services/TransStrings.php:2219
 msgid "Search shortcodes..."
 msgstr "Sök kortkoder …"
 
@@ -17664,8 +17403,7 @@ msgstr ""
 msgid "Short"
 msgstr "Kort"
 
-#: assets/guten-editor/index.js:1
-#: app/Services/TransStrings.php:2422
+#: assets/guten-editor/index.js:1 app/Services/TransStrings.php:2422
 msgid "Shortcode"
 msgstr "Kortkod"
 
@@ -17785,8 +17523,7 @@ msgstr "Kortnamn"
 msgid "Slug (Optional)"
 msgstr ""
 
-#: assets/guten-editor/index.js:1
-#: app/Services/TransStrings.php:2453
+#: assets/guten-editor/index.js:1 app/Services/TransStrings.php:2453
 msgid "Smart Link"
 msgstr "Smart länk"
 
@@ -17814,8 +17551,7 @@ msgstr "Kortkoden har kopierats till urklipp"
 msgid "Smartcode:"
 msgstr "Kortkod:"
 
-#: app/Services/TransStrings.php:2460
-#: app/Services/TransStringsGuten.php:20
+#: app/Services/TransStrings.php:2460 app/Services/TransStringsGuten.php:20
 msgid "Smartcodes"
 msgstr ""
 
@@ -17963,8 +17699,7 @@ msgstr "Statistik"
 msgid "Status for New Contacts"
 msgstr ""
 
-#: app/Services/TransStrings.php:2506
-#: app/Services/TransStrings.php:2508
+#: app/Services/TransStrings.php:2506 app/Services/TransStrings.php:2508
 msgid "Status for new contacts not in FluentCRM Database."
 msgstr ""
 
@@ -18213,8 +17948,7 @@ msgstr ""
 msgid "Test your API key to make sure it works."
 msgstr ""
 
-#: assets/guten-editor/index.js:1
-#: app/Services/TransStrings.php:2577
+#: assets/guten-editor/index.js:1 app/Services/TransStrings.php:2577
 msgid "Text"
 msgstr "Text"
 
@@ -19132,8 +18866,7 @@ msgstr "Visa dokumentation"
 msgid "View subscribers"
 msgstr ""
 
-#: assets/guten-editor/index.js:1
-#: app/Services/TransStrings.php:2821
+#: assets/guten-editor/index.js:1 app/Services/TransStrings.php:2821
 msgid "Visual"
 msgstr "Visuellt"
 
@@ -20066,13 +19799,11 @@ msgstr ""
 msgid "if it's already exist?"
 msgstr ""
 
-#: app/Services/TransStrings.php:3069
-#: app/Services/TransStrings.php:3134
+#: app/Services/TransStrings.php:3069 app/Services/TransStrings.php:3134
 msgid "Select Your Current CRM / Email Marketing software"
 msgstr ""
 
-#: app/Services/TransStrings.php:3070
-#: app/Services/TransStrings.php:3174
+#: app/Services/TransStrings.php:3070 app/Services/TransStrings.php:3174
 msgid "Transfer your contacts, tags and associate data from your current email marketing software to FluentCRM in minutes"
 msgstr ""
 
@@ -20545,8 +20276,7 @@ msgstr "du@exempel.se"
 msgid "→"
 msgstr ""
 
-#: assets/guten-editor/index.js:1
-#: app/Services/TransStringsGuten.php:16
+#: assets/guten-editor/index.js:1 app/Services/TransStringsGuten.php:16
 msgid "Save Draft"
 msgstr "Spara utkast"
 
