@@ -141,12 +141,67 @@ select.ff-el-form-control option:hover {
   margin: 0;
 }
 
-.fluentform input[type="checkbox"],
 .fluentform input[type="radio"] {
   appearance: none;
   -webkit-appearance: none;
   border: 1px solid var(--fluentform-border-color);
   border-radius: 4px;
+}
+
+.fluentform .ff-el-form-check-label:has(> input[type="checkbox"]) {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5em;
+}
+
+.fluentform .ff-el-form-check-label:has(> input[type="checkbox"]) > span {
+  margin: 0;
+}
+
+/* font: inherit makes 1lh resolve against the label text, not the browser's form-control font. */
+.fluentform input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  font: inherit;
+  flex-shrink: 0;
+  width: 1lh;
+  height: 1lh;
+  display: grid;
+  place-content: center;
+  background: var(--amrf-input-background);
+  border: 1px solid var(--fluentform-border-color);
+  border-radius: var(--fluentform-border-radius);
+  cursor: pointer;
+}
+
+.fluentform .ff-el-form-check-label > input[type="checkbox"] {
+  top: 0;
+}
+
+.fluentform input[type="checkbox"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  box-shadow: inset 1em 1em var(--amrf-input-color, currentColor);
+  transform: scale(0);
+  transition: transform 0.12s ease-in-out;
+}
+
+.fluentform input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fluentform input[type="checkbox"]::before {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .fluentform input[type="checkbox"]::before {
+    background-color: CanvasText;
+  }
 }
 
 /**
