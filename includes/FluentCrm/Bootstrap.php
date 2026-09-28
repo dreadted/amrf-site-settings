@@ -17,5 +17,6 @@ class Bootstrap
   {
     new Provider();
     new PublicStyles();
+    new AdminAccess();
   }
 }

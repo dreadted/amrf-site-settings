@@ -43,6 +43,12 @@ class Repository
                         // keeps this in sync after activation.
                         home_url('/#builder_active'),
                         'fluent_forms',
+                        'fluentcrm-admin',
+                        'fluentcrm-admin#/subscribers',
+                        'fluentcrm-admin#/contact-groups/lists',
+                        'fluentcrm-admin#/contact-groups/tags',
+                        'fluentcrm-admin#/email/campaigns',
+                        'fluentcrm-admin#/email/templates',
                         'nav-menus.php',
                         'profile.php',
                         'support-tickets',
