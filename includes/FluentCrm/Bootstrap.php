@@ -16,5 +16,6 @@ class Bootstrap
   public static function register(): void
   {
     new Provider();
+    new PublicStyles();
   }
 }
