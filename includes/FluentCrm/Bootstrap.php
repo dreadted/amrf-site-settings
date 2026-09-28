@@ -20,6 +20,7 @@ class Bootstrap
     new AdminAccess();
     new ConsentLog();
     new ContactReducer();
+    new DefaultCampaignTemplate();
     new DoNotContact();
     new PrivacyEraser();
   }
