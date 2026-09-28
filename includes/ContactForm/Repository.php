@@ -287,10 +287,107 @@ class Repository
     ],
   ];
 
-  /** Site baseline for form CONTACT_FORM_ID's formSettings['confirmation']. */
+  /** Newsletter opt-in checkbox appended to CONTACT_FORM_ID's fields when FluentCRM is active, minus its option label (see getNewsletterOptinField()). */
+  private const FLUENTFORM_NEWSLETTER_OPTIN_FIELD = [
+    'index' => 9,
+    'element' => 'input_checkbox',
+    'attributes' => [
+      'type' => 'checkbox',
+      'name' => 'newsletter_optin',
+      'value' => [],
+    ],
+    'settings' => [
+      'dynamic_default_value' => '',
+      'container_class' => '',
+      'label' => 'Nyhetsbrev',
+      'admin_field_label' => 'Nyhetsbrev',
+      'label_placement' => 'hide_label',
+      'display_type' => '',
+      'help_message' => '',
+      'advanced_options' => [],
+      'calc_value_status' => false,
+      'enable_image_input' => false,
+      'values_visible' => true,
+      'randomize_options' => 'no',
+      'enable_other_option' => 'no',
+      'other_option_label' => 'Other',
+      'other_option_placeholder' => 'Please specify...',
+      'other_option_required_message' => 'Please specify a value for the selected "Other" option',
+      'validation_rules' => [
+        'required' => [
+          'value' => false,
+          'message' => 'Detta fält är obligatoriskt',
+          'global_message' => 'Detta fält är obligatoriskt',
+          'global' => true,
+        ],
+        'max_selection' => [
+          'value' => '',
+          'message' => 'Du har valt fler alternativ än tillåtet',
+          'global_message' => 'Du har valt fler alternativ än tillåtet',
+          'global' => true,
+        ],
+        'min_selection' => [
+          'value' => '',
+          'message' => 'Välj minst det lägsta tillåtna antalet alternativ',
+          'global_message' => 'Välj minst det lägsta tillåtna antalet alternativ',
+          'global' => true,
+        ],
+      ],
+      'conditional_logics' => [
+        'type' => 'any',
+        'status' => false,
+        'conditions' => [
+          ['field' => '', 'value' => '', 'operator' => ''],
+        ],
+      ],
+      'layout_class' => '',
+    ],
+    'editor_options' => [
+      'title' => 'Checkbox',
+      'icon_class' => 'ff-edit-checkbox-1',
+      'template' => 'inputCheckable',
+    ],
+    'uniqElKey' => 'el_1790519812526',
+  ];
+
+  private const NEWSLETTER_LIST_SLUG = 'nyhetsbrev';
+
+  private const NEWSLETTER_LIST_TITLE = 'Nyhetsbrev';
+
+  /** Site baseline for CONTACT_FORM_ID's FluentCRM feed, minus list_id (resolved per site). */
+  private const FLUENTCRM_FEED_BASELINE = [
+    'name' => 'FluentCRM Integration Feed',
+    'first_name' => '{inputs.names.first_name}',
+    'last_name' => '{inputs.names.last_name}',
+    'full_name' => '',
+    'email' => 'email',
+    'other_fields' => [
+      ['item_value' => '', 'label' => ''],
+    ],
+    'tag_ids' => [],
+    'tag_ids_selection_type' => 'simple',
+    'tag_routers' => [],
+    'skip_if_exists' => false,
+    'double_opt_in' => false,
+    'force_subscribe' => true,
+    'skip_primary_data' => false,
+    'conditionals' => [
+      'conditions' => [
+        ['field' => 'newsletter_optin', 'operator' => '=', 'value' => 'yes'],
+      ],
+      'status' => true,
+      'type' => 'all',
+    ],
+    'run_events_only' => [],
+    'remove_tags' => [],
+    'enabled' => true,
+    'CustomFields' => [],
+    'default_fields' => [],
+  ];
+
+  /** Site baseline for form CONTACT_FORM_ID's formSettings['confirmation'], minus messageToShow (see getConfirmationMessage()). */
   private const FLUENTFORM_CONFIRMATION_BASELINE = [
     'redirectTo' => 'samePage',
-    'messageToShow' => '<h3>Tack för ditt meddelande,<br />jag hör av mig snarast möjligt!</h3>',
     'customPage' => null,
     'samePageFormBehavior' => 'hide_form',
     'customUrl' => null,
@@ -547,6 +644,85 @@ class Repository
     update_option('fluentmail-settings', $settings);
   }
 
+  /** Links the privacy notice to the site's own privacy policy page, and drops it if none is set. */
+  private static function getConfirmationMessage(): string
+  {
+    $message = '<h3>Tack för ditt meddelande,<br />jag hör av mig snarast möjligt!</h3>';
+    $privacyUrl = get_privacy_policy_url();
+    if (!$privacyUrl) {
+      return $message;
+    }
+
+    return $message . "\n<p>&nbsp;</p>\n" . sprintf(
+      '<p><small>Vi behandlar dina personuppgifter för att kunna svara på ditt meddelande. Läs mer i vår <a href="%s">integritetspolicy</a>.</small></p>',
+      esc_url($privacyUrl)
+    );
+  }
+
+  /** Opt-in option label naming this site's business. */
+  private static function getNewsletterOptinField(): array
+  {
+    $name = amrf_get_site_settings()['business_name'] ?: get_bloginfo('name');
+    $field = self::FLUENTFORM_NEWSLETTER_OPTIN_FIELD;
+    $field['settings']['advanced_options'] = [
+      [
+        'label' => sprintf('Ja tack, jag vill få nyheter och erbjudanden från %s via e-post.', $name),
+        'value' => 'yes',
+        'calc_value' => '',
+        'image' => '',
+        'id' => 1790519812526,
+      ],
+    ];
+
+    return $field;
+  }
+
+  /**
+   * @return int The newsletter list's ID, created if missing; 0 if FluentCRM isn't active.
+   */
+  private static function getNewsletterListId(): int
+  {
+    global $wpdb;
+    if (!defined('FLUENTCRM')) {
+      return 0;
+    }
+
+    $listsTable = $wpdb->prefix . 'fc_lists';
+    $listId = (int) $wpdb->get_var($wpdb->prepare("SELECT id FROM {$listsTable} WHERE slug = %s", self::NEWSLETTER_LIST_SLUG));
+    if ($listId) {
+      return $listId;
+    }
+
+    $now = current_time('mysql');
+    $inserted = $wpdb->insert($listsTable, [
+      'title' => self::NEWSLETTER_LIST_TITLE,
+      'slug' => self::NEWSLETTER_LIST_SLUG,
+      'is_public' => 0,
+      'created_at' => $now,
+      'updated_at' => $now,
+    ]);
+
+    return $inserted ? (int) $wpdb->insert_id : 0;
+  }
+
+  private static function upsertFormMeta(int $formId, string $key, string $value): void
+  {
+    global $wpdb;
+    $metaTable = $wpdb->prefix . 'fluentform_form_meta';
+
+    $id = $wpdb->get_var($wpdb->prepare(
+      "SELECT id FROM {$metaTable} WHERE form_id = %d AND meta_key = %s LIMIT 1",
+      $formId,
+      $key
+    ));
+
+    if ($id) {
+      $wpdb->update($metaTable, ['value' => $value], ['id' => $id]);
+    } else {
+      $wpdb->insert($metaTable, ['form_id' => $formId, 'meta_key' => $key, 'value' => $value]);
+    }
+  }
+
   /** Same one-shot, overwrite-regardless-of-current-values contract as applyFluentFormBaseline(); no-ops if the form doesn't exist. */
   private static function applyContactFormBaseline(): void
   {
@@ -559,40 +735,37 @@ class Repository
       return;
     }
 
+    $fields = self::FLUENTFORM_CONTACT_FORM_FIELDS;
+    $newsletterListId = self::getNewsletterListId();
+    if ($newsletterListId) {
+      $fields['fields'][] = self::getNewsletterOptinField();
+    }
+
     $wpdb->update(
       $formsTable,
       [
         'title' => self::CONTACT_FORM_TITLE,
-        'form_fields' => wp_json_encode(self::FLUENTFORM_CONTACT_FORM_FIELDS),
+        'form_fields' => wp_json_encode($fields),
       ],
       ['id' => $formId]
     );
 
-    $settingsRow = $wpdb->get_row($wpdb->prepare(
-      "SELECT id, value FROM {$metaTable} WHERE form_id = %d AND meta_key = 'formSettings' LIMIT 1",
+    $settingsValue = $wpdb->get_var($wpdb->prepare(
+      "SELECT value FROM {$metaTable} WHERE form_id = %d AND meta_key = 'formSettings' LIMIT 1",
       $formId
     ));
-    $formSettings = $settingsRow ? json_decode((string) $settingsRow->value, true) : null;
+    $formSettings = $settingsValue ? json_decode((string) $settingsValue, true) : null;
     $formSettings = is_array($formSettings) ? $formSettings : [];
-    $formSettings['confirmation'] = self::FLUENTFORM_CONFIRMATION_BASELINE;
-    $encodedSettings = wp_json_encode($formSettings);
+    $formSettings['confirmation'] = array_merge(self::FLUENTFORM_CONFIRMATION_BASELINE, [
+      'messageToShow' => self::getConfirmationMessage(),
+    ]);
+    self::upsertFormMeta($formId, 'formSettings', wp_json_encode($formSettings));
 
-    if ($settingsRow) {
-      $wpdb->update($metaTable, ['value' => $encodedSettings], ['id' => $settingsRow->id]);
-    } else {
-      $wpdb->insert($metaTable, ['form_id' => $formId, 'meta_key' => 'formSettings', 'value' => $encodedSettings]);
-    }
+    self::upsertFormMeta($formId, 'notifications', wp_json_encode(self::FLUENTFORM_NOTIFICATION_BASELINE));
 
-    $notificationId = $wpdb->get_var($wpdb->prepare(
-      "SELECT id FROM {$metaTable} WHERE form_id = %d AND meta_key = 'notifications' LIMIT 1",
-      $formId
-    ));
-    $encodedNotification = wp_json_encode(self::FLUENTFORM_NOTIFICATION_BASELINE);
-
-    if ($notificationId) {
-      $wpdb->update($metaTable, ['value' => $encodedNotification], ['id' => $notificationId]);
-    } else {
-      $wpdb->insert($metaTable, ['form_id' => $formId, 'meta_key' => 'notifications', 'value' => $encodedNotification]);
+    if ($newsletterListId) {
+      $feed = array_merge(self::FLUENTCRM_FEED_BASELINE, ['list_id' => (string) $newsletterListId]);
+      self::upsertFormMeta($formId, 'fluentcrm_feeds', wp_json_encode($feed));
     }
   }
 }
