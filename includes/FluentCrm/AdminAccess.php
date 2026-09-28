@@ -24,7 +24,6 @@ class AdminAccess
       'fcrm_view_dashboard',
       'fcrm_read_contacts',
       'fcrm_manage_contacts',
-      'fcrm_manage_contacts_delete',
       'fcrm_manage_contact_cats',
       'fcrm_read_emails',
       'fcrm_manage_emails',
