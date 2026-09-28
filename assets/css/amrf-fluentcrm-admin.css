@@ -9,3 +9,13 @@
 .fcrm_email_campaign_excluded_contacts {
   display: none;
 }
+
+/* Campaign view's "Link activity" card when it only holds a Pro upsell. */
+.fcrm_base_card:has(.fluentcrm_link_metrics a[href*="utm_campaign=promo"]) {
+  display: none;
+}
+
+/* Dashboard "Active automations" card, second after "Recent contacts"; no class of its own. */
+.fcrm_contact_automation_stats > .fcrm_base_card:nth-child(2) {
+  display: none;
+}

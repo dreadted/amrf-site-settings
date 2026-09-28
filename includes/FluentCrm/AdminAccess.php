@@ -114,6 +114,9 @@ class AdminAccess
       unset($data['stats']['total_automations']);
     }
 
+    // The "Getting started" checklist is site setup (automations, forms), not editor work.
+    $data['onboarding'] = null;
+
     if (!empty($data['quick_links']) && is_array($data['quick_links'])) {
       $data['quick_links'] = array_values(array_filter(
         $data['quick_links'],
