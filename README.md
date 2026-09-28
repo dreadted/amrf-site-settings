@@ -132,6 +132,9 @@ behavior changes that default to _on_ but can be switched off per site:
 - Which admin page it sees by default when opening `/wp-admin/`
 - A checklist of exactly which menu items the role is allowed to see
 
+For non-administrators, FluentCRM and Fluent Forms are moved from the top of
+the admin menu to right after Pages.
+
 ### Optional integrations
 
 These only do anything if the corresponding plugin is also active —

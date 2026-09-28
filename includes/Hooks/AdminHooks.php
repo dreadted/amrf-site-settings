@@ -3,6 +3,7 @@
 namespace Antropomorf\Hooks;
 
 use Antropomorf\Admin\MenuManager;
+use Antropomorf\Admin\MenuOrder;
 use Antropomorf\Admin\SettingsPage;
 use Antropomorf\Admin\SiteSettingsMenu;
 use Antropomorf\Utilities\SettingsRenderer;
@@ -31,6 +32,7 @@ class AdminHooks
     public static function register(): void
     {
         register_activation_hook(AMRF_ADMIN_PLUGIN_FILE, [Repository::class, 'activate']);
+        new MenuOrder();
         add_action('plugins_loaded', [self::class, 'init']);
         add_filter(
             'plugin_action_links_' . plugin_basename(AMRF_ADMIN_PLUGIN_FILE),
