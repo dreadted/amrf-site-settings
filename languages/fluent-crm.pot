@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-28T03:45:34+00:00\n"
+"POT-Creation-Date: 2026-09-28T05:05:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fluent-crm\n"
@@ -33,6 +33,258 @@ msgstr ""
 #. Author of the plugin
 #: fluent-crm.php
 msgid "WP Email Newsletter Team - FluentCRM"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "No editors available."
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+#: app/Services/TransStrings.php:847
+msgid "Default (Gutenberg)"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+#: app/Services/TransStringsGuten.php:16
+msgid "Save Draft"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Save as Template"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Browse Templates"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Switch Editor"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Fullscreen mode"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+#: app/Hooks/Handlers/AdminMenu.php:236
+#: app/Hooks/Handlers/AdminMenu.php:237
+msgid "Help"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Smart Links requires FluentCRM Pro"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "No smart links found"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "No smart links available"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+#: app/Services/TransStrings.php:2453
+msgid "Smart Link"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Search smart links..."
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Links"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+#: app/Services/TransStrings.php:1527
+msgid "Learn More"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+#: app/Services/TransStrings.php:2219
+msgid "Search shortcodes..."
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Click to insert shortcode"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "No shortcodes found for this search."
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Detach pattern"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Detach"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Insert Image"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Select or Upload Image"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Use this image"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Footer Content"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+#: app/Services/TransStrings.php:2422
+msgid "Shortcode"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+#: app/Services/TransStrings.php:2821
+msgid "Visual"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+#: app/Services/TransStrings.php:2577
+msgid "Text"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Bold"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Italic"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Link"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "UL"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "OL"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "LI"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Code"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Rewrite"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Rewrite while keeping the same meaning"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Shorten"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Make it shorter and more concise"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Expand"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Add more detail and engagement"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Fix Grammar"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Fix grammar, spelling, and punctuation"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Custom Prompt"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Describe what you want"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Could not insert or copy shortcode"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "No content was generated. Please try again."
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+#: app/Services/TransStrings.php:260
+msgid "An error occurred. Please try again."
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "The selected block is empty. Add some text first or use Custom Prompt."
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "This block type is not supported for AI writing."
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Please select a text block first."
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+#: app/Services/TransStrings.php:36
+msgid "AI Writing"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Change writing tone"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Tone:"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Describe what you want the AI to do with the selected text..."
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Generate"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Generating..."
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Generated Content"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Discard"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Try Again"
+msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "Accept"
 msgstr ""
 
 #. translators: %s: requested FluentCRM API module key
@@ -435,11 +687,6 @@ msgstr ""
 #: app/Hooks/Handlers/AdminMenu.php:225
 #: app/Hooks/Handlers/AdminMenu.php:226
 msgid "SMTP"
-msgstr ""
-
-#: app/Hooks/Handlers/AdminMenu.php:236
-#: app/Hooks/Handlers/AdminMenu.php:237
-msgid "Help"
 msgstr ""
 
 #: app/Hooks/Handlers/AdminMenu.php:275
@@ -8838,10 +9085,6 @@ msgstr ""
 msgid "AI Summary of %s"
 msgstr ""
 
-#: app/Services/TransStrings.php:36
-msgid "AI Writing"
-msgstr ""
-
 #: app/Services/TransStrings.php:37
 msgid "AI Writing Assistant"
 msgstr ""
@@ -9650,10 +9893,6 @@ msgstr ""
 
 #: app/Services/TransStrings.php:259
 msgid "An error occurred"
-msgstr ""
-
-#: app/Services/TransStrings.php:260
-msgid "An error occurred. Please try again."
 msgstr ""
 
 #: app/Services/TransStrings.php:261
@@ -11799,10 +12038,6 @@ msgstr ""
 
 #: app/Services/TransStrings.php:846
 msgid "Default"
-msgstr ""
-
-#: app/Services/TransStrings.php:847
-msgid "Default (Gutenberg)"
 msgstr ""
 
 #: app/Services/TransStrings.php:848
@@ -14345,10 +14580,6 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1526
 msgid "Layout"
-msgstr ""
-
-#: app/Services/TransStrings.php:1527
-msgid "Learn More"
 msgstr ""
 
 #: app/Services/TransStrings.php:1528
@@ -16940,10 +17171,6 @@ msgstr ""
 msgid "Search managers..."
 msgstr ""
 
-#: app/Services/TransStrings.php:2219
-msgid "Search shortcodes..."
-msgstr ""
-
 #: app/Services/TransStrings.php:2220
 msgid "Search statuses..."
 msgstr ""
@@ -17658,10 +17885,6 @@ msgstr ""
 msgid "Short"
 msgstr ""
 
-#: app/Services/TransStrings.php:2422
-msgid "Shortcode"
-msgstr ""
-
 #: app/Services/TransStrings.php:2423
 msgid "Show All Rows"
 msgstr ""
@@ -17776,10 +17999,6 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2452
 msgid "Slug (Optional)"
-msgstr ""
-
-#: app/Services/TransStrings.php:2453
-msgid "Smart Link"
 msgstr ""
 
 #: app/Services/TransStrings.php:2454
@@ -18203,10 +18422,6 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2576
 msgid "Test your API key to make sure it works."
-msgstr ""
-
-#: app/Services/TransStrings.php:2577
-msgid "Text"
 msgstr ""
 
 #: app/Services/TransStrings.php:2578
@@ -19121,10 +19336,6 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2820
 msgid "View subscribers"
-msgstr ""
-
-#: app/Services/TransStrings.php:2821
-msgid "Visual"
 msgstr ""
 
 #: app/Services/TransStrings.php:2823
@@ -20533,10 +20744,6 @@ msgstr ""
 
 #: app/Services/TransStrings.php:3199
 msgid "→"
-msgstr ""
-
-#: app/Services/TransStringsGuten.php:16
-msgid "Save Draft"
 msgstr ""
 
 #: app/Services/TransStringsGuten.php:17

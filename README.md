@@ -208,10 +208,17 @@ This plugin is fully **translation-ready**. The `.pot` file is in the
 `languages` folder, alongside a complete Swedish (`sv_SE`) translation.
 
 It also bundles its own Swedish translations for **Fluent Forms** (complete)
-and **FluentCRM** (the visitor-facing pages plus contacts, lists, tags and
-campaigns). They're loaded straight from this plugin's `languages` folder and
-take precedence over any wordpress.org language pack — no files need to be
-copied into `wp-content/languages`.
+and **FluentCRM** (the visitor-facing pages plus the dashboard, contacts,
+lists, tags, campaigns, email templates and the email editor). They're loaded
+straight from this plugin's `languages` folder and take precedence over any
+wordpress.org language pack — no files need to be copied into
+`wp-content/languages`. That includes script translations FluentCRM's email
+editor never loads on its own, and labels Fluent Forms' entries page leaves
+out of its translation map.
+
+Some texts in both plugins are hard-coded in their JavaScript (for example
+FluentCRM's email editor sidebar and style panel, and Fluent Forms'
+pagination and relative times) and stay in English.
 
 ## License
 

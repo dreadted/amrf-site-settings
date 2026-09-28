@@ -11,6 +11,7 @@ if (!defined('ABSPATH')) {
  *
  * Serves this plugin's own translations for third-party plugins from its
  * languages/ folder, taking precedence over wordpress.org language packs.
+ * Covers PHP (.mo) and script (.json) translations.
  *
  * @package Antropomorf\Translations
  */
@@ -18,11 +19,24 @@ class Provider
 {
   private const DOMAINS = ['fluentform', 'fluent-crm'];
 
+  /** Script handles that call wp.i18n but that their plugin never registers translations for. */
+  private const SCRIPT_DOMAINS = ['fcrm_editor_custom' => 'fluent-crm'];
+
   public function __construct()
   {
     // Just-in-time loading never reaches load_translation_file unless a file is found here first.
     add_filter('lang_dir_for_domain', [$this, 'filterLangDir'], 10, 3);
     add_filter('load_translation_file', [$this, 'filterTranslationFile'], 10, 3);
+    add_action('wp_enqueue_scripts', [$this, 'setScriptTranslations'], PHP_INT_MAX);
+  }
+
+  public function setScriptTranslations(): void
+  {
+    foreach (self::SCRIPT_DOMAINS as $handle => $domain) {
+      if (wp_script_is($handle, 'registered')) {
+        wp_set_script_translations($handle, $domain, AMRF_ADMIN_PLUGIN_DIR . '/languages');
+      }
+    }
   }
 
   /**

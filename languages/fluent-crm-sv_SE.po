@@ -1,5 +1,3 @@
-# Copyright (C) 2026 WP Email Newsletter Team - FluentCRM
-# This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
 "Project-Id-Version: FluentCRM - Marketing Automation For WordPress 3.2.0\n"
@@ -9,10 +7,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sv_SE\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "POT-Creation-Date: 2026-09-28T03:45:34+00:00\n"
 "PO-Revision-Date: 2026-09-28 03:49+0000\n"
+"Language: sv_SE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: fluent-crm\n"
 
@@ -108,7 +106,7 @@ msgstr ""
 #: app/Functions/helpers.php:676
 #: app/Http/Controllers/CampaignAnalyticsController.php:359
 msgid "Customer"
-msgstr ""
+msgstr "Kund"
 
 #: app/Functions/helpers.php:730
 #: app/Services/TransStrings.php:1788
@@ -439,6 +437,7 @@ msgstr "Tillägg"
 msgid "SMTP"
 msgstr "SMTP"
 
+#: assets/guten-editor/index.js:1
 #: app/Hooks/Handlers/AdminMenu.php:236
 #: app/Hooks/Handlers/AdminMenu.php:237
 msgid "Help"
@@ -2025,7 +2024,7 @@ msgstr ""
 #: app/Hooks/Handlers/FormSubmissions.php:129
 #: app/Services/TransStrings.php:68
 msgid "Action"
-msgstr ""
+msgstr "Åtgärd"
 
 #: app/Hooks/Handlers/FormSubmissions.php:141
 #: app/Hooks/Handlers/FormSubmissions.php:147
@@ -2484,19 +2483,19 @@ msgstr ""
 
 #: app/Http/Controllers/CampaignAnalyticsController.php:92
 msgid "No revenue found for this campaign"
-msgstr ""
+msgstr "Inga intäkter hittades för det här utskicket"
 
 #: app/Http/Controllers/CampaignAnalyticsController.php:131
 msgid "No attributed orders found. Stale revenue data has been cleared."
-msgstr ""
+msgstr "Inga kopplade beställningar hittades. Inaktuella intäktsuppgifter har rensats."
 
 #: app/Http/Controllers/CampaignAnalyticsController.php:137
 msgid "No order found to re-sync"
-msgstr ""
+msgstr "Ingen beställning att synkronisera om"
 
 #: app/Http/Controllers/CampaignAnalyticsController.php:147
 msgid "Revenue has been re-synced successfully"
-msgstr ""
+msgstr "Intäkterna har synkroniserats om"
 
 #: app/Http/Controllers/CampaignAnalyticsController.php:363
 #: app/Http/Controllers/CampaignAnalyticsController.php:410
@@ -2532,11 +2531,11 @@ msgstr ""
 
 #: app/Http/Controllers/CampaignAnalyticsController.php:399
 msgid "M j, Y"
-msgstr ""
+msgstr "j M Y"
 
 #: app/Http/Controllers/CampaignAnalyticsController.php:430
 msgid "(customer missing)"
-msgstr ""
+msgstr "(kund saknas)"
 
 #: app/Http/Controllers/CampaignController.php:175
 #: app/Models/Campaign.php:855
@@ -2874,39 +2873,39 @@ msgstr "Förslag på databasrensning"
 #: app/Http/Controllers/DashboardController.php:119
 #: app/Http/Controllers/DashboardController.php:127
 msgid "Do more with WooCommerce + FluentCRM"
-msgstr ""
+msgstr "Gör mer med WooCommerce + FluentCRM"
 
 #: app/Http/Controllers/DashboardController.php:120
 #: app/Http/Controllers/DashboardController.php:128
 msgid "Integrate FluentCRM with WooCommerce and segment your customers by purchase behavior, send super targeted emails, onboarding emails, cross promotions and many more."
-msgstr ""
+msgstr "Integrera FluentCRM med WooCommerce och segmentera kunderna efter köpbeteende, skicka riktade mejl och välkomstmejl, korsmarknadsför och mycket mer."
 
 #: app/Http/Controllers/DashboardController.php:123
 #: app/Http/Controllers/DashboardController.php:131
 msgid "Supercharge your WooCommerce store by upgrading FluentCRM Pro"
-msgstr ""
+msgstr "Ge din WooCommerce-butik mer kraft med FluentCRM Pro"
 
 #: app/Http/Controllers/DashboardController.php:138
 msgid "Do more with EDD + FluentCRM"
-msgstr ""
+msgstr "Gör mer med EDD + FluentCRM"
 
 #: app/Http/Controllers/DashboardController.php:139
 msgid "Integrate FluentCRM with Easy Digital Downloads and segment your customers by purchase behavior, send super targeted emails, onboarding emails, cross promotions and many more."
-msgstr ""
+msgstr "Integrera FluentCRM med Easy Digital Downloads och segmentera kunderna efter köpbeteende, skicka riktade mejl och välkomstmejl, korsmarknadsför och mycket mer."
 
 #: app/Http/Controllers/DashboardController.php:142
 msgid "Supercharge your Digital Downloads store by upgrading FluentCRM Pro"
-msgstr ""
+msgstr "Ge din butik för digitala produkter mer kraft med FluentCRM Pro"
 
 #: app/Http/Controllers/DashboardController.php:149
 #: app/Http/Controllers/DashboardController.php:157
 msgid "Do more with LifterLMS + FluentCRM"
-msgstr ""
+msgstr "Gör mer med LifterLMS + FluentCRM"
 
 #: app/Http/Controllers/DashboardController.php:150
 #: app/Http/Controllers/DashboardController.php:158
 msgid "Integrate LifterLMS with FluentCRM and segment your students by courses, send super targeted emails, onboarding emails, cross promote more courses and many more."
-msgstr ""
+msgstr "Integrera LifterLMS med FluentCRM och segmentera deltagarna efter kurs, skicka riktade mejl och välkomstmejl, marknadsför fler kurser och mycket mer."
 
 #: app/Http/Controllers/DashboardController.php:153
 #: app/Http/Controllers/DashboardController.php:161
@@ -2915,88 +2914,88 @@ msgstr ""
 #: app/Http/Controllers/DashboardController.php:187
 #: app/Http/Controllers/DashboardController.php:196
 msgid "Supercharge your LMS by upgrading FluentCRM Pro"
-msgstr ""
+msgstr "Ge din kursplattform mer kraft med FluentCRM Pro"
 
 #: app/Http/Controllers/DashboardController.php:166
 #: app/Http/Controllers/DashboardController.php:174
 msgid "Do more with LearnDash + FluentCRM"
-msgstr ""
+msgstr "Gör mer med LearnDash + FluentCRM"
 
 #: app/Http/Controllers/DashboardController.php:167
 #: app/Http/Controllers/DashboardController.php:175
 msgid "Integrate LearnDash with FluentCRM and segment your students by courses, send super targeted emails, onboarding emails, cross promote more courses and many more."
-msgstr ""
+msgstr "Integrera LearnDash med FluentCRM och segmentera deltagarna efter kurs, skicka riktade mejl och välkomstmejl, marknadsför fler kurser och mycket mer."
 
 #: app/Http/Controllers/DashboardController.php:183
 msgid "Do more with TutorLMS + FluentCRM"
-msgstr ""
+msgstr "Gör mer med TutorLMS + FluentCRM"
 
 #: app/Http/Controllers/DashboardController.php:184
 msgid "Integrate TutorLMS with FluentCRM and segment your students by courses, send super targeted emails, onboarding emails, cross promote more courses and many more."
-msgstr ""
+msgstr "Integrera TutorLMS med FluentCRM och segmentera deltagarna efter kurs, skicka riktade mejl och välkomstmejl, marknadsför fler kurser och mycket mer."
 
 #: app/Http/Controllers/DashboardController.php:192
 msgid "Do more with LearnPress + FluentCRM"
-msgstr ""
+msgstr "Gör mer med LearnPress + FluentCRM"
 
 #: app/Http/Controllers/DashboardController.php:193
 msgid "Integrate LearnPress with FluentCRM and segment your students by courses, send super targeted emails, onboarding emails, cross promote more courses and many more."
-msgstr ""
+msgstr "Integrera LearnPress med FluentCRM och segmentera deltagarna efter kurs, skicka riktade mejl och välkomstmejl, marknadsför fler kurser och mycket mer."
 
 #: app/Http/Controllers/DashboardController.php:203
 msgid "Do more with PaidMembership Pro + FluentCRM"
-msgstr ""
+msgstr "Gör mer med PaidMembership Pro + FluentCRM"
 
 #: app/Http/Controllers/DashboardController.php:204
 msgid "Integrate PaidMembership Pro with FluentCRM and segment your members by membership levels, send super targeted emails, onboarding emails, cross promote more levels and many more."
-msgstr ""
+msgstr "Integrera PaidMembership Pro med FluentCRM och segmentera medlemmarna efter medlemsnivå, skicka riktade mejl och välkomstmejl, marknadsför fler nivåer och mycket mer."
 
 #: app/Http/Controllers/DashboardController.php:206
 #: app/Http/Controllers/DashboardController.php:214
 #: app/Http/Controllers/DashboardController.php:222
 #: app/Http/Controllers/DashboardController.php:230
 msgid "Supercharge your Membership Site by upgrading FluentCRM Pro"
-msgstr ""
+msgstr "Ge din medlemssajt mer kraft med FluentCRM Pro"
 
 #: app/Http/Controllers/DashboardController.php:211
 msgid "Do more with Wishlist Member + FluentCRM"
-msgstr ""
+msgstr "Gör mer med Wishlist Member + FluentCRM"
 
 #: app/Http/Controllers/DashboardController.php:212
 msgid "Integrate Wishlist Member with FluentCRM and segment your members by membership levels, send super targeted emails, onboarding emails, cross promote more levels and many more."
-msgstr ""
+msgstr "Integrera Wishlist Member med FluentCRM och segmentera medlemmarna efter medlemsnivå, skicka riktade mejl och välkomstmejl, marknadsför fler nivåer och mycket mer."
 
 #: app/Http/Controllers/DashboardController.php:219
 msgid "Do more with MemberPress + FluentCRM"
-msgstr ""
+msgstr "Gör mer med MemberPress + FluentCRM"
 
 #: app/Http/Controllers/DashboardController.php:220
 msgid "Integrate MemberPress with FluentCRM and segment your members by membership levels, send super targeted emails, onboarding emails, cross promote more levels and many more."
-msgstr ""
+msgstr "Integrera MemberPress med FluentCRM och segmentera medlemmarna efter medlemsnivå, skicka riktade mejl och välkomstmejl, marknadsför fler nivåer och mycket mer."
 
 #: app/Http/Controllers/DashboardController.php:227
 msgid "Do more with Restrict Content Pro + FluentCRM"
-msgstr ""
+msgstr "Gör mer med Restrict Content Pro + FluentCRM"
 
 #: app/Http/Controllers/DashboardController.php:228
 msgid "Integrate Restrict Content Pro with FluentCRM and segment your members by membership levels, send super targeted emails, onboarding emails, cross promote more levels and many more."
-msgstr ""
+msgstr "Integrera Restrict Content Pro med FluentCRM och segmentera medlemmarna efter medlemsnivå, skicka riktade mejl och välkomstmejl, marknadsför fler nivåer och mycket mer."
 
 #. translators: %s: plugin name (BuddyBoss or BuddyPress)
 #: app/Http/Controllers/DashboardController.php:239
 #, php-format
 msgid "Do more with %s + FluentCRM"
-msgstr ""
+msgstr "Gör mer med %s + FluentCRM"
 
 #. translators: %s: plugin name (BuddyBoss or BuddyPress)
 #: app/Http/Controllers/DashboardController.php:241
 #, php-format
 msgid "Integrate %s with FluentCRM and segment your members by different group, send super targeted emails, onboarding emails, cross promote more groups and many more."
-msgstr ""
+msgstr "Integrera %s med FluentCRM och segmentera medlemmarna efter grupp, skicka riktade mejl och välkomstmejl, marknadsför fler grupper och mycket mer."
 
 #: app/Http/Controllers/DashboardController.php:243
 msgid "Supercharge your Community Site by upgrading FluentCRM Pro"
-msgstr ""
+msgstr "Ge din community-webbplats mer kraft med FluentCRM Pro"
 
 #: app/Http/Controllers/DocsController.php:64
 #: app/Services/TransStrings.php:1346
@@ -3640,11 +3639,11 @@ msgstr ""
 
 #: app/Http/Controllers/ReportingController.php:45
 msgid "Current Range"
-msgstr ""
+msgstr "Aktuell period"
 
 #: app/Http/Controllers/ReportingController.php:59
 msgid "Compare Range"
-msgstr ""
+msgstr "Jämförelseperiod"
 
 #: app/Http/Controllers/ReportingController.php:309
 #: app/Http/Controllers/SubscriberController.php:841
@@ -3654,7 +3653,7 @@ msgstr "De valda mejlen har raderats"
 #: app/Http/Controllers/SettingsController.php:76
 #: app/Http/Controllers/TemplateController.php:250
 msgid "##crm.manage_subscription_url## or ##crm.unsubscribe_url## string is required for compliance. Please include unsubscription or manage subscription link"
-msgstr ""
+msgstr "##crm.manage_subscription_url## eller ##crm.unsubscribe_url## krävs enligt lag. Lägg in en länk för att avsluta eller hantera prenumerationen"
 
 #: app/Http/Controllers/SettingsController.php:85
 msgid "Settings Updated"
@@ -4351,47 +4350,47 @@ msgstr "De valda taggarna har tagits bort permanent"
 
 #: app/Http/Controllers/TemplateController.php:181
 msgid "Template successfully created"
-msgstr ""
+msgstr "Mallen har skapats"
 
 #: app/Http/Controllers/TemplateController.php:218
 msgid "Template successfully duplicated"
-msgstr ""
+msgstr "Mallen har kopierats"
 
 #: app/Http/Controllers/TemplateController.php:286
 msgid "Template successfully updated"
-msgstr ""
+msgstr "Mallen har uppdaterats"
 
 #: app/Http/Controllers/TemplateController.php:342
 msgid "Status has been changed for the selected templates"
-msgstr ""
+msgstr "Status har ändrats för de valda mallarna"
 
 #: app/Http/Controllers/TemplateController.php:357
 msgid "Selected Templates have been deleted permanently"
-msgstr ""
+msgstr "De valda mallarna har raderats permanent"
 
 #: app/Http/Controllers/TemplateController.php:377
 msgid "The template has been deleted successfully."
-msgstr ""
+msgstr "Mallen har raderats."
 
 #: app/Http/Controllers/TemplateController.php:432
 msgid "Default campaign template has been saved"
-msgstr ""
+msgstr "Standardmallen för utskick har sparats"
 
 #: app/Http/Controllers/TemplateController.php:442
 msgid "Default campaign template has been removed"
-msgstr ""
+msgstr "Standardmallen för utskick har tagits bort"
 
 #: app/Http/Controllers/TemplateController.php:463
 msgid "Global style settings have been updated"
-msgstr ""
+msgstr "De globala stilinställningarna har uppdaterats"
 
 #: app/Http/Controllers/TemplateController.php:507
 msgid "The selected template does not have any email content."
-msgstr ""
+msgstr "Den valda mallen har inget mejlinnehåll."
 
 #: app/Http/Controllers/TemplateController.php:512
 msgid "Template has been inserted"
-msgstr ""
+msgstr "Mallen har infogats"
 
 #: app/Http/Controllers/WebhookBounceController.php:84
 msgid "Invalid Data or Security Code"
@@ -4474,7 +4473,7 @@ msgstr ""
 #: app/Models/Company.php:54
 #: app/Services/TransStrings.php:1455
 msgid "Industry"
-msgstr ""
+msgstr "Bransch"
 
 #: app/Models/Company.php:55
 msgid "Company Description"
@@ -4773,7 +4772,7 @@ msgstr "Kontakt"
 #: app/Services/Helper.php:1929
 #: app/Services/TransStrings.php:767
 msgid "Created At"
-msgstr ""
+msgstr "Skapad"
 
 #: app/Modules/AbandonCart/Drivers/FluentCart/FluentCartAutomationTrigger.php:208
 #: app/Services/Helper.php:1977
@@ -7589,7 +7588,7 @@ msgstr ""
 #: app/Services/Funnel/Actions/SendEmailAction.php:117
 #: app/Services/TransStrings.php:2786
 msgid "Set Custom From Name and Email"
-msgstr ""
+msgstr "Ange eget avsändarnamn och egen avsändaradress"
 
 #: app/Services/Funnel/Actions/SendEmailAction.php:252
 msgid "Email Sent From Funnel: "
@@ -8677,12 +8676,12 @@ msgstr ""
 
 #: app/Services/Stats.php:31
 msgid "Active Contacts"
-msgstr ""
+msgstr "Aktiva kontakter"
 
 #: app/Services/Stats.php:45
 #: app/Services/TransStrings.php:1096
 msgid "Emails Sent"
-msgstr ""
+msgstr "Skickade mejl"
 
 #: app/Services/Stats.php:52
 #: app/Services/TransStrings.php:79
@@ -8691,28 +8690,28 @@ msgstr "Aktiva automatiseringar"
 
 #: app/Services/Stats.php:64
 msgid "Pending Emails"
-msgstr ""
+msgstr "Väntande mejl"
 
 #: app/Services/Stats.php:90
 msgid "Contact Segments"
-msgstr ""
+msgstr "Kontaktsegment"
 
 #: app/Services/Stats.php:105
 #: app/Services/TransStrings.php:1595
 msgid "MCP for AI Agents"
-msgstr ""
+msgstr "MCP för AI-agenter"
 
 #: app/Services/Stats.php:110
 msgid "Documentations"
-msgstr ""
+msgstr "Dokumentation"
 
 #: app/Services/Stats.php:115
 msgid "Video Tutorials (Free)"
-msgstr ""
+msgstr "Videoguider (gratis)"
 
 #: app/Services/Stats.php:154
 msgid "Create a Tag"
-msgstr ""
+msgstr "Skapa en tagg"
 
 #: app/Services/Stats.php:161
 #: app/Services/TransStrings.php:1412
@@ -8722,7 +8721,7 @@ msgstr "Importera kontakter"
 
 #: app/Services/Stats.php:168
 msgid "Create a Campaign"
-msgstr ""
+msgstr "Skapa ett utskick"
 
 #: app/Services/Stats.php:175
 #: app/Services/TransStrings.php:745
@@ -8732,7 +8731,7 @@ msgstr "Skapa en automatisering"
 #: app/Services/Stats.php:182
 #: app/Services/TransStrings.php:736
 msgid "Create a Form"
-msgstr ""
+msgstr "Skapa ett formulär"
 
 #: app/Services/TransStrings.php:11
 msgid " Segments"
@@ -8840,9 +8839,10 @@ msgstr "AI-sammanfattning"
 msgid "AI Summary of %s"
 msgstr "AI-sammanfattning av %s"
 
+#: assets/guten-editor/index.js:1
 #: app/Services/TransStrings.php:36
 msgid "AI Writing"
-msgstr ""
+msgstr "AI-skrivhjälp"
 
 #: app/Services/TransStrings.php:37
 msgid "AI Writing Assistant"
@@ -8866,7 +8866,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:43
 msgid "This subject will not be used to send emails. Please set A/B testing subjects"
-msgstr ""
+msgstr "Den här ämnesraden används inte när mejlen skickas. Ange ämnesrader för A/B-testet"
 
 #: app/Services/TransStrings.php:44
 #: app/Services/TransStrings.php:481
@@ -8925,11 +8925,11 @@ msgstr ""
 
 #: app/Services/TransStrings.php:55
 msgid "You can split test your Email Subject Line and Test which Subject Lines got more open and click rate. This is a pro feature"
-msgstr ""
+msgstr "Du kan A/B-testa ämnesraden och se vilken som ger flest öppningar och klick. Det här är en Pro-funktion"
 
 #: app/Services/TransStrings.php:56
 msgid "Send Emails with Multiple Subject Line (A/B) test"
-msgstr ""
+msgstr "Skicka mejl med flera ämnesrader (A/B-test)"
 
 #: app/Services/TransStrings.php:57
 msgid "Abandoned Cart Settings Require WooCommerce"
@@ -9105,7 +9105,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:111
 msgid "Add Media"
-msgstr ""
+msgstr "Lägg till media"
 
 #: app/Services/TransStrings.php:112
 msgid "Add More"
@@ -9177,7 +9177,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:130
 msgid "Add SmartCodes"
-msgstr ""
+msgstr "Lägg till smartkoder"
 
 #: app/Services/TransStrings.php:131
 msgid "Add Social Media URL"
@@ -9209,7 +9209,7 @@ msgstr "Lägg till taggar på prenumeranter"
 
 #: app/Services/TransStrings.php:140
 msgid "Add Template"
-msgstr ""
+msgstr "Lägg till mall"
 
 #: app/Services/TransStrings.php:141
 msgid "Add To Automation"
@@ -9282,7 +9282,7 @@ msgstr ""
 #: app/Services/TransStrings.php:158
 #: app/Services/TransStrings.php:1252
 msgid "Add new filter to narrow down your contacts based on different properties"
-msgstr ""
+msgstr "Lägg till ett filter för att avgränsa kontakterna utifrån olika egenskaper"
 
 #: app/Services/TransStrings.php:159
 msgid "Add new:"
@@ -9316,7 +9316,7 @@ msgstr ""
 #: app/Services/TransStrings.php:167
 #: app/Services/TransStrings.php:410
 msgid "Add/Remove Tag of your Contacts based on email interaction"
-msgstr ""
+msgstr "Lägg till/ta bort taggar på kontakter utifrån hur de interagerat med mejlet"
 
 #: app/Services/TransStrings.php:168
 msgid "Are you sure you want to add contacts to selected Automation Funnel?"
@@ -9360,7 +9360,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:179
 msgid "Address"
-msgstr ""
+msgstr "Adress"
 
 #: app/Services/TransStrings.php:180
 msgid "Address Fields"
@@ -9490,15 +9490,15 @@ msgstr ""
 
 #: app/Services/TransStrings.php:215
 msgid "After 1 Hour"
-msgstr ""
+msgstr "Efter 1 timme"
 
 #: app/Services/TransStrings.php:216
 msgid "After 1 Week"
-msgstr ""
+msgstr "Efter 1 vecka"
 
 #: app/Services/TransStrings.php:217
 msgid "After 2 Days"
-msgstr ""
+msgstr "Efter 2 dagar"
 
 #: app/Services/TransStrings.php:218
 msgid "After Confirmation Settings"
@@ -9652,11 +9652,12 @@ msgstr ""
 
 #: app/Services/TransStrings.php:259
 msgid "An error occurred"
-msgstr ""
+msgstr "Ett fel inträffade"
 
+#: assets/guten-editor/index.js:1
 #: app/Services/TransStrings.php:260
 msgid "An error occurred. Please try again."
-msgstr ""
+msgstr "Ett fel inträffade. Försök igen."
 
 #: app/Services/TransStrings.php:261
 msgid "And"
@@ -9736,11 +9737,11 @@ msgstr "Arkiverad"
 
 #: app/Services/TransStrings.php:281
 msgid "Are you sure to Resend Unopened Emails?"
-msgstr ""
+msgstr "Vill du skicka om de oöppnade mejlen?"
 
 #: app/Services/TransStrings.php:282
 msgid "Are you sure to delete this?"
-msgstr ""
+msgstr "Vill du radera det här?"
 
 #: app/Services/TransStrings.php:283
 msgid "Are you sure to delete?"
@@ -10002,7 +10003,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:350
 msgid "Back to Labels"
-msgstr ""
+msgstr "Tillbaka till etiketter"
 
 #: app/Services/TransStrings.php:351
 msgid "Back to Sequence"
@@ -10010,7 +10011,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:352
 msgid "Background Color"
-msgstr ""
+msgstr "Bakgrundsfärg"
 
 #: app/Services/TransStrings.php:353
 msgid "Bar chart"
@@ -10074,7 +10075,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:369
 msgid "You can use fallback value using | separator. Example:"
-msgstr ""
+msgstr "Du kan ange ett reservvärde med avgränsaren |. Exempel:"
 
 #: app/Services/TransStrings.php:370
 msgid "Blog Posts"
@@ -10086,7 +10087,7 @@ msgstr "Bakgrundsfärg för sidan"
 
 #: app/Services/TransStrings.php:372
 msgid "Border Radius"
-msgstr ""
+msgstr "Hörnradie"
 
 #: app/Services/TransStrings.php:373
 msgid "Bounce Handler"
@@ -10142,19 +10143,19 @@ msgstr ""
 
 #: app/Services/TransStrings.php:388
 msgid "Button"
-msgstr ""
+msgstr "Knapp"
 
 #: app/Services/TransStrings.php:389
 msgid "Button Preview"
-msgstr ""
+msgstr "Förhandsvisning av knapp"
 
 #: app/Services/TransStrings.php:390
 msgid "Button Text"
-msgstr ""
+msgstr "Knapptext"
 
 #: app/Services/TransStrings.php:391
 msgid "Button URL"
-msgstr ""
+msgstr "Knappens URL"
 
 #: app/Services/TransStrings.php:392
 msgid "By"
@@ -10222,7 +10223,7 @@ msgstr "CSV-filen måste ha en kolumn som heter \"title\""
 
 #: app/Services/TransStrings.php:411
 msgid "Broadcast/Schedule This Email Campaign Now"
-msgstr ""
+msgstr "Skicka eller schemalägg utskicket nu"
 
 #: app/Services/TransStrings.php:412
 msgid "Broadcast/Schedule This SMS Campaign Now"
@@ -10230,7 +10231,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:413
 msgid "Contacts processed so far..."
-msgstr ""
+msgstr "Kontakter bearbetade hittills …"
 
 #: app/Services/TransStrings.php:414
 msgid "Continue To Next Step [Review]"
@@ -10254,15 +10255,15 @@ msgstr ""
 
 #: app/Services/TransStrings.php:419
 msgid "Current Server Time (Based on your Site Settings)"
-msgstr ""
+msgstr "Aktuell servertid (enligt webbplatsens inställningar)"
 
 #: app/Services/TransStrings.php:420
 msgid "Email body successfully updated"
-msgstr ""
+msgstr "Mejltexten har uppdaterats"
 
 #: app/Services/TransStrings.php:421
 msgid "If you think everything is alright. You can broadcast/Schedule the emails now."
-msgstr ""
+msgstr "Om allt ser bra ut kan du skicka eller schemalägga mejlen nu."
 
 #: app/Services/TransStrings.php:422
 msgid "If you think everything is alright. You can broadcast/Schedule the sms now."
@@ -10290,36 +10291,36 @@ msgstr ""
 
 #: app/Services/TransStrings.php:428
 msgid "Please provide email body."
-msgstr ""
+msgstr "Ange mejltext."
 
 #: app/Services/TransStrings.php:429
 msgid "Remove Tags From Subscribers"
-msgstr ""
+msgstr "Ta bort taggar från prenumeranter"
 
 #: app/Services/TransStrings.php:430
 msgid "Select Subscribers who click selected links"
-msgstr ""
+msgstr "Välj prenumeranter som klickat på valda länkar"
 
 #: app/Services/TransStrings.php:431
 msgid "Select Subscribers who did not open email"
-msgstr ""
+msgstr "Välj prenumeranter som inte öppnat mejlet"
 
 #: app/Services/TransStrings.php:432
 msgid "Select Subscribers who open the emails"
-msgstr ""
+msgstr "Välj prenumeranter som öppnat mejlen"
 
 #: app/Services/TransStrings.php:433
 msgid "Select URLS that where clicked (Will Match for any Selected URLs)"
-msgstr ""
+msgstr "Välj URL:er som klickats på (matchar vilken som helst av de valda)"
 
 #: app/Services/TransStrings.php:434
 #: app/Services/TransStrings.php:2183
 msgid "Are you sure to proceed?"
-msgstr ""
+msgstr "Vill du fortsätta?"
 
 #: app/Services/TransStrings.php:435
 msgid "Note: The associated contacts in this campaign will receive emails shortly."
-msgstr ""
+msgstr "Obs! Kontakterna i det här utskicket får mejlet inom kort."
 
 #: app/Services/TransStrings.php:436
 msgid "Note: The associated contacts in this campaign will receive SMS messages shortly."
@@ -10327,24 +10328,24 @@ msgstr ""
 
 #: app/Services/TransStrings.php:437
 msgid "Send or schedule campaign emails"
-msgstr ""
+msgstr "Skicka eller schemalägg utskickets mejl"
 
 #: app/Services/TransStrings.php:438
 msgid "Sorry no links found that contacts clicked"
-msgstr ""
+msgstr "Inga länkar som kontakter klickat på hittades"
 
 #: app/Services/TransStrings.php:439
 #: app/Services/TransStrings.php:3156
 msgid "Type custom email to send test or leave blank to send current user email"
-msgstr ""
+msgstr "Ange en e-postadress för testmejlet, eller lämna tomt för att skicka till din egen adress"
 
 #: app/Services/TransStrings.php:440
 msgid "contacts have been processed"
-msgstr ""
+msgstr "kontakter har bearbetats"
 
 #: app/Services/TransStrings.php:441
 msgid "Based on your time selection, the emails will be scheduled within that range randomly"
-msgstr ""
+msgstr "Mejlen schemaläggs vid slumpmässiga tidpunkter inom det tidsintervall du valt"
 
 #: app/Services/TransStrings.php:442
 msgid "Based on your time selection, the SMS messages will be scheduled within that range randomly"
@@ -10380,7 +10381,7 @@ msgstr "Utskickets detaljer"
 
 #: app/Services/TransStrings.php:451
 msgid "Campaign Link Clicks"
-msgstr ""
+msgstr "Länkklick i utskicket"
 
 #: app/Services/TransStrings.php:452
 msgid "Campaign Medium (required)"
@@ -10436,7 +10437,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:466
 msgid "Campaign export is only available on pro version of FluentCRM"
-msgstr ""
+msgstr "Export av utskick finns bara i Pro-versionen av FluentCRM"
 
 #: app/Services/TransStrings.php:467
 msgid "Campaign Archive showcase is a pro features. Please upgrade to pro."
@@ -10632,7 +10633,7 @@ msgstr "Rensa filter"
 
 #: app/Services/TransStrings.php:524
 msgid "Clear color"
-msgstr ""
+msgstr "Rensa färg"
 
 #: app/Services/TransStrings.php:525
 msgid "Clear filter"
@@ -10640,7 +10641,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:526
 msgid "Click"
-msgstr ""
+msgstr "Klick"
 
 #: app/Services/TransStrings.php:527
 msgid "Click & Open tracking is required to perform this action."
@@ -10692,7 +10693,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:541
 msgid "Columns"
-msgstr ""
+msgstr "Kolumner"
 
 #: app/Services/TransStrings.php:542
 msgid "Coming Soon"
@@ -10748,7 +10749,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:560
 msgid "Company Owner"
-msgstr ""
+msgstr "Företagsägare"
 
 #: app/Services/TransStrings.php:561
 msgid "Company Phone Number"
@@ -10760,7 +10761,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:563
 msgid "Company Type"
-msgstr ""
+msgstr "Företagstyp"
 
 #: app/Services/TransStrings.php:564
 msgid "Company association removed"
@@ -11127,7 +11128,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:662
 msgid "Contacts have been attached to this campaign"
-msgstr ""
+msgstr "Kontakterna har kopplats till utskicket"
 
 #: app/Services/TransStrings.php:663
 msgid "Contacts that are invalid"
@@ -11203,7 +11204,7 @@ msgstr "Kopierat till urklipp"
 
 #: app/Services/TransStrings.php:681
 msgid "Copied to your clipboard"
-msgstr ""
+msgstr "Kopierat till urklipp"
 
 #: app/Services/TransStrings.php:682
 msgid "Copy"
@@ -11235,7 +11236,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:689
 msgid "Copyable item value"
-msgstr ""
+msgstr "Kopierbart värde"
 
 #: app/Services/TransStrings.php:690
 msgid "Could not create campaign"
@@ -11367,7 +11368,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:725
 msgid "Create New Label"
-msgstr ""
+msgstr "Skapa ny etikett"
 
 #: app/Services/TransStrings.php:726
 msgid "Create New Recurring Campaign"
@@ -11491,7 +11492,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:758
 msgid "Create your first email template to save time on future emails."
-msgstr ""
+msgstr "Skapa din första mejlmall så sparar du tid på kommande mejl."
 
 #: app/Services/TransStrings.php:759
 msgid "Create your first recurring campaign to automatically send scheduled emails to your audience."
@@ -11659,7 +11660,7 @@ msgstr "Kund sedan"
 
 #: app/Services/TransStrings.php:805
 msgid "You can customize your footer in this section. If no custom footer being added here, global footer will be added to this email."
-msgstr ""
+msgstr "Här kan du anpassa sidfoten. Om du inte lägger till en egen sidfot används den globala sidfoten i det här mejlet."
 
 #: app/Services/TransStrings.php:806
 msgid "Deleting will erase all your FluentCRM data forever — no way to get it back. Save a backup first."
@@ -11709,7 +11710,7 @@ msgstr "Mörkt"
 
 #: app/Services/TransStrings.php:817
 msgid "View Email Sending Service Settings"
-msgstr ""
+msgstr "Visa inställningar för e-posttjänsten"
 
 #: app/Services/TransStrings.php:819
 msgid "Data Cleanup"
@@ -11761,7 +11762,7 @@ msgstr "Tillagd datum"
 
 #: app/Services/TransStrings.php:832
 msgid "Date Of Birth"
-msgstr ""
+msgstr "Födelsedatum"
 
 #: app/Services/TransStrings.php:834
 msgid "Date Time difference (EG: 2 hours ago)"
@@ -11803,6 +11804,7 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
+#: assets/guten-editor/index.js:1
 #: app/Services/TransStrings.php:847
 msgid "Default (Gutenberg)"
 msgstr "Standard (Gutenberg)"
@@ -11969,7 +11971,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:889
 msgid "Delete Templates"
-msgstr ""
+msgstr "Radera mallar"
 
 #: app/Services/TransStrings.php:890
 msgid "Delete connected contact when a user get deleted"
@@ -11997,11 +11999,11 @@ msgstr ""
 
 #: app/Services/TransStrings.php:896
 msgid "Are you sure you want to delete this template?"
-msgstr ""
+msgstr "Vill du radera den här mallen?"
 
 #: app/Services/TransStrings.php:897
 msgid "Delivered"
-msgstr ""
+msgstr "Levererade"
 
 #: app/Services/TransStrings.php:898
 msgid "Delivery Date"
@@ -12025,7 +12027,7 @@ msgstr "Avmarkera"
 
 #: app/Services/TransStrings.php:905
 msgid "Design Your Button"
-msgstr ""
+msgstr "Utforma knappen"
 
 #: app/Services/TransStrings.php:906
 msgid "Design and send your first email."
@@ -12273,7 +12275,7 @@ msgstr "Dynamiska segment"
 
 #: app/Services/TransStrings.php:969
 msgid "Use your dynamic segments to broadcast Email Campaigns"
-msgstr ""
+msgstr "Använd dynamiska segment för dina utskick"
 
 #: app/Services/TransStrings.php:970
 msgid "The selected coupon configuration will be used when creating the dynamic coupon"
@@ -12451,15 +12453,15 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1013
 msgid "Add UTM Parameters For URLs"
-msgstr ""
+msgstr "Lägg till UTM-parametrar i länkar"
 
 #: app/Services/TransStrings.php:1014
 msgid "Enable A/B testing for email subjects"
-msgstr ""
+msgstr "Aktivera A/B-test av ämnesrader"
 
 #: app/Services/TransStrings.php:1015
 msgid "Your provided priority will be converted to percent and it's relative"
-msgstr ""
+msgstr "Prioriteten räknas om till procent och är relativ"
 
 #: app/Services/TransStrings.php:1018
 msgid "Email Address for bi-monthly newsletter"
@@ -12722,11 +12724,11 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1090
 msgid "Sorry you can not insert the selected template type in this email campaign"
-msgstr ""
+msgstr "Den valda malltypen kan inte användas i det här utskicket"
 
 #: app/Services/TransStrings.php:1091
 msgid "Emails are being scheduled and sending in the background at the same time"
-msgstr ""
+msgstr "Mejlen schemaläggs och skickas samtidigt i bakgrunden"
 
 #: app/Services/TransStrings.php:1092
 msgid "Messages are being scheduled and sending in the background at the same time"
@@ -12916,7 +12918,7 @@ msgstr "Lägenhet, våning, portkod"
 
 #: app/Services/TransStrings.php:1141
 msgid "Enter button text"
-msgstr ""
+msgstr "Ange knapptext"
 
 #: app/Services/TransStrings.php:1142
 msgid "Enter city"
@@ -12990,7 +12992,7 @@ msgstr "Uppskattat antal kontakter:"
 
 #: app/Services/TransStrings.php:1159
 msgid "Evening vibes!"
-msgstr ""
+msgstr "Kvällsstämning!"
 
 #: app/Services/TransStrings.php:1160
 msgid "Event Name"
@@ -13186,7 +13188,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1208
 msgid "Exporting archived campaign emails is only available in the Pro version of FluentCRM"
-msgstr ""
+msgstr "Export av arkiverade utskicksmejl finns bara i Pro-versionen av FluentCRM"
 
 #: app/Services/TransStrings.php:1209
 msgid "Expose the full FluentCRM app on the frontend for logged-in CRM users."
@@ -13488,11 +13490,11 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1288
 msgid "Font Size"
-msgstr ""
+msgstr "Teckenstorlek"
 
 #: app/Services/TransStrings.php:1289
 msgid "Font Style"
-msgstr ""
+msgstr "Teckenstil"
 
 #: app/Services/TransStrings.php:1290
 msgid "Footer Settings"
@@ -13545,7 +13547,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1307
 msgid "Friday"
-msgstr ""
+msgstr "fredag"
 
 #: app/Services/TransStrings.php:1308
 msgid "Friendly"
@@ -13561,7 +13563,7 @@ msgstr "Från"
 
 #: app/Services/TransStrings.php:1311
 msgid "From Email"
-msgstr ""
+msgstr "Avsändaradress"
 
 #: app/Services/TransStrings.php:1312
 msgid "From Email Address"
@@ -13573,7 +13575,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1314
 msgid "From Name"
-msgstr ""
+msgstr "Avsändarnamn"
 
 #: app/Services/TransStrings.php:1315
 msgid "This name shows as the sender in recipients' inbox."
@@ -13786,15 +13788,15 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1368
 msgid "Good afternoon"
-msgstr ""
+msgstr "God eftermiddag"
 
 #: app/Services/TransStrings.php:1369
 msgid "Good evening"
-msgstr ""
+msgstr "God kväll"
 
 #: app/Services/TransStrings.php:1370
 msgid "Good morning"
-msgstr ""
+msgstr "God morgon"
 
 #: app/Services/TransStrings.php:1371
 msgid "Goto FluentSMTP Settings"
@@ -13826,7 +13828,7 @@ msgstr "Väx din publik"
 
 #: app/Services/TransStrings.php:1379
 msgid "Suggesting value: Between 600 to 800"
-msgstr ""
+msgstr "Rekommenderat värde: mellan 600 och 800"
 
 #: app/Services/TransStrings.php:1380
 msgid "Gutenberg / WordPress Editor Conditional Blocks"
@@ -13975,7 +13977,7 @@ msgstr "Importera taggar"
 
 #: app/Services/TransStrings.php:1422
 msgid "Import Template"
-msgstr ""
+msgstr "Importera mall"
 
 #: app/Services/TransStrings.php:1423
 msgid "Import Templates"
@@ -14100,7 +14102,7 @@ msgstr "Info"
 
 #: app/Services/TransStrings.php:1457
 msgid "Insert"
-msgstr ""
+msgstr "Infoga"
 
 #: app/Services/TransStrings.php:1458
 msgid "Insert a valid url that this link will direct to"
@@ -14215,7 +14217,7 @@ msgstr "Ogiltigt telefonnummer"
 
 #: app/Services/TransStrings.php:1489
 msgid "Invalid links detected. Check the following button / links"
-msgstr ""
+msgstr "Ogiltiga länkar hittades. Kontrollera följande knappar/länkar"
 
 #: app/Services/TransStrings.php:1490
 msgid "It's Free"
@@ -14267,7 +14269,7 @@ msgstr "Etikett"
 
 #: app/Services/TransStrings.php:1502
 msgid "Label Color"
-msgstr ""
+msgstr "Etikettfärg"
 
 #: app/Services/TransStrings.php:1503
 msgid "Label Name"
@@ -14275,11 +14277,11 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1504
 msgid "Label Title"
-msgstr ""
+msgstr "Etikettnamn"
 
 #: app/Services/TransStrings.php:1505
 msgid "Label name is required"
-msgstr ""
+msgstr "Etiketten måste ha ett namn"
 
 #: app/Services/TransStrings.php:1506
 msgid "Labels"
@@ -14287,11 +14289,11 @@ msgstr "Etiketter"
 
 #: app/Services/TransStrings.php:1507
 msgid "Last 3 months"
-msgstr ""
+msgstr "Senaste 3 månaderna"
 
 #: app/Services/TransStrings.php:1509
 msgid "Last Change Date"
-msgstr ""
+msgstr "Senast ändrad"
 
 #: app/Services/TransStrings.php:1510
 msgid "Last Changed"
@@ -14311,7 +14313,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1517
 msgid "Last month"
-msgstr ""
+msgstr "Förra månaden"
 
 #: app/Services/TransStrings.php:1518
 msgid "Last order"
@@ -14323,7 +14325,7 @@ msgstr "Sista sidan"
 
 #: app/Services/TransStrings.php:1520
 msgid "Last quarter"
-msgstr ""
+msgstr "Förra kvartalet"
 
 #: app/Services/TransStrings.php:1521
 msgid "Last run"
@@ -14331,11 +14333,11 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1522
 msgid "Last week"
-msgstr ""
+msgstr "Förra veckan"
 
 #: app/Services/TransStrings.php:1523
 msgid "Last year"
-msgstr ""
+msgstr "Förra året"
 
 #: app/Services/TransStrings.php:1524
 msgid "Latest Action"
@@ -14349,9 +14351,10 @@ msgstr ""
 msgid "Layout"
 msgstr "Layout"
 
+#: assets/guten-editor/index.js:1
 #: app/Services/TransStrings.php:1527
 msgid "Learn More"
-msgstr ""
+msgstr "Läs mer"
 
 #: app/Services/TransStrings.php:1528
 msgid "Learn more about FluentSMTP Plugin."
@@ -14428,7 +14431,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1548
 msgid "This is a premium feature. Please download the FluentCRM Pro to activate this feature."
-msgstr ""
+msgstr "Det här är en premiumfunktion. Installera FluentCRM Pro för att aktivera den."
 
 #: app/Services/TransStrings.php:1549
 msgid "Line"
@@ -14436,7 +14439,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1550
 msgid "Line Height"
-msgstr ""
+msgstr "Radavstånd"
 
 #: app/Services/TransStrings.php:1551
 msgid "Line chart"
@@ -14464,11 +14467,11 @@ msgstr "Länkaktivitet"
 
 #: app/Services/TransStrings.php:1557
 msgid "Link clicks analytics"
-msgstr ""
+msgstr "Statistik för länkklick"
 
 #: app/Services/TransStrings.php:1558
 msgid "Link tracking is disabled in your global settings."
-msgstr ""
+msgstr "Länkspårning är avstängd i de globala inställningarna."
 
 #: app/Services/TransStrings.php:1559
 msgid "LinkedIn"
@@ -14512,7 +14515,7 @@ msgstr "Listor att importera"
 
 #: app/Services/TransStrings.php:1571
 msgid "Loading"
-msgstr ""
+msgstr "Laddar"
 
 #: app/Services/TransStrings.php:1572
 msgid "Loading Campaign Data..."
@@ -14540,7 +14543,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1578
 msgid "Loading..."
-msgstr ""
+msgstr "Laddar …"
 
 #: app/Services/TransStrings.php:1579
 msgid "Loading....."
@@ -14794,7 +14797,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1644
 msgid "Message"
-msgstr ""
+msgstr "Meddelande"
 
 #: app/Services/TransStrings.php:1645
 msgid "Message Module"
@@ -14876,7 +14879,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1666
 msgid "Monday"
-msgstr ""
+msgstr "måndag"
 
 #: app/Services/TransStrings.php:1668
 msgid "Monthly"
@@ -15204,7 +15207,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1753
 msgid "No link activity recorded yet."
-msgstr ""
+msgstr "Inga länkklick har registrerats ännu."
 
 #: app/Services/TransStrings.php:1754
 msgid "No lists found"
@@ -15316,7 +15319,7 @@ msgstr "Inte schemalagt"
 
 #: app/Services/TransStrings.php:1784
 msgid "Do not import email campaigns from untrusted sources."
-msgstr ""
+msgstr "Importera inte utskick från källor du inte litar på."
 
 #: app/Services/TransStrings.php:1785
 msgid "Do not import recurring campaigns from untrusted sources."
@@ -15328,7 +15331,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:1787
 msgid "Do not import templates from untrusted sources."
-msgstr ""
+msgstr "Importera inte mallar från källor du inte litar på."
 
 #: app/Services/TransStrings.php:1789
 msgid "Note (Optional)"
@@ -15352,7 +15355,7 @@ msgstr "november"
 
 #: app/Services/TransStrings.php:1796
 msgid "Number of Employees"
-msgstr ""
+msgstr "Antal anställda"
 
 #: app/Services/TransStrings.php:1797
 msgid "OK"
@@ -15434,7 +15437,7 @@ msgstr ""
 #: app/Services/TransStrings.php:1818
 #: app/Services/TransStrings.php:3110
 msgid "Open rate is estimated based on pixel loads. it may not show the correct analytics as many email clients load or block tracking regardless of the actual email open"
-msgstr ""
+msgstr "Öppningsfrekvensen uppskattas utifrån laddade spårningspixlar. Den kan vara missvisande, eftersom många e-postprogram laddar eller blockerar spårning oavsett om mejlet faktiskt öppnas"
 
 #: app/Services/TransStrings.php:1819
 msgid "Opened"
@@ -15534,7 +15537,7 @@ msgstr "Pausa utskicket"
 
 #: app/Services/TransStrings.php:1845
 msgid "Pause/Run"
-msgstr ""
+msgstr "Pausa/kör"
 
 #: app/Services/TransStrings.php:1846
 msgid "Paused"
@@ -16138,7 +16141,7 @@ msgstr "HTML-redigerare"
 
 #: app/Services/TransStrings.php:2010
 msgid "Please Provide HTML of your Email"
-msgstr ""
+msgstr "Ange mejlets HTML"
 
 #: app/Services/TransStrings.php:2011
 msgid "Re-Sync"
@@ -16202,7 +16205,7 @@ msgstr "Orsak:"
 
 #: app/Services/TransStrings.php:2026
 msgid "All contacts on Selected List segment"
-msgstr ""
+msgstr "Alla kontakter i den valda listan"
 
 #: app/Services/TransStrings.php:2027
 msgid "Are you sure you want to delete this Recurring Campaign?"
@@ -16214,35 +16217,35 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2029
 msgid "Continue To Next Step [Review and Send]"
-msgstr ""
+msgstr "Fortsätt till nästa steg [Granska och skicka]"
 
 #: app/Services/TransStrings.php:2030
 msgid "Please do not close this window."
-msgstr ""
+msgstr "Stäng inte det här fönstret."
 
 #: app/Services/TransStrings.php:2031
 msgid "Please select to which dynamic segment you want to send emails for this campaign"
-msgstr ""
+msgstr "Välj vilket dynamiskt segment utskicket ska skickas till"
 
 #: app/Services/TransStrings.php:2032
 msgid "Please select to which dynamic segment you want to send SMS for this campaign"
-msgstr ""
+msgstr "Välj vilket dynamiskt segment sms:et ska skickas till"
 
 #: app/Services/TransStrings.php:2033
 msgid "Processing Error happened. Maybe it's timeout error. Resume or StartOver"
-msgstr ""
+msgstr "Ett fel uppstod vid bearbetningen, kanske en tidsgräns. Återuppta eller börja om"
 
 #: app/Services/TransStrings.php:2034
 msgid "Select Lists and Tags that you want to exclude from this campaign. Excluded contacts will be subtracted from your included selection"
-msgstr ""
+msgstr "Välj listor och taggar som ska undantas från utskicket. Undantagna kontakter dras bort från de inkluderade"
 
 #: app/Services/TransStrings.php:2035
 msgid "Select Lists and Tags that you want to send emails for this campaign. You can create multiple row to send to all of them"
-msgstr ""
+msgstr "Välj listor och taggar som utskicket ska skickas till. Du kan lägga till flera rader för att skicka till alla"
 
 #: app/Services/TransStrings.php:2036
 msgid "Select Lists and Tags that you want to send SMS for this campaign. You can create multiple rows to send to all of them"
-msgstr ""
+msgstr "Välj listor och taggar som sms:et ska skickas till. Du kan lägga till flera rader för att skicka till alla"
 
 #: app/Services/TransStrings.php:2037
 msgid "Select List or all subscribers first and then select tag"
@@ -16250,11 +16253,11 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2038
 msgid "This will filter all available contacts"
-msgstr ""
+msgstr "Det här filtrerar bland alla kontakter"
 
 #: app/Services/TransStrings.php:2039
 msgid "contacts found based on your selection"
-msgstr ""
+msgstr "kontakter hittades utifrån ditt urval"
 
 #: app/Services/TransStrings.php:2040
 msgid "Recent Campaigns"
@@ -16282,7 +16285,7 @@ msgstr "Mottagare"
 
 #: app/Services/TransStrings.php:2046
 msgid "Invalid selection of lists and tags in contacts included."
-msgstr ""
+msgstr "Ogiltigt urval av listor och taggar bland inkluderade kontakter."
 
 #: app/Services/TransStrings.php:2047
 msgid "Recommended Plugins"
@@ -16326,7 +16329,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2058
 msgid "Refresh"
-msgstr ""
+msgstr "Uppdatera"
 
 #: app/Services/TransStrings.php:2059
 msgid "Refresh Campaign"
@@ -16410,7 +16413,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2081
 msgid "Are you sure to remove this label from the campaign?"
-msgstr ""
+msgstr "Vill du ta bort etiketten från utskicket?"
 
 #: app/Services/TransStrings.php:2082
 msgid "Are you sure to remove this label from the funnel?"
@@ -16438,7 +16441,7 @@ msgstr "Ersätt värde"
 
 #: app/Services/TransStrings.php:2088
 msgid "Reply To Email"
-msgstr ""
+msgstr "Svarsadress"
 
 #: app/Services/TransStrings.php:2089
 #: app/Services/TransStrings.php:2095
@@ -16447,7 +16450,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2090
 msgid "Reply To Name"
-msgstr ""
+msgstr "Svarsnamn"
 
 #: app/Services/TransStrings.php:2091
 msgid "Reply to Email"
@@ -16499,7 +16502,7 @@ msgstr "Skicka mejlet igen"
 
 #: app/Services/TransStrings.php:2105
 msgid "Resend Unopened Emails"
-msgstr ""
+msgstr "Skicka om oöppnade mejl"
 
 #: app/Services/TransStrings.php:2106
 msgid "Resent Count"
@@ -16567,7 +16570,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2122
 msgid "Retry Sending"
-msgstr ""
+msgstr "Försök skicka igen"
 
 #: app/Services/TransStrings.php:2124
 msgid "Revenue From Sequence Emails"
@@ -16724,7 +16727,7 @@ msgstr "Försäljning"
 
 #: app/Services/TransStrings.php:2163
 msgid "Saturday"
-msgstr ""
+msgstr "lördag"
 
 #: app/Services/TransStrings.php:2164
 #: app/Services/TransStringsGuten.php:14
@@ -16807,7 +16810,7 @@ msgstr "Schemalägg utskicket"
 
 #: app/Services/TransStrings.php:2184
 msgid "Schedule emails within a specified date-time range"
-msgstr ""
+msgstr "Schemalägg mejlen inom ett tidsintervall"
 
 #: app/Services/TransStrings.php:2185
 msgid "Scheduled"
@@ -16942,9 +16945,10 @@ msgstr "Sök listor"
 msgid "Search managers..."
 msgstr ""
 
+#: assets/guten-editor/index.js:1
 #: app/Services/TransStrings.php:2219
 msgid "Search shortcodes..."
-msgstr ""
+msgstr "Sök kortkoder …"
 
 #: app/Services/TransStrings.php:2220
 msgid "Search statuses..."
@@ -17004,7 +17008,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2236
 msgid "Select All"
-msgstr ""
+msgstr "Välj alla"
 
 #: app/Services/TransStrings.php:2237
 #, php-format
@@ -17338,7 +17342,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2330
 msgid "Select Date & Time Range that you want to send the emails"
-msgstr ""
+msgstr "Välj det datum- och tidsintervall då mejlen ska skickas"
 
 #: app/Services/TransStrings.php:2331
 msgid "Select Date & Time Range that you want to send the SMS messages"
@@ -17646,7 +17650,7 @@ msgstr "Berätta om dina erfarenheter med ett kort omdöme i WordPress-katalogen
 
 #: app/Services/TransStrings.php:2417
 msgid "Share this URL with anyone to view this newsletter online."
-msgstr ""
+msgstr "Dela den här länken så kan vem som helst läsa nyhetsbrevet på webben."
 
 #: app/Services/TransStrings.php:2418
 msgid "Shipped"
@@ -17660,9 +17664,10 @@ msgstr ""
 msgid "Short"
 msgstr "Kort"
 
+#: assets/guten-editor/index.js:1
 #: app/Services/TransStrings.php:2422
 msgid "Shortcode"
-msgstr ""
+msgstr "Kortkod"
 
 #: app/Services/TransStrings.php:2423
 msgid "Show All Rows"
@@ -17702,7 +17707,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2432
 msgid "Show Preview"
-msgstr ""
+msgstr "Förhandsvisa"
 
 #: app/Services/TransStrings.php:2433
 msgid "Show Report"
@@ -17780,9 +17785,10 @@ msgstr "Kortnamn"
 msgid "Slug (Optional)"
 msgstr ""
 
+#: assets/guten-editor/index.js:1
 #: app/Services/TransStrings.php:2453
 msgid "Smart Link"
-msgstr ""
+msgstr "Smart länk"
 
 #: app/Services/TransStrings.php:2454
 msgid "Smart Links"
@@ -17855,7 +17861,7 @@ msgstr "Några prestandaindex saknas och kunde inte skapas automatiskt. Klicka h
 
 #: app/Services/TransStrings.php:2472
 msgid "Please note, some smart codes like footer links may not work on test email"
-msgstr ""
+msgstr "Observera att vissa smartkoder, till exempel länkar i sidfoten, kanske inte fungerar i testmejl"
 
 #: app/Services/TransStrings.php:2473
 msgid "Something is wrong!"
@@ -17883,7 +17889,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2483
 msgid "Sorry, No subscribers found based on your filters"
-msgstr ""
+msgstr "Inga prenumeranter matchar dina filter"
 
 #: app/Services/TransStrings.php:2484
 msgid "Sorry, the selected plugins could not be installed"
@@ -17989,7 +17995,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2514
 msgid "Step into the moonlight!"
-msgstr ""
+msgstr "Kliv ut i månskenet!"
 
 #: app/Services/TransStrings.php:2515
 msgid "Sticky note removed"
@@ -18069,7 +18075,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2539
 msgid "Sunday"
-msgstr ""
+msgstr "söndag"
 
 #: app/Services/TransStrings.php:2540
 msgid "Super fast UI powered by VueJS"
@@ -18189,7 +18195,7 @@ msgstr "Mallen har importerats"
 
 #: app/Services/TransStrings.php:2571
 msgid "Template export is only available on pro version of FluentCRM"
-msgstr ""
+msgstr "Export av mallar finns bara i Pro-versionen av FluentCRM"
 
 #: app/Services/TransStrings.php:2573
 msgid "Test Connection"
@@ -18207,13 +18213,14 @@ msgstr ""
 msgid "Test your API key to make sure it works."
 msgstr ""
 
+#: assets/guten-editor/index.js:1
 #: app/Services/TransStrings.php:2577
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: app/Services/TransStrings.php:2578
 msgid "Text Color"
-msgstr ""
+msgstr "Textfärg"
 
 #: app/Services/TransStrings.php:2579
 msgid "Thank you again for configuring your own CRM in WordPress."
@@ -18233,7 +18240,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2583
 msgid "The night's still young!"
-msgstr ""
+msgstr "Natten är ung!"
 
 #: app/Services/TransStrings.php:2584
 msgid "The referrer: (e.g. google, newsletter)"
@@ -18258,7 +18265,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2589
 msgid "This Month"
-msgstr ""
+msgstr "Den här månaden"
 
 #: app/Services/TransStrings.php:2590
 msgid "This campaign is now on \"Paused\" state. No SMS will be sent"
@@ -18287,7 +18294,7 @@ msgstr "Den här sidfotstexten används bara i det här mejlet"
 #: app/Services/TransStrings.php:2597
 #, php-format
 msgid "This feature is not available on your plan. Please upgrade to the PRO plan to unlock all these awesome features including %s"
-msgstr ""
+msgstr "Funktionen ingår inte i din plan. Uppgradera till Pro för att låsa upp alla funktioner, bland annat %s"
 
 #: app/Services/TransStrings.php:2598
 msgid "This feature only available on FluentCRM Pro."
@@ -18299,11 +18306,11 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2600
 msgid "This is a pro feature"
-msgstr ""
+msgstr "Det här är en Pro-funktion"
 
 #: app/Services/TransStrings.php:2601
 msgid "This quarter"
-msgstr ""
+msgstr "Det här kvartalet"
 
 #: app/Services/TransStrings.php:2602
 msgid "This setup is completely optional. It only takes two minutes, but you can skip and come back to customize these options in the Settings menu at any time."
@@ -18344,7 +18351,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2612
 msgid "Thursday"
-msgstr ""
+msgstr "torsdag"
 
 #: app/Services/TransStrings.php:2613
 msgid "Time"
@@ -18401,7 +18408,7 @@ msgstr "Visa/dölj kolumner"
 
 #: app/Services/TransStrings.php:2627
 msgid "Tomorrow"
-msgstr ""
+msgstr "I morgon"
 
 #: app/Services/TransStrings.php:2628
 msgid "Tone"
@@ -18538,7 +18545,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2663
 msgid "Trigger"
-msgstr ""
+msgstr "Utlösare"
 
 #: app/Services/TransStrings.php:2664
 msgid "Trigger Title"
@@ -18558,7 +18565,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2669
 msgid "Tuesday"
-msgstr ""
+msgstr "tisdag"
 
 #: app/Services/TransStrings.php:2670
 msgid "TutorLMS Integration:"
@@ -18566,7 +18573,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2671
 msgid "Tutorial"
-msgstr ""
+msgstr "Guide"
 
 #: app/Services/TransStrings.php:2672
 msgid "Twitter Handle URL"
@@ -18698,7 +18705,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2707
 msgid "Awesome! No one unsubscribed from this campaign"
-msgstr ""
+msgstr "Toppen! Ingen har avslutat prenumerationen via det här utskicket"
 
 #: app/Services/TransStrings.php:2709
 msgid "Untitled Segment"
@@ -18766,7 +18773,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2726
 msgid "Updated At"
-msgstr ""
+msgstr "Uppdaterad"
 
 #: app/Services/TransStrings.php:2727
 msgid "Updates & Support"
@@ -18814,7 +18821,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2739
 msgid "Upload"
-msgstr ""
+msgstr "Ladda upp"
 
 #: app/Services/TransStrings.php:2740
 msgid "Upload CSV"
@@ -18978,7 +18985,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2782
 msgid "Emails are sending at this moment"
-msgstr ""
+msgstr "Mejlen skickas just nu"
 
 #: app/Services/TransStrings.php:2783
 msgid "Get started with adding an email to this sequence"
@@ -18986,7 +18993,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2784
 msgid "Please make sure this email is supported by your SMTP/SES"
-msgstr ""
+msgstr "Kontrollera att adressen stöds av din SMTP-/SES-tjänst"
 
 #: app/Services/TransStrings.php:2785
 msgid "SMS are sending at this moment"
@@ -18994,15 +19001,15 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2787
 msgid "The emails will be sent based on your set date and time."
-msgstr ""
+msgstr "Mejlen skickas vid det datum och den tid du angett."
 
 #: app/Services/TransStrings.php:2788
 msgid "This campaign has been scheduled."
-msgstr ""
+msgstr "Utskicket har schemalagts."
 
 #: app/Services/TransStrings.php:2789
 msgid "This campaign is now on \"Paused\" state. No Emails will be sent"
-msgstr ""
+msgstr "Utskicket är pausat. Inga mejl skickas"
 
 #: app/Services/TransStrings.php:2790
 msgid "Your emails are sending right now...."
@@ -19111,7 +19118,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2817
 msgid "View in new tab"
-msgstr ""
+msgstr "Visa i ny flik"
 
 #: app/Services/TransStrings.php:2818
 msgid "View order"
@@ -19119,15 +19126,16 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2819
 msgid "View related documentation"
-msgstr ""
+msgstr "Visa dokumentation"
 
 #: app/Services/TransStrings.php:2820
 msgid "View subscribers"
 msgstr ""
 
+#: assets/guten-editor/index.js:1
 #: app/Services/TransStrings.php:2821
 msgid "Visual"
-msgstr ""
+msgstr "Visuellt"
 
 #: app/Services/TransStrings.php:2823
 msgid "Visual Builder (Demo)"
@@ -19135,7 +19143,7 @@ msgstr "Visuell byggare (demo)"
 
 #: app/Services/TransStrings.php:2824
 msgid "Visual Email Builder is a Pro feature. Please upgrade to pro to use this feature"
-msgstr ""
+msgstr "Den visuella mejlbyggaren är en Pro-funktion. Uppgradera till Pro för att använda den"
 
 #: app/Services/TransStrings.php:2825
 msgid "Visually design your email with Drag & Drop Builder"
@@ -19203,7 +19211,7 @@ msgstr "Varning"
 
 #: app/Services/TransStrings.php:2841
 msgid "Are you sure? All of the FluentCRM email will be sent from "
-msgstr ""
+msgstr "Är du säker? Alla mejl från FluentCRM skickas då från "
 
 #: app/Services/TransStrings.php:2842
 msgid "Copy the webhook URL you want to send your POST request to."
@@ -19255,7 +19263,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2854
 msgid "Website"
-msgstr ""
+msgstr "Webbplats"
 
 #: app/Services/TransStrings.php:2855
 msgid "Website:"
@@ -19263,7 +19271,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2857
 msgid "Wednesday"
-msgstr ""
+msgstr "onsdag"
 
 #: app/Services/TransStrings.php:2858
 msgid "Weekly"
@@ -19412,7 +19420,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2896
 msgid "Year to Date"
-msgstr ""
+msgstr "Hittills i år"
 
 #: app/Services/TransStrings.php:2898
 msgid "Yes, Count me in"
@@ -19600,11 +19608,11 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2949
 msgid "Please upgrade to pro to use this feature"
-msgstr ""
+msgstr "Uppgradera till Pro för att använda den här funktionen"
 
 #: app/Services/TransStrings.php:2950
 msgid "failed to send to recipients. Try Resending"
-msgstr ""
+msgstr "kunde inte skickas till mottagarna. Försök skicka igen"
 
 #: app/Services/TransStrings.php:2951
 msgid "Create an Automation Funnel"
@@ -19672,11 +19680,11 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2967
 msgid "action"
-msgstr ""
+msgstr "åtgärd"
 
 #: app/Services/TransStrings.php:2968
 msgid "actions"
-msgstr ""
+msgstr "åtgärder"
 
 #: app/Services/TransStrings.php:2969
 msgid "Enable to log FluentCRM activity events. Useful for tracking purpose."
@@ -19748,7 +19756,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2988
 msgid "cancelled"
-msgstr ""
+msgstr "avbruten"
 
 #: app/Services/TransStrings.php:2989
 msgid "You may cleanup old data like email logs, email click and open logs easily using this tool."
@@ -19756,7 +19764,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2990
 msgid "click here"
-msgstr ""
+msgstr "klicka här"
 
 #: app/Services/TransStrings.php:2991
 msgid "click to upload"
@@ -19764,11 +19772,11 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2992
 msgid "How many contacts clicked at least one of the links in the email"
-msgstr ""
+msgstr "Antal kontakter som klickat på minst en länk i mejlet"
 
 #: app/Services/TransStrings.php:2993
 msgid "companies"
-msgstr ""
+msgstr "företag"
 
 #: app/Services/TransStrings.php:2994
 msgid "companies on this page selected"
@@ -19784,7 +19792,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:2998
 msgid "completed"
-msgstr ""
+msgstr "slutförd"
 
 #: app/Services/TransStrings.php:2999
 msgid "condition"
@@ -19796,7 +19804,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:3001
 msgid "confirm"
-msgstr ""
+msgstr "bekräfta"
 
 #: app/Services/TransStrings.php:3002
 msgid "Copy the keys in the right column and paste it into the app you want to use for sending the POST request, so it will send the data into the contact field you want."
@@ -19804,7 +19812,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:3003
 msgid "You can create as many dynamic segment as you want and send email campaign only a selected segment. It will let you target specific audiences and increase your conversion rate."
-msgstr ""
+msgstr "Du kan skapa hur många dynamiska segment du vill och skicka utskick till bara ett valt segment. Då kan du rikta dig till specifika målgrupper och öka konverteringen."
 
 #: app/Services/TransStrings.php:3004
 msgid "Create dynamic Segments of contacts by using dynamic contact properties and filter your target audience. Available in pro version of FluentCRM"
@@ -19844,15 +19852,15 @@ msgstr ""
 
 #: app/Services/TransStrings.php:3013
 msgid "date"
-msgstr ""
+msgstr "datum"
 
 #: app/Services/TransStrings.php:3014
 msgid "day"
-msgstr ""
+msgstr "dag"
 
 #: app/Services/TransStrings.php:3015
 msgid "days"
-msgstr ""
+msgstr "dagar"
 
 #: app/Services/TransStrings.php:3016
 msgid "All the associate data of the selected companies will be deleted"
@@ -19872,7 +19880,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:3020
 msgid "All selected templates will be deleted"
-msgstr ""
+msgstr "Alla valda mallar raderas"
 
 #: app/Services/TransStrings.php:3021
 msgid "Are you sure about this action? If you confirm, Your old log data will be deleted permanently!"
@@ -19900,7 +19908,7 @@ msgstr "innehåller inte"
 
 #: app/Services/TransStrings.php:3028
 msgid "draft"
-msgstr ""
+msgstr "utkast"
 
 #: app/Services/TransStrings.php:3029
 msgid "e.g. 5000"
@@ -19972,7 +19980,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:3046
 msgid "If you check this email will be sent without footer contents including unsubscribe link. Please use smartcode to include unsubscribe link"
-msgstr ""
+msgstr "Om du kryssar i det här skickas mejlet utan sidfot, och därmed utan länk för att avsluta prenumerationen. Använd en smartkod för att lägga in den länken"
 
 #: app/Services/TransStrings.php:3047
 msgid "Enable Activity Log to track activity"
@@ -19988,7 +19996,7 @@ msgstr "är lika med"
 
 #: app/Services/TransStrings.php:3050
 msgid "failed"
-msgstr ""
+msgstr "misslyckades"
 
 #: app/Services/TransStrings.php:3051
 msgid "FluentSMTP requires to configure properly. Please configure FluentSMTP to make your email delivery works."
@@ -20008,7 +20016,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:3056
 msgid "Connect your WordPress emails securely with FluentSMTP, the ultimate SMTP & email service integration plugin."
-msgstr ""
+msgstr "Skicka WordPress-mejl säkert med FluentSMTP, ett tillägg för SMTP och e-posttjänster."
 
 #: app/Services/TransStrings.php:3057
 msgid "follow this tutorial"
@@ -20040,7 +20048,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:3064
 msgid "https://example.com"
-msgstr ""
+msgstr "https://example.com"
 
 #: app/Services/TransStrings.php:3065
 msgid "https://www.facebook.com/example"
@@ -20247,7 +20255,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:3119
 msgid "Preview Email may differ from actual email that was sent. Specially the dynamic data is shown as it's current state. You may check in FluentSMTP's log to see the actual email"
-msgstr ""
+msgstr "Förhandsvisningen kan skilja sig från mejlet som faktiskt skickades, särskilt dynamiska uppgifter som visas som de ser ut nu. I FluentSMTP:s logg ser du det faktiska mejlet"
 
 #: app/Services/TransStrings.php:3120
 msgid "pro version of FluentCRM"
@@ -20259,11 +20267,11 @@ msgstr ""
 
 #: app/Services/TransStrings.php:3122
 msgid "processing"
-msgstr ""
+msgstr "bearbetas"
 
 #: app/Services/TransStrings.php:3123
 msgid "published"
-msgstr ""
+msgstr "publicerad"
 
 #: app/Services/TransStrings.php:3124
 msgid "published within"
@@ -20271,7 +20279,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:3125
 msgid "Fluent Forms is a free form plugin for WordPress that is integrated with FluentCRM"
-msgstr ""
+msgstr "Fluent Forms är ett kostnadsfritt formulärtillägg för WordPress som är integrerat med FluentCRM"
 
 #: app/Services/TransStrings.php:3126
 msgid "read the doc for advanced usage"
@@ -20295,11 +20303,11 @@ msgstr ""
 
 #: app/Services/TransStrings.php:3132
 msgid "scheduled"
-msgstr ""
+msgstr "schemalagd"
 
 #: app/Services/TransStrings.php:3133
 msgid "Segment your contacts by advanced data points like contact's properties, custom fields, tags, purchase history etc."
-msgstr ""
+msgstr "Segmentera kontakterna utifrån till exempel egenskaper, egna fält, taggar och köphistorik."
 
 #: app/Services/TransStrings.php:3135
 msgid "selected"
@@ -20315,7 +20323,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:3138
 msgid "sent"
-msgstr ""
+msgstr "skickat"
 
 #: app/Services/TransStrings.php:3139
 msgid "Looks like your server does not support PUT and DELETE REST api Requests. Maybe It's blocking from your server firewall"
@@ -20343,11 +20351,11 @@ msgstr "börjar med"
 
 #: app/Services/TransStrings.php:3145
 msgid "status"
-msgstr ""
+msgstr "status"
 
 #: app/Services/TransStrings.php:3146
 msgid "statuses"
-msgstr ""
+msgstr "statusar"
 
 #: app/Services/TransStrings.php:3148
 msgid "first. If you still can't find the answer"
@@ -20399,7 +20407,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:3162
 msgid "to"
-msgstr ""
+msgstr "till"
 
 #: app/Services/TransStrings.php:3163
 msgid "to enable this feature"
@@ -20439,7 +20447,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:3172
 msgid "total"
-msgstr ""
+msgstr "totalt"
 
 #: app/Services/TransStrings.php:3173
 msgid "If enabled no email footer or unsubscribe link will be added to the email"
@@ -20475,7 +20483,7 @@ msgstr ""
 
 #: app/Services/TransStrings.php:3183
 msgid "Looks like you are using Old version of WordPress. Use at-least version 5.4 to use Smart Email Editor powered by Block Editor"
-msgstr ""
+msgstr "Du verkar använda en gammal version av WordPress. Mejlredigeraren bygger på blockredigeraren och kräver minst version 5.4"
 
 #: app/Services/TransStrings.php:3184
 msgid "email as per your domain/SMTP settings. Email mismatch settings may not deliver emails as expected"
@@ -20537,9 +20545,10 @@ msgstr "du@exempel.se"
 msgid "→"
 msgstr ""
 
+#: assets/guten-editor/index.js:1
 #: app/Services/TransStringsGuten.php:16
 msgid "Save Draft"
-msgstr ""
+msgstr "Spara utkast"
 
 #: app/Services/TransStringsGuten.php:17
 msgid "Back to campaign title and layout"
@@ -20643,3 +20652,199 @@ msgstr ""
 #: fluent-crm.php:67
 msgid "Developer Docs"
 msgstr ""
+
+#: assets/guten-editor/index.js:1
+msgid "No editors available."
+msgstr "Inga redigerare tillgängliga."
+
+#: assets/guten-editor/index.js:1
+msgid "Save as Template"
+msgstr "Spara som mall"
+
+#: assets/guten-editor/index.js:1
+msgid "Browse Templates"
+msgstr "Bläddra bland mallar"
+
+#: assets/guten-editor/index.js:1
+msgid "Switch Editor"
+msgstr "Byt redigerare"
+
+#: assets/guten-editor/index.js:1
+msgid "Fullscreen mode"
+msgstr "Helskärmsläge"
+
+#: assets/guten-editor/index.js:1
+msgid "Smart Links requires FluentCRM Pro"
+msgstr "Smarta länkar kräver FluentCRM Pro"
+
+#: assets/guten-editor/index.js:1
+msgid "No smart links found"
+msgstr "Inga smarta länkar hittades"
+
+#: assets/guten-editor/index.js:1
+msgid "No smart links available"
+msgstr "Inga smarta länkar finns"
+
+#: assets/guten-editor/index.js:1
+msgid "Search smart links..."
+msgstr "Sök smarta länkar …"
+
+#: assets/guten-editor/index.js:1
+msgid "Links"
+msgstr "Länkar"
+
+#: assets/guten-editor/index.js:1
+msgid "Click to insert shortcode"
+msgstr "Klicka för att infoga kortkod"
+
+#: assets/guten-editor/index.js:1
+msgid "No shortcodes found for this search."
+msgstr "Inga kortkoder matchar sökningen."
+
+#: assets/guten-editor/index.js:1
+msgid "Detach pattern"
+msgstr "Koppla loss mönster"
+
+#: assets/guten-editor/index.js:1
+msgid "Detach"
+msgstr "Koppla loss"
+
+#: assets/guten-editor/index.js:1
+msgid "Insert Image"
+msgstr "Infoga bild"
+
+#: assets/guten-editor/index.js:1
+msgid "Select or Upload Image"
+msgstr "Välj eller ladda upp bild"
+
+#: assets/guten-editor/index.js:1
+msgid "Use this image"
+msgstr "Använd den här bilden"
+
+#: assets/guten-editor/index.js:1
+msgid "Footer Content"
+msgstr "Sidfotens innehåll"
+
+#: assets/guten-editor/index.js:1
+msgid "Bold"
+msgstr "Fetstil"
+
+#: assets/guten-editor/index.js:1
+msgid "Italic"
+msgstr "Kursiv"
+
+#: assets/guten-editor/index.js:1
+msgid "Link"
+msgstr "Länk"
+
+#: assets/guten-editor/index.js:1
+msgid "UL"
+msgstr "UL"
+
+#: assets/guten-editor/index.js:1
+msgid "OL"
+msgstr "OL"
+
+#: assets/guten-editor/index.js:1
+msgid "LI"
+msgstr "LI"
+
+#: assets/guten-editor/index.js:1
+msgid "Code"
+msgstr "Kod"
+
+#: assets/guten-editor/index.js:1
+msgid "Rewrite"
+msgstr "Skriv om"
+
+#: assets/guten-editor/index.js:1
+msgid "Rewrite while keeping the same meaning"
+msgstr "Skriv om med samma innebörd"
+
+#: assets/guten-editor/index.js:1
+msgid "Shorten"
+msgstr "Korta ner"
+
+#: assets/guten-editor/index.js:1
+msgid "Make it shorter and more concise"
+msgstr "Gör texten kortare och mer koncis"
+
+#: assets/guten-editor/index.js:1
+msgid "Expand"
+msgstr "Utveckla"
+
+#: assets/guten-editor/index.js:1
+msgid "Add more detail and engagement"
+msgstr "Lägg till fler detaljer och mer engagemang"
+
+#: assets/guten-editor/index.js:1
+msgid "Fix Grammar"
+msgstr "Rätta språket"
+
+#: assets/guten-editor/index.js:1
+msgid "Fix grammar, spelling, and punctuation"
+msgstr "Rätta grammatik, stavning och skiljetecken"
+
+#: assets/guten-editor/index.js:1
+msgid "Custom Prompt"
+msgstr "Egen instruktion"
+
+#: assets/guten-editor/index.js:1
+msgid "Describe what you want"
+msgstr "Beskriv vad du vill ha"
+
+#: assets/guten-editor/index.js:1
+msgid "Could not insert or copy shortcode"
+msgstr "Kunde inte infoga eller kopiera kortkoden"
+
+#: assets/guten-editor/index.js:1
+msgid "No content was generated. Please try again."
+msgstr "Inget innehåll skapades. Försök igen."
+
+#: assets/guten-editor/index.js:1
+msgid "The selected block is empty. Add some text first or use Custom Prompt."
+msgstr "Det valda blocket är tomt. Skriv lite text först eller använd en egen instruktion."
+
+#: assets/guten-editor/index.js:1
+msgid "This block type is not supported for AI writing."
+msgstr "AI-skrivhjälpen stöder inte den här blocktypen."
+
+#: assets/guten-editor/index.js:1
+msgid "Please select a text block first."
+msgstr "Välj ett textblock först."
+
+#: assets/guten-editor/index.js:1
+msgid "Change writing tone"
+msgstr "Ändra tonläge"
+
+#: assets/guten-editor/index.js:1
+msgid "Tone:"
+msgstr "Tonläge:"
+
+#: assets/guten-editor/index.js:1
+msgid "Describe what you want the AI to do with the selected text..."
+msgstr "Beskriv vad AI:n ska göra med den markerade texten …"
+
+#: assets/guten-editor/index.js:1
+msgid "Generate"
+msgstr "Skapa"
+
+#: assets/guten-editor/index.js:1
+msgid "Generating..."
+msgstr "Skapar …"
+
+#: assets/guten-editor/index.js:1
+msgid "Generated Content"
+msgstr "Skapat innehåll"
+
+#: assets/guten-editor/index.js:1
+msgid "Discard"
+msgstr "Förkasta"
+
+#: assets/guten-editor/index.js:1
+msgid "Try Again"
+msgstr "Försök igen"
+
+#: assets/guten-editor/index.js:1
+msgid "Accept"
+msgstr "Godkänn"
