@@ -419,6 +419,11 @@ class FrontendHooks
       return;
     }
 
+    // A single entry (route=entries) opens on this page too; FluentForm checks entries access for it itself.
+    if (in_array($_GET['route'] ?? '', ['entries', 'reports'], true)) {
+      return;
+    }
+
     if (current_user_can('administrator') || current_user_can('fluentform_forms_manager')) {
       return;
     }
