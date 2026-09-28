@@ -145,7 +145,7 @@ otherwise they're inert:
 
 - Blocks FluentCRM's visitor identification cookies (`fc_hash_secure`, `fc_cid`), including the ones its unsubscribe, confirmation and manage-subscription pages set regardless of its own `fluent_crm/will_use_cookie` filter.
 - Gives the Editor role FluentCRM access in code — contacts, lists, tags, campaigns and email templates, but not automations, forms, settings or exports — so it survives a fresh database without FluentCRM's per-user Managers setting.
-- Hides FluentCRM's in-app top bar (navigation, search, "Upgrade to Pro") and dashboard quick links to pages they can't open for non-administrators; they navigate via the WordPress admin menu instead.
+- Hides FluentCRM's in-app top bar (navigation, search, "Upgrade to Pro"), the dashboard's Pro upsell card, the campaign recipient step's "Excluded contacts" section and dashboard quick links to pages they can't open for non-administrators; they navigate via the WordPress admin menu instead.
 
 #### Support Genix Lite
 

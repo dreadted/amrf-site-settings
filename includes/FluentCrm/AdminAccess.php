@@ -40,6 +40,8 @@ class AdminAccess
     'settings/mcp_settings',
   ];
 
+  private const STYLE_HANDLE = 'amrf-fluentcrm-admin';
+
   public function __construct()
   {
     add_action('plugins_loaded', [$this, 'register']);
@@ -54,6 +56,21 @@ class AdminAccess
     add_filter('fluent_crm/user_permissions', [$this, 'grantRolePermissions'], 10, 2);
     add_filter('fluent_crm/render_top_menu_bar', [$this, 'isAdministrator']);
     add_filter('fluent_crm/dashboard_data', [$this, 'trimDashboard']);
+    add_action('admin_enqueue_scripts', [$this, 'enqueueStyles']);
+  }
+
+  public function enqueueStyles(string $hookSuffix): void
+  {
+    if ($hookSuffix !== 'toplevel_page_fluentcrm-admin' || current_user_can('manage_options')) {
+      return;
+    }
+
+    wp_enqueue_style(
+      self::STYLE_HANDLE,
+      AMRF_ADMIN_PLUGIN_URL . 'assets/css/amrf-fluentcrm-admin.css',
+      [],
+      filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/css/amrf-fluentcrm-admin.css')
+    );
   }
 
   /**

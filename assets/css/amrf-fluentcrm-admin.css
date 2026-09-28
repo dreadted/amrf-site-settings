@@ -1,0 +1,11 @@
+/* Loaded on FluentCRM's admin page for non-administrators only. */
+
+/* Dashboard "Upgrade to Pro" card. */
+.fluentcrm_admin_dashboard .fcrm_base_card:has(a[href*="utm_campaign=pro"]) {
+  display: none;
+}
+
+/* "Excluded contacts" section of the campaign recipient step. */
+.fcrm_email_campaign_excluded_contacts {
+  display: none;
+}
