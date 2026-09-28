@@ -23,10 +23,14 @@ class Repository
 {
   public const OPTION_NAME = 'amrf_fluentform_privacy';
 
+  public const NEWSLETTER_OPTIN_FIELD_NAME = 'newsletter_optin';
+
+  public const NEWSLETTER_OPTIN_VALUE = 'yes';
+
   /** Site baseline for FluentForm's own _fluentform_global_form_settings['misc'], applied on demand (see applyFluentFormBaseline()). */
   private const FLUENTFORM_BASELINE = [
-    'isIpLogingDisabled' => true,
-    'isAnalyticsDisabled' => false,
+    'isIpLogingDisabled' => false,
+    'isAnalyticsDisabled' => true,
     'honeypotStatus' => 'yes',
     'tokenBasedProtectionStatus' => 'yes',
     'classicEditorButton' => 'no',
@@ -293,7 +297,7 @@ class Repository
     'element' => 'input_checkbox',
     'attributes' => [
       'type' => 'checkbox',
-      'name' => 'newsletter_optin',
+      'name' => self::NEWSLETTER_OPTIN_FIELD_NAME,
       'value' => [],
     ],
     'settings' => [
@@ -369,11 +373,11 @@ class Repository
     'tag_routers' => [],
     'skip_if_exists' => false,
     'double_opt_in' => false,
-    'force_subscribe' => true,
+    'force_subscribe' => false,
     'skip_primary_data' => false,
     'conditionals' => [
       'conditions' => [
-        ['field' => 'newsletter_optin', 'operator' => '=', 'value' => 'yes'],
+        ['field' => self::NEWSLETTER_OPTIN_FIELD_NAME, 'operator' => '=', 'value' => self::NEWSLETTER_OPTIN_VALUE],
       ],
       'status' => true,
       'type' => 'all',
@@ -667,7 +671,7 @@ class Repository
     $field['settings']['advanced_options'] = [
       [
         'label' => sprintf('Ja tack, jag vill få nyheter och erbjudanden från %s via e-post.', $name),
-        'value' => 'yes',
+        'value' => self::NEWSLETTER_OPTIN_VALUE,
         'calc_value' => '',
         'image' => '',
         'id' => 1790519812526,
