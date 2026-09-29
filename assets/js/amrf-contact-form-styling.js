@@ -6,9 +6,23 @@
  * amrf-contact-form-styling.css.
  */
 (function () {
+  // Browsers without field-sizing (e.g. iOS < 26.2) need the height set from scrollHeight.
+  var needsHeightFallback = !CSS.supports("field-sizing", "content");
+
+  function fitToContent(textarea) {
+    textarea.style.height = "auto";
+    // scrollHeight excludes borders, which border-box height includes.
+    var border = textarea.offsetHeight - textarea.clientHeight;
+    textarea.style.height = textarea.scrollHeight + border + "px";
+  }
+
   function resizeTextarea(textarea) {
     textarea.addEventListener("input", function () {
       textarea.classList.toggle("is-expanded", textarea.value.length >= 10);
+
+      if (needsHeightFallback) {
+        fitToContent(textarea);
+      }
     });
   }
 
