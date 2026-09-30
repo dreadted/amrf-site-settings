@@ -45,9 +45,9 @@ class ContactLinkShortcodes
     /**
      * Same client-side-assembled-address technique as ptsussis-theme's
      * footer: a plain "mailto:" href or raw address in the markup is
-     * trivial for scraper bots to harvest, JS execution isn't. <noscript>
-     * hides the dead placeholder link and shows a human-readable, still
-     * non-machine-parseable fallback instead.
+     * trivial for scraper bots to harvest, JS execution isn't. The parts
+     * are ROT13-encoded and the link starts hidden; the theme script
+     * decodes them and unhides it. No no-JS fallback, by design.
      */
     public function renderEmailLink(): string
     {
@@ -59,12 +59,10 @@ class ContactLinkShortcodes
         [$user, $domain] = array_pad(explode('@', $email, 2), 2, '');
 
         $placeholder = esc_html__('Email', 'amrf-admin');
-        $fallback = esc_html($user . ' (at) ' . str_replace('.', ' (dot) ', $domain));
 
-        return '<a href="#" class="email-link" data-user="' . esc_attr($user) . '" data-domain="' . esc_attr($domain) . '">'
+        return '<a href="#" class="email-link" hidden data-user="' . esc_attr(str_rot13($user)) . '" data-domain="' . esc_attr(str_rot13($domain)) . '">'
             . '<span class="email-link-text">' . $placeholder . '</span>'
-            . '</a>'
-            . '<noscript><style>.email-link{display:none}</style>' . $fallback . '</noscript>';
+            . '</a>';
     }
 
     public function renderPhoneLink(): string
