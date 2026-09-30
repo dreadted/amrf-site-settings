@@ -2,6 +2,8 @@
 
 namespace Antropomorf\SiteSettings;
 
+use Antropomorf\Utilities\CachePurge;
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -24,5 +26,8 @@ class Bootstrap
         new LoginBranding();
         new SettingShortcode();
         new ContactLinkShortcodes();
+
+        CachePurge::onOptionChange(Repository::OPTION_NAME);
+        CachePurge::onOptionChange('blog_public');
     }
 }

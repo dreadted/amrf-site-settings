@@ -2,6 +2,8 @@
 
 namespace Antropomorf\Swish;
 
+use Antropomorf\Utilities\CachePurge;
+
 if (!defined('ABSPATH')) {
   exit;
 }
@@ -19,5 +21,7 @@ class Bootstrap
   {
     new Provider();
     new FrontendProvider();
+
+    CachePurge::onOptionChange(Repository::OPTION_NAME);
   }
 }
