@@ -74,9 +74,11 @@ class ContactLinkShortcodes
 
         $phone_href = preg_replace('/[^0-9+]/', '', $phone);
         $copied_label = esc_attr__('Copied!', 'amrf-admin');
+        // Word joiner after the hyphen: U+2011 is missing from the theme font.
+        $phone_text = str_replace([' ', '-'], ['&nbsp;', '-&#8288;'], esc_html($phone));
 
         return '<a href="' . esc_attr('tel:' . $phone_href) . '" class="site-footer-copy-link" data-copy-value="' . esc_attr($phone) . '" data-copied-label="' . $copied_label . '">'
-            . '<span class="site-footer-copy-text">' . esc_html($phone) . '</span>'
+            . '<span class="site-footer-copy-text">' . $phone_text . '</span>'
             . '</a>';
     }
 }

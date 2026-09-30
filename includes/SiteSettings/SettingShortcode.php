@@ -56,6 +56,8 @@ class SettingShortcode
             return '';
         }
 
-        return esc_html(Repository::getSettings()[$field] ?? '');
+        $value = esc_html(Repository::getSettings()[$field] ?? '');
+
+        return $field === 'person_name' ? str_replace(' ', '&nbsp;', $value) : $value;
     }
 }
