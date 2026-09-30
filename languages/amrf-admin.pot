@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-28T14:01:35+00:00\n"
+"POT-Creation-Date: 2026-09-30T04:44:32+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -156,46 +156,46 @@ msgid_plural "for up to %d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/FluentCrm/ConsentLog.php:56
+#: includes/FluentCrm/ConsentLog.php:57
 msgid "Newsletter opt-in ignored"
 msgstr ""
 
-#: includes/FluentCrm/ConsentLog.php:56
+#: includes/FluentCrm/ConsentLog.php:57
 msgid "The contact is tagged \"Do not contact\", so no confirmation email was sent."
 msgstr ""
 
-#: includes/FluentCrm/ConsentLog.php:61
+#: includes/FluentCrm/ConsentLog.php:62
 msgid "Newsletter consent"
 msgstr ""
 
-#: includes/FluentCrm/ConsentLog.php:71
+#: includes/FluentCrm/ConsentLog.php:72
 msgid "A confirmation email was sent; the contact is subscribed again only after clicking its link."
 msgstr ""
 
-#: includes/FluentCrm/ConsentLog.php:72
+#: includes/FluentCrm/ConsentLog.php:73
 msgid "No confirmation email was sent (one was sent less than 150 seconds ago, or the double opt-in email isn't configured)."
 msgstr ""
 
-#: includes/FluentCrm/ConsentLog.php:74
+#: includes/FluentCrm/ConsentLog.php:75
 msgid "Newsletter re-subscription requested"
 msgstr ""
 
 #. translators: %s: name of the logged-in user who changed the status
-#: includes/FluentCrm/ConsentLog.php:94
+#: includes/FluentCrm/ConsentLog.php:95
 #, php-format
 msgid "Unsubscribed manually by %s."
 msgstr ""
 
-#: includes/FluentCrm/ConsentLog.php:95
+#: includes/FluentCrm/ConsentLog.php:96
 msgid "Unsubscribed without the unsubscribe page, e.g. by one-click unsubscribe in the email client."
 msgstr ""
 
-#: includes/FluentCrm/ConsentLog.php:97
+#: includes/FluentCrm/ConsentLog.php:98
 msgid "Unsubscribed"
 msgstr ""
 
 #. translators: 1: form title, 2: page URL, 3: IP address, 4: opt-in checkbox label
-#: includes/FluentCrm/ConsentLog.php:116
+#: includes/FluentCrm/ConsentLog.php:117
 #, php-format
 msgid "Opted in via the form \"%1$s\" on %2$s from IP address %3$s.<br>Consent text: \"%4$s\""
 msgstr ""
@@ -538,31 +538,35 @@ msgstr ""
 msgid "Copied!"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:96
+#: includes/SiteSettings/Provider.php:95
 msgid "Discourage search engines from indexing this site"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:194
-msgid "Mirrors the \"Discourage search engines from indexing this site\" setting under Settings → Reading and applies immediately. While this is on, the rest of this tab is locked, since none of it has any effect until search engines are allowed back in."
+#: includes/SiteSettings/Provider.php:202
+msgid "Reset to theme default"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:212
+#: includes/SiteSettings/Provider.php:218
+msgid "Mirrors the \"Discourage search engines from indexing this site\" setting under Settings → Reading and applies immediately. It only asks search engines not to index the site; the rest of this tab still applies, e.g. to link previews when the site is shared."
+msgstr ""
+
+#: includes/SiteSettings/Provider.php:236
 msgid "You are not allowed to change this setting."
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:269
+#: includes/SiteSettings/Provider.php:293
 msgid "Select image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:270
+#: includes/SiteSettings/Provider.php:294
 msgid "Use this image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:271
+#: includes/SiteSettings/Provider.php:295
 msgid "Choose image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:276
+#: includes/SiteSettings/Provider.php:300
 msgid "Remove image"
 msgstr ""
 

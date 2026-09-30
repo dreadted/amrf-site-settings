@@ -278,19 +278,19 @@ msgstr "Tillåtna menyalternativ"
 msgid "Select which admin menu items should be visible to this user role."
 msgstr "Välj vilka menyalternativ som ska visas i administratörsmenyn för den här användarrollen."
 
-#: includes/SiteSettings/Provider.php:269
+#: includes/SiteSettings/Provider.php:293
 msgid "Select image"
 msgstr "Välj bild"
 
-#: includes/SiteSettings/Provider.php:270
+#: includes/SiteSettings/Provider.php:294
 msgid "Use this image"
 msgstr "Använd denna bild"
 
-#: includes/SiteSettings/Provider.php:271
+#: includes/SiteSettings/Provider.php:295
 msgid "Choose image"
 msgstr "Välj bild"
 
-#: includes/SiteSettings/Provider.php:276
+#: includes/SiteSettings/Provider.php:300
 msgid "Remove image"
 msgstr "Ta bort bild"
 
@@ -539,15 +539,11 @@ msgstr "Åtkomst till webbplatsinställningar"
 msgid "Enable to give this user role access to the Site Settings menu (SEO, Business & Contact, Address, Social Media, Forms/GDPR/Swish) and to native theme menu/design editing (Appearance → Menus/Customize on a classic theme, or the Site Editor on a block theme)."
 msgstr "Aktivera för att ge den här användarrollen åtkomst till menyn Webbplatsinställningar (SEO, Företag & Kontakt, Adress, Sociala medier, Formulär/GDPR/Swish) samt till WordPress egen temameny-/designredigering (Utseende → Menyer/Anpassa i ett klassiskt tema, eller webbplatsredigeraren i ett blocktema)."
 
-#: includes/SiteSettings/Provider.php:96
+#: includes/SiteSettings/Provider.php:95
 msgid "Discourage search engines from indexing this site"
 msgstr "Avskräck sökmotorer från att indexera den här webbplatsen"
 
-#: includes/SiteSettings/Provider.php:194
-msgid "Mirrors the \"Discourage search engines from indexing this site\" setting under Settings → Reading and applies immediately. While this is on, the rest of this tab is locked, since none of it has any effect until search engines are allowed back in."
-msgstr "Speglar inställningen \"Avskräck sökmotorer från att indexera den här webbplatsen\" under Inställningar → Läsning och tillämpas omedelbart. Så länge den är aktiverad är resten av fliken låst, eftersom inget av det har någon effekt förrän sökmotorer släpps in igen."
-
-#: includes/SiteSettings/Provider.php:212
+#: includes/SiteSettings/Provider.php:236
 msgid "You are not allowed to change this setting."
 msgstr "Du har inte behörighet att ändra den här inställningen."
 
@@ -720,27 +716,27 @@ msgstr "Inaktivera kommentarer"
 msgid "Closes comments, pingbacks and trackbacks on all content regardless of each page's discussion settings, hides already approved comments, and turns the comment feeds into a 404."
 msgstr "Stänger kommentarer, pingbacks och trackbacks på allt innehåll oavsett sidornas diskussionsinställningar, döljer redan godkända kommentarer och gör kommentarsflödena till 404."
 
-#: includes/FluentCrm/ConsentLog.php:61
+#: includes/FluentCrm/ConsentLog.php:62
 msgid "Newsletter consent"
 msgstr "Samtycke till nyhetsbrev"
 
 #. translators: 1: form title, 2: page URL, 3: IP address, 4: opt-in checkbox label
-#: includes/FluentCrm/ConsentLog.php:116
+#: includes/FluentCrm/ConsentLog.php:117
 #, php-format
 msgid "Opted in via the form \"%1$s\" on %2$s from IP address %3$s.<br>Consent text: \"%4$s\""
 msgstr "Anmälde sig via formuläret \"%1$s\" på %2$s från IP-adress %3$s.<br>Samtyckestext: \"%4$s\""
 
 #. translators: %s: name of the logged-in user who changed the status
-#: includes/FluentCrm/ConsentLog.php:94
+#: includes/FluentCrm/ConsentLog.php:95
 #, php-format
 msgid "Unsubscribed manually by %s."
 msgstr "Avregistrerad manuellt av %s."
 
-#: includes/FluentCrm/ConsentLog.php:95
+#: includes/FluentCrm/ConsentLog.php:96
 msgid "Unsubscribed without the unsubscribe page, e.g. by one-click unsubscribe in the email client."
 msgstr "Avregistrerad utan avregistreringssidan, t.ex. via avregistrering med ett klick i e-postprogrammet."
 
-#: includes/FluentCrm/ConsentLog.php:97
+#: includes/FluentCrm/ConsentLog.php:98
 msgid "Unsubscribed"
 msgstr "Avregistrerad"
 
@@ -760,23 +756,23 @@ msgstr "Personuppgifterna raderades på begäran. E-postadressen och uppgifterna
 msgid "The newsletter register keeps the email address and the consent and unsubscribe records, to block further newsletters and as proof of consent."
 msgstr "Nyhetsbrevsregistret behåller e-postadressen och uppgifterna om samtycke och avregistrering, för att stoppa fler nyhetsbrev och som bevis på samtycket."
 
-#: includes/FluentCrm/ConsentLog.php:56
+#: includes/FluentCrm/ConsentLog.php:57
 msgid "Newsletter opt-in ignored"
 msgstr "Anmälan till nyhetsbrevet ignorerad"
 
-#: includes/FluentCrm/ConsentLog.php:56
+#: includes/FluentCrm/ConsentLog.php:57
 msgid "The contact is tagged \"Do not contact\", so no confirmation email was sent."
 msgstr "Kontakten är taggad \"Spärrad\", så inget bekräftelsemejl skickades."
 
-#: includes/FluentCrm/ConsentLog.php:71
+#: includes/FluentCrm/ConsentLog.php:72
 msgid "A confirmation email was sent; the contact is subscribed again only after clicking its link."
 msgstr "Ett bekräftelsemejl skickades; kontakten prenumererar igen först efter att ha klickat på länken i det."
 
-#: includes/FluentCrm/ConsentLog.php:72
+#: includes/FluentCrm/ConsentLog.php:73
 msgid "No confirmation email was sent (one was sent less than 150 seconds ago, or the double opt-in email isn't configured)."
 msgstr "Inget bekräftelsemejl skickades (ett skickades för mindre än 150 sekunder sedan, eller så är mejlet för dubbel opt-in inte inställt)."
 
-#: includes/FluentCrm/ConsentLog.php:74
+#: includes/FluentCrm/ConsentLog.php:75
 msgid "Newsletter re-subscription requested"
 msgstr "Återanmälan till nyhetsbrevet begärd"
 
@@ -791,3 +787,11 @@ msgstr "Prenumeration spärrad"
 #: includes/FluentCrm/DoNotContact.php:103
 msgid "The contact is tagged \"Do not contact\", so its status was set back to unsubscribed. Remove the tag first to subscribe the contact again."
 msgstr "Kontakten är taggad \"Spärrad\", så statusen återställdes till avregistrerad. Ta bort taggen först om kontakten ska prenumerera igen."
+
+#: includes/SiteSettings/Provider.php:218
+msgid "Mirrors the \"Discourage search engines from indexing this site\" setting under Settings → Reading and applies immediately. It only asks search engines not to index the site; the rest of this tab still applies, e.g. to link previews when the site is shared."
+msgstr "Speglar inställningen \"Avskräck sökmotorer från att indexera den här webbplatsen\" under Inställningar → Läsning och tillämpas omedelbart. Den ber bara sökmotorer att inte indexera webbplatsen; resten av fliken gäller fortfarande, t.ex. för länkförhandsvisningar när webbplatsen delas."
+
+#: includes/SiteSettings/Provider.php:202
+msgid "Reset to theme default"
+msgstr "Återställ till temats standard"

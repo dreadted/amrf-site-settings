@@ -87,27 +87,17 @@ class Repository
     }
 
     /**
-     * Starting values for the theme_color/background_color color pickers,
-     * read from the active theme's own theme.json instead of defaulting to
-     * blank — <input type="color"> renders an empty value as black, which
-     * looks like a real (wrong) choice rather than "unset". Only ever
-     * fills the gap before this option has been saved once: the moment the
-     * SEO tab is submitted, sanitize() stores whatever the color picker
-     * held (the theme default, or the user's own pick) as a literal value
-     * from then on, per Settings API normal behavior.
-     *
-     * background_color prefers the theme's custom.contactFormBackground
-     * token (see ptsussis-theme's theme.json) over styles.color.background
-     * — the page's own background and a sensible manifest/splash-screen
-     * background are often two different colors, and a theme that cares
-     * to distinguish them can say so explicitly.
+     * Used whenever theme_color/background_color is stored empty, which
+     * sanitize() does for a value equal to this default so it keeps
+     * following the theme. The theme's --amrf-theme-color/
+     * --amrf-background-color CSS properties win; theme.json is the fallback.
      *
      * WP_Theme_JSON_Resolver needs WP 5.8+, past this plugin's 5.6 floor —
      * class_exists guards it.
      *
      * @return array{theme_color: string, background_color: string}
      */
-    private static function getThemeDefaultColors(): array
+    public static function getThemeDefaultColors(): array
     {
         if (!class_exists('WP_Theme_JSON_Resolver')) {
             return ['theme_color' => '#000000', 'background_color' => '#ffffff'];
@@ -117,9 +107,12 @@ class Repository
         $palette = $settings['color']['palette']['theme'] ?? [];
         $by_slug = array_column($palette, 'color', 'slug');
         $first = $palette[0]['color'] ?? '';
+        $css_tokens = ThemeCssTokens::get();
 
-        $theme_color = $by_slug['primary'] ?? $by_slug['accent-1'] ?? $first;
-        $background_color = self::resolveColorReference($settings['custom']['contactFormBackground'] ?? '', $by_slug)
+        $theme_color = self::resolveColorReference($css_tokens['--amrf-theme-color'] ?? '', $by_slug)
+            ?? $by_slug['primary'] ?? $by_slug['accent-1'] ?? $first;
+        $background_color = self::resolveColorReference($css_tokens['--amrf-background-color'] ?? '', $by_slug)
+            ?? self::resolveColorReference($settings['custom']['contactFormBackground'] ?? '', $by_slug)
             ?? self::resolveThemeBackgroundColor($by_slug)
             ?? $by_slug['base'] ?? $by_slug['background'] ?? '';
 
@@ -224,8 +217,7 @@ class Repository
         $stored = get_option(self::OPTION_NAME, []);
         $settings = wp_parse_args(is_array($stored) ? $stored : [], self::getDefaults());
 
-        // A stored '' isn't a real choice here — nothing clears a color
-        // picker — so treat it as unset.
+        // Empty means "follow the theme" (see sanitize()).
         foreach (['theme_color', 'background_color'] as $key) {
             if ($settings[$key] === '') {
                 $settings[$key] = self::getThemeDefaultColors()[$key];
@@ -245,18 +237,11 @@ class Repository
 
     public static function isSeoOutputEnabled(): bool
     {
-        if (self::isSearchEngineDiscouraged()) {
-            return false;
-        }
-
         return !empty(self::getSettings()['enable_seo_output']);
     }
 
     /**
-     * WordPress's own "Discourage search engines" setting (core's
-     * blog_public option, not one of this plugin's fields) — checked here
-     * since core's noindex tag alone doesn't stop this plugin's own OG/
-     * Twitter/JSON-LD output from still being scraped.
+     * Core's blog_public option ("Discourage search engines"), not one of this plugin's fields.
      *
      * @return bool
      */
@@ -308,6 +293,13 @@ class Repository
                 'color' => preg_match('/^#[0-9a-f]{6}$/i', $value) ? $value : $output[$key],
                 default => sanitize_text_field($value),
             };
+        }
+
+        // Also covers other tabs' saves, since $output starts from getSettings()'s resolved defaults.
+        foreach (self::getThemeDefaultColors() as $key => $default) {
+            if (strcasecmp($output[$key], $default) === 0) {
+                $output[$key] = '';
+            }
         }
 
         return $output;

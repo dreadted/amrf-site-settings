@@ -1,7 +1,7 @@
 /**
  * Drives the "Discourage search engines" toggle on the Site Settings SEO tab.
  * Writes straight to WordPress's blog_public option via admin-ajax.php the
- * moment it's flipped, then locks/unlocks the rest of the tab to match.
+ * moment it's flipped.
  */
 ( function ( $ ) {
 	'use strict';
@@ -11,19 +11,6 @@
 		if ( ! $toggle.length || typeof amrfSearchVisibility === 'undefined' ) {
 			return;
 		}
-
-		var $form = $toggle.closest( 'form' );
-		var $table = $toggle.closest( 'table.form-table' );
-
-		function setLocked( locked ) {
-			$form
-				.find( 'input, textarea, select, button' )
-				.not( $toggle )
-				.prop( 'disabled', locked );
-			$table.toggleClass( 'amrf-seo-locked', locked );
-		}
-
-		setLocked( $toggle.is( ':checked' ) );
 
 		$toggle.on( 'change', function () {
 			var discourage = $toggle.is( ':checked' );
@@ -36,9 +23,7 @@
 				discourage: discourage ? '1' : '0',
 			} )
 				.done( function ( response ) {
-					if ( response && response.success ) {
-						setLocked( response.data.discourage );
-					} else {
+					if ( ! response || ! response.success ) {
 						$toggle.prop( 'checked', ! discourage );
 					}
 				} )
