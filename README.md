@@ -1,6 +1,11 @@
 # AMRF Site Settings
 
-<img src="https://gist.githubusercontent.com/dreadted/216967826e7a59ab91e8a3a16f6fed3f/raw/plugin_version.svg" alt="Plugin Version"> <img src="https://gist.githubusercontent.com/dreadted/216967826e7a59ab91e8a3a16f6fed3f/raw/requires_wp.svg" alt="Requires WP"> <img src="https://gist.githubusercontent.com/dreadted/216967826e7a59ab91e8a3a16f6fed3f/raw/tested_wp.svg" alt="Tested WP"> [![License: GPLv2+](https://img.shields.io/badge/License-GPLv2+-blue.svg?logo=gnu)](https://www.gnu.org/licenses/gpl-2.0.html)
+<!-- badges:start -->
+[![Plugin Version](https://img.shields.io/badge/Plugin_Version-0.3.3-3d444d?style=for-the-badge&labelColor=1f2328)](https://github.com/dreadted/amrf-site-settings/releases/latest)
+[![Requires WP](https://img.shields.io/badge/Requires_WP-5.6-3d444d?style=for-the-badge&labelColor=1f2328&logo=wordpress&logoColor=white)](https://wordpress.org/)
+[![Tested WP](https://img.shields.io/badge/Tested_WP-7.1-3d444d?style=for-the-badge&labelColor=1f2328&logo=wordpress&logoColor=white)](https://wordpress.org/)
+[![License](https://img.shields.io/badge/License-GPLv2%2B-3d444d?style=for-the-badge&labelColor=1f2328&logo=gnu&logoColor=white)](https://www.gnu.org/licenses/gpl-2.0.html)
+<!-- badges:end -->
 
 A WordPress plugin with general site settings for
 
@@ -157,7 +162,7 @@ otherwise they're inert:
 
 ## Requirements
 
-- [WordPress](https://wordpress.org/) 5.6 or later (tested up to 7.1)
+- [WordPress](https://wordpress.org/) 5.6 or later
 - [PHP](https://www.php.net/) 8.3 or later
 - [Fluent Forms](https://wordpress.org/plugins/fluentform/), [FluentCRM](https://wordpress.org/plugins/fluent-crm/) and/or [Support Genix Lite](https://wordpress.org/plugins/support-genix-lite/), only if you want the optional integrations above — the plugin works fully without them.
 
@@ -222,6 +227,19 @@ out of its translation map.
 Some texts in both plugins are hard-coded in their JavaScript (for example
 FluentCRM's email editor sidebar and style panel, and Fluent Forms'
 pagination and relative times) and stay in English.
+
+## Releases
+
+Releases are cut from `main` with one command, which needs the [GitHub CLI](https://cli.github.com/), logged in:
+
+```sh
+bin/release.sh            # patch
+bin/release.sh minor      # or major, or an explicit version such as 0.4.0
+```
+
+The script bumps the version in `amrf-site-settings.php` and `readme.txt`, adds the commit subjects since the previous tag to [`changelog.txt`](changelog.txt), refreshes the badges above, commits and tags `vX.Y.Z`, and builds `amrf-site-settings.zip` with `git archive` (files marked `export-ignore` in `.gitattributes` are left out). After you confirm, it pushes the commit and tag and publishes a GitHub Release with the zip, which the wp-cli install command above always points to. Answering no removes the commit and tag again.
+
+_Requires at least_ and _Requires PHP_ are kept in the plugin header and copied to `readme.txt` on release; _Tested up to_ is kept in `readme.txt`. Don't change the version by hand.
 
 ## License
 

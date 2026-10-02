@@ -1,8 +1,5 @@
-# Excluded from the zip .github/workflows/release.yml builds via
-# `git archive` — dev-only tooling that a site running the plugin doesn't
-# need, kept out to match how e.g. WordPress.org SVN deploys trim a repo
-# down to its distributable contents.
-/.github export-ignore
+# Kept out of the release zip that bin/release.sh builds with git archive.
+/bin export-ignore
 /.vscode export-ignore
 /.editorconfig export-ignore
 /.gitattributes export-ignore
