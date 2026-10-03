@@ -215,7 +215,8 @@ class Provider
 	}
 
 	/**
-	 * Front-end only. Loads nothing when umami_site is empty or the visitor is logged in.
+	 * Front-end only. Loads nothing when umami_site is empty, the visitor is logged in,
+	 * or the amrf_umami_track_request filter returns false.
 	 *
 	 * @return void
 	 */
@@ -223,7 +224,7 @@ class Provider
 	{
 		$settings = Repository::getSettings();
 
-		if (empty($settings['site']) || is_user_logged_in()) {
+		if (empty($settings['site']) || is_user_logged_in() || !apply_filters('amrf_umami_track_request', true)) {
 			return;
 		}
 
