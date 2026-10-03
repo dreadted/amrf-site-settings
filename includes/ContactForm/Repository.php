@@ -623,9 +623,19 @@ class Repository
     return $messages;
   }
 
-  /** Same one-shot, overwrite-regardless-of-current-values contract as applyFluentFormBaseline(); merges into existing connections rather than replacing them. */
+  /** Seeds a Mailhog connection on a local site only, and only while none exists, so a real mail setup is never overwritten. */
   private static function applyFluentSmtpBaseline(): void
   {
+    if (wp_get_environment_type() !== 'local') {
+      return;
+    }
+
+    $settings = get_option('fluentmail-settings', []);
+    $settings = is_array($settings) ? $settings : [];
+    if (!empty($settings['connections'])) {
+      return;
+    }
+
     $domain = wp_parse_url(home_url(), PHP_URL_HOST);
     if (!$domain) {
       return;
@@ -634,9 +644,6 @@ class Repository
     $senderEmail = self::FLUENTSMTP_SENDER_LOCAL_PART . '@' . $domain;
     // Same key FluentSMTP itself derives for a connection — see Settings::generateUniqueKey().
     $key = md5($senderEmail);
-
-    $settings = get_option('fluentmail-settings', []);
-    $settings = is_array($settings) ? $settings : [];
 
     $settings['connections'][$key] = [
       'title' => 'SMTP Server',

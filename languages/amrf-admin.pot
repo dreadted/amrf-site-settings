@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-30T04:44:32+00:00\n"
+"POT-Creation-Date: 2026-10-03T10:09:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -133,7 +133,7 @@ msgid "FluentForm is not active."
 msgstr ""
 
 #: includes/ContactForm/Provider.php:254
-msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: disables IP logging, keeps form analytics on, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. Also writes FluentForm's default validation messages (e.g. \"This field is required\") in the site language, so they no longer follow the saving admin's own language. Also renames form ID 1 to \"Kontaktformulär\", replaces its fields with this site's baseline set (name, email, a required message field), and applies this site's baseline confirmation message and email notification to it. If FluentSMTP is active, also adds a baseline SMTP connection to Mailhog (port 1025) using this site's own domain as the sender address, and sets it as the default connection. A one-time action, not a saved setting — resets to off after saving."
+msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: enables IP logging (as proof of consent), turns form view analytics off, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. Also writes FluentForm's default validation messages (e.g. \"This field is required\") in the site language, so they no longer follow the saving admin's own language. Also renames form ID 1 to \"Kontaktformulär\", replaces its fields with this site's baseline set (name, email, a required message field), and applies this site's baseline confirmation message and email notification to it. On a local site (WP_ENVIRONMENT_TYPE \"local\") where FluentSMTP is active but has no connections yet, also adds an SMTP connection to Mailhog (port 1025) using this site's own domain as the sender address, and sets it as the default connection. Existing FluentSMTP connections are never changed. A one-time action, not a saved setting — resets to off after saving."
 msgstr ""
 
 #: includes/ContactForm/Provider.php:289
@@ -238,135 +238,135 @@ msgstr ""
 msgid "Forms"
 msgstr ""
 
-#: includes/Hardening/Provider.php:47
-#: includes/Hardening/Provider.php:615
-#: includes/Hardening/Provider.php:616
+#: includes/Hardening/Provider.php:48
+#: includes/Hardening/Provider.php:589
+#: includes/Hardening/Provider.php:590
 msgid "Hardening"
 msgstr ""
 
-#: includes/Hardening/Provider.php:65
+#: includes/Hardening/Provider.php:66
 msgid "There is an error."
 msgstr ""
 
-#: includes/Hardening/Provider.php:227
+#: includes/Hardening/Provider.php:229
 msgid "You are not allowed to upload SVG files."
 msgstr ""
 
-#: includes/Hardening/Provider.php:234
+#: includes/Hardening/Provider.php:236
 msgid "This file does not look like a valid SVG."
 msgstr ""
 
-#: includes/Hardening/Provider.php:241
+#: includes/Hardening/Provider.php:243
 msgid "This SVG could not be sanitized and was rejected."
 msgstr ""
 
 #. translators: %d is the existing attachment's post ID.
-#: includes/Hardening/Provider.php:315
+#: includes/Hardening/Provider.php:289
 #, php-format
 msgid "This image is identical to an existing upload (attachment #%d) and was not saved again."
 msgstr ""
 
-#: includes/Hardening/Provider.php:629
+#: includes/Hardening/Provider.php:603
 msgid "Images"
 msgstr ""
 
-#: includes/Hardening/Provider.php:637
+#: includes/Hardening/Provider.php:611
 msgid "Frontend"
 msgstr ""
 
-#: includes/Hardening/Provider.php:674
+#: includes/Hardening/Provider.php:648
 msgid "Convert uploads to WebP"
 msgstr ""
 
-#: includes/Hardening/Provider.php:678
+#: includes/Hardening/Provider.php:652
 msgid "Automatically converts every non-WebP image upload to WebP at the quality below, and blocks exact duplicates of an already-uploaded image."
 msgstr ""
 
-#: includes/Hardening/Provider.php:687
+#: includes/Hardening/Provider.php:661
 msgid "WebP quality"
 msgstr ""
 
-#: includes/Hardening/Provider.php:697
+#: includes/Hardening/Provider.php:671
 msgid "Restrict media deletion"
 msgstr ""
 
-#: includes/Hardening/Provider.php:698
+#: includes/Hardening/Provider.php:672
 msgid "Non-administrators can only delete media library items they uploaded themselves. Without this, WordPress lets anyone who can upload files delete any attachment, regardless of who uploaded it."
 msgstr ""
 
-#: includes/Hardening/Provider.php:701
+#: includes/Hardening/Provider.php:675
 msgid "Allow SVG uploads"
 msgstr ""
 
-#: includes/Hardening/Provider.php:702
+#: includes/Hardening/Provider.php:676
 msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
 msgstr ""
 
-#: includes/Hardening/Provider.php:705
+#: includes/Hardening/Provider.php:679
 msgid "Disable generated image sizes"
 msgstr ""
 
-#: includes/Hardening/Provider.php:706
+#: includes/Hardening/Provider.php:680
 msgid "Stops WordPress from generating its own default image sizes (thumbnail, medium, medium_large, large, 1536x1536, 2048x2048). Sizes a theme registers itself are unaffected."
 msgstr ""
 
-#: includes/Hardening/Provider.php:731
+#: includes/Hardening/Provider.php:705
 msgid "Restrict site to logged-in users"
 msgstr ""
 
-#: includes/Hardening/Provider.php:735
+#: includes/Hardening/Provider.php:709
 msgid "Blocks every front-end page for logged-out visitors with a blank placeholder page — the WordPress admin and login screen stay reachable. Use this to preview a site privately before launch."
 msgstr ""
 
-#: includes/Hardening/Provider.php:745
+#: includes/Hardening/Provider.php:719
 msgid "Disable author archives"
 msgstr ""
 
-#: includes/Hardening/Provider.php:746
+#: includes/Hardening/Provider.php:720
 msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
 msgstr ""
 
-#: includes/Hardening/Provider.php:749
+#: includes/Hardening/Provider.php:723
 msgid "Disable blog posts"
 msgstr ""
 
-#: includes/Hardening/Provider.php:750
+#: includes/Hardening/Provider.php:724
 msgid "For sites built from pages only. Posts, category, tag and date archives, and the RSS feeds return a 404 (then redirect to the homepage if \"Redirect 404 pages to the homepage\" is on), and posts are left out of the WordPress sitemap. Existing posts and the admin are unaffected."
 msgstr ""
 
-#: includes/Hardening/Provider.php:753
+#: includes/Hardening/Provider.php:727
 msgid "Disable comments"
 msgstr ""
 
-#: includes/Hardening/Provider.php:754
+#: includes/Hardening/Provider.php:728
 msgid "Closes comments, pingbacks and trackbacks on all content regardless of each page's discussion settings, hides already approved comments, and turns the comment feeds into a 404."
 msgstr ""
 
-#: includes/Hardening/Provider.php:757
+#: includes/Hardening/Provider.php:731
 msgid "Redirect 404 pages to the homepage"
 msgstr ""
 
-#: includes/Hardening/Provider.php:758
+#: includes/Hardening/Provider.php:732
 msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
 msgstr ""
 
-#: includes/Hardening/Provider.php:761
+#: includes/Hardening/Provider.php:735
 msgid "Disable site search"
 msgstr ""
 
-#: includes/Hardening/Provider.php:762
+#: includes/Hardening/Provider.php:736
 msgid "Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn't expose a working search box yet."
 msgstr ""
 
-#: includes/Hardening/Provider.php:765
+#: includes/Hardening/Provider.php:739
 msgid "Remove jQuery Migrate"
 msgstr ""
 
-#: includes/Hardening/Provider.php:766
+#: includes/Hardening/Provider.php:740
 msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
 msgstr ""
 
-#: includes/Hardening/Provider.php:824
+#: includes/Hardening/Provider.php:798
 msgid "Applies to both the WebP format conversion above and every automatically generated responsive image size (1–100)."
 msgstr ""
 
@@ -379,8 +379,8 @@ msgid "Page Editor"
 msgstr ""
 
 #. translators: %d is the number indicating minimum password length
-#: includes/Hooks/FrontendHooks.php:268
-#: includes/Hooks/FrontendHooks.php:300
+#: includes/Hooks/FrontendHooks.php:269
+#: includes/Hooks/FrontendHooks.php:301
 #, php-format
 msgid "ERROR: Password must be at least %d characters long."
 msgstr ""
@@ -533,7 +533,7 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: includes/SiteSettings/ContactLinkShortcodes.php:78
+#: includes/SiteSettings/ContactLinkShortcodes.php:76
 #: includes/Swish/FrontendProvider.php:66
 msgid "Copied!"
 msgstr ""
@@ -683,23 +683,23 @@ msgstr ""
 msgid "Apply Defaults"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:246
+#: includes/SupportGenix/Provider.php:247
 msgid "Security check failed"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:268
+#: includes/SupportGenix/Provider.php:269
 msgid "Support Genix defaults applied successfully!"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:270
+#: includes/SupportGenix/Provider.php:271
 msgid "There was an error applying the Support Genix defaults."
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:471
+#: includes/SupportGenix/Provider.php:479
 msgid "Ticket"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:551
+#: includes/SupportGenix/Provider.php:559
 msgid "You are not authorized to edit this page."
 msgstr ""
 
@@ -784,7 +784,7 @@ msgstr ""
 msgid "One CSS selector per line. Matched elements are tracked automatically, named after their own visible text. Leave empty to use the built-in defaults."
 msgstr ""
 
-#: includes/Utilities/SettingsRenderer.php:96
+#: includes/Utilities/SettingsRenderer.php:97
 msgid "Reset to Defaults"
 msgstr ""
 
