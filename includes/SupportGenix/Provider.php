@@ -48,6 +48,9 @@ class Provider
   /** This module's own top-level admin menu slug, not one of Support Genix Lite's own. */
   private const MENU_SLUG = 'support-tickets';
 
+  /** Set once "Apply Defaults" has run, which hides the button for good. */
+  private const DEFAULTS_APPLIED_OPTION = 'amrf_support_genix_defaults_applied';
+
   /**
    * Docs-related style handles Support Genix Lite always enqueues on the
    * front end even though logged-out visitors never see any Support Genix
@@ -215,7 +218,7 @@ class Provider
     if ($pagenow !== 'admin.php' || ($_GET['page'] ?? '') !== self::THIRD_PARTY_SETTINGS_PAGE) {
       return;
     }
-    if (!current_user_can('manage_options') || get_option('support_genix_default_settings')) {
+    if (!current_user_can('manage_options') || get_option(self::DEFAULTS_APPLIED_OPTION)) {
       return;
     }
 
@@ -238,7 +241,7 @@ class Provider
    */
   public function handleApplyDefaults(): void
   {
-    if (!isset($_POST['amrf_apply_support_genix_defaults']) || get_option('support_genix_default_settings')) {
+    if (!isset($_POST['amrf_apply_support_genix_defaults']) || get_option(self::DEFAULTS_APPLIED_OPTION)) {
       return;
     }
 
@@ -307,7 +310,7 @@ class Provider
       $this->setupDefaultTicketCategories();
       $this->updateSupportGenixSettings();
 
-      update_option('support_genix_default_settings', true);
+      update_option(self::DEFAULTS_APPLIED_OPTION, true);
 
       $wpdb->query('COMMIT');
       return true;

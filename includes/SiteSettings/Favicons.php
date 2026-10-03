@@ -27,22 +27,38 @@ class Favicons
     public function __construct()
     {
         register_activation_hook(AMRF_ADMIN_PLUGIN_FILE, [self::class, 'flushRewriteRulesOnActivation']);
+        register_deactivation_hook(AMRF_ADMIN_PLUGIN_FILE, [self::class, 'flushRewriteRulesOnDeactivation']);
 
         add_action('wp_head', [$this, 'renderLinkTags']);
-        add_action('init', [$this, 'registerRewriteRule']);
+        add_action('init', [self::class, 'registerRewriteRules']);
         add_filter('query_vars', [$this, 'registerQueryVar']);
         add_filter('redirect_canonical', [$this, 'skipCanonicalRedirect']);
         add_action('template_redirect', [$this, 'renderManifest']);
     }
 
     /**
-     * A rewrite rule only takes effect after a flush — WP core's own
-     * documented pattern for a plugin/theme that registers one.
+     * Activation runs after 'init', so the rules must be added here before the flush.
      *
      * @return void
      */
     public static function flushRewriteRulesOnActivation(): void
     {
+        self::registerRewriteRules();
+        flush_rewrite_rules();
+    }
+
+    /**
+     * The rules were already added on this request's 'init', so drop them before the flush.
+     *
+     * @return void
+     */
+    public static function flushRewriteRulesOnDeactivation(): void
+    {
+        global $wp_rewrite;
+
+        foreach (array_keys(self::rewriteRules()) as $regex) {
+            unset($wp_rewrite->extra_rules_top[$regex], $wp_rewrite->non_wp_rules[$regex]);
+        }
         flush_rewrite_rules();
     }
 
@@ -66,20 +82,32 @@ class Favicons
     }
 
     /**
+     * @return void
+     */
+    public static function registerRewriteRules(): void
+    {
+        foreach (self::rewriteRules() as $regex => $target) {
+            add_rewrite_rule($regex, $target, 'top');
+        }
+    }
+
+    /**
      * Non-index.php targets go to .htaccess, served without PHP. The touch icon
      * is root-only: linked in <head>, Android picks it as the tab icon.
      *
-     * @return void
+     * @return array<string, string> Regex => target.
      */
-    public function registerRewriteRule(): void
+    private static function rewriteRules(): array
     {
-        add_rewrite_rule('^site\.webmanifest$', 'index.php?' . self::QUERY_VAR . '=1', 'top');
-
         $homePath = trailingslashit((string) wp_parse_url(home_url(), PHP_URL_PATH));
         $themePath = (string) wp_parse_url(get_stylesheet_directory_uri(), PHP_URL_PATH);
         $images = substr($themePath, strlen($homePath)) . '/assets/images';
-        add_rewrite_rule('favicon\.ico$', $images . '/favicon.ico', 'top');
-        add_rewrite_rule('apple-touch-icon(-precomposed)?\.png$', $images . '/apple-touch-icon.png', 'top');
+
+        return [
+            '^site\.webmanifest$' => 'index.php?' . self::QUERY_VAR . '=1',
+            'favicon\.ico$' => $images . '/favicon.ico',
+            'apple-touch-icon(-precomposed)?\.png$' => $images . '/apple-touch-icon.png',
+        ];
     }
 
     /**

@@ -24,6 +24,7 @@ class RetentionCron
     public function __construct()
     {
         register_activation_hook(AMRF_ADMIN_PLUGIN_FILE, [self::class, 'scheduleOnActivation']);
+        register_deactivation_hook(AMRF_ADMIN_PLUGIN_FILE, [self::class, 'unscheduleOnDeactivation']);
         // Also self-heal on 'init' in case files were deployed without a
         // proper activation cycle — wp_next_scheduled() keeps this a no-op
         // once the event exists.
@@ -36,6 +37,11 @@ class RetentionCron
         if (!wp_next_scheduled(self::HOOK)) {
             wp_schedule_event(time(), 'daily', self::HOOK);
         }
+    }
+
+    public static function unscheduleOnDeactivation(): void
+    {
+        wp_clear_scheduled_hook(self::HOOK);
     }
 
     /**

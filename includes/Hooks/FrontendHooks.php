@@ -36,7 +36,7 @@ class FrontendHooks
 
   {
     add_filter('auth_cookie', function ($cookie, $user_id, $expiration, $scheme, $token) {
-      set_transient('user_' . $user_id . '_logging_in', true, 60);
+      set_transient('amrf_logging_in_' . $user_id, true, 60);
       return $cookie;
     }, 10, 5);
 
@@ -93,7 +93,7 @@ class FrontendHooks
 
           $user = wp_get_current_user();
 
-          $transient_key = 'user_' . $user->ID . '_logging_in';
+          $transient_key = 'amrf_logging_in_' . $user->ID;
           $is_logging_in = get_transient($transient_key);
 
           if ($is_logging_in) {
