@@ -19,17 +19,6 @@ class Repository
   public const OPTION_NAME = 'amrf_swish_settings';
 
   /**
-   * ptsussis-theme's own original site-settings option — read directly
-   * from here, not via SiteSettings\Repository's already-migrated copy:
-   * that migration's sanitize() strips swish_number (not one of its own
-   * fields) before this class ever gets a chance to read it. Migrated
-   * lazily on read (not an activation hook, since that never fires for an
-   * already-active plugin updated in place).
-   */
-  private const LEGACY_THEME_OPTION_NAME = 'ptsussis_site_settings';
-  private const LEGACY_FIELD_KEY = 'swish_number';
-
-  /**
    * @return array<string, string>
    */
   public static function getDefaults(): array
@@ -47,48 +36,9 @@ class Repository
   }
 
   /**
-   * True while sanitize() is already running — guards against infinite
-   * recursion: update_option() for this option re-enters sanitize() via
-   * WP's "sanitize_option_..." filter, and the migration write in
-   * getSettings() below would otherwise call update_option() again forever.
-   * Do not remove without understanding this. sanitize() also never calls
-   * getSettings() itself, as defense in depth on top of this flag.
-   */
-  private static bool $sanitizing = false;
-
-  /**
    * @return array<string, string>
    */
   public static function getSettings(): array
-  {
-    $stored = get_option(self::OPTION_NAME, null);
-
-    if ($stored === null) {
-      $legacy = get_option(self::LEGACY_THEME_OPTION_NAME, []);
-      $migrated = self::getDefaults();
-      if (is_array($legacy) && !empty($legacy[self::LEGACY_FIELD_KEY])) {
-        $migrated['number'] = (string) $legacy[self::LEGACY_FIELD_KEY];
-      }
-
-      self::$sanitizing = true;
-      update_option(self::OPTION_NAME, $migrated);
-      self::$sanitizing = false;
-
-      return $migrated;
-    }
-
-    return wp_parse_args(is_array($stored) ? $stored : [], self::getDefaults());
-  }
-
-  /**
-   * The stored option's raw value, defaulted — but never migrating (no
-   * update_option() side effect) and never going through getSettings()
-   * itself. sanitize() uses this instead of getSettings() for its "current
-   * value" precisely to stay out of the recursion trap described above.
-   *
-   * @return array<string, string>
-   */
-  private static function getStoredSettings(): array
   {
     $stored = get_option(self::OPTION_NAME, []);
     return wp_parse_args(is_array($stored) ? $stored : [], self::getDefaults());
@@ -104,13 +54,7 @@ class Repository
    */
   public static function sanitize($input): array
   {
-    // Re-entered via getSettings()'s migration write (see $sanitizing) —
-    // $input is already the fully-formed migrated array, not raw $_POST.
-    if (self::$sanitizing) {
-      return is_array($input) ? wp_parse_args($input, self::getDefaults()) : self::getDefaults();
-    }
-
-    $current = self::getStoredSettings();
+    $current = self::getSettings();
     $input = is_array($input) ? $input : [];
 
     $output = $current;

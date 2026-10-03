@@ -17,9 +17,6 @@ class Repository
 {
     public const OPTION_NAME = 'amrf_site_settings';
 
-    /** Legacy theme option, migrated once on activation. See migrateFromThemeIfNeeded(). */
-    private const LEGACY_THEME_OPTION_NAME = 'ptsussis_site_settings';
-
     /**
      * Field key => [label, type, section]. type is the <input> type, except
      * "textarea" and "url" (see Provider::renderField() for how those two
@@ -43,7 +40,7 @@ class Repository
             'job_title' => [__('Job title', 'amrf-admin'), 'text', 'business'],
             'email' => [__('Email', 'amrf-admin'), 'email', 'business'],
             'phone' => [__('Phone', 'amrf-admin'), 'text', 'business'],
-            // Swish number lives on its own "Swish" tab now (Swish\Repository).
+            // The Swish number is stored by Swish\Repository.
             // No canonical-URL field — reuse WordPress's own home_url()
             // instead of a second value that can drift.
 
@@ -295,27 +292,5 @@ class Repository
         }
 
         return $output;
-    }
-
-    /**
-     * Copies ptsussis-theme's site-settings option over on first
-     * activation. No-ops if this plugin's option already holds data or the
-     * legacy option doesn't exist.
-     *
-     * @return void
-     */
-    public static function migrateFromThemeIfNeeded(): void
-    {
-        $existing = get_option(self::OPTION_NAME, []);
-        if (!empty($existing)) {
-            return;
-        }
-
-        $legacy = get_option(self::LEGACY_THEME_OPTION_NAME, []);
-        if (empty($legacy) || !is_array($legacy)) {
-            return;
-        }
-
-        update_option(self::OPTION_NAME, self::sanitize($legacy));
     }
 }

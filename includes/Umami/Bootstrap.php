@@ -17,8 +17,6 @@ class Bootstrap
 {
   public static function register(): void
   {
-    register_activation_hook(AMRF_ADMIN_PLUGIN_FILE, [Repository::class, 'migrateFromThemeIfNeeded']);
-
     new Provider();
 
     CachePurge::onOptionChange(Repository::OPTION_NAME);

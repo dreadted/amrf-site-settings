@@ -470,17 +470,7 @@ class Repository
   public static function getSettings(): array
   {
     $stored = get_option(self::OPTION_NAME, []);
-    $stored = is_array($stored) ? $stored : [];
-
-    // One-time migration: legacy comma-separated 'form_ids' -> int[] 'contact_form_ids'.
-    if (!array_key_exists('contact_form_ids', $stored) && array_key_exists('form_ids', $stored)) {
-      $ids = array_map('absint', explode(',', (string) $stored['form_ids']));
-      $stored['contact_form_ids'] = array_values(array_unique(array_filter($ids)));
-      unset($stored['form_ids']);
-      update_option(self::OPTION_NAME, $stored);
-    }
-
-    return wp_parse_args($stored, self::getDefaults());
+    return wp_parse_args(is_array($stored) ? $stored : [], self::getDefaults());
   }
 
   /**
