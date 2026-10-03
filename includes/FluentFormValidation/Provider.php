@@ -33,7 +33,7 @@ class Provider
   {
     add_filter('fluentform/validate_input_item_text', [$this, 'validatePinField'], 10, 4);
     add_filter('fluentform/response_render_item_text', [$this, 'formatPinField'], 10, 2);
-    add_action('wp_enqueue_scripts', [$this, 'enqueueValidationScript']);
+    add_action('fluentform/before_form_render', [$this, 'enqueueValidationScript']);
   }
 
   /**
@@ -151,15 +151,44 @@ class Provider
   }
 
   /**
-   * Front-end only — the client-side mirror of the same validation, for
-   * immediate feedback before the form is even submitted. No-ops instantly
-   * if no element in the page carries CONTAINER_CLASS (see
-   * initPinValidation() in the script itself).
+   * Whether any field in the form, including fields nested in containers, is a PIN field.
    *
+   * @param array $fields
+   * @return bool
+   */
+  private function hasPinField(array $fields): bool
+  {
+    foreach ($fields as $field) {
+      if (!is_array($field)) {
+        continue;
+      }
+
+      if ($this->isPinField($field)) {
+        return true;
+      }
+
+      foreach ($field['columns'] ?? [] as $column) {
+        if ($this->hasPinField($column['fields'] ?? [])) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Client-side mirror of the same validation, enqueued only for forms that have a PIN field.
+   *
+   * @param object $form FluentForm form, with decoded $form->fields.
    * @return void
    */
-  public function enqueueValidationScript(): void
+  public function enqueueValidationScript($form): void
   {
+    if (!$this->hasPinField($form->fields['fields'] ?? [])) {
+      return;
+    }
+
     wp_enqueue_script(
       self::SCRIPT_HANDLE,
       AMRF_ADMIN_PLUGIN_URL . 'assets/js/amrf-fluentform-validation.js',
