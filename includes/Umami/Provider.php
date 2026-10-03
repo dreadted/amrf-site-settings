@@ -29,6 +29,7 @@ class Provider
 	{
 		add_filter('amrf_site_settings_pages', [$this, 'registerPages']);
 		add_action('wp_enqueue_scripts', [$this, 'enqueueTrackingScript']);
+		add_filter('wp_resource_hints', [$this, 'addPreconnect'], 10, 2);
 		add_action('admin_menu', [$this, 'addAnalyticsMenu']);
 	}
 
@@ -214,22 +215,17 @@ class Provider
 	}
 
 	/**
-	 * Front-end only. Skips self::TRACKER_HANDLE entirely when umami_site is
-	 * empty (avoiding an empty-string data-website-id) or the visitor is
-	 * logged in.
-	 *
-	 * The tracker is enqueued as a real <script defer> tag rather than
-	 * injected via JS after DOMContentLoaded — that used to arrive so late
-	 * that the theme's <link rel="preconnect"> to this same host went unused
-	 * (connection long idle by the time the request happened). A real tag
-	 * lets the browser's preload scanner find it during initial HTML parsing,
-	 * close enough to the preconnect for it to matter.
+	 * Front-end only. Loads nothing when umami_site is empty or the visitor is logged in.
 	 *
 	 * @return void
 	 */
 	public function enqueueTrackingScript(): void
 	{
 		$settings = Repository::getSettings();
+
+		if (empty($settings['site']) || is_user_logged_in()) {
+			return;
+		}
 
 		wp_enqueue_script(
 			self::SCRIPT_HANDLE,
@@ -251,10 +247,7 @@ class Provider
 			. 'const amrfUmamiPageTitle = ' . wp_json_encode(wp_get_document_title()) . ';'
 		);
 
-		if (empty($settings['site']) || is_user_logged_in()) {
-			return;
-		}
-
+		// A real <script defer> in <head>, so the preload scanner finds it early enough for the preconnect to pay off.
 		wp_enqueue_script(
 			self::TRACKER_HANDLE,
 			'https://' . $settings['host'] . '/script.js',
@@ -277,5 +270,21 @@ class Provider
 				$tag
 			);
 		}, 10, 2);
+	}
+
+	/**
+	 * Preconnects to the Umami host on pages that load its tracker.
+	 *
+	 * @param string[] $urls          URLs to print for this relation type.
+	 * @param string   $relation_type Relation type the URLs are printed for.
+	 * @return string[]
+	 */
+	public function addPreconnect(array $urls, string $relation_type): array
+	{
+		if ($relation_type === 'preconnect' && wp_script_is(self::TRACKER_HANDLE)) {
+			$urls[] = 'https://' . Repository::getSettings()['host'];
+		}
+
+		return $urls;
 	}
 }
