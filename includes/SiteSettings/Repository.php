@@ -134,7 +134,7 @@ class Repository
         global $_wp_admin_css_colors;
 
         // register_admin_color_schemes() only runs on admin_init, so the
-        // front end (where both callers render) needs it registered here.
+        // Support Genix portal on the front end needs it registered here.
         if (empty($_wp_admin_css_colors)) {
             if (!function_exists('register_admin_color_schemes')) {
                 return ['primary' => '', 'secondary' => ''];

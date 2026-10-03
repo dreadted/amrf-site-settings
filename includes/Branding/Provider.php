@@ -10,8 +10,8 @@ if (!defined('ABSPATH')) {
  * Class Provider
  *
  * Prints a stylized console.log badge on every front-end page load, colored
- * with the viewer's own wp-admin color scheme (or the site admin's, if
- * logged out); amrf_site_colors can override.
+ * with the theme's --amrf-primary-color, --amrf-secondary-color and
+ * --amrf-text-color.
  *
  * @package Antropomorf\Branding
  */
@@ -38,17 +38,10 @@ class Provider
     );
 
     $theme = wp_get_theme();
-    $admin_colors = \Antropomorf\SiteSettings\Repository::getAdminColorSchemeColors();
-    $colors = apply_filters('amrf_site_colors', [
-      'primary' => $admin_colors['primary'] ?: '#1976d2',
-      'secondary' => $admin_colors['secondary'] ?: '#1976d2',
-    ]);
 
     wp_localize_script(self::SCRIPT_HANDLE, 'amrfBranding', [
       'author' => $theme->get('Author'),
       'version' => $theme->get('Version'),
-      'primary' => $colors['primary'],
-      'dark' => $colors['secondary'],
     ]);
   }
 }
