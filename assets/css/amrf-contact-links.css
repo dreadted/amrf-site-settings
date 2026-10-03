@@ -1,0 +1,14 @@
+/* Markup contract: see SiteSettings\ContactLinks. */
+.amrf-email-link[hidden] {
+	display: none;
+}
+
+.amrf-copy-link {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	font: inherit;
+	color: inherit;
+	cursor: pointer;
+}

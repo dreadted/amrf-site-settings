@@ -1,44 +1,17 @@
 /**
  * Sitewide "#swish" link handling — scans the page for `<a href="#swish">`
  * and swaps each for either a deep link (mobile) or a QR code (desktop).
- * Config comes from one global object, amrfSwish (Swish\FrontendProvider).
+ * Config comes from one global object, amrfSwish (Swish\FrontendProvider);
+ * device detection and the copy button come from amrf-contact-links.js.
  */
-
-function canRunSwish() {
-	const platform = window.navigator.userAgentData?.platform;
-	if (platform) return platform === 'Android' || platform === 'iOS';
-
-	const ua = navigator.userAgent;
-	if (/android|iphone|ipod/i.test(ua)) return true;
-
-	if (/Macintosh/.test(ua) && navigator.maxTouchPoints > 0) return true;
-
-	return false;
-}
-
-function setupCopyOnClick(button, value) {
-	let resetTimer;
-
-	button.addEventListener('click', () => {
-		if (!navigator.clipboard?.writeText) return;
-
-		navigator.clipboard.writeText(value).then(() => {
-			clearTimeout(resetTimer);
-			button.textContent = window.amrfSwish?.copiedLabel || value;
-			button.classList.add('is-copied');
-			resetTimer = setTimeout(() => {
-				button.textContent = value;
-				button.classList.remove('is-copied');
-			}, 1500);
-		});
-	});
-}
 
 function setupSwishLink(link) {
 	if (link.dataset.swishReady) return;
 	link.dataset.swishReady = 'true';
 
-	if (canRunSwish() && window.amrfSwish?.swishUrl) {
+	const { isMobileDevice, setupCopyButton } = window.amrfContactLinks;
+
+	if (isMobileDevice() && window.amrfSwish?.swishUrl) {
 		link.href = window.amrfSwish.swishUrl;
 		return;
 	}
@@ -61,9 +34,14 @@ function setupSwishLink(link) {
 		const numberButton = document.createElement('button');
 		numberButton.type = 'button';
 		numberButton.className = 'amrf-swish-qr-number';
-		numberButton.textContent = number;
-		numberButton.setAttribute('aria-live', 'polite');
-		setupCopyOnClick(numberButton, number);
+		numberButton.dataset.copyValue = number;
+
+		const numberText = document.createElement('span');
+		numberText.className = 'amrf-copy-text';
+		numberText.textContent = number;
+		numberButton.appendChild(numberText);
+
+		setupCopyButton(numberButton);
 		wrap.appendChild(numberButton);
 	}
 

@@ -48,7 +48,7 @@ class FrontendProvider
 		wp_enqueue_script(
 			self::SCRIPT_HANDLE,
 			AMRF_ADMIN_PLUGIN_URL . 'assets/js/amrf-swish.js',
-			[],
+			[\Antropomorf\SiteSettings\ContactLinks::HANDLE],
 			filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/js/amrf-swish.js'),
 			true
 		);
@@ -63,7 +63,6 @@ class FrontendProvider
 			),
 			'qrSrc' => QrCodeGenerator::url($settings),
 			'qrAlt' => $settings['number'],
-			'copiedLabel' => __('Copied!', 'amrf-admin'),
 		]);
 	}
 }

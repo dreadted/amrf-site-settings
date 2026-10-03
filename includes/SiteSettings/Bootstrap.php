@@ -23,7 +23,7 @@ class Bootstrap
 		new Favicons();
 		new LoginBranding();
 		new SettingShortcode();
-		new ContactLinkShortcodes();
+		new ContactLinks();
 
 		CachePurge::onOptionChange(Repository::OPTION_NAME);
 		CachePurge::onOptionChange('blog_public');

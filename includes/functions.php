@@ -60,3 +60,14 @@ function amrf_build_swish_url(
 ): string {
 	return \Antropomorf\SiteSettings\Swish::buildUrl($swish_number, $amount, $amount_editable, $message, $message_editable);
 }
+
+/**
+ * Loads the script and styles behind the ContactLinks markup contract
+ * (ROT13 email links, desktop copy buttons) on the current page.
+ *
+ * @return void
+ */
+function amrf_enqueue_contact_links(): void
+{
+	\Antropomorf\SiteSettings\ContactLinks::enqueue();
+}

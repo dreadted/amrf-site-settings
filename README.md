@@ -56,6 +56,16 @@ These feed the SEO structured data above and are reused wherever the site needs 
 - Contact person
 - Email
 - Phone number
+- **Contact links:** `[amrf_email_link]` prints the email as a link whose address is assembled in the browser (ROT13 in the HTML, so scrapers don't see it), and `[amrf_phone_link]` prints a `tel:` link that becomes a copy button on desktop. A theme can reuse the same behavior for its own markup by calling `amrf_enqueue_contact_links()` and using these classes:
+
+  ```html
+  <a href="#" class="amrf-email-link" hidden data-user="<ROT13 user>" data-domain="<ROT13 domain>">
+    <span class="amrf-email-link-text">Email</span>
+  </a>
+  <a href="tel:+46…" class="amrf-copy-link" data-copy-value="070-…">
+    <span class="amrf-copy-text">070-…</span>
+  </a>
+  ```
 
 #### Address
 
