@@ -63,7 +63,7 @@ body.login {
     --wp-admin-theme-color-darker-10: #2271b1;
 }
 .login h1 a, .login h1 {
-    background-image: url({$logo});
+    background-image: url(\"{$logo}\");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -76,7 +76,8 @@ body.login {
     display: block;
 }
 .login .message, .login .notice, .login .success {
-border-left: 4px solid var(--wp-admin-theme-color);
+    border-left: 4px solid var(--wp-admin-theme-color);
+}
 ");
   }
 
