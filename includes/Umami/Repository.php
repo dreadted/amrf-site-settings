@@ -72,9 +72,13 @@ class Repository
 	{
 		$host = is_array($input) ? ($input['host'] ?? '') : '';
 		$button_selectors_raw = is_array($input) ? ($input['button_selectors'] ?? '') : '';
+		// A new option is sanitized twice (update_option() then add_option()), so the second pass gets the list.
+		$button_selectors_lines = is_array($button_selectors_raw)
+			? $button_selectors_raw
+			: preg_split('/\r\n|\r|\n/', (string) $button_selectors_raw);
 		$button_selectors = array_values(array_filter(array_map(
 			'sanitize_text_field',
-			preg_split('/\r\n|\r|\n/', (string) $button_selectors_raw)
+			$button_selectors_lines
 		), fn ($line) => $line !== ''));
 
 		return [
