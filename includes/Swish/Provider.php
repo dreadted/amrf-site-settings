@@ -85,13 +85,21 @@ class Provider
       esc_attr($settings['number'])
     );
 
-    if ($settings['qr_url'] !== '') {
-      printf(
-        '<p style="margin-top:10px;"><img src="%1$s" alt="%2$s" style="max-width:160px;height:auto;" /></p>',
-        esc_url($settings['qr_url']),
-        esc_attr__('Current Swish QR code', 'amrf-admin')
-      );
+    if ($settings['number'] === '') {
+      return;
     }
+
+    // Retries a code that failed to generate on save; a no-op when it exists.
+    if (!QrCodeGenerator::ensure($settings)) {
+      echo '<p class="description">' . esc_html__('The Swish QR code could not be created. Reload this page to try again.', 'amrf-admin') . '</p>';
+      return;
+    }
+
+    printf(
+      '<p style="margin-top:10px;"><img src="%1$s" alt="%2$s" style="max-width:160px;height:auto;" /></p>',
+      esc_url(QrCodeGenerator::url($settings)),
+      esc_attr__('Current Swish QR code', 'amrf-admin')
+    );
   }
 
   /**

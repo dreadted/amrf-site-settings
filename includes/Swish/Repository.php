@@ -9,8 +9,8 @@ if (!defined('ABSPATH')) {
 /**
  * Class Repository
  *
- * Storage, defaults, and sanitization for the Swish tab's own settings,
- * which also drive QrCodeGenerator.
+ * Storage, defaults, and sanitization for the Swish tab's settings. The QR
+ * code is derived from them by QrCodeGenerator and is not stored here.
  *
  * @package Antropomorf\Swish
  */
@@ -29,9 +29,6 @@ class Repository
       'amount_editable' => '1',
       'message' => '',
       'message_editable' => '1',
-      // Not form fields — written only by QrCodeGenerator::maybeRegenerate().
-      'qr_url' => '',
-      'qr_source_hash' => '',
     ];
   }
 
@@ -41,7 +38,8 @@ class Repository
   public static function getSettings(): array
   {
     $stored = get_option(self::OPTION_NAME, []);
-    return wp_parse_args(is_array($stored) ? $stored : [], self::getDefaults());
+    $defaults = self::getDefaults();
+    return array_intersect_key(wp_parse_args(is_array($stored) ? $stored : [], $defaults), $defaults);
   }
 
   /**
@@ -54,17 +52,15 @@ class Repository
    */
   public static function sanitize($input): array
   {
-    $current = self::getSettings();
     $input = is_array($input) ? $input : [];
 
-    $output = $current;
-    $output['number'] = sanitize_text_field((string) ($input['number'] ?? ''));
-    $output['amount'] = self::normalizeAmount((string) ($input['amount'] ?? ''));
-    $output['amount_editable'] = !empty($input['amount_editable']) ? '1' : '';
-    $output['message'] = sanitize_text_field((string) ($input['message'] ?? ''));
-    $output['message_editable'] = !empty($input['message_editable']) ? '1' : '';
-
-    return array_merge($output, QrCodeGenerator::maybeRegenerate($current, $output));
+    return [
+      'number' => sanitize_text_field((string) ($input['number'] ?? '')),
+      'amount' => self::normalizeAmount((string) ($input['amount'] ?? '')),
+      'amount_editable' => !empty($input['amount_editable']) ? '1' : '',
+      'message' => sanitize_text_field((string) ($input['message'] ?? '')),
+      'message_editable' => !empty($input['message_editable']) ? '1' : '',
+    ];
   }
 
   /**

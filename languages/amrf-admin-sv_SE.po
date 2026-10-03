@@ -16,7 +16,7 @@ msgstr ""
 
 #: includes/Admin/SettingsPage.php:66
 #: includes/Admin/SettingsPage.php:67
-#: includes/Hooks/AdminHooks.php:65
+#: includes/Hooks/AdminHooks.php:57
 msgid "Admin Panel Settings"
 msgstr "Inställningar för Adminpanelen"
 
@@ -35,7 +35,7 @@ msgstr ""
 #: includes/Admin/SiteSettingsMenu.php:56
 #: includes/Admin/SiteSettingsMenu.php:68
 #: includes/Admin/SiteSettingsMenu.php:69
-#: includes/Hooks/AdminHooks.php:110
+#: includes/Hooks/AdminHooks.php:102
 msgid "Site Settings"
 msgstr "Webbplatsinställningar"
 
@@ -144,7 +144,7 @@ msgstr "Stäng av om ett äldre plugin eller tema på sajten är beroende av jQu
 msgid "Disable generated image sizes"
 msgstr "Inaktivera genererade bildstorlekar"
 
-#: includes/Hooks/AdminHooks.php:89
+#: includes/Hooks/AdminHooks.php:81
 msgid "Settings"
 msgstr "Inställningar"
 
@@ -159,122 +159,122 @@ msgstr "Redigera sida"
 msgid "ERROR: Password must be at least %d characters long."
 msgstr "FEL: Lösenordet måste bestå av minst %d tecken."
 
-#: includes/Settings/Manager.php:65
+#: includes/Settings/Manager.php:62
 msgid "General"
 msgstr "Allmänna"
 
-#: includes/Settings/Manager.php:102
+#: includes/Settings/Manager.php:99
 msgid "General Settings"
 msgstr "Allmänna inställningar"
 
-#: includes/Settings/Manager.php:108
+#: includes/Settings/Manager.php:105
 msgid "Add Page Editor Link"
 msgstr "Lägg till \"Redigera sida\" i menyn"
 
-#: includes/Settings/Manager.php:115
+#: includes/Settings/Manager.php:112
 msgid "Page Editor Link Target"
 msgstr "Mållänk för \"Redigera sida\""
 
-#: includes/Settings/Manager.php:122
+#: includes/Settings/Manager.php:119
 msgid "Minimum Password Length"
 msgstr "Minsta tillåtna antal tecken i lösenord"
 
-#: includes/Settings/Manager.php:129
+#: includes/Settings/Manager.php:126
 msgid "Prevent Non-Admins from Changing Passwords"
 msgstr "Förhindra att icke-administratörer byter lösenord"
 
-#: includes/Settings/Manager.php:136
+#: includes/Settings/Manager.php:133
 msgid "Hide Application Passwords for Non-Admins"
 msgstr "Dölj applikationslösenord för icke-administratörer"
 
-#: includes/Settings/Manager.php:143
+#: includes/Settings/Manager.php:140
 msgid "Remove Admin Bar Items for Non-Admins"
 msgstr "Ta bort länkar från administrationsfältet för icke-administratörer"
 
-#: includes/Settings/Manager.php:150
+#: includes/Settings/Manager.php:147
 msgid "Remove Default Dashboard Widgets"
 msgstr "Ta bort standardwidgetar från adminpanelen"
 
 #. translators: %s is the user role name (e.g. "Editor").
-#: includes/Settings/Manager.php:172
-#: includes/Settings/Manager.php:179
+#: includes/Settings/Manager.php:169
+#: includes/Settings/Manager.php:176
 #, php-format
 msgid "%s Settings"
 msgstr "Inställningar för %s"
 
-#: includes/Settings/Manager.php:199
+#: includes/Settings/Manager.php:196
 msgid "Settings have been reset to defaults."
 msgstr "Inställningarna har återställts till standardvärden."
 
-#: includes/Settings/Manager.php:416
+#: includes/Settings/Manager.php:413
 msgid "Configure general admin panel settings."
 msgstr "Ange allmänna inställningar för adminpanelen."
 
-#: includes/Settings/Manager.php:426
+#: includes/Settings/Manager.php:423
 msgid "Configure settings for each user role."
 msgstr "Ange inställningar för respektive användarroll."
 
-#: includes/Settings/Manager.php:438
+#: includes/Settings/Manager.php:435
 msgid "Adds a link to the front page editor in the admin menu."
 msgstr "Lägger till länken \"Redigera sida\" i administratörsmenyn."
 
-#: includes/Settings/Manager.php:459
+#: includes/Settings/Manager.php:456
 msgid "The link the \"Page Editor\" admin menu item points to, relative to the site root."
 msgstr "Länken som menyalternativet \"Redigera sida\" pekar på, relativt sajtens rot."
 
-#: includes/Settings/Manager.php:477
+#: includes/Settings/Manager.php:474
 msgid "Minimum required characters for user passwords."
 msgstr "Minsta antal tillåtna tecken för användarnas lösenord."
 
-#: includes/Settings/Manager.php:488
+#: includes/Settings/Manager.php:485
 msgid "Prevents non-admin users from changing their passwords."
 msgstr "Tar bort möjligheten att byta lösenord för icke-administratörer."
 
-#: includes/Settings/Manager.php:498
+#: includes/Settings/Manager.php:495
 msgid "Hides application passwords section for non-admin users."
 msgstr "Döljer applikationslösenord för icke-administratörer."
 
-#: includes/Settings/Manager.php:508
+#: includes/Settings/Manager.php:505
 msgid "Removes comments and new content links from admin bar for non-admins."
 msgstr "Tar bort länkar till kommentarer och nytt innehåll från administrationsfältet för icke-administratörer."
 
-#: includes/Settings/Manager.php:518
+#: includes/Settings/Manager.php:515
 msgid "Removes default dashboard widgets (Activity, Quick Draft, etc.)."
 msgstr "Tar bort standardwidgetar (Aktivitet, Snabbutkast etc.)"
 
-#: includes/Settings/Manager.php:538
+#: includes/Settings/Manager.php:534
 msgid "Login Redirect"
 msgstr "Omdirigering efter inloggning"
 
-#: includes/Settings/Manager.php:541
+#: includes/Settings/Manager.php:537
 msgid "-- Select Redirect URL --"
 msgstr "-- Välj sida för omdirigering --"
 
-#: includes/Settings/Manager.php:542
+#: includes/Settings/Manager.php:538
 msgid "-- Front Page --"
 msgstr "-- Startsida --"
 
-#: includes/Settings/Manager.php:547
+#: includes/Settings/Manager.php:543
 msgid "URL to redirect this user role to after login."
 msgstr "Sida som skall visas för denna användarroll efter inloggning."
 
-#: includes/Settings/Manager.php:550
+#: includes/Settings/Manager.php:546
 msgid "Default Admin Page"
 msgstr "Startsida för adminpanelen"
 
-#: includes/Settings/Manager.php:555
+#: includes/Settings/Manager.php:551
 msgid "-- Select Default Page --"
 msgstr "-- Välj startsida --"
 
-#: includes/Settings/Manager.php:560
+#: includes/Settings/Manager.php:556
 msgid "Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below)."
 msgstr "Sida som visas när den här användarrollen besöker /wp-admin/ (måste finnas med bland tillåtna menyalternativ)."
 
-#: includes/Settings/Manager.php:583
+#: includes/Settings/Manager.php:579
 msgid "Allowed Menu Items"
 msgstr "Tillåtna menyalternativ"
 
-#: includes/Settings/Manager.php:599
+#: includes/Settings/Manager.php:595
 msgid "Select which admin menu items should be visible to this user role."
 msgstr "Välj vilka menyalternativ som ska visas i administratörsmenyn för den här användarrollen."
 
@@ -294,52 +294,52 @@ msgstr "Välj bild"
 msgid "Remove image"
 msgstr "Ta bort bild"
 
-#: includes/SiteSettings/Repository.php:33
+#: includes/SiteSettings/Repository.php:30
 msgid "Enable SEO Output"
 msgstr "Aktivera SEO-output"
 
-#: includes/SiteSettings/Repository.php:34
+#: includes/SiteSettings/Repository.php:31
 msgid "SEO title"
 msgstr "SEO-titel"
 
-#: includes/SiteSettings/Repository.php:35
+#: includes/SiteSettings/Repository.php:32
 msgid "Meta description"
 msgstr "Metabeskrivning"
 
-#: includes/SiteSettings/Repository.php:36
+#: includes/SiteSettings/Repository.php:33
 msgid "Share image"
 msgstr "Delningsbild"
 
-#: includes/SiteSettings/Repository.php:37
+#: includes/SiteSettings/Repository.php:34
 msgid "Theme color"
 msgstr "Temafärg"
 
-#: includes/SiteSettings/Repository.php:38
+#: includes/SiteSettings/Repository.php:35
 msgid "Background color"
 msgstr "Bakgrundsfärg"
 
-#: includes/SiteSettings/Repository.php:40
+#: includes/SiteSettings/Repository.php:37
 msgid "Business name"
 msgstr "Företagsnamn"
 
-#: includes/SiteSettings/Repository.php:41
+#: includes/SiteSettings/Repository.php:38
 msgid "Business type (schema.org)"
 msgstr "Verksamhetstyp (schema.org)"
 
-#: includes/SiteSettings/Repository.php:42
+#: includes/SiteSettings/Repository.php:39
 msgid "Person name"
 msgstr "Personnamn"
 
-#: includes/SiteSettings/Repository.php:43
+#: includes/SiteSettings/Repository.php:40
 msgid "Job title"
 msgstr "Titel"
 
 #: includes/SiteSettings/ContactLinkShortcodes.php:61
-#: includes/SiteSettings/Repository.php:44
+#: includes/SiteSettings/Repository.php:41
 msgid "Email"
 msgstr "E-post"
 
-#: includes/SiteSettings/Repository.php:45
+#: includes/SiteSettings/Repository.php:42
 msgid "Phone"
 msgstr "Telefon"
 
@@ -347,59 +347,59 @@ msgstr "Telefon"
 msgid "Swish number"
 msgstr "Swish-nummer"
 
-#: includes/SiteSettings/Repository.php:50
+#: includes/SiteSettings/Repository.php:47
 msgid "Street address"
 msgstr "Gatuadress"
 
-#: includes/SiteSettings/Repository.php:51
+#: includes/SiteSettings/Repository.php:48
 msgid "Postal code"
 msgstr "Postnummer"
 
-#: includes/SiteSettings/Repository.php:52
+#: includes/SiteSettings/Repository.php:49
 msgid "City"
 msgstr "Ort"
 
-#: includes/SiteSettings/Repository.php:53
+#: includes/SiteSettings/Repository.php:50
 msgid "Region"
 msgstr "Region"
 
-#: includes/SiteSettings/Repository.php:54
+#: includes/SiteSettings/Repository.php:51
 msgid "Country"
 msgstr "Land"
 
-#: includes/SiteSettings/Repository.php:55
+#: includes/SiteSettings/Repository.php:52
 msgid "Latitude"
 msgstr "Latitud"
 
-#: includes/SiteSettings/Repository.php:56
+#: includes/SiteSettings/Repository.php:53
 msgid "Longitude"
 msgstr "Longitud"
 
-#: includes/SiteSettings/Repository.php:58
+#: includes/SiteSettings/Repository.php:55
 msgid "Facebook URL"
 msgstr "Facebook-URL"
 
-#: includes/SiteSettings/Repository.php:59
+#: includes/SiteSettings/Repository.php:56
 msgid "Instagram URL"
 msgstr "Instagram-URL"
 
-#: includes/SiteSettings/Repository.php:60
+#: includes/SiteSettings/Repository.php:57
 msgid "X (Twitter) URL"
 msgstr "X (Twitter)-URL"
 
-#: includes/SiteSettings/Repository.php:70
+#: includes/SiteSettings/Repository.php:67
 msgid "SEO"
 msgstr "SEO"
 
-#: includes/SiteSettings/Repository.php:71
+#: includes/SiteSettings/Repository.php:68
 msgid "Business & Contact"
 msgstr "Företag & Kontakt"
 
-#: includes/SiteSettings/Repository.php:72
+#: includes/SiteSettings/Repository.php:69
 msgid "Address"
 msgstr "Adress"
 
-#: includes/SiteSettings/Repository.php:73
+#: includes/SiteSettings/Repository.php:70
 msgid "Social Media"
 msgstr "Sociala medier"
 
@@ -499,21 +499,17 @@ msgstr "Förifyllt meddelande"
 msgid "Any link with the address \"#swish\" anywhere on the site opens this directly in the Swish app on a phone, or shows this QR code on a device that can't run it."
 msgstr "Alla länkar med adressen \"#swish\" någonstans på sajten öppnar detta direkt i Swish-appen på en mobil, eller visar denna QR-kod på en enhet som inte kan köra den."
 
-#: includes/Swish/Provider.php:92
+#: includes/Swish/Provider.php:101
 msgid "Current Swish QR code"
 msgstr "Aktuell Swish QR-kod"
 
-#: includes/Swish/Provider.php:111
+#: includes/Swish/Provider.php:119
 msgid "Blank = no amount prefilled."
 msgstr "Tomt = inget belopp förifyllt."
 
-#: includes/Swish/Provider.php:136
+#: includes/Swish/Provider.php:144
 msgid "Editable by the payer after scanning"
 msgstr "Redigerbart av betalaren efter skanning"
-
-#: includes/Swish/QrCodeGenerator.php:57
-msgid "The Swish QR code could not be regenerated — the previous one (if any) is still in use. Try saving again."
-msgstr "Swish QR-koden kunde inte genereras om — den tidigare (om någon finns) används fortfarande. Försök spara igen."
 
 #: assets/js/amrf-fluentform-validation.js:6
 msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)"
@@ -523,15 +519,15 @@ msgstr "Fyll i ett giltigt svenskt personnummer (ÅÅMMDD-XXXX)"
 msgid "Personal Identity Number is required"
 msgstr "Personnummer är obligatoriskt"
 
-#: includes/Settings/Manager.php:564
+#: includes/Settings/Manager.php:560
 msgid "Form Entries Access"
 msgstr "Åtkomst till formulärposter"
 
-#: includes/Settings/Manager.php:565
+#: includes/Settings/Manager.php:561
 msgid "Enable to allow this user role to view and manage Fluent Forms entries (view, delete, mark read/unread, favorite) — not forms themselves or site-wide Fluent Forms settings."
 msgstr "Aktivera för att ge den här användarrollen behörighet att visa och hantera poster i Fluent Forms (visa, radera, markera läst/oläst, favorit) — inte formulären själva eller Fluent Forms sajtomfattande inställningar."
 
-#: includes/Settings/Manager.php:571
+#: includes/Settings/Manager.php:567
 msgid "Site Settings Access"
 msgstr "Åtkomst till webbplatsinställningar"
 
@@ -619,11 +615,11 @@ msgstr "Bilder"
 msgid "Frontend"
 msgstr "Frontend"
 
-#: includes/Settings/Manager.php:577
+#: includes/Settings/Manager.php:573
 msgid "SEO Framework Access"
 msgstr "Åtkomst till SEO Framework"
 
-#: includes/Settings/Manager.php:578
+#: includes/Settings/Manager.php:574
 msgid "Enable to give this user role access to The SEO Framework's meta box on posts/pages and its SEO column in the post/page list."
 msgstr "Aktivera för att ge den här användarrollen åtkomst till The SEO Frameworks metabox på inlägg/sidor samt SEO-kolumnen i inläggs-/sidlistan."
 
@@ -792,6 +788,10 @@ msgstr "Återställ till temats standard"
 msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: enables IP logging (as proof of consent), turns form view analytics off, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. Also writes FluentForm's default validation messages (e.g. \"This field is required\") in the site language, so they no longer follow the saving admin's own language. Also renames form ID 1 to \"Kontaktformulär\", replaces its fields with this site's baseline set (name, email, a required message field), and applies this site's baseline confirmation message and email notification to it. On a local site (WP_ENVIRONMENT_TYPE \"local\") where FluentSMTP is active but has no connections yet, also adds an SMTP connection to Mailhog (port 1025) using this site's own domain as the sender address, and sets it as the default connection. Existing FluentSMTP connections are never changed. A one-time action, not a saved setting — resets to off after saving."
 msgstr "Skriver vid sparning över FluentForms egna Global Settings → Miscellaneous, oavsett nuvarande värden: aktiverar IP-loggning (som bevis på samtycke), stänger av statistik över formulärvisningar, aktiverar honeypot och tokenbaserat spamskydd, stänger av klassiska redigerarknappen och automatisk tabbordning, samt aktiverar no-conflict-läge. Skriver också FluentForms standardmeddelanden för validering (t.ex. \"Detta fält är obligatoriskt\") på sajtens språk, så att de inte längre följer admin-språket hos den som sparar. Byter också namn på formulär-ID 1 till \"Kontaktformulär\", ersätter dess fält med sajtens standarduppsättning (namn, e-post, ett obligatoriskt meddelandefält), och tillämpar sajtens standardbekräftelsemeddelande och e-postnotifiering på det. På en lokal sajt (WP_ENVIRONMENT_TYPE \"local\") där FluentSMTP är aktivt men ännu saknar anslutningar läggs även en SMTP-anslutning till Mailhog (port 1025) till, med sajtens egen domän som avsändaradress, och sätts som standardanslutning. Befintliga FluentSMTP-anslutningar ändras aldrig. En engångsåtgärd, inte en sparad inställning — återgår till avstängd efter sparning."
 
-#: includes/Settings/Manager.php:572
+#: includes/Settings/Manager.php:568
 msgid "Enable to give this user role access to the Site Settings menu (Business & Contact, Address, Social Media, Forms/GDPR/Swish; the SEO tab is for administrators only) and to native theme menu/design editing (Appearance → Menus/Customize on a classic theme, or the Site Editor on a block theme)."
 msgstr "Aktivera för att ge den här användarrollen åtkomst till menyn Webbplatsinställningar (Företag & Kontakt, Adress, Sociala medier, Formulär/GDPR/Swish; fliken SEO är bara för administratörer) samt till WordPress egen temameny-/designredigering (Utseende → Menyer/Anpassa i ett klassiskt tema, eller webbplatsredigeraren i ett blocktema)."
+
+#: includes/Swish/Provider.php:94
+msgid "The Swish QR code could not be created. Reload this page to try again."
+msgstr "Swish QR-koden kunde inte skapas. Ladda om sidan för att försöka igen."

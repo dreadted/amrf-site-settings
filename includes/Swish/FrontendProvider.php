@@ -61,7 +61,7 @@ class FrontendProvider
         $settings['message'],
         $settings['message_editable'] === '1'
       ),
-      'qrSrc' => $settings['qr_url'],
+      'qrSrc' => QrCodeGenerator::url($settings),
       'qrAlt' => $settings['number'],
       'copiedLabel' => __('Copied!', 'amrf-admin'),
     ]);

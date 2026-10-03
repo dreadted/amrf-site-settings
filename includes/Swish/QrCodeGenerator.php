@@ -9,10 +9,8 @@ if (!defined('ABSPATH')) {
 /**
  * Class QrCodeGenerator
  *
- * Generates this site's Swish QR code via Swish's own unauthenticated QR
- * API, caching the result to uploads/ as a single fixed-filename .svg —
- * regenerated only when Repository::sanitize() detects the source settings
- * actually changed.
+ * Creates the Swish QR code via Swish's QR API after each save, in uploads/
+ * under a name derived from the settings, so nothing else is stored.
  *
  * Requested as SVG, not PNG/JPG: recoloring is then a plain DOM edit (see
  * applyBlackStyle()) instead of a pixel operation that depends on the
@@ -25,54 +23,94 @@ class QrCodeGenerator
   private const API_URL = 'https://mpc.getswish.net/qrg-swish/api/v1/prefilled';
 
   private const UPLOAD_SUBDIR = 'amrf-swish';
-  private const FILENAME = 'swish-qr.svg';
+  private const FILENAME_PREFIX = 'swish-qr-';
+
+  public static function register(): void
+  {
+    // Both fire once per save, after the value is stored; update only when it changed.
+    add_action('add_option_' . Repository::OPTION_NAME, [self::class, 'onSave']);
+    add_action('update_option_' . Repository::OPTION_NAME, [self::class, 'onSave']);
+  }
+
+  public static function onSave(): void
+  {
+    self::ensure(Repository::getSettings());
+  }
 
   /**
-   * @param array<string, string> $before Settings as they were before this save.
-   * @param array<string, string> $after  Settings as sanitize() just computed them
-   *                                      (qr_url/qr_source_hash keys not set yet).
-   * @return array{qr_url: string, qr_source_hash: string} Merge this into
-   *         the option being saved.
+   * Creates the QR code for these settings unless it already exists, and
+   * removes codes for earlier settings.
+   *
+   * @param array<string, string> $settings
+   * @return bool False if the code could not be created.
    */
-  public static function maybeRegenerate(array $before, array $after): array
+  public static function ensure(array $settings): bool
   {
-    $hash = self::hash($after);
-
-    if ($after['number'] === '') {
-      // Nothing to generate without a number — clear any stale QR rather
-      // than leaving a code for a number that's no longer configured.
-      return ['qr_url' => '', 'qr_source_hash' => $hash];
+    if ($settings['number'] === '') {
+      self::deleteFiles();
+      return true;
     }
 
-    if ($hash === $before['qr_source_hash'] && $before['qr_url'] !== '') {
-      return ['qr_url' => $before['qr_url'], 'qr_source_hash' => $hash];
+    $path = self::path($settings);
+    if (file_exists($path)) {
+      return true;
     }
 
-    $url = self::generate($after);
-
-    if ($url === null) {
-      add_settings_error(
-        Repository::OPTION_NAME,
-        'amrf_swish_qr_failed',
-        __('The Swish QR code could not be regenerated — the previous one (if any) is still in use. Try saving again.', 'amrf-admin')
-      );
-      // Deliberately keep the OLD hash, not the new one: the settings did
-      // change, the cached QR is now stale relative to them, and keeping
-      // the old hash means the next save (even with identical values)
-      // retries instead of silently treating this as "already up to date."
-      return ['qr_url' => $before['qr_url'], 'qr_source_hash' => $before['qr_source_hash']];
+    $svg = self::fetch($settings);
+    if ($svg === null || !wp_mkdir_p(dirname($path)) || file_put_contents($path, $svg) === false) {
+      return false;
     }
 
-    return ['qr_url' => $url, 'qr_source_hash' => $hash];
+    self::deleteFiles(basename($path));
+    return true;
   }
 
   /**
    * @param array<string, string> $settings
-   * @return string|null The final, cache-busted image URL, or null on
-   *                      any failure (network or a response the write
-   *                      to uploads/ couldn't complete).
+   * @return string The QR code's URL, or '' if there is none for these settings.
    */
-  private static function generate(array $settings): ?string
+  public static function url(array $settings): string
+  {
+    $path = self::path($settings);
+    if ($settings['number'] === '' || !file_exists($path)) {
+      return '';
+    }
+
+    $upload_dir = wp_upload_dir(null, false);
+    return trailingslashit($upload_dir['baseurl']) . self::UPLOAD_SUBDIR . '/' . basename($path);
+  }
+
+  /**
+   * @param array<string, string> $settings
+   */
+  private static function path(array $settings): string
+  {
+    return self::dir() . '/' . self::FILENAME_PREFIX . self::hash($settings) . '.svg';
+  }
+
+  private static function dir(): string
+  {
+    $upload_dir = wp_upload_dir(null, false);
+    return trailingslashit($upload_dir['basedir']) . self::UPLOAD_SUBDIR;
+  }
+
+  /**
+   * @param string|null $keep File name to leave in place.
+   */
+  private static function deleteFiles(?string $keep = null): void
+  {
+    foreach (glob(self::dir() . '/' . self::FILENAME_PREFIX . '*.svg') ?: [] as $file) {
+      if (basename($file) !== $keep) {
+        wp_delete_file($file);
+      }
+    }
+  }
+
+  /**
+   * @param array<string, string> $settings
+   * @return string|null Recolored SVG markup, or null if the request failed.
+   */
+  private static function fetch(array $settings): ?string
   {
     $body = [
       'format' => 'svg',
@@ -105,33 +143,7 @@ class QrCodeGenerator
       return null;
     }
 
-    return self::save(self::applyBlackStyle($svg));
-  }
-
-  /**
-   * @param string $svg Final SVG markup to write to uploads/.
-   * @return string|null Cache-busted URL, or null if the write failed.
-   */
-  private static function save(string $svg): ?string
-  {
-    $upload_dir = wp_upload_dir();
-    if (!empty($upload_dir['error'])) {
-      return null;
-    }
-
-    $dir = trailingslashit($upload_dir['basedir']) . self::UPLOAD_SUBDIR;
-    wp_mkdir_p($dir);
-
-    $destination = trailingslashit($dir) . self::FILENAME;
-    if (file_put_contents($destination, $svg) === false) {
-      return null;
-    }
-
-    $url = trailingslashit($upload_dir['baseurl']) . self::UPLOAD_SUBDIR . '/' . self::FILENAME;
-
-    // Fixed filename, always overwritten — a plain URL would otherwise
-    // keep serving a browser/CDN-cached copy from before this save.
-    return add_query_arg('v', substr(md5($svg), 0, 8), $url);
+    return self::applyBlackStyle($svg);
   }
 
   /**
