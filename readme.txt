@@ -1,6 +1,6 @@
 === AMRF Site Settings ===
 Contributors: dreadted
-Requires at least: 5.6
+Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.2
 Stable tag: 0.3.3

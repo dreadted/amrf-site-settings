@@ -2,7 +2,7 @@
 
 <!-- badges:start -->
 [![Plugin Version](https://img.shields.io/badge/Plugin_Version-0.3.3-3d444d?style=for-the-badge&labelColor=1f2328)](https://github.com/dreadted/amrf-site-settings/releases/latest)
-[![Requires WP](https://img.shields.io/badge/Requires_WP-5.6-3d444d?style=for-the-badge&labelColor=1f2328&logo=wordpress&logoColor=white)](https://wordpress.org/)
+[![Requires WP](https://img.shields.io/badge/Requires_WP-6.6-3d444d?style=for-the-badge&labelColor=1f2328&logo=wordpress&logoColor=white)](https://wordpress.org/)
 [![Tested WP](https://img.shields.io/badge/Tested_WP-7.1-3d444d?style=for-the-badge&labelColor=1f2328&logo=wordpress&logoColor=white)](https://wordpress.org/)
 [![License](https://img.shields.io/badge/License-GPLv2%2B-3d444d?style=for-the-badge&labelColor=1f2328&logo=gnu&logoColor=white)](https://www.gnu.org/licenses/gpl-2.0.html)
 <!-- badges:end -->
@@ -162,7 +162,7 @@ otherwise they're inert:
 
 ## Requirements
 
-- [WordPress](https://wordpress.org/) 5.6 or later
+- [WordPress](https://wordpress.org/) 6.6 or later
 - [PHP](https://www.php.net/) 8.3 or later
 - [Fluent Forms](https://wordpress.org/plugins/fluentform/), [FluentCRM](https://wordpress.org/plugins/fluent-crm/) and/or [Support Genix Lite](https://wordpress.org/plugins/support-genix-lite/), only if you want the optional integrations above — the plugin works fully without them.
 

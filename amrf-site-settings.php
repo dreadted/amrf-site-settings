@@ -4,7 +4,7 @@
  * Plugin Name:       AMRF Site Settings
  * Description:       General site settings — SEO, contact forms with GDPR tools, Swish payments, analytics, security hardening, and per-role admin panel control.
  * Version:           0.3.3
- * Requires at least: 5.6
+ * Requires at least: 6.6
  * Requires PHP:      8.2
  * Author:            Christofer Laurin
  * Author URI:        https://github.com/dreadted/
