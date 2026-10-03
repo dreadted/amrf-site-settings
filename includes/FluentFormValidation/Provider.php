@@ -90,11 +90,17 @@ class Provider
   }
 
   /**
+   * Only Simple Text fields count, since the validation filters and the script target text inputs.
+   *
    * @param array $field
-   * @return bool Whether this field carries the CONTAINER_CLASS marker.
+   * @return bool Whether this is a text field carrying the CONTAINER_CLASS marker.
    */
   private function isPinField(array $field): bool
   {
+    if (($field['element'] ?? '') !== 'input_text') {
+      return false;
+    }
+
     $container_class = $field['settings']['container_class'] ?? '';
     return $container_class !== '' && strpos($container_class, self::CONTAINER_CLASS) !== false;
   }
