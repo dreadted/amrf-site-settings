@@ -13,13 +13,19 @@ if (!defined('ABSPATH')) {
  * amrf_site_settings_tabs registry (see Admin\SiteSettingsMenu). All four
  * tabs save into the same option (Repository::OPTION_NAME) via one
  * option_group, each with its own page_slug so do_settings_sections() only
- * pulls that tab's section.
+ * pulls that tab's section. The SEO tab, including core's blog_public
+ * toggle, is for administrators only.
  *
  * @package Antropomorf\SiteSettings
  */
 class Provider
 {
   private const OPTION_GROUP = 'amrf_site_settings_group';
+
+  private const SEO_SECTION = 'seo';
+
+  /** Core's own capability for Settings → Reading, where blog_public lives. */
+  private const SEO_CAPABILITY = 'manage_options';
 
   /** AJAX action + nonce action for the "discourage search engines" toggle. */
   private const AJAX_ACTION = 'amrf_toggle_search_engine_visibility';
@@ -56,6 +62,7 @@ class Provider
         'page_slug' => self::pageSlug($section_key),
         'show_reset' => false,
         'register' => [$this, 'register'],
+        'capability' => $section_key === self::SEO_SECTION ? self::SEO_CAPABILITY : '',
       ];
     }
 
@@ -80,7 +87,7 @@ class Provider
     register_setting(
       self::OPTION_GROUP,
       Repository::OPTION_NAME,
-      [Repository::class, 'sanitize']
+      [$this, 'sanitize']
     );
 
     foreach (Repository::getSections() as $section_key => $section_label) {
@@ -89,7 +96,7 @@ class Provider
       add_settings_section($section_id, '', '__return_false', $page_slug);
 
       // Core's blog_public, not one of this plugin's fields; rendered first.
-      if ($section_key === 'seo') {
+      if ($section_key === self::SEO_SECTION) {
         add_settings_field(
           'site_settings_discourage_search_engines',
           __('Discourage search engines from indexing this site', 'amrf-admin'),
@@ -116,6 +123,26 @@ class Provider
         );
       }
     }
+  }
+
+  /**
+   * Drops SEO fields from a non-admin's submission, so saving another tab
+   * never changes them. Logged-out contexts (WP-CLI, cron) aren't the form.
+   *
+   * @param mixed $input Raw POSTed value for this option.
+   * @return array<string, string>
+   */
+  public function sanitize($input): array
+  {
+    if (is_array($input) && is_user_logged_in() && !current_user_can(self::SEO_CAPABILITY)) {
+      foreach (Repository::getFields() as $field_key => [, , $field_section]) {
+        if ($field_section === self::SEO_SECTION) {
+          unset($input[$field_key], $input[$field_key . '_submitted']);
+        }
+      }
+    }
+
+    return Repository::sanitize($input);
   }
 
   /**
@@ -223,8 +250,7 @@ class Provider
 
   /**
    * AJAX save target for the discourage-search-engines toggle — writes
-   * straight to blog_public. Same edit_theme_options gate as the rest of
-   * this tab, not core's own manage_options.
+   * straight to blog_public.
    *
    * @return void
    */
@@ -232,7 +258,7 @@ class Provider
   {
     check_ajax_referer(self::AJAX_ACTION, 'nonce');
 
-    if (!current_user_can('edit_theme_options')) {
+    if (!current_user_can(self::SEO_CAPABILITY)) {
       wp_send_json_error(['message' => __('You are not allowed to change this setting.', 'amrf-admin')], 403);
     }
 
@@ -371,12 +397,12 @@ class Provider
    */
   public function enqueueSearchVisibilityScript(string $hook): void
   {
-    if ($hook !== 'toplevel_page_amrf-site-settings') {
+    if ($hook !== 'toplevel_page_amrf-site-settings' || !current_user_can(self::SEO_CAPABILITY)) {
       return;
     }
 
     $current_tab = isset($_GET['tab']) && is_string($_GET['tab']) ? sanitize_key(wp_unslash($_GET['tab'])) : array_key_first(Repository::getSections());
-    if ($current_tab !== 'seo') {
+    if ($current_tab !== self::SEO_SECTION) {
       return;
     }
 

@@ -25,7 +25,8 @@ class SettingsRenderer
   /**
    * @param string   $tabsFilter Filter to read this page's tabs from — each
    *                              entry shaped like ['label', 'option_group',
-   *                              'page_slug', 'show_reset', 'register'].
+   *                              'page_slug', 'show_reset', 'register'], plus
+   *                              an optional 'capability' that hides the tab.
    * @param string   $menuSlug   This page's own admin menu slug.
    * @param callable $pageTitle  Returns the heading shown above the tab strip.
    *                              A callable, not a plain string: constructors
@@ -47,7 +48,10 @@ class SettingsRenderer
 
   public function render(): void
   {
-    $tabs = apply_filters($this->tabsFilter, []);
+    $tabs = array_filter(
+      apply_filters($this->tabsFilter, []),
+      fn($tab) => empty($tab['capability']) || current_user_can($tab['capability'])
+    );
     if (empty($tabs)) {
       return;
     }

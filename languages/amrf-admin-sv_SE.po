@@ -111,36 +111,36 @@ msgid "There is an error."
 msgstr "Ett fel har uppstått."
 
 #: includes/Hardening/Provider.php:48
-#: includes/Hardening/Provider.php:589
-#: includes/Hardening/Provider.php:590
+#: includes/Hardening/Provider.php:613
+#: includes/Hardening/Provider.php:614
 msgid "Hardening"
 msgstr "Härdning"
 
-#: includes/Hardening/Provider.php:719
+#: includes/Hardening/Provider.php:743
 msgid "Disable author archives"
 msgstr "Inaktivera författararkiv"
 
-#: includes/Hardening/Provider.php:720
+#: includes/Hardening/Provider.php:744
 msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
 msgstr "Omdirigerar författararkivsidor till startsidan — användbart på sajter med en enda författare, eller för att undvika att användarnamn läcker via författar-URL:er."
 
-#: includes/Hardening/Provider.php:731
+#: includes/Hardening/Provider.php:755
 msgid "Redirect 404 pages to the homepage"
 msgstr "Omdirigera 404-sidor till startsidan"
 
-#: includes/Hardening/Provider.php:732
+#: includes/Hardening/Provider.php:756
 msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
 msgstr "Gäller bara utloggade besökare. Stäng av om sajten istället ska visa en riktig 404-sida."
 
-#: includes/Hardening/Provider.php:739
+#: includes/Hardening/Provider.php:763
 msgid "Remove jQuery Migrate"
 msgstr "Ta bort jQuery Migrate"
 
-#: includes/Hardening/Provider.php:740
+#: includes/Hardening/Provider.php:764
 msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
 msgstr "Stäng av om ett äldre plugin eller tema på sajten är beroende av jQuery Migrates kompatibilitetslager."
 
-#: includes/Hardening/Provider.php:679
+#: includes/Hardening/Provider.php:703
 msgid "Disable generated image sizes"
 msgstr "Inaktivera genererade bildstorlekar"
 
@@ -278,19 +278,19 @@ msgstr "Tillåtna menyalternativ"
 msgid "Select which admin menu items should be visible to this user role."
 msgstr "Välj vilka menyalternativ som ska visas i administratörsmenyn för den här användarrollen."
 
-#: includes/SiteSettings/Provider.php:293
+#: includes/SiteSettings/Provider.php:319
 msgid "Select image"
 msgstr "Välj bild"
 
-#: includes/SiteSettings/Provider.php:294
+#: includes/SiteSettings/Provider.php:320
 msgid "Use this image"
 msgstr "Använd denna bild"
 
-#: includes/SiteSettings/Provider.php:295
+#: includes/SiteSettings/Provider.php:321
 msgid "Choose image"
 msgstr "Välj bild"
 
-#: includes/SiteSettings/Provider.php:300
+#: includes/SiteSettings/Provider.php:326
 msgid "Remove image"
 msgstr "Ta bort bild"
 
@@ -403,36 +403,36 @@ msgstr "Adress"
 msgid "Social Media"
 msgstr "Sociala medier"
 
-#: includes/SupportGenix/Provider.php:176
-#: includes/SupportGenix/Provider.php:177
+#: includes/SupportGenix/Provider.php:179
+#: includes/SupportGenix/Provider.php:180
 msgid "Support Tickets"
 msgstr "Supportärenden"
 
-#: includes/SupportGenix/Provider.php:224
+#: includes/SupportGenix/Provider.php:227
 msgid "Apply this site's default settings for Support Genix."
 msgstr "Tillämpa sajtens standardinställningar för Support Genix."
 
-#: includes/SupportGenix/Provider.php:229
+#: includes/SupportGenix/Provider.php:232
 msgid "Apply Defaults"
 msgstr "Tillämpa standardvärden"
 
-#: includes/SupportGenix/Provider.php:247
+#: includes/SupportGenix/Provider.php:250
 msgid "Security check failed"
 msgstr "Säkerhetskontrollen misslyckades"
 
-#: includes/SupportGenix/Provider.php:269
+#: includes/SupportGenix/Provider.php:272
 msgid "Support Genix defaults applied successfully!"
 msgstr "Support Genix standardinställningar har tillämpats!"
 
-#: includes/SupportGenix/Provider.php:271
+#: includes/SupportGenix/Provider.php:274
 msgid "There was an error applying the Support Genix defaults."
 msgstr "Ett fel uppstod när Support Genix standardinställningar skulle tillämpas."
 
-#: includes/SupportGenix/Provider.php:479
+#: includes/SupportGenix/Provider.php:482
 msgid "Ticket"
 msgstr "Ärende"
 
-#: includes/SupportGenix/Provider.php:559
+#: includes/SupportGenix/Provider.php:562
 msgid "You are not authorized to edit this page."
 msgstr "Du har inte behörighet att redigera den här sidan."
 
@@ -461,7 +461,7 @@ msgstr "Umami-sajt"
 msgid "Umami ID"
 msgstr "Umami-ID"
 
-#: includes/Utilities/SettingsRenderer.php:97
+#: includes/Utilities/SettingsRenderer.php:101
 msgid "Reset to Defaults"
 msgstr "Återställ till standardvärden"
 
@@ -535,15 +535,11 @@ msgstr "Aktivera för att ge den här användarrollen behörighet att visa och h
 msgid "Site Settings Access"
 msgstr "Åtkomst till webbplatsinställningar"
 
-#: includes/Settings/Manager.php:572
-msgid "Enable to give this user role access to the Site Settings menu (SEO, Business & Contact, Address, Social Media, Forms/GDPR/Swish) and to native theme menu/design editing (Appearance → Menus/Customize on a classic theme, or the Site Editor on a block theme)."
-msgstr "Aktivera för att ge den här användarrollen åtkomst till menyn Webbplatsinställningar (SEO, Företag & Kontakt, Adress, Sociala medier, Formulär/GDPR/Swish) samt till WordPress egen temameny-/designredigering (Utseende → Menyer/Anpassa i ett klassiskt tema, eller webbplatsredigeraren i ett blocktema)."
-
-#: includes/SiteSettings/Provider.php:95
+#: includes/SiteSettings/Provider.php:102
 msgid "Discourage search engines from indexing this site"
 msgstr "Avskräck sökmotorer från att indexera den här webbplatsen"
 
-#: includes/SiteSettings/Provider.php:236
+#: includes/SiteSettings/Provider.php:262
 msgid "You are not allowed to change this setting."
 msgstr "Du har inte behörighet att ändra den här inställningen."
 
@@ -569,23 +565,23 @@ msgstr[1] "i högst %d dagar"
 msgid "General site settings — SEO, contact forms with GDPR tools, Swish payments, analytics, security hardening, and per-role admin panel control."
 msgstr ""
 
-#: includes/Hardening/Provider.php:229
+#: includes/Hardening/Provider.php:253
 msgid "You are not allowed to upload SVG files."
 msgstr "Du har inte behörighet att ladda upp SVG-filer."
 
-#: includes/Hardening/Provider.php:236
+#: includes/Hardening/Provider.php:260
 msgid "This file does not look like a valid SVG."
 msgstr "Den här filen verkar inte vara en giltig SVG."
 
-#: includes/Hardening/Provider.php:243
+#: includes/Hardening/Provider.php:267
 msgid "This SVG could not be sanitized and was rejected."
 msgstr "Den här SVG-filen kunde inte saneras och avvisades."
 
-#: includes/Hardening/Provider.php:675
+#: includes/Hardening/Provider.php:699
 msgid "Allow SVG uploads"
 msgstr "Tillåt SVG-uppladdning"
 
-#: includes/Hardening/Provider.php:676
+#: includes/Hardening/Provider.php:700
 msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
 msgstr "Låter administratörer ladda upp SVG-filer via Mediabiblioteket — varje fil saneras (skript, händelsehanterare och inbäddad HTML tas bort) innan den sparas."
 
@@ -601,25 +597,25 @@ msgstr "FluentForm är inte aktivt."
 msgid "None"
 msgstr "Ingen"
 
-#: includes/Hardening/Provider.php:735
+#: includes/Hardening/Provider.php:759
 msgid "Disable site search"
 msgstr "Stäng av sajtsökning"
 
-#: includes/Hardening/Provider.php:736
+#: includes/Hardening/Provider.php:760
 msgid "Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn't expose a working search box yet."
 msgstr "Gör att WordPress inbyggda sökfunktion visar en 404-sida för alla besökare — användbart medan en sajt fortfarande byggs och inte ska visa en fungerande sökruta än."
 
 #. translators: %d is the existing attachment's post ID.
-#: includes/Hardening/Provider.php:289
+#: includes/Hardening/Provider.php:313
 #, php-format
 msgid "This image is identical to an existing upload (attachment #%d) and was not saved again."
 msgstr "Den här bilden är identisk med en befintlig uppladdning (bifogad fil #%d) och sparades inte igen."
 
-#: includes/Hardening/Provider.php:603
+#: includes/Hardening/Provider.php:627
 msgid "Images"
 msgstr "Bilder"
 
-#: includes/Hardening/Provider.php:611
+#: includes/Hardening/Provider.php:635
 msgid "Frontend"
 msgstr "Frontend"
 
@@ -631,11 +627,11 @@ msgstr "Åtkomst till SEO Framework"
 msgid "Enable to give this user role access to The SEO Framework's meta box on posts/pages and its SEO column in the post/page list."
 msgstr "Aktivera för att ge den här användarrollen åtkomst till The SEO Frameworks metabox på inlägg/sidor samt SEO-kolumnen i inläggs-/sidlistan."
 
-#: includes/Hardening/Provider.php:671
+#: includes/Hardening/Provider.php:695
 msgid "Restrict media deletion"
 msgstr "Begränsa borttagning av media"
 
-#: includes/Hardening/Provider.php:672
+#: includes/Hardening/Provider.php:696
 msgid "Non-administrators can only delete media library items they uploaded themselves. Without this, WordPress lets anyone who can upload files delete any attachment, regardless of who uploaded it."
 msgstr "Icke-administratörer kan bara ta bort mediefiler de själva har laddat upp. Utan detta låter WordPress alla som kan ladda upp filer ta bort vilken bilaga som helst, oavsett vem som laddade upp den."
 
@@ -668,47 +664,47 @@ msgstr "Knapp-selektorer"
 msgid "One CSS selector per line. Matched elements are tracked automatically, named after their own visible text. Leave empty to use the built-in defaults."
 msgstr "En CSS-selector per rad. Matchande element spåras automatiskt och namnges efter sin egen synliga text. Lämna tomt för att använda standardlistan."
 
-#: includes/Hardening/Provider.php:705
+#: includes/Hardening/Provider.php:729
 msgid "Restrict site to logged-in users"
 msgstr "Begränsa sajten till inloggade användare"
 
-#: includes/Hardening/Provider.php:709
+#: includes/Hardening/Provider.php:733
 msgid "Blocks every front-end page for logged-out visitors with a blank placeholder page — the WordPress admin and login screen stay reachable. Use this to preview a site privately before launch."
 msgstr "Blockerar alla sidor på frontend för utloggade besökare med en tom platshållarsida — WordPress adminpanel och inloggningssida förblir nåbara. Använd detta för att förhandsgranska en sajt privat inför lansering."
 
-#: includes/Hardening/Provider.php:648
+#: includes/Hardening/Provider.php:672
 msgid "Convert uploads to WebP"
 msgstr "Konvertera uppladdningar till WebP"
 
-#: includes/Hardening/Provider.php:652
+#: includes/Hardening/Provider.php:676
 msgid "Automatically converts every non-WebP image upload to WebP at the quality below, and blocks exact duplicates of an already-uploaded image."
 msgstr "Konverterar automatiskt varje uppladdad bild som inte redan är WebP till WebP med kvaliteten nedan, och blockerar exakta dubbletter av en redan uppladdad bild."
 
-#: includes/Hardening/Provider.php:661
+#: includes/Hardening/Provider.php:685
 msgid "WebP quality"
 msgstr "WebP-kvalitet"
 
-#: includes/Hardening/Provider.php:680
+#: includes/Hardening/Provider.php:704
 msgid "Stops WordPress from generating its own default image sizes (thumbnail, medium, medium_large, large, 1536x1536, 2048x2048). Sizes a theme registers itself are unaffected."
 msgstr "Hindrar WordPress från att generera sina egna standardbildstorlekar (thumbnail, medium, medium_large, large, 1536x1536, 2048x2048). Storlekar som ett tema registrerar själv påverkas inte."
 
-#: includes/Hardening/Provider.php:798
+#: includes/Hardening/Provider.php:822
 msgid "Applies to both the WebP format conversion above and every automatically generated responsive image size (1–100)."
 msgstr "Gäller både WebP-konverteringen ovan och varje automatiskt genererad responsiv bildstorlek (1–100)."
 
-#: includes/Hardening/Provider.php:723
+#: includes/Hardening/Provider.php:747
 msgid "Disable blog posts"
 msgstr "Inaktivera blogginlägg"
 
-#: includes/Hardening/Provider.php:724
+#: includes/Hardening/Provider.php:748
 msgid "For sites built from pages only. Posts, category, tag and date archives, and the RSS feeds return a 404 (then redirect to the homepage if \"Redirect 404 pages to the homepage\" is on), and posts are left out of the WordPress sitemap. Existing posts and the admin are unaffected."
 msgstr "För sajter som bara består av sidor. Inlägg, kategori-, tagg- och datumarkiv samt RSS-flöden ger 404 (och omdirigeras sedan till startsidan om \"Omdirigera 404-sidor till startsidan\" är på), och inlägg utesluts ur WordPress sitemap. Befintliga inlägg och adminpanelen påverkas inte."
 
-#: includes/Hardening/Provider.php:727
+#: includes/Hardening/Provider.php:751
 msgid "Disable comments"
 msgstr "Inaktivera kommentarer"
 
-#: includes/Hardening/Provider.php:728
+#: includes/Hardening/Provider.php:752
 msgid "Closes comments, pingbacks and trackbacks on all content regardless of each page's discussion settings, hides already approved comments, and turns the comment feeds into a 404."
 msgstr "Stänger kommentarer, pingbacks och trackbacks på allt innehåll oavsett sidornas diskussionsinställningar, döljer redan godkända kommentarer och gör kommentarsflödena till 404."
 
@@ -784,14 +780,18 @@ msgstr "Prenumeration spärrad"
 msgid "The contact is tagged \"Do not contact\", so its status was set back to unsubscribed. Remove the tag first to subscribe the contact again."
 msgstr "Kontakten är taggad \"Spärrad\", så statusen återställdes till avregistrerad. Ta bort taggen först om kontakten ska prenumerera igen."
 
-#: includes/SiteSettings/Provider.php:218
+#: includes/SiteSettings/Provider.php:245
 msgid "Mirrors the \"Discourage search engines from indexing this site\" setting under Settings → Reading and applies immediately. It only asks search engines not to index the site; the rest of this tab still applies, e.g. to link previews when the site is shared."
 msgstr "Speglar inställningen \"Avskräck sökmotorer från att indexera den här webbplatsen\" under Inställningar → Läsning och tillämpas omedelbart. Den ber bara sökmotorer att inte indexera webbplatsen; resten av fliken gäller fortfarande, t.ex. för länkförhandsvisningar när webbplatsen delas."
 
-#: includes/SiteSettings/Provider.php:202
+#: includes/SiteSettings/Provider.php:229
 msgid "Reset to theme default"
 msgstr "Återställ till temats standard"
 
 #: includes/ContactForm/Provider.php:254
 msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: enables IP logging (as proof of consent), turns form view analytics off, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. Also writes FluentForm's default validation messages (e.g. \"This field is required\") in the site language, so they no longer follow the saving admin's own language. Also renames form ID 1 to \"Kontaktformulär\", replaces its fields with this site's baseline set (name, email, a required message field), and applies this site's baseline confirmation message and email notification to it. On a local site (WP_ENVIRONMENT_TYPE \"local\") where FluentSMTP is active but has no connections yet, also adds an SMTP connection to Mailhog (port 1025) using this site's own domain as the sender address, and sets it as the default connection. Existing FluentSMTP connections are never changed. A one-time action, not a saved setting — resets to off after saving."
 msgstr "Skriver vid sparning över FluentForms egna Global Settings → Miscellaneous, oavsett nuvarande värden: aktiverar IP-loggning (som bevis på samtycke), stänger av statistik över formulärvisningar, aktiverar honeypot och tokenbaserat spamskydd, stänger av klassiska redigerarknappen och automatisk tabbordning, samt aktiverar no-conflict-läge. Skriver också FluentForms standardmeddelanden för validering (t.ex. \"Detta fält är obligatoriskt\") på sajtens språk, så att de inte längre följer admin-språket hos den som sparar. Byter också namn på formulär-ID 1 till \"Kontaktformulär\", ersätter dess fält med sajtens standarduppsättning (namn, e-post, ett obligatoriskt meddelandefält), och tillämpar sajtens standardbekräftelsemeddelande och e-postnotifiering på det. På en lokal sajt (WP_ENVIRONMENT_TYPE \"local\") där FluentSMTP är aktivt men ännu saknar anslutningar läggs även en SMTP-anslutning till Mailhog (port 1025) till, med sajtens egen domän som avsändaradress, och sätts som standardanslutning. Befintliga FluentSMTP-anslutningar ändras aldrig. En engångsåtgärd, inte en sparad inställning — återgår till avstängd efter sparning."
+
+#: includes/Settings/Manager.php:572
+msgid "Enable to give this user role access to the Site Settings menu (Business & Contact, Address, Social Media, Forms/GDPR/Swish; the SEO tab is for administrators only) and to native theme menu/design editing (Appearance → Menus/Customize on a classic theme, or the Site Editor on a block theme)."
+msgstr "Aktivera för att ge den här användarrollen åtkomst till menyn Webbplatsinställningar (Företag & Kontakt, Adress, Sociala medier, Formulär/GDPR/Swish; fliken SEO är bara för administratörer) samt till WordPress egen temameny-/designredigering (Utseende → Menyer/Anpassa i ett klassiskt tema, eller webbplatsredigeraren i ett blocktema)."

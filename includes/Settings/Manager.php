@@ -569,7 +569,7 @@ class Manager
 		// Stored/keyed as site_menus_cap; grants edit_theme_options, which
 		// also gates native theme menu/design editing.
 		echo '<div class="setting-row"><h4>' . esc_html__('Site Settings Access', 'amrf-admin') . '</h4>';
-		$this->renderCheckbox('site_menus_cap', esc_html__('Enable to give this user role access to the Site Settings menu (SEO, Business & Contact, Address, Social Media, Forms/GDPR/Swish) and to native theme menu/design editing (Appearance → Menus/Customize on a classic theme, or the Site Editor on a block theme).', 'amrf-admin'), ['user_group_settings', $role]);
+		$this->renderCheckbox('site_menus_cap', esc_html__('Enable to give this user role access to the Site Settings menu (Business & Contact, Address, Social Media, Forms/GDPR/Swish; the SEO tab is for administrators only) and to native theme menu/design editing (Appearance → Menus/Customize on a classic theme, or the Site Editor on a block theme).', 'amrf-admin'), ['user_group_settings', $role]);
 		echo '</div>';
 
 		// Only shown on a site that actually has The SEO Framework.
