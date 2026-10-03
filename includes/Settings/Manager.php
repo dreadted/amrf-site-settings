@@ -22,18 +22,15 @@ class Manager
 	private const FLUENTFORM_ENTRIES_MENU_SLUG = 'fluent_forms_all_entries';
 
 	private array $roles;
-	private array $menuItems;
 
 	/**
 	 * Manager constructor.
 	 *
-	 * @param array $roles     List of user roles.
-	 * @param array $menuItems Menu items indexed by role.
+	 * @param array $roles List of user roles.
 	 */
-	public function __construct(array $roles, array $menuItems)
+	public function __construct(array $roles)
 	{
 		$this->roles = $roles;
-		$this->menuItems = $menuItems;
 	}
 
 	/** Guards register_setting() against being called twice per request. */
@@ -526,10 +523,9 @@ class Manager
 	 */
 	public function userRoleSettingsCallback(array $args): void
 	{
-		// Rescan each time the settings page renders.
-		$this->menuItems  = MenuScanner::scanMenuItems($this->roles);
-
 		$role = $args['role'];
+		// Scanned here because the admin menu is only built after plugins load.
+		$menuItems = MenuScanner::scanMenuItems($this->roles)[$role]['menu_items'];
 
 		$settings = Repository::getSettings()['user_group_settings'][$role] ?? Repository::getDefaultSettings()['user_group_settings'][$role] ?? [];
 		echo '<div class="user-role-settings">';
@@ -540,7 +536,7 @@ class Manager
 		echo '<select name="' . Repository::OPTION_NAME . '[user_group_settings][' . esc_attr($role) . '][login_redirect_url]">';
 		echo '<option value="">' . esc_html__('-- Select Redirect URL --', 'amrf-admin') . '</option>';
 		echo '<option value="/" ' . selected($redirect, '/', false) . '>' . esc_html__('-- Front Page --', 'amrf-admin') . '</option>';
-		foreach ($this->menuItems[$role]['menu_items'] as $item) {
+		foreach ($menuItems as $item) {
 			$page = (strpos($item['slug'], 'php') === false) ? esc_attr('admin.php?page=' . $item['slug']) : esc_attr($item['slug']);
 			printf('<option value="%1$s" %2$s>%3$s</option>', $page, selected($redirect, $page, false), esc_html($item['name']));
 		}
@@ -550,7 +546,7 @@ class Manager
 		echo '<div class="setting-row"><h4>' . esc_html__('Default Admin Page', 'amrf-admin') . '</h4>';
 		$defaultPage = $settings['admin_default_page'] ?? Repository::getDefaultSettings()['user_group_settings'][$role]['admin_default_page'] ?? '';
 		$allowed = $settings['allowed_menu_items'] ?? Repository::getDefaultSettings()['user_group_settings'][$role]['allowed_menu_items'] ?? [];
-		$filtered = array_filter($this->menuItems[$role]['menu_items'], fn($item) => in_array($item['slug'], $allowed, true));
+		$filtered = array_filter($menuItems, fn($item) => in_array($item['slug'], $allowed, true));
 		echo '<select name="' . Repository::OPTION_NAME . '[user_group_settings][' . esc_attr($role) . '][admin_default_page]">';
 		echo '<option value="">' . esc_html__('-- Select Default Page --', 'amrf-admin') . '</option>';
 		foreach ($filtered as $item) {
@@ -582,7 +578,7 @@ class Manager
 		// Allowed Menu Items
 		echo '<div class="setting-row"><h4>' . esc_html__('Allowed Menu Items', 'amrf-admin') . '</h4><div class="menu-items-container">';
 		$toggleOwned = [...self::SITE_SETTINGS_MENU_SLUGS, self::FLUENTFORM_ENTRIES_MENU_SLUG];
-		foreach ($this->menuItems[$role]['menu_items'] as $item) {
+		foreach ($menuItems as $item) {
 			if (in_array($item['slug'], $toggleOwned, true)) {
 				continue;
 			}

@@ -94,36 +94,6 @@ class Repository
     return wp_parse_args(is_array($stored) ? $stored : [], self::getDefaults());
   }
 
-  public static function getNumber(): string
-  {
-    return self::getSettings()['number'];
-  }
-
-  public static function getAmount(): string
-  {
-    return self::getSettings()['amount'];
-  }
-
-  public static function isAmountEditable(): bool
-  {
-    return self::getSettings()['amount_editable'] === '1';
-  }
-
-  public static function getMessage(): string
-  {
-    return self::getSettings()['message'];
-  }
-
-  public static function isMessageEditable(): bool
-  {
-    return self::getSettings()['message_editable'] === '1';
-  }
-
-  public static function getQrUrl(): string
-  {
-    return self::getSettings()['qr_url'];
-  }
-
   /**
    * One option, one page, one form — no "{key}_submitted" marker needed
    * since every call here is this form's full submission; an absent

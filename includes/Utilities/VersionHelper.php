@@ -13,7 +13,7 @@ if (! defined('ABSPATH')) {
  */
 class VersionHelper
 {
-    public static function getVersion(?string $file_path = null): string
+    public static function getVersion(): string
     {
         if (! function_exists('get_plugin_data')) {
             require_once ABSPATH . 'wp-admin/includes/plugin.php';

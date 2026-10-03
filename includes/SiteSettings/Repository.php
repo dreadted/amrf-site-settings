@@ -227,14 +227,6 @@ class Repository
         return $settings;
     }
 
-    /**
-     * @param array<string, string> $settings
-     */
-    public static function updateSettings(array $settings): void
-    {
-        update_option(self::OPTION_NAME, $settings);
-    }
-
     public static function isSeoOutputEnabled(): bool
     {
         return !empty(self::getSettings()['enable_seo_output']);

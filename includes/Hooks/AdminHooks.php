@@ -2,7 +2,6 @@
 
 namespace Antropomorf\Hooks;
 
-use Antropomorf\Admin\MenuManager;
 use Antropomorf\Admin\MenuOrder;
 use Antropomorf\Admin\SettingsPage;
 use Antropomorf\Admin\SiteSettingsMenu;
@@ -45,20 +44,13 @@ class AdminHooks
     }
 
     /**
-     * Initialize admin hooks: scan menus, setup settings manager and renderers.
+     * Set up the settings manager, its renderer and the admin menu pages.
      *
      * @return void
      */
     public static function init(): void
     {
-        $roles = wp_roles()->roles;
-        $menuManager = new MenuManager($roles);
-        $menuManager->scan();
-
-        $settingsManager = new SettingsManager(
-            $roles,
-            $menuManager->getMenuItems()
-        );
+        $settingsManager = new SettingsManager(wp_roles()->roles);
         // Priority 5 so General/role tabs always sort first.
         add_filter('amrf_admin_settings_tabs', [$settingsManager, 'registerTabs'], 5);
 

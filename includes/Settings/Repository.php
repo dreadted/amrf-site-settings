@@ -103,15 +103,4 @@ class Repository
     {
         return get_option(self::OPTION_NAME, self::getDefaultSettings());
     }
-
-    /**
-     * Update the plugin settings in the database.
-     *
-     * @param array $settings Settings array to save.
-     * @return void
-     */
-    public static function updateSettings(array $settings): void
-    {
-        update_option(self::OPTION_NAME, $settings);
-    }
 }

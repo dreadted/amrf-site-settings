@@ -102,31 +102,6 @@ class MenuScanner
 		return $all;
 	}
 
-	/**
-	 * @return array List of admin page slugs.
-	 */
-	public static function scanAdminPages(): array
-	{
-		global $menu, $submenu;
-
-		$pages = ['profile.php'];
-		foreach ($menu as $item) {
-			if (! empty($item[2])) {
-				$pages[] = $item[2];
-			}
-		}
-		foreach ($submenu as $items) {
-			foreach ($items as $item) {
-				if (! empty($item[2])) {
-					$pages[] = $item[2];
-				}
-			}
-		}
-		$pages = array_unique($pages);
-		sort($pages);
-		return $pages;
-	}
-
 	private static function getCleanMenuName($menu_title)
 	{
 		$clean = preg_replace('/<span\b[^>]*>.*?<\/span>/si', '', $menu_title);
