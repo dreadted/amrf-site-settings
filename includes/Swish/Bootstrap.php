@@ -5,7 +5,7 @@ namespace Antropomorf\Swish;
 use Antropomorf\Utilities\CachePurge;
 
 if (!defined('ABSPATH')) {
-  exit;
+	exit;
 }
 
 /**
@@ -17,12 +17,12 @@ if (!defined('ABSPATH')) {
  */
 class Bootstrap
 {
-  public static function register(): void
-  {
-    new Provider();
-    new FrontendProvider();
-    QrCodeGenerator::register();
+	public static function register(): void
+	{
+		new Provider();
+		new FrontendProvider();
+		QrCodeGenerator::register();
 
-    CachePurge::onOptionChange(Repository::OPTION_NAME);
-  }
+		CachePurge::onOptionChange(Repository::OPTION_NAME);
+	}
 }

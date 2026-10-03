@@ -9,16 +9,16 @@ SLUG="amrf-site-settings"
 MAIN_FILE="$SLUG.php"
 
 die() {
-  echo "Error: $*" >&2
-  exit 1
+	echo "Error: $*" >&2
+	exit 1
 }
 
 plugin_header() {
-  sed -nE "/^[ *]*$1:/{s/^[ *]*$1:[[:space:]]*//;s/[[:space:]]+$//;p;q}" "$MAIN_FILE"
+	sed -nE "/^[ *]*$1:/{s/^[ *]*$1:[[:space:]]*//;s/[[:space:]]+$//;p;q}" "$MAIN_FILE"
 }
 
 readme_field() {
-  sed -nE "/^$1:/{s/^$1:[[:space:]]*//;s/[[:space:]]+$//;p;q}" readme.txt
+	sed -nE "/^$1:/{s/^$1:[[:space:]]*//;s/[[:space:]]+$//;p;q}" readme.txt
 }
 
 BUMP="${1:-patch}"
@@ -32,10 +32,10 @@ gh auth status >/dev/null 2>&1 || die "gh is not logged in; run: gh auth login"
 git diff --quiet && git diff --cached --quiet || die "commit or stash your changes first."
 [[ -f changelog.txt ]] || die "changelog.txt is missing."
 for field in 'Requires at least' 'Tested up to' 'Requires PHP' 'Stable tag'; do
-  grep -qE "^$field:" readme.txt || die "readme.txt has no '$field:' line."
+	grep -qE "^$field:" readme.txt || die "readme.txt has no '$field:' line."
 done
 grep -q '^<!-- badges:start -->$' README.md && grep -q '^<!-- badges:end -->$' README.md ||
-  die "README.md needs <!-- badges:start --> and <!-- badges:end --> lines."
+	die "README.md needs <!-- badges:start --> and <!-- badges:end --> lines."
 
 git fetch --quiet --tags origin main
 [[ "$(git rev-parse HEAD)" == "$(git rev-parse origin/main)" ]] || die "main and origin/main differ; push or pull first."
@@ -46,29 +46,29 @@ REQUIRES_PHP="$(plugin_header 'Requires PHP')"
 TESTED_WP="$(readme_field 'Tested up to')"
 [[ "$CURRENT" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || die "$MAIN_FILE Version '$CURRENT' is not X.Y.Z."
 for v in "$REQUIRES_WP" "$REQUIRES_PHP" "$TESTED_WP"; do
-  [[ "$v" =~ ^[0-9]+(\.[0-9]+)*$ ]] || die "Requires at least, Requires PHP and Tested up to must be plain version numbers."
+	[[ "$v" =~ ^[0-9]+(\.[0-9]+)*$ ]] || die "Requires at least, Requires PHP and Tested up to must be plain version numbers."
 done
 
 IFS=. read -r MAJOR MINOR PATCH <<< "$CURRENT"
 case "$BUMP" in
-  major) NEW="$((MAJOR + 1)).0.0" ;;
-  minor) NEW="$MAJOR.$((MINOR + 1)).0" ;;
-  patch) NEW="$MAJOR.$MINOR.$((PATCH + 1))" ;;
-  *) NEW="$BUMP" ;;
+	major) NEW="$((MAJOR + 1)).0.0" ;;
+	minor) NEW="$MAJOR.$((MINOR + 1)).0" ;;
+	patch) NEW="$MAJOR.$MINOR.$((PATCH + 1))" ;;
+	*) NEW="$BUMP" ;;
 esac
 TAG="v$NEW"
 [[ "$NEW" != "$CURRENT" && "$(printf '%s\n' "$CURRENT" "$NEW" | sort -V | tail -n1)" == "$NEW" ]] ||
-  die "$NEW is not higher than the current version $CURRENT."
+	die "$NEW is not higher than the current version $CURRENT."
 if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
-  die "tag $TAG already exists."
+	die "tag $TAG already exists."
 fi
 
 LAST_TAG="$(git describe --tags --abbrev=0 --match 'v[0-9]*' 2>/dev/null || true)"
 if [[ -z "$LAST_TAG" ]]; then
-  CHANGES="- Initial release."
+	CHANGES="- Initial release."
 else
-  CHANGES="$(git log "$LAST_TAG"..HEAD --no-merges --pretty=format:'- %s')"
-  [[ -n "$CHANGES" ]] || CHANGES="- Maintenance release."
+	CHANGES="$(git log "$LAST_TAG"..HEAD --no-merges --pretty=format:'- %s')"
+	[[ -n "$CHANGES" ]] || CHANGES="- Maintenance release."
 fi
 
 echo "Releasing $CURRENT -> $NEW."
@@ -78,8 +78,8 @@ START="$(git rev-parse HEAD)"
 WORK="$(mktemp -d)"
 
 rollback() {
-  git tag -d "$TAG" >/dev/null 2>&1 || true
-  git reset --hard -q "$START"
+	git tag -d "$TAG" >/dev/null 2>&1 || true
+	git reset --hard -q "$START"
 }
 trap 'rm -f -- "$WORK"/*; rmdir -- "$WORK"' EXIT
 trap rollback ERR
@@ -89,19 +89,19 @@ sed -E -i "0,/^[ *]*Version:/s/^([ *]*Version:[[:space:]]*)[^[:space:]]+/\1$NEW/
 
 # The plugin header is the source for the requirements; readme.txt mirrors them.
 sed -E -i \
-  -e "s/^(Requires at least:[[:space:]]*).*/\1$REQUIRES_WP/" \
-  -e "s/^(Requires PHP:[[:space:]]*).*/\1$REQUIRES_PHP/" \
-  -e "s/^(Stable tag:[[:space:]]*).*/\1$NEW/" \
-  readme.txt
+	-e "s/^(Requires at least:[[:space:]]*).*/\1$REQUIRES_WP/" \
+	-e "s/^(Requires PHP:[[:space:]]*).*/\1$REQUIRES_PHP/" \
+	-e "s/^(Stable tag:[[:space:]]*).*/\1$NEW/" \
+	readme.txt
 
 # New entry above the newest one, keeping the file's own line endings.
 ENTRY="$(printf '%s\n------\n%s' "$NEW" "$CHANGES")" awk '
-  function emit(   n, i, lines) { n = split(ENVIRON["ENTRY"], lines, "\n"); for (i = 1; i <= n; i++) print lines[i] eol }
-  NR == 1 { eol = /\r$/ ? "\r" : "" }
-  { line = $0; sub(/\r$/, "", line) }
-  !done && line ~ /^[0-9]+\.[0-9]+\.[0-9]+$/ { emit(); print eol; done = 1 }
-  { print; last = line }
-  END { if (!done) { if (last != "") print eol; emit() } }
+	function emit(   n, i, lines) { n = split(ENVIRON["ENTRY"], lines, "\n"); for (i = 1; i <= n; i++) print lines[i] eol }
+	NR == 1 { eol = /\r$/ ? "\r" : "" }
+	{ line = $0; sub(/\r$/, "", line) }
+	!done && line ~ /^[0-9]+\.[0-9]+\.[0-9]+$/ { emit(); print eol; done = 1 }
+	{ print; last = line }
+	END { if (!done) { if (last != "") print eol; emit() } }
 ' changelog.txt > "$WORK/changelog.txt"
 cat "$WORK/changelog.txt" > changelog.txt
 
@@ -113,9 +113,9 @@ BADGES="[![Plugin Version]($SHIELDS/Plugin_Version-$NEW-3d444d?$STYLE)]($REPO_UR
 [![Tested WP]($SHIELDS/Tested_WP-$TESTED_WP-3d444d?$STYLE&$WP_LOGO)](https://wordpress.org/)
 [![License]($SHIELDS/License-GPLv2%2B-3d444d?$STYLE&logo=gnu&logoColor=white)](https://www.gnu.org/licenses/gpl-2.0.html)"
 BADGES="$BADGES" awk '
-  /^<!-- badges:start -->$/ { print; print ENVIRON["BADGES"]; skip = 1; next }
-  /^<!-- badges:end -->$/ { skip = 0 }
-  !skip { print }
+	/^<!-- badges:start -->$/ { print; print ENVIRON["BADGES"]; skip = 1; next }
+	/^<!-- badges:end -->$/ { skip = 0 }
+	!skip { print }
 ' README.md > "$WORK/README.md"
 cat "$WORK/README.md" > README.md
 
@@ -134,16 +134,16 @@ echo "$CHANGES"
 echo
 read -r -p "Push $TAG to origin and publish the GitHub Release? [y/N] " answer
 if [[ ! "$answer" =~ ^[yY]$ ]]; then
-  rollback
-  echo "Cancelled: the release commit and tag were removed."
-  exit 0
+	rollback
+	echo "Cancelled: the release commit and tag were removed."
+	exit 0
 fi
 
 if ! git push --quiet --atomic origin main "$TAG"; then
-  rollback
-  die "the push failed; the release commit and tag were removed locally."
+	rollback
+	die "the push failed; the release commit and tag were removed locally."
 fi
 trap - ERR INT
 
 gh release create "$TAG" "$WORK/$SLUG.zip" --title "$TAG" --notes-file "$WORK/notes.md" --verify-tag ||
-  die "$TAG is pushed but the GitHub Release failed; create it with: git archive --format=zip --prefix=$SLUG/ -o $SLUG.zip $TAG && gh release create $TAG $SLUG.zip --title $TAG"
+	die "$TAG is pushed but the GitHub Release failed; create it with: git archive --format=zip --prefix=$SLUG/ -o $SLUG.zip $TAG && gh release create $TAG $SLUG.zip --title $TAG"

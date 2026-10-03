@@ -3,7 +3,7 @@
 namespace Antropomorf\FluentCrm;
 
 if (!defined('ABSPATH')) {
-  exit;
+	exit;
 }
 
 /**
@@ -13,15 +13,15 @@ if (!defined('ABSPATH')) {
  */
 class Bootstrap
 {
-  public static function register(): void
-  {
-    new Provider();
-    new PublicStyles();
-    new AdminAccess();
-    new ConsentLog();
-    new ContactReducer();
-    new DefaultCampaignTemplate();
-    new DoNotContact();
-    new PrivacyEraser();
-  }
+	public static function register(): void
+	{
+		new Provider();
+		new PublicStyles();
+		new AdminAccess();
+		new ConsentLog();
+		new ContactReducer();
+		new DefaultCampaignTemplate();
+		new DoNotContact();
+		new PrivacyEraser();
+	}
 }

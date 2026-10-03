@@ -3,7 +3,7 @@
 namespace Antropomorf\Translations;
 
 if (!defined('ABSPATH')) {
-  exit;
+	exit;
 }
 
 /**
@@ -13,9 +13,9 @@ if (!defined('ABSPATH')) {
  */
 class Bootstrap
 {
-  public static function register(): void
-  {
-    new Provider();
-    new FluentFormAdminStrings();
-  }
+	public static function register(): void
+	{
+		new Provider();
+		new FluentFormAdminStrings();
+	}
 }

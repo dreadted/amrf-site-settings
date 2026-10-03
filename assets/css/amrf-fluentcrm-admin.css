@@ -2,20 +2,20 @@
 
 /* Dashboard "Upgrade to Pro" card. */
 .fluentcrm_admin_dashboard .fcrm_base_card:has(a[href*="utm_campaign=pro"]) {
-  display: none;
+	display: none;
 }
 
 /* "Excluded contacts" section of the campaign recipient step. */
 .fcrm_email_campaign_excluded_contacts {
-  display: none;
+	display: none;
 }
 
 /* Campaign view's "Link activity" card when it only holds a Pro upsell. */
 .fcrm_base_card:has(.fluentcrm_link_metrics a[href*="utm_campaign=promo"]) {
-  display: none;
+	display: none;
 }
 
 /* Dashboard "Active automations" card, second after "Recent contacts"; no class of its own. */
 .fcrm_contact_automation_stats > .fcrm_base_card:nth-child(2) {
-  display: none;
+	display: none;
 }

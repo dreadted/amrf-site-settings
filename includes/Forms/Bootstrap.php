@@ -3,7 +3,7 @@
 namespace Antropomorf\Forms;
 
 if (!defined('ABSPATH')) {
-  exit;
+	exit;
 }
 
 /**
@@ -14,8 +14,8 @@ if (!defined('ABSPATH')) {
  */
 class Bootstrap
 {
-  public static function register(): void
-  {
-    new Menu();
-  }
+	public static function register(): void
+	{
+		new Menu();
+	}
 }

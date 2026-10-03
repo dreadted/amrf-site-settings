@@ -3,7 +3,7 @@
 namespace Antropomorf\SiteSettings;
 
 if (!defined('ABSPATH')) {
-  exit;
+	exit;
 }
 
 /**
@@ -17,47 +17,47 @@ if (!defined('ABSPATH')) {
  */
 class LoginBranding
 {
-  public function __construct()
-  {
-    add_action('login_enqueue_scripts', [$this, 'renderStyles']);
-    add_filter('login_headertext', [$this, 'headerText']);
-    add_action('login_footer', [$this, 'stripHeaderLink']);
-  }
+	public function __construct()
+	{
+		add_action('login_enqueue_scripts', [$this, 'renderStyles']);
+		add_filter('login_headertext', [$this, 'headerText']);
+		add_action('login_footer', [$this, 'stripHeaderLink']);
+	}
 
-  /**
-   * @return string
-   */
-  public function headerText(): string
-  {
-    return get_bloginfo('name');
-  }
+	/**
+	 * @return string
+	 */
+	public function headerText(): string
+	{
+		return get_bloginfo('name');
+	}
 
-  /**
-   * Attached via wp_add_inline_style() rather than a raw <style> echo,
-   * so it prints right after WP core's own login.css and reliably wins
-   * the cascade instead of flashing the WordPress logo first.
-   *
-   * The theme-color variables are set on 'body.login' rather than
-   * ':root' — wp-login.php always hardcodes an 'admin-color-modern'
-   * body class (core's default scheme, regardless of login state),
-   * and 'body.admin-color-modern' in admin-schemes.css has higher
-   * specificity than ':root' so it would otherwise always win.
-   * 'body.login' matches that specificity and comes later in the
-   * cascade, since wp-base-styles (admin-schemes.css) is a dependency
-   * of the 'login' handle this is attached to.
-   *
-   * Both '.login h1' and '.login h1 a' are targeted identically since
-   * stripHeaderLink() removes the <a> — the rule needs to still apply
-   * once that wrapper is gone.
-   *
-   * @return void
-   */
-  public function renderStyles(): void
-  {
-    $uploadDir = wp_upload_dir();
-    $logo = esc_url(trailingslashit($uploadDir['baseurl']) . 'favicon.svg');
+	/**
+	 * Attached via wp_add_inline_style() rather than a raw <style> echo,
+	 * so it prints right after WP core's own login.css and reliably wins
+	 * the cascade instead of flashing the WordPress logo first.
+	 *
+	 * The theme-color variables are set on 'body.login' rather than
+	 * ':root' — wp-login.php always hardcodes an 'admin-color-modern'
+	 * body class (core's default scheme, regardless of login state),
+	 * and 'body.admin-color-modern' in admin-schemes.css has higher
+	 * specificity than ':root' so it would otherwise always win.
+	 * 'body.login' matches that specificity and comes later in the
+	 * cascade, since wp-base-styles (admin-schemes.css) is a dependency
+	 * of the 'login' handle this is attached to.
+	 *
+	 * Both '.login h1' and '.login h1 a' are targeted identically since
+	 * stripHeaderLink() removes the <a> — the rule needs to still apply
+	 * once that wrapper is gone.
+	 *
+	 * @return void
+	 */
+	public function renderStyles(): void
+	{
+		$uploadDir = wp_upload_dir();
+		$logo = esc_url(trailingslashit($uploadDir['baseurl']) . 'favicon.svg');
 
-    wp_add_inline_style('login', "
+		wp_add_inline_style('login', "
 body.login {
     --wp-admin-theme-color: #2271b1;
     --wp-admin-theme-color-darker-10: #2271b1;
@@ -79,25 +79,25 @@ body.login {
     border-left: 4px solid var(--wp-admin-theme-color);
 }
 ");
-  }
+	}
 
-  /**
-   * WP core has no filter to drop the <a> wrapper around the login
-   * header logo, so it's unwrapped client-side after the page renders.
-   *
-   * @return void
-   */
-  public function stripHeaderLink(): void
-  {
+	/**
+	 * WP core has no filter to drop the <a> wrapper around the login
+	 * header logo, so it's unwrapped client-side after the page renders.
+	 *
+	 * @return void
+	 */
+	public function stripHeaderLink(): void
+	{
 ?>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        var link = document.querySelector('.wp-login-logo a');
-        if (link) {
-          link.replaceWith(...link.childNodes);
-        }
-      });
-    </script>
+		<script>
+			document.addEventListener('DOMContentLoaded', function() {
+				var link = document.querySelector('.wp-login-logo a');
+				if (link) {
+					link.replaceWith(...link.childNodes);
+				}
+			});
+		</script>
 <?php
-  }
+	}
 }

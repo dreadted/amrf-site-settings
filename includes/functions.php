@@ -6,7 +6,7 @@
  */
 
 if (!defined('ABSPATH')) {
-    exit;
+	exit;
 }
 
 /**
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
  */
 function amrf_get_site_settings(): array
 {
-    return \Antropomorf\SiteSettings\Repository::getSettings();
+	return \Antropomorf\SiteSettings\Repository::getSettings();
 }
 
 /**
@@ -29,7 +29,7 @@ function amrf_get_site_settings(): array
  */
 function amrf_get_swish_settings(): array
 {
-    return \Antropomorf\Swish\Repository::getSettings();
+	return \Antropomorf\Swish\Repository::getSettings();
 }
 
 /**
@@ -39,7 +39,7 @@ function amrf_get_swish_settings(): array
  */
 function amrf_get_default_contact_form_id(): int
 {
-    return \Antropomorf\ContactForm\Repository::getDefaultContactFormId();
+	return \Antropomorf\ContactForm\Repository::getDefaultContactFormId();
 }
 
 /**
@@ -52,11 +52,11 @@ function amrf_get_default_contact_form_id(): int
  * @param bool   $message_editable
  */
 function amrf_build_swish_url(
-    string $swish_number,
-    string $amount = '',
-    bool $amount_editable = true,
-    string $message = '',
-    bool $message_editable = true
+	string $swish_number,
+	string $amount = '',
+	bool $amount_editable = true,
+	string $message = '',
+	bool $message_editable = true
 ): string {
-    return \Antropomorf\SiteSettings\Swish::buildUrl($swish_number, $amount, $amount_editable, $message, $message_editable);
+	return \Antropomorf\SiteSettings\Swish::buildUrl($swish_number, $amount, $amount_editable, $message, $message_editable);
 }

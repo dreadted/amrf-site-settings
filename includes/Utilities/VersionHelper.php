@@ -3,7 +3,7 @@
 namespace Antropomorf\Utilities;
 
 if (! defined('ABSPATH')) {
-    exit;
+	exit;
 }
 
 /**
@@ -13,12 +13,12 @@ if (! defined('ABSPATH')) {
  */
 class VersionHelper
 {
-    public static function getVersion(): string
-    {
-        if (! function_exists('get_plugin_data')) {
-            require_once ABSPATH . 'wp-admin/includes/plugin.php';
-        }
-        $data = get_plugin_data(AMRF_ADMIN_PLUGIN_FILE);
-        return $data['Version'] ?? '';
-    }
+	public static function getVersion(): string
+	{
+		if (! function_exists('get_plugin_data')) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		$data = get_plugin_data(AMRF_ADMIN_PLUGIN_FILE);
+		return $data['Version'] ?? '';
+	}
 }

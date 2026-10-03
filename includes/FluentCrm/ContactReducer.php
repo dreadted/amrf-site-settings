@@ -14,7 +14,7 @@ use FluentCrm\App\Models\SubscriberPivot;
 use FluentCrm\App\Models\Tag;
 
 if (!defined('ABSPATH')) {
-  exit;
+	exit;
 }
 
 /**
@@ -29,77 +29,77 @@ if (!defined('ABSPATH')) {
  */
 class ContactReducer
 {
-  private const KEPT_META_KEYS = ['unsubscribe_reason'];
+	private const KEPT_META_KEYS = ['unsubscribe_reason'];
 
-  public function __construct()
-  {
-    add_action('plugins_loaded', [$this, 'register']);
-  }
+	public function __construct()
+	{
+		add_action('plugins_loaded', [$this, 'register']);
+	}
 
-  public function register(): void
-  {
-    if (!defined('FLUENTCRM')) {
-      return;
-    }
+	public function register(): void
+	{
+		if (!defined('FLUENTCRM')) {
+			return;
+		}
 
-    add_action('fluent_crm/subscriber_status_changed', [$this, 'reduceUnsubscribed'], 20, 3);
-  }
+		add_action('fluent_crm/subscriber_status_changed', [$this, 'reduceUnsubscribed'], 20, 3);
+	}
 
-  /**
-   * @param Subscriber $subscriber
-   */
-  public function reduceUnsubscribed($subscriber, string $oldStatus, string $newStatus): void
-  {
-    if ($newStatus === 'unsubscribed') {
-      // Lists are kept so a confirmed re-subscription gets the newsletter again.
-      self::reduce((int) $subscriber->id, true);
-    }
-  }
+	/**
+	 * @param Subscriber $subscriber
+	 */
+	public function reduceUnsubscribed($subscriber, string $oldStatus, string $newStatus): void
+	{
+		if ($newStatus === 'unsubscribed') {
+			// Lists are kept so a confirmed re-subscription gets the newsletter again.
+			self::reduce((int) $subscriber->id, true);
+		}
+	}
 
-  public static function reduce(int $id, bool $keepLists): void
-  {
-    // Query-builder update, not updateStatus(): status-change hooks would log a misleading unsubscribe note.
-    Subscriber::where('id', $id)->update([
-      'user_id' => null,
-      'contact_owner' => null,
-      'company_id' => null,
-      'prefix' => null,
-      'first_name' => null,
-      'last_name' => null,
-      'timezone' => null,
-      'address_line_1' => null,
-      'address_line_2' => null,
-      'postal_code' => null,
-      'city' => null,
-      'state' => null,
-      'country' => null,
-      'ip' => null,
-      'latitude' => null,
-      'longitude' => null,
-      'total_points' => 0,
-      'life_time_value' => 0,
-      'phone' => null,
-      'avatar' => null,
-      'date_of_birth' => null,
-      'last_activity' => null,
-      'status' => 'unsubscribed',
-      'updated_at' => current_time('mysql'),
-    ]);
+	public static function reduce(int $id, bool $keepLists): void
+	{
+		// Query-builder update, not updateStatus(): status-change hooks would log a misleading unsubscribe note.
+		Subscriber::where('id', $id)->update([
+			'user_id' => null,
+			'contact_owner' => null,
+			'company_id' => null,
+			'prefix' => null,
+			'first_name' => null,
+			'last_name' => null,
+			'timezone' => null,
+			'address_line_1' => null,
+			'address_line_2' => null,
+			'postal_code' => null,
+			'city' => null,
+			'state' => null,
+			'country' => null,
+			'ip' => null,
+			'latitude' => null,
+			'longitude' => null,
+			'total_points' => 0,
+			'life_time_value' => 0,
+			'phone' => null,
+			'avatar' => null,
+			'date_of_birth' => null,
+			'last_activity' => null,
+			'status' => 'unsubscribed',
+			'updated_at' => current_time('mysql'),
+		]);
 
-    $pivot = SubscriberPivot::where('subscriber_id', $id)
-      ->where(function ($query) {
-        $query->where('object_type', '!=', Tag::class)->orWhere('object_id', '!=', DoNotContact::getTagId());
-      });
-    if ($keepLists) {
-      $pivot->where('object_type', '!=', Lists::class);
-    }
-    $pivot->delete();
+		$pivot = SubscriberPivot::where('subscriber_id', $id)
+			->where(function ($query) {
+				$query->where('object_type', '!=', Tag::class)->orWhere('object_id', '!=', DoNotContact::getTagId());
+			});
+		if ($keepLists) {
+			$pivot->where('object_type', '!=', Lists::class);
+		}
+		$pivot->delete();
 
-    SubscriberMeta::where('subscriber_id', $id)->whereNotIn('key', self::KEPT_META_KEYS)->delete();
-    SubscriberNote::where('subscriber_id', $id)->where('type', '!=', 'system_log')->delete();
-    CampaignEmail::where('subscriber_id', $id)->delete();
-    CampaignUrlMetric::where('subscriber_id', $id)->delete();
-    FunnelMetric::where('subscriber_id', $id)->delete();
-    FunnelSubscriber::where('subscriber_id', $id)->delete();
-  }
+		SubscriberMeta::where('subscriber_id', $id)->whereNotIn('key', self::KEPT_META_KEYS)->delete();
+		SubscriberNote::where('subscriber_id', $id)->where('type', '!=', 'system_log')->delete();
+		CampaignEmail::where('subscriber_id', $id)->delete();
+		CampaignUrlMetric::where('subscriber_id', $id)->delete();
+		FunnelMetric::where('subscriber_id', $id)->delete();
+		FunnelSubscriber::where('subscriber_id', $id)->delete();
+	}
 }

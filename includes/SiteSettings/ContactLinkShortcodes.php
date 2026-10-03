@@ -3,7 +3,7 @@
 namespace Antropomorf\SiteSettings;
 
 if (!defined('ABSPATH')) {
-    exit;
+	exit;
 }
 
 /**
@@ -36,49 +36,49 @@ if (!defined('ABSPATH')) {
  */
 class ContactLinkShortcodes
 {
-    public function __construct()
-    {
-        add_shortcode('amrf_email_link', [$this, 'renderEmailLink']);
-        add_shortcode('amrf_phone_link', [$this, 'renderPhoneLink']);
-    }
+	public function __construct()
+	{
+		add_shortcode('amrf_email_link', [$this, 'renderEmailLink']);
+		add_shortcode('amrf_phone_link', [$this, 'renderPhoneLink']);
+	}
 
-    /**
-     * Same client-side-assembled-address technique as ptsussis-theme's
-     * footer: a plain "mailto:" href or raw address in the markup is
-     * trivial for scraper bots to harvest, JS execution isn't. The parts
-     * are ROT13-encoded and the link starts hidden; the theme script
-     * decodes them and unhides it. No no-JS fallback, by design.
-     */
-    public function renderEmailLink(): string
-    {
-        $email = Repository::getSettings()['email'];
-        if ($email === '' || strpos($email, '@') === false) {
-            return '';
-        }
+	/**
+	 * Same client-side-assembled-address technique as ptsussis-theme's
+	 * footer: a plain "mailto:" href or raw address in the markup is
+	 * trivial for scraper bots to harvest, JS execution isn't. The parts
+	 * are ROT13-encoded and the link starts hidden; the theme script
+	 * decodes them and unhides it. No no-JS fallback, by design.
+	 */
+	public function renderEmailLink(): string
+	{
+		$email = Repository::getSettings()['email'];
+		if ($email === '' || strpos($email, '@') === false) {
+			return '';
+		}
 
-        [$user, $domain] = array_pad(explode('@', $email, 2), 2, '');
+		[$user, $domain] = array_pad(explode('@', $email, 2), 2, '');
 
-        $placeholder = esc_html__('Email', 'amrf-admin');
+		$placeholder = esc_html__('Email', 'amrf-admin');
 
-        return '<a href="#" class="email-link" hidden data-user="' . esc_attr(str_rot13($user)) . '" data-domain="' . esc_attr(str_rot13($domain)) . '">'
-            . '<span class="email-link-text">' . $placeholder . '</span>'
-            . '</a>';
-    }
+		return '<a href="#" class="email-link" hidden data-user="' . esc_attr(str_rot13($user)) . '" data-domain="' . esc_attr(str_rot13($domain)) . '">'
+			. '<span class="email-link-text">' . $placeholder . '</span>'
+			. '</a>';
+	}
 
-    public function renderPhoneLink(): string
-    {
-        $phone = Repository::getSettings()['phone'];
-        if ($phone === '') {
-            return '';
-        }
+	public function renderPhoneLink(): string
+	{
+		$phone = Repository::getSettings()['phone'];
+		if ($phone === '') {
+			return '';
+		}
 
-        $phone_href = preg_replace('/[^0-9+]/', '', $phone);
-        $copied_label = esc_attr__('Copied!', 'amrf-admin');
-        // Word joiner after the hyphen: U+2011 is missing from the theme font.
-        $phone_text = str_replace([' ', '-'], ['&nbsp;', '-&#8288;'], esc_html($phone));
+		$phone_href = preg_replace('/[^0-9+]/', '', $phone);
+		$copied_label = esc_attr__('Copied!', 'amrf-admin');
+		// Word joiner after the hyphen: U+2011 is missing from the theme font.
+		$phone_text = str_replace([' ', '-'], ['&nbsp;', '-&#8288;'], esc_html($phone));
 
-        return '<a href="' . esc_attr('tel:' . $phone_href) . '" class="site-footer-copy-link" data-copy-value="' . esc_attr($phone) . '" data-copied-label="' . $copied_label . '">'
-            . '<span class="site-footer-copy-text">' . $phone_text . '</span>'
-            . '</a>';
-    }
+		return '<a href="' . esc_attr('tel:' . $phone_href) . '" class="site-footer-copy-link" data-copy-value="' . esc_attr($phone) . '" data-copied-label="' . $copied_label . '">'
+			. '<span class="site-footer-copy-text">' . $phone_text . '</span>'
+			. '</a>';
+	}
 }

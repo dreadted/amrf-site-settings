@@ -14,12 +14,12 @@
  * that declares the former should win.
  */
 :root {
-  --fluentform-primary: var(--amrf-form-primary);
-  --fluentform-secondary: var(--amrf-form-secondary);
-  --fluentform-danger: var(--amrf-danger-color);
-  --fluentform-border-color: var(--amrf-input-border-color);
-  --fluentform-hover-surface: var(--amrf-button-hover-background);
-  --fluentform-border-radius: var(--amrf-button-border-radius);
+	--fluentform-primary: var(--amrf-form-primary);
+	--fluentform-secondary: var(--amrf-form-secondary);
+	--fluentform-danger: var(--amrf-danger-color);
+	--fluentform-border-color: var(--amrf-input-border-color);
+	--fluentform-hover-surface: var(--amrf-button-hover-background);
+	--fluentform-border-radius: var(--amrf-button-border-radius);
 }
 
 /**
@@ -33,23 +33,23 @@
  * told to inherit too.
  */
 .fluentform .ff-el-form-control {
-  background: var(--amrf-input-background);
-  font-family: inherit;
-  font-size: inherit;
+	background: var(--amrf-input-background);
+	font-family: inherit;
+	font-size: inherit;
 }
 
 /** Fallback for the block editor preview, where FluentForm's own inline reset on this <fieldset> gets stripped. */
 .fluentform fieldset {
-  --focus-ring-color: var(--amrf-focus-ring-color);
-  margin: 0;
-  border: none;
-  padding: 0;
+	--focus-ring-color: var(--amrf-focus-ring-color);
+	margin: 0;
+	border: none;
+	padding: 0;
 }
 
 /** Same editor-preview fallback, for this screen-reader-only <legend>'s inline height:0 reset. */
 .ff_screen_reader_title {
-  height: 0;
-  overflow: hidden;
+	height: 0;
+	overflow: hidden;
 }
 
 /**
@@ -57,7 +57,7 @@
  * dropdown's own native popup and ignore page CSS for its row highlight.
  */
 select.ff-el-form-control option:hover {
-  background-color: var(--fluentform-hover-surface);
+	background-color: var(--fluentform-hover-surface);
 }
 
 /**
@@ -66,15 +66,15 @@ select.ff-el-form-control option:hover {
  * between fields.
  */
 .fluentform .ff-el-group {
-  margin-block: 2rem;
+	margin-block: 2rem;
 }
 
 .ff-t-container > div > .ff-el-group:first-child {
-  margin-top: 0;
+	margin-top: 0;
 }
 
 .fluentform .ff-el-group.ff_submit_btn_wrapper {
-  margin-block: 0;
+	margin-block: 0;
 }
 
 /**
@@ -87,10 +87,10 @@ select.ff-el-form-control option:hover {
  * doesn't declare its own button font.
  */
 .ff-default .ff_btn_style {
-  border-radius: var(--fluentform-border-radius);
-  font-family: var(--amrf-button-font-family, inherit);
-  font-weight: var(--amrf-button-font-weight, inherit);
-  font-size: var(--amrf-button-font-size, inherit);
+	border-radius: var(--fluentform-border-radius);
+	font-family: var(--amrf-button-font-family, inherit);
+	font-weight: var(--amrf-button-font-weight, inherit);
+	font-size: var(--amrf-button-font-size, inherit);
 }
 
 /**
@@ -104,26 +104,26 @@ select.ff-el-form-control option:hover {
  */
 .ff-default .ff-btn-primary:not(.ff_btn_no_style),
 .ff-default .ff-btn-submit:not(.ff_btn_no_style) {
-  background: var(--amrf-button-background);
-  border-color: var(--amrf-button-border-color);
-  color: var(--amrf-button-text, #fff);
-  box-shadow: var(--amrf-button-shadow, none);
+	background: var(--amrf-button-background);
+	border-color: var(--amrf-button-border-color);
+	color: var(--amrf-button-text, #fff);
+	box-shadow: var(--amrf-button-shadow, none);
 }
 
 .ff-default .ff-btn-primary:not(.ff_btn_no_style):focus,
 .ff-default .ff-btn-primary:not(.ff_btn_no_style):hover,
 .ff-default .ff-btn-submit:not(.ff_btn_no_style):focus,
 .ff-default .ff-btn-submit:not(.ff_btn_no_style):hover {
-  background-color: var(
-    --amrf-button-hover-background,
-    var(--fluentform-primary)
-  );
-  border-color: var(--amrf-button-border-color);
-  opacity: 1;
+	background-color: var(
+		--amrf-button-hover-background,
+		var(--fluentform-primary)
+	);
+	border-color: var(--amrf-button-border-color);
+	opacity: 1;
 }
 
 .fluentform .ff_t_c {
-  padding: 1rem;
+	padding: 1rem;
 }
 
 /**
@@ -133,79 +133,79 @@ select.ff-el-form-control option:hover {
  * looking like a separate card inside it.
  */
 .ff-message-success {
-  border: none;
-  box-shadow: none;
-  margin: 0;
-  padding: 0;
-  border-radius: 0;
+	border: none;
+	box-shadow: none;
+	margin: 0;
+	padding: 0;
+	border-radius: 0;
 }
 
 .ff-message-success h3,
 .ff-message-success p {
-  margin: 0;
+	margin: 0;
 }
 
 .fluentform input[type="radio"] {
-  appearance: none;
-  -webkit-appearance: none;
-  border: 1px solid var(--fluentform-border-color);
-  border-radius: 4px;
+	appearance: none;
+	-webkit-appearance: none;
+	border: 1px solid var(--fluentform-border-color);
+	border-radius: 4px;
 }
 
 .fluentform .ff-el-form-check-label:has(> input[type="checkbox"]) {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.5em;
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5em;
 }
 
 .fluentform .ff-el-form-check-label:has(> input[type="checkbox"]) > span {
-  margin: 0;
+	margin: 0;
 }
 
 /* font: inherit makes 1lh resolve against the label text, not the browser's form-control font. */
 .fluentform input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  font: inherit;
-  flex-shrink: 0;
-  width: 1lh;
-  height: 1lh;
-  display: grid;
-  place-content: center;
-  background: var(--amrf-input-background);
-  border: 1px solid var(--fluentform-border-color);
-  border-radius: var(--fluentform-border-radius);
-  cursor: pointer;
+	appearance: none;
+	-webkit-appearance: none;
+	font: inherit;
+	flex-shrink: 0;
+	width: 1lh;
+	height: 1lh;
+	display: grid;
+	place-content: center;
+	background: var(--amrf-input-background);
+	border: 1px solid var(--fluentform-border-color);
+	border-radius: var(--fluentform-border-radius);
+	cursor: pointer;
 }
 
 .fluentform .ff-el-form-check-label > input[type="checkbox"] {
-  top: 0;
+	top: 0;
 }
 
 .fluentform input[type="checkbox"]::before {
-  content: "";
-  width: 0.65em;
-  height: 0.65em;
-  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-  box-shadow: inset 1em 1em var(--amrf-input-color, currentColor);
-  transform: scale(0);
-  transition: transform 0.12s ease-in-out;
+	content: "";
+	width: 0.65em;
+	height: 0.65em;
+	clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+	box-shadow: inset 1em 1em var(--amrf-input-color, currentColor);
+	transform: scale(0);
+	transition: transform 0.12s ease-in-out;
 }
 
 .fluentform input[type="checkbox"]:checked::before {
-  transform: scale(1);
+	transform: scale(1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fluentform input[type="checkbox"]::before {
-    transition: none;
-  }
+	.fluentform input[type="checkbox"]::before {
+		transition: none;
+	}
 }
 
 @media (forced-colors: active) {
-  .fluentform input[type="checkbox"]::before {
-    background-color: CanvasText;
-  }
+	.fluentform input[type="checkbox"]::before {
+		background-color: CanvasText;
+	}
 }
 
 /**
@@ -215,46 +215,46 @@ select.ff-el-form-control option:hover {
  * attribute itself, only on an explicit pixel height.
  */
 .fluentform textarea.ff-el-form-control {
-  line-height: 1.4;
-  min-height: 48px;
-  field-sizing: content;
-  resize: vertical;
-  transition: height 0.25s ease-in-out;
+	line-height: 1.4;
+	min-height: 48px;
+	field-sizing: content;
+	resize: vertical;
+	transition: height 0.25s ease-in-out;
 }
 
 .fluentform textarea.ff-el-form-control.is-expanded {
-  min-height: 90px;
+	min-height: 90px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fluentform textarea.ff-el-form-control {
-    transition: none;
-  }
+	.fluentform textarea.ff-el-form-control {
+		transition: none;
+	}
 }
 
 .ff-default .ff-el-input--label label,
 .fluentform .ff_t_c {
-  font-size: 0.875em;
-  font-weight: 700;
+	font-size: 0.875em;
+	font-weight: 700;
 }
 
 span.ff_tc_checkbox:has(input.ff_gdpr_field) + .ff_t_c::after {
-  color: var(--fluentform-danger);
-  content: " *";
-  margin-left: 3px;
+	color: var(--fluentform-danger);
+	content: " *";
+	margin-left: 3px;
 }
 
 input.ff_gdpr_field:focus {
-  border-color: var(--fluentform-primary) !important;
+	border-color: var(--fluentform-primary) !important;
 }
 
 .fluentform .ff-el-is-error .text-danger {
-  font-size: 1rem;
-  font-weight: bold;
+	font-size: 1rem;
+	font-weight: bold;
 }
 
 @media (min-width: 768px) {
-  .frm-fluent-form .ff-name-field-wrapper .ff-t-cell {
-    justify-content: flex-start;
-  }
+	.frm-fluent-form .ff-name-field-wrapper .ff-t-cell {
+		justify-content: flex-start;
+	}
 }
