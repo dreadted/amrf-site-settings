@@ -23,7 +23,9 @@ if (!defined('ABSPATH')) {
  *   'edit_posts' sidesteps that.
  * - An "Apply Defaults" button injected onto Support Genix Lite's OWN
  *   settings page — seeds its ticket categories/assignment rule/settings once.
- * - Ticket page visibility/edit-access lockdown for non-administrators.
+ * - Ticket page lockdown for non-administrators: hidden from the Pages list,
+ *   no edit/delete, and left out of the sitemap. The page is the one in
+ *   Support Genix Lite's own "Ticket Page" setting (ticketPageId()).
  * - Dequeues the docs/knowledge-base styles and script Support Genix Lite
  *   always loads on the front end, even though this site never shows that
  *   content to logged-out visitors.
@@ -94,7 +96,7 @@ class Provider
 		add_action('wp_print_styles', [$this, 'dequeueGuestDocsScript'], 999);
 
 		add_action('pre_get_posts', [$this, 'hideTicketPageFromNonAdmins']);
-		add_action('current_screen', [$this, 'preventTicketPageEditAccess']);
+		add_filter('map_meta_cap', [$this, 'restrictTicketPageToAdmins'], 10, 4);
 
 		add_action('apbd-wps/action/portal-header', [$this, 'startColorShadow'], 1);
 		add_action('apbd-wps/action/portal-header', [$this, 'endColorShadow'], 100);
@@ -189,20 +191,27 @@ class Provider
 	}
 
 	/**
-	 * The ticket portal is a normal front-end page (self::TICKET_PAGE_SLUG)
-	 * Support Genix Lite serves; this iframe lets non-admins reach it from
-	 * wp-admin without a separate login/navigation step.
+	 * The ticket portal is a normal front-end page (ticketPageId()) Support
+	 * Genix Lite serves; this iframe lets non-admins reach it from wp-admin
+	 * without a separate login/navigation step.
 	 *
 	 * @return void
 	 */
 	public function renderTicketsPage(): void
 	{
-		$url = home_url('/' . self::TICKET_PAGE_SLUG);
+		$page_id = self::ticketPageId();
+		if (!$page_id) {
+			printf(
+				'<div class="wrap"><div class="notice notice-warning"><p>%s</p></div></div>',
+				esc_html__('Support Genix has no ticket page yet.', 'amrf-admin')
+			);
+			return;
+		}
 
 		echo '<div class="wrap" style="margin: 0;">';
 		printf(
 			'<iframe src="%s" style="border:0; height: 100dvh; width: calc(100%% + 20px); margin: 0 0 -65px -20px;"></iframe>',
-			esc_url($url)
+			esc_url(get_permalink($page_id))
 		);
 		echo '</div>';
 	}
@@ -393,7 +402,7 @@ class Provider
 
 	private function updateSupportGenixSettings(): void
 	{
-		$lang = $this->resolveLanguageKey();
+		$lang = self::resolveLanguageKey();
 
 		$current_settings = get_option('support-genix_o_Apbd_wps_settings', []);
 
@@ -443,7 +452,7 @@ class Provider
 	 *
 	 * @return string
 	 */
-	private function resolveLanguageKey(): string
+	private static function resolveLanguageKey(): string
 	{
 		$lang = 'en';
 
@@ -461,10 +470,8 @@ class Provider
 
 	/**
 	 * Finds or creates the front-end ticket portal page and returns its ID
-	 * for the 'ticket_page' setting — NOT slug-based, so
-	 * home_url('/' . self::TICKET_PAGE_SLUG) only works once this setting
-	 * points at a real page. Page shape matches what the plugin's own setup
-	 * wizard produces.
+	 * for the 'ticket_page' setting. Page shape matches what the plugin's
+	 * own setup wizard produces.
 	 *
 	 * @param string $lang Resolved language key — passed in so this reads
 	 *                      back under the exact key it's about to write under.
@@ -472,8 +479,7 @@ class Provider
 	 */
 	private function ensureTicketPage(string $lang): int
 	{
-		$current_settings = get_option('support-genix_o_Apbd_wps_settings', []);
-		$configured_id = (int) ($current_settings['ticket_page'][$lang] ?? 0);
+		$configured_id = self::configuredTicketPageId($lang);
 		if ($configured_id && get_post($configured_id)) {
 			return $configured_id;
 		}
@@ -504,27 +510,75 @@ class Provider
 	}
 
 	/**
+	 * @param string $lang
+	 * @return int The page ID in Support Genix Lite's "Ticket Page" setting, 0 if unset.
+	 */
+	private static function configuredTicketPageId(string $lang): int
+	{
+		$settings = get_option('support-genix_o_Apbd_wps_settings', []);
+
+		return (int) ($settings['ticket_page'][$lang] ?? 0);
+	}
+
+	/**
+	 * Read from the stored setting, not Support Genix Lite's API, so the page stays locked while that plugin is inactive.
+	 *
+	 * @return int The ticket portal page's ID, 0 if Support Genix Lite has none.
+	 */
+	public static function ticketPageId(): int
+	{
+		$page_id = self::configuredTicketPageId(self::resolveLanguageKey());
+
+		return ($page_id && get_post_type($page_id) === 'page') ? $page_id : 0;
+	}
+
+	/**
 	 * @param \WP_Query $query
 	 * @return void
 	 */
 	public function hideTicketPageFromNonAdmins($query): void
 	{
-		if (!is_admin() || !$query->is_main_query() || current_user_can('administrator')) {
+		global $pagenow;
+
+		if (!is_admin() || !$query->is_main_query() || current_user_can('manage_options')) {
 			return;
 		}
-		if ('page' !== $query->get('post_type')) {
+		if ($pagenow !== 'edit.php' || 'page' !== $query->get('post_type')) {
 			return;
 		}
 
-		$page = get_page_by_path(self::TICKET_PAGE_SLUG);
-		if (!$page) {
+		$page_id = self::ticketPageId();
+		if (!$page_id) {
 			return;
 		}
 
 		$exclude = $query->get('post__not_in');
 		$exclude = is_array($exclude) ? $exclude : [];
-		$exclude[] = $page->ID;
+		$exclude[] = $page_id;
 		$query->set('post__not_in', $exclude);
+	}
+
+	/**
+	 * Like core does for the privacy policy page: also closes post.php, REST, Quick Edit and the admin bar's "Edit page" link.
+	 *
+	 * @param string[] $caps
+	 * @param string   $cap
+	 * @param int      $user_id
+	 * @param array    $args
+	 * @return string[]
+	 */
+	public function restrictTicketPageToAdmins(array $caps, string $cap, int $user_id, array $args): array
+	{
+		if (!in_array($cap, ['edit_post', 'edit_page', 'delete_post', 'delete_page'], true) || empty($args[0])) {
+			return $caps;
+		}
+
+		$page_id = self::ticketPageId();
+		if ($page_id && (int) $args[0] === $page_id) {
+			$caps[] = 'manage_options';
+		}
+
+		return $caps;
 	}
 
 	/**
@@ -537,37 +591,12 @@ class Provider
 	 */
 	public function excludeTicketPageFromSitemap(array $excludedIds): array
 	{
-		$page = get_page_by_path(self::TICKET_PAGE_SLUG);
-		if ($page) {
-			$excludedIds[] = $page->ID;
+		$page_id = self::ticketPageId();
+		if ($page_id) {
+			$excludedIds[] = $page_id;
 		}
 
 		return $excludedIds;
-	}
-
-	/**
-	 * @return void
-	 */
-	public function preventTicketPageEditAccess(): void
-	{
-		if (!is_admin() || current_user_can('administrator')) {
-			return;
-		}
-
-		$screen = get_current_screen();
-		if (!$screen || $screen->base !== 'post' || $screen->post_type !== 'page') {
-			return;
-		}
-
-		$post_id = isset($_GET['post']) ? intval($_GET['post']) : 0;
-		if (!$post_id) {
-			return;
-		}
-
-		$post = get_post($post_id);
-		if ($post && $post->post_name === self::TICKET_PAGE_SLUG) {
-			wp_die(esc_html__('You are not authorized to edit this page.', 'amrf-admin'));
-		}
 	}
 
 	/**

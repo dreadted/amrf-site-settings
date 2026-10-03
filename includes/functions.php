@@ -71,3 +71,13 @@ function amrf_enqueue_contact_links(): void
 {
 	\Antropomorf\SiteSettings\ContactLinks::enqueue();
 }
+
+/**
+ * The Support Genix Lite ticket portal page, which amrf hides from and locks for non-administrators.
+ *
+ * @return int Page ID, 0 if Support Genix Lite has no ticket page set.
+ */
+function amrf_get_ticket_page_id(): int
+{
+	return \Antropomorf\SupportGenix\Provider::ticketPageId();
+}

@@ -189,7 +189,8 @@ otherwise they're inert:
 #### Support Genix Lite
 
 - Adds a "Support Tickets" admin menu (an iframe onto the front-end ticket portal)
-- An "Apply Defaults" button on the Support Genix plugin's own settings page to seed its default ticket categories, visibility/edit lockdown for non-administrators, and matching the portal's colors to the site's own brand colors.
+- An "Apply Defaults" button on the Support Genix plugin's own settings page to seed its default ticket categories, and matching the portal's colors to the site's own brand colors.
+- Locks the ticket portal page for non-administrators: hidden from the Pages list, not editable or deletable, and left out of The SEO Framework's sitemap. The page is the one in Support Genix's own "Ticket Page" setting, and it stays locked while Support Genix is deactivated. A theme can get its ID with `amrf_get_ticket_page_id()`, for example to keep it out of a menu.
 
 ## Requirements
 

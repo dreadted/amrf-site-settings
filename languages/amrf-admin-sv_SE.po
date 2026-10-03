@@ -335,7 +335,7 @@ msgstr "Personnamn"
 msgid "Job title"
 msgstr "Titel"
 
-#: includes/SiteSettings/ContactLinkShortcodes.php:61
+#: includes/SiteSettings/ContactLinks.php:88
 #: includes/SiteSettings/Repository.php:41
 msgid "Email"
 msgstr "E-post"
@@ -404,61 +404,57 @@ msgstr "Adress"
 msgid "Social Media"
 msgstr "Sociala medier"
 
-#: includes/SupportGenix/Provider.php:179
-#: includes/SupportGenix/Provider.php:180
+#: includes/SupportGenix/Provider.php:183
+#: includes/SupportGenix/Provider.php:184
 msgid "Support Tickets"
 msgstr "Supportärenden"
 
-#: includes/SupportGenix/Provider.php:227
+#: includes/SupportGenix/Provider.php:238
 msgid "Apply this site's default settings for Support Genix."
 msgstr "Tillämpa sajtens standardinställningar för Support Genix."
 
-#: includes/SupportGenix/Provider.php:232
+#: includes/SupportGenix/Provider.php:243
 msgid "Apply Defaults"
 msgstr "Tillämpa standardvärden"
 
-#: includes/SupportGenix/Provider.php:250
+#: includes/SupportGenix/Provider.php:261
 msgid "Security check failed"
 msgstr "Säkerhetskontrollen misslyckades"
 
-#: includes/SupportGenix/Provider.php:272
+#: includes/SupportGenix/Provider.php:283
 msgid "Support Genix defaults applied successfully!"
 msgstr "Support Genix standardinställningar har tillämpats!"
 
-#: includes/SupportGenix/Provider.php:274
+#: includes/SupportGenix/Provider.php:285
 msgid "There was an error applying the Support Genix defaults."
 msgstr "Ett fel uppstod när Support Genix standardinställningar skulle tillämpas."
 
-#: includes/SupportGenix/Provider.php:482
+#: includes/SupportGenix/Provider.php:495
 msgid "Ticket"
 msgstr "Ärende"
 
-#: includes/SupportGenix/Provider.php:562
-msgid "You are not authorized to edit this page."
-msgstr "Du har inte behörighet att redigera den här sidan."
-
-#: includes/Umami/Provider.php:43
 #: includes/Umami/Provider.php:44
+#: includes/Umami/Provider.php:45
 msgid "Analytics"
 msgstr "Statistik"
 
-#: includes/Umami/Provider.php:65
+#: includes/Umami/Provider.php:66
 msgid "Umami ID is not set. Please configure it in the settings."
 msgstr "Umami-ID är inte inställt. Konfigurera det i inställningarna."
 
-#: includes/Umami/Provider.php:87
+#: includes/Umami/Provider.php:88
 msgid "Umami Settings"
 msgstr "Umami-inställningar"
 
-#: includes/Umami/Provider.php:88
+#: includes/Umami/Provider.php:89
 msgid "Umami"
 msgstr "Umami"
 
-#: includes/Umami/Provider.php:125
+#: includes/Umami/Provider.php:126
 msgid "Umami Site"
 msgstr "Umami-sajt"
 
-#: includes/Umami/Provider.php:132
+#: includes/Umami/Provider.php:133
 msgid "Umami ID"
 msgstr "Umami-ID"
 
@@ -532,8 +528,7 @@ msgstr "Avskräck sökmotorer från att indexera den här webbplatsen"
 msgid "You are not allowed to change this setting."
 msgstr "Du har inte behörighet att ändra den här inställningen."
 
-#: includes/SiteSettings/ContactLinkShortcodes.php:76
-#: includes/Swish/FrontendProvider.php:66
+#: includes/SiteSettings/ContactLinks.php:58
 msgid "Copied!"
 msgstr "Kopierat!"
 
@@ -633,23 +628,23 @@ msgstr "Formuläret som sajtens länkar/knappar mot ankaret \"#contact\" öppnar
 msgid "AMRF Site Settings"
 msgstr ""
 
-#: includes/Umami/Provider.php:118
+#: includes/Umami/Provider.php:119
 msgid "Umami Server"
 msgstr "Umami-server"
 
-#: includes/Umami/Provider.php:153
+#: includes/Umami/Provider.php:154
 msgid "Egen installation (umami.antropomorf.se)"
 msgstr "Egen installation (umami.antropomorf.se)"
 
-#: includes/Umami/Provider.php:154
+#: includes/Umami/Provider.php:155
 msgid "Umami Cloud (eu.umami.is)"
 msgstr "Umami Cloud (eu.umami.is)"
 
-#: includes/Umami/Provider.php:139
+#: includes/Umami/Provider.php:140
 msgid "Button Selectors"
 msgstr "Knapp-selektorer"
 
-#: includes/Umami/Provider.php:199
+#: includes/Umami/Provider.php:200
 msgid "One CSS selector per line. Matched elements are tracked automatically, named after their own visible text. Leave empty to use the built-in defaults."
 msgstr "En CSS-selector per rad. Matchande element spåras automatiskt och namnges efter sin egen synliga text. Lämna tomt för att använda standardlistan."
 
@@ -788,3 +783,7 @@ msgstr "Aktivera för att ge den här användarrollen åtkomst till menyn Webbpl
 #: includes/Swish/Provider.php:94
 msgid "The Swish QR code could not be created. Reload this page to try again."
 msgstr "Swish QR-koden kunde inte skapas. Ladda om sidan för att försöka igen."
+
+#: includes/SupportGenix/Provider.php:206
+msgid "Support Genix has no ticket page yet."
+msgstr "Support Genix har ingen ärendesida än."
