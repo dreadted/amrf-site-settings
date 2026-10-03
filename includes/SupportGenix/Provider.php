@@ -215,7 +215,7 @@ class Provider
     if ($pagenow !== 'admin.php' || ($_GET['page'] ?? '') !== self::THIRD_PARTY_SETTINGS_PAGE) {
       return;
     }
-    if (get_option('support_genix_default_settings')) {
+    if (!current_user_can('manage_options') || get_option('support_genix_default_settings')) {
       return;
     }
 
@@ -238,11 +238,12 @@ class Provider
    */
   public function handleApplyDefaults(): void
   {
-    if (!isset($_POST['amrf_apply_support_genix_defaults'])) {
+    if (!isset($_POST['amrf_apply_support_genix_defaults']) || get_option('support_genix_default_settings')) {
       return;
     }
 
-    if (!isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'], 'amrf_apply_support_genix_defaults')) {
+    $nonce = isset($_POST['_wpnonce']) ? sanitize_key(wp_unslash($_POST['_wpnonce'])) : '';
+    if (!current_user_can('manage_options') || !wp_verify_nonce($nonce, 'amrf_apply_support_genix_defaults')) {
       wp_die(esc_html__('Security check failed', 'amrf-admin'));
     }
 
@@ -285,19 +286,21 @@ class Provider
     $wpdb->query('START TRANSACTION');
 
     try {
-      $wpdb->query(
+      $deleted_roles = $wpdb->query(
         $wpdb->prepare(
           "DELETE FROM {$wpdb->prefix}apbd_wps_role WHERE slug != %s",
           'administrator'
         )
       );
-
-      $wpdb->query(
+      $deleted_access = $wpdb->query(
         $wpdb->prepare(
           "DELETE FROM {$wpdb->prefix}apbd_wps_role_access WHERE role_slug != %s",
           'administrator'
         )
       );
+      if (false === $deleted_roles || false === $deleted_access) {
+        throw new \Exception('Failed to delete support roles: ' . $wpdb->last_error);
+      }
 
       $this->removeSupportRoles();
       $this->setupDefaultTicketRules();
@@ -333,7 +336,10 @@ class Provider
       throw new \Exception('Ticket assignment rules table does not exist');
     }
 
-    $wpdb->query("TRUNCATE TABLE $table_name");
+    // DELETE, not TRUNCATE: TRUNCATE commits implicitly and would defeat the rollback.
+    if (false === $wpdb->query("DELETE FROM $table_name")) {
+      throw new \Exception('Failed to clear ticket assignment rules: ' . $wpdb->last_error);
+    }
 
     $result = $wpdb->insert(
       $table_name,
@@ -361,7 +367,9 @@ class Provider
       throw new \Exception('Ticket categories table does not exist');
     }
 
-    $wpdb->query("TRUNCATE TABLE $table_name");
+    if (false === $wpdb->query("DELETE FROM $table_name")) {
+      throw new \Exception('Failed to clear ticket categories: ' . $wpdb->last_error);
+    }
 
     $categories = [
       ['id' => 1, 'title' => 'task'],
