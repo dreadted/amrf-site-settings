@@ -104,6 +104,7 @@ class SiteSettingsMenu
 
     echo '<div class="wrap">';
     echo '<h1>' . esc_html($page['page_title']) . '</h1>';
+    settings_errors();
     SettingsRenderer::renderSettingsForm($page['option_group'], $page['page_slug'], !empty($page['show_reset']));
     echo '</div>';
   }

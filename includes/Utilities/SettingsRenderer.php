@@ -62,6 +62,8 @@ class SettingsRenderer
 
     echo '<div class="wrap">';
     echo '<h1>' . esc_html(call_user_func($this->pageTitle)) . '</h1>';
+    // Core prints these only under the Settings menu (options-head.php).
+    settings_errors();
     echo '<h2 class="nav-tab-wrapper">';
     foreach ($tabs as $id => $tab_info) {
       printf(
