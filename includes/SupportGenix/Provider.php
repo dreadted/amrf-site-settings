@@ -2,6 +2,8 @@
 
 namespace Antropomorf\SupportGenix;
 
+use Antropomorf\SiteSettings\BrandImages;
+
 if (!defined('ABSPATH')) {
 	exit;
 }
@@ -391,15 +393,11 @@ class Provider
 
 	private function updateSupportGenixSettings(): void
 	{
-		$upload_dir = wp_upload_dir();
-		$base_upload_url = $upload_dir['baseurl'];
 		$lang = $this->resolveLanguageKey();
 
 		$current_settings = get_option('support-genix_o_Apbd_wps_settings', []);
 
 		$updated_settings = [
-			'app_favicon' => $base_upload_url . '/favicon.svg',
-			'app_logo' => [$lang => $base_upload_url . '/logo.svg'],
 			'client_role' => 'editor',
 			'disable_guest_ticket_creation' => 'Y',
 			'disable_guest_email_to_ticket_creation' => 'Y',
@@ -411,6 +409,15 @@ class Provider
 			'setup_wizard_step' => 4,
 			'setup_wizard_finished' => true,
 		];
+
+		$favicon = BrandImages::url('icon_svg');
+		if ($favicon) {
+			$updated_settings['app_favicon'] = $favicon;
+		}
+		$logo = BrandImages::url('logo');
+		if ($logo) {
+			$updated_settings['app_logo'] = [$lang => $logo];
+		}
 
 		$merged_settings = array_merge($current_settings, $updated_settings);
 		update_option('support-genix_o_Apbd_wps_settings', $merged_settings, true);

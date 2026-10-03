@@ -13,10 +13,7 @@ if (!defined('ABSPATH')) {
  * enable_seo_output — these are core site identity, not optional SEO
  * output, so they still need to render even with that toggle off.
  *
- * Assumes the active theme ships favicon.svg/favicon.ico/apple-touch-
- * icon.png/icon-192.png/favicon.png under its own assets/images/ — true for
- * ptsussis-theme, not guaranteed for every theme this plugin might run
- * under.
+ * Icons come from BrandImages; a missing one is left out.
  *
  * @package Antropomorf\SiteSettings
  */
@@ -66,14 +63,22 @@ class Favicons
 	 */
 	public function renderLinkTags(): void
 	{
-		$images = get_stylesheet_directory_uri() . '/assets/images';
 		$settings = Repository::getSettings();
 		$themeColor = $settings['theme_color'];
 		$shortName = $settings['business_name'] ?: get_bloginfo('name');
+		$icons = [
+			'icon_svg' => ' type="image/svg+xml"',
+			'icon_ico' => '',
+			'icon_192' => ' type="image/png" sizes="192x192"',
+		];
+
+		foreach ($icons as $key => $attributes) {
+			$url = BrandImages::url($key);
+			if ($url) {
+				printf("<link rel=\"icon\"%s href=\"%s\" />\n", $attributes, esc_url($url));
+			}
+		}
 		?>
-<link rel="icon" type="image/svg+xml" href="<?php echo esc_url($images . '/favicon.svg'); ?>" />
-<link rel="icon" href="<?php echo esc_url($images . '/favicon.ico'); ?>" />
-<link rel="icon" type="image/png" sizes="192x192" href="<?php echo esc_url($images . '/icon-192.png'); ?>" />
 <link rel="manifest" href="<?php echo esc_url(home_url('/site.webmanifest')); ?>" />
 <meta name="theme-color" content="<?php echo esc_attr($themeColor); ?>" />
 <meta name="apple-mobile-web-app-title" content="<?php echo esc_attr($shortName); ?>" />
@@ -98,15 +103,20 @@ class Favicons
 	 */
 	private static function rewriteRules(): array
 	{
-		$homePath = trailingslashit((string) wp_parse_url(home_url(), PHP_URL_PATH));
-		$themePath = (string) wp_parse_url(get_stylesheet_directory_uri(), PHP_URL_PATH);
-		$images = substr($themePath, strlen($homePath)) . '/assets/images';
-
-		return [
-			'^site\.webmanifest$' => 'index.php?' . self::QUERY_VAR . '=1',
-			'favicon\.ico$' => $images . '/favicon.ico',
-			'apple-touch-icon(-precomposed)?\.png$' => $images . '/apple-touch-icon.png',
+		$rules = ['^site\.webmanifest$' => 'index.php?' . self::QUERY_VAR . '=1'];
+		$files = [
+			'favicon\.ico$' => 'icon_ico',
+			'apple-touch-icon(-precomposed)?\.png$' => 'apple_touch_icon',
 		];
+
+		foreach ($files as $regex => $key) {
+			$path = BrandImages::homePath($key);
+			if ($path) {
+				$rules[$regex] = $path;
+			}
+		}
+
+		return $rules;
 	}
 
 	/**
@@ -132,7 +142,19 @@ class Favicons
 		}
 
 		$settings = Repository::getSettings();
-		$images = get_stylesheet_directory_uri() . '/assets/images';
+		$icons = [
+			'icon_svg' => ['sizes' => 'any', 'type' => 'image/svg+xml'],
+			'icon_192' => ['sizes' => '192x192', 'type' => 'image/png'],
+			'icon_512' => ['sizes' => '512x512', 'type' => 'image/png'],
+		];
+		$manifestIcons = [];
+
+		foreach ($icons as $key => $icon) {
+			$url = BrandImages::url($key);
+			if ($url) {
+				$manifestIcons[] = ['src' => $url] + $icon;
+			}
+		}
 
 		$manifest = [
 			'name' => $settings['seo_title'] ?: ($settings['business_name'] ?: get_bloginfo('name')),
@@ -144,11 +166,7 @@ class Favicons
 			'display' => 'browser',
 			'background_color' => $settings['background_color'],
 			'theme_color' => $settings['theme_color'],
-			'icons' => [
-				['src' => $images . '/favicon.svg', 'sizes' => 'any', 'type' => 'image/svg+xml'],
-				['src' => $images . '/icon-192.png', 'sizes' => '192x192', 'type' => 'image/png'],
-				['src' => $images . '/favicon.png', 'sizes' => '512x512', 'type' => 'image/png'],
-			],
+			'icons' => $manifestIcons,
 		];
 
 		header('Content-Type: application/manifest+json');

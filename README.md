@@ -68,6 +68,25 @@ These feed the SEO structured data above and are reused wherever the site needs 
 - Instagram URL
 - X (Twitter) URL
 
+#### Icons & logo
+
+Favicon tags, `/site.webmanifest`, the root `/favicon.ico` and `/apple-touch-icon.png`, the login page logo and the Support Genix portal's favicon and logo all come from the `amrf_brand_images` filter. The plugin ships no images of its own: an icon the theme leaves out is not output, and the login logo falls back to the WordPress Site Icon.
+
+```php
+add_filter('amrf_brand_images', function (): array {
+  return [
+    'icon_svg' => get_theme_file_uri('assets/images/favicon.svg'),
+    'icon_ico' => get_theme_file_uri('assets/images/favicon.ico'),
+    'icon_192' => get_theme_file_uri('assets/images/icon-192.png'),
+    'icon_512' => get_theme_file_uri('assets/images/favicon.png'),
+    'apple_touch_icon' => get_theme_file_uri('assets/images/apple-touch-icon.png'),
+    'logo' => get_theme_file_uri('assets/images/logo.svg'),
+  ];
+});
+```
+
+The `/favicon.ico` and `/apple-touch-icon.png` rewrites are written to `.htaccess` when rewrite rules are flushed, so re-save **Settings → Permalinks** after changing those two. The portal's favicon and logo are copied into Support Genix's own settings when its "Apply Defaults" button is used.
+
 ### Forms
 
 #### Contact Forms
