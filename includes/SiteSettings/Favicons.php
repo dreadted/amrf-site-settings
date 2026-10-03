@@ -32,8 +32,7 @@ class Favicons
         add_action('wp_head', [$this, 'renderLinkTags']);
         add_action('init', [self::class, 'registerRewriteRules']);
         add_filter('query_vars', [$this, 'registerQueryVar']);
-        add_filter('redirect_canonical', [$this, 'skipCanonicalRedirect']);
-        add_action('template_redirect', [$this, 'renderManifest']);
+        add_action('parse_request', [$this, 'renderManifest']);
     }
 
     /**
@@ -121,24 +120,14 @@ class Favicons
     }
 
     /**
-     * Without this, redirect_canonical() 301s /site.webmanifest to
-     * /site.webmanifest/ — it doesn't recognize .webmanifest as a "real
-     * file" extension the way it does e.g. .xml.
+     * Served before the main query, so posts-disabled 404s and redirect_canonical never see it.
      *
-     * @param string|false $redirectUrl
-     * @return string|false
-     */
-    public function skipCanonicalRedirect($redirectUrl)
-    {
-        return get_query_var(self::QUERY_VAR) ? false : $redirectUrl;
-    }
-
-    /**
+     * @param \WP $wp
      * @return void
      */
-    public function renderManifest(): void
+    public function renderManifest(\WP $wp): void
     {
-        if (!get_query_var(self::QUERY_VAR)) {
+        if (empty($wp->query_vars[self::QUERY_VAR])) {
             return;
         }
 
