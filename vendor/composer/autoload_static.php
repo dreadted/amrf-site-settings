@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInitea29e4152bd93dd6e4eec68a583ec52b
 {
     public static $prefixLengthsPsr4 = array (
+        'e' =>
+        array (
+            'enshrined\\svgSanitize\\' => 22,
+        ),
         'A' =>
         array (
             'AltchaOrg\\Altcha\\' => 17,
@@ -14,6 +18,10 @@ class ComposerStaticInitea29e4152bd93dd6e4eec68a583ec52b
     );
 
     public static $prefixDirsPsr4 = array (
+        'enshrined\\svgSanitize\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/enshrined/svg-sanitize/src',
+        ),
         'AltchaOrg\\Altcha\\' =>
         array (
             0 => __DIR__ . '/..' . '/altcha-org/altcha/src',

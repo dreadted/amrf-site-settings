@@ -3,6 +3,7 @@
 namespace Antropomorf\Hardening;
 
 use Antropomorf\Utilities\SettingsRenderer;
+use enshrined\svgSanitize\Sanitizer;
 
 if (!defined('ABSPATH')) {
   exit;
@@ -96,6 +97,7 @@ class Provider
       add_filter('upload_mimes', [$this, 'allowSvgMimeType']);
       add_filter('wp_check_filetype_and_ext', [$this, 'checkSvgFiletype'], 10, 4);
       add_filter('wp_handle_upload_prefilter', [$this, 'sanitizeUploadedSvg']);
+      add_filter('wp_handle_sideload_prefilter', [$this, 'sanitizeUploadedSvg']);
     }
 
     if ($settings['disable_author_archives']) {
@@ -217,7 +219,7 @@ class Provider
    */
   public function sanitizeUploadedSvg(array $file): array
   {
-    $is_svg = $file['type'] === 'image/svg+xml' || preg_match('/\.svg$/i', $file['name'] ?? '');
+    $is_svg = ($file['type'] ?? '') === 'image/svg+xml' || preg_match('/\.svg$/i', $file['name'] ?? '');
 
     if (!$is_svg) {
       return $file;
@@ -248,46 +250,18 @@ class Provider
   }
 
   /**
-   * Strips executable/active content from an SVG's markup: <script>,
-   * event-handler attributes (onload, onclick, …), javascript: URIs, and
-   * <foreignObject> (arbitrary embedded HTML). Returns null if the file
-   * isn't parseable XML at all.
+   * Allowlist-sanitizes SVG markup and drops remote references; null if rejected.
    *
    * @param string $content
    * @return string|null
    */
   private function sanitizeSvgMarkup(string $content): ?string
   {
-    $previous = libxml_use_internal_errors(true);
-    $doc = new \DOMDocument();
-    $loaded = $doc->loadXML($content, LIBXML_NONET | LIBXML_NOENT);
-    libxml_clear_errors();
-    libxml_use_internal_errors($previous);
+    $sanitizer = new Sanitizer();
+    $sanitizer->removeRemoteReferences(true);
+    $clean = $sanitizer->sanitize($content);
 
-    if (!$loaded) {
-      return null;
-    }
-
-    $xpath = new \DOMXPath($doc);
-
-    foreach (iterator_to_array($xpath->query('//*[local-name()="script"] | //*[local-name()="foreignObject"]')) as $node) {
-      $node->parentNode->removeChild($node);
-    }
-
-    foreach (iterator_to_array($xpath->query('//@*')) as $attr) {
-      $name = strtolower($attr->nodeName);
-      $value = trim($attr->nodeValue);
-
-      $is_event_handler = str_starts_with($name, 'on');
-      $is_script_uri = ($name === 'href' || $name === 'xlink:href' || $name === 'src')
-        && preg_match('/^\s*javascript:/i', $value);
-
-      if ($is_event_handler || $is_script_uri) {
-        $attr->ownerElement->removeAttributeNode($attr);
-      }
-    }
-
-    return $doc->saveXML();
+    return $clean === false ? null : $clean;
   }
 
   // Scoped to 'upload' context — sideloads are typically admin-triggered, not a direct user action.
