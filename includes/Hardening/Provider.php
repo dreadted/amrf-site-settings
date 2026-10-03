@@ -16,8 +16,8 @@ if (!defined('ABSPATH')) {
  *
  * - Unconditional: XML-RPC blocking, generic login error message, hiding
  *   the WP version generator tag and RSD link, blocking ?username= at
- *   login, and removing the /wp/v2/users REST endpoint. Near-universal,
- *   no downside.
+ *   login, removing the /wp/v2/users REST endpoint, and disabling core's
+ *   emoji fallback. Near-universal, no downside.
  * - Toggleable, on the "Hardening" page (manage_options): allowing admins
  *   to upload sanitized SVGs, disabling author archives (and, tied to that
  *   same toggle, WP's own users sitemap — pointless and actively leaks
@@ -74,6 +74,30 @@ class Provider
 
     add_action('login_init', [$this, 'blockUsernameInLoginUrl']);
     add_filter('rest_endpoints', [$this, 'disableUsersRestEndpoint']);
+
+    $this->disableEmojiFallback();
+  }
+
+  /**
+   * Core's emoji fallback swaps emoji for images from s.w.org, a third-party request.
+   *
+   * @return void
+   */
+  private function disableEmojiFallback(): void
+  {
+    remove_action('wp_head', 'print_emoji_detection_script', 7);
+    remove_action('embed_head', 'print_emoji_detection_script');
+    // Unhooking the legacy printer also makes wp_enqueue_emoji_styles() bail.
+    remove_action('wp_print_styles', 'print_emoji_styles');
+    remove_filter('the_content_feed', 'wp_staticize_emoji');
+    remove_filter('comment_text_rss', 'wp_staticize_emoji');
+    remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
+
+    // Core adds the admin hooks after plugins load.
+    add_action('admin_init', function () {
+      remove_action('admin_print_scripts', 'print_emoji_detection_script');
+      remove_action('admin_print_styles', 'print_emoji_styles');
+    });
   }
 
   /**

@@ -112,7 +112,7 @@ All links can be customized with a pre-filled amount or message.
 ### Hardening
 
 A handful of always-on, no-downside protections
-(blocking XML-RPC, a generic login error message instead of "unknown username", hiding the WordPress version tag, blocking `?username=` probing, and removing the `/wp/v2/users` REST endpoint), plus four
+(blocking XML-RPC, a generic login error message instead of "unknown username", hiding the WordPress version tag, blocking `?username=` probing, removing the `/wp/v2/users` REST endpoint, and disabling WordPress's emoji fallback, which loads images from `s.w.org`), plus four
 behavior changes that default to _on_ but can be switched off per site:
 
 - Disable author archives
