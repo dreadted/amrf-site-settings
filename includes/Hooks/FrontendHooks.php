@@ -244,7 +244,7 @@ class FrontendHooks
    *
    * @param \WP_Error $errors Validation errors object.
    * @param bool      $update Whether this is an existing user being updated.
-   * @param mixed     $user   WP_User object or user ID.
+   * @param object    $user   User data from edit_user(), with the trimmed, still slashed user_pass.
    * @return \WP_Error Modified errors object after validation.
    */
   public static function enforcePasswordLengthOnProfileUpdate(
@@ -260,7 +260,8 @@ class FrontendHooks
     if (!empty($settings['minimum_password_length'])) {
       $min = absint($settings['minimum_password_length']);
 
-      if (!empty($_POST['pass1']) && strlen($_POST['pass1']) < $min) {
+      $pass = isset($user->user_pass) ? wp_unslash($user->user_pass) : '';
+      if ($pass !== '' && mb_strlen($pass) < $min) {
         $errors->add(
           'pass',
           sprintf(
@@ -294,7 +295,7 @@ class FrontendHooks
     if (!empty($settings['minimum_password_length'])) {
       $min = absint($settings['minimum_password_length']);
 
-      if (strlen($new_pass) < $min) {
+      if (mb_strlen(wp_unslash($new_pass)) < $min) {
         wp_die(sprintf(
           //  translators: %d is the number indicating minimum password length
           __('ERROR: Password must be at least %d characters long.', 'amrf-admin'),

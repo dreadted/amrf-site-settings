@@ -203,7 +203,7 @@ class Manager
 		}
 
 		$current = get_option(Repository::OPTION_NAME, []);
-		$current_tab = $_POST['current_tab'] ?? 'general';
+		$current_tab = isset($_POST['current_tab']) ? sanitize_key(wp_unslash($_POST['current_tab'])) : 'general';
 
 		if ($current_tab === 'general') {
 			// Process only general settings

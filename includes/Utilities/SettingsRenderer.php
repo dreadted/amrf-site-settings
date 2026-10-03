@@ -52,7 +52,8 @@ class SettingsRenderer
       return;
     }
 
-    $current_tab = isset($_GET['tab'], $tabs[$_GET['tab']]) ? $_GET['tab'] : array_key_first($tabs);
+    $requested_tab = isset($_GET['tab']) ? sanitize_key(wp_unslash($_GET['tab'])) : '';
+    $current_tab = isset($tabs[$requested_tab]) ? $requested_tab : array_key_first($tabs);
     $tab = $tabs[$current_tab];
 
     echo '<div class="wrap">';
