@@ -1,39 +1,38 @@
-// Client-side validation for the Swedish Personal Identity Number field,
-// identified by the "ff-personnummer" CSS class (FluentFormValidation\Provider's
-// CONTAINER_CLASS), not by field name.
+// Client-side validation for Swedish Personal Identity Number fields. Fluent Forms
+// puts the "ff-personnummer" Container Class (FluentFormValidation\Provider's
+// CONTAINER_CLASS) on the field's .ff-el-group, not on the input.
 
 const pinValidationStrings = {
   invalidPin: wp.i18n.__(
-    "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)",
+    "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX).",
     "amrf-admin"
   ),
-  requiredPin: wp.i18n.__("Personal Identity Number is required", "amrf-admin"),
 };
 
-const showFluentFormsError = (element, message) => {
-  let errorContainer = element.closest(".ff-el-group").querySelector(".error");
+// Mirrors the error markup Fluent Forms itself renders, so its own
+// on-change clearing removes our message too.
+const showFluentFormsError = (input, message) => {
+  const group = input.closest(".ff-el-group");
+  const content = group.querySelector(".ff-el-input--content") || group;
+  let errorContainer = content.querySelector(".error");
 
   if (!errorContainer) {
     errorContainer = document.createElement("div");
     errorContainer.classList.add("error", "text-danger");
-
-    element.closest(".ff-el-group").appendChild(errorContainer);
+    errorContainer.setAttribute("role", "alert");
+    content.appendChild(errorContainer);
   }
 
   errorContainer.textContent = message;
-  element.classList.add("is-invalid");
-  element.closest(".ff-el-group").classList.add("ff-el-is-error");
+  input.setAttribute("aria-invalid", "true");
+  group.classList.add("ff-el-is-error");
 };
 
-const clearFluentFormsError = (element) => {
-  const errorContainer = element
-    .closest(".ff-el-group")
-    .querySelector(".ff-el-is-error");
-  if (errorContainer) {
-    errorContainer.remove();
-  }
-  element.classList.remove("is-invalid");
-  element.closest(".ff-el-group").classList.remove("ff-el-is-error");
+const clearFluentFormsError = (input) => {
+  const group = input.closest(".ff-el-group");
+  group.querySelector(".error")?.remove();
+  input.setAttribute("aria-invalid", "false");
+  group.classList.remove("ff-el-is-error");
 };
 
 const validatePIN = (PIN) => {
@@ -83,37 +82,51 @@ const formatPIN = (PIN) => {
   return PIN;
 };
 
+const isInvalidPinInput = (input) =>
+  input.value.trim() !== "" && !validatePIN(input.value);
+
 const initPinValidation = () => {
-  const pinField = document.querySelector(".frm-fluent-form .ff-personnummer");
+  const pinInputs = document.querySelectorAll(
+    ".frm-fluent-form .ff-personnummer input.ff-el-form-control"
+  );
 
-  if (!pinField) return;
+  pinInputs.forEach((input) => {
+    input.setAttribute("autocomplete", "off");
 
-  pinField.setAttribute("autocomplete", "off");
-
-  pinField.addEventListener("blur", () => {
-    if (pinField.value.trim() === "") {
-      clearFluentFormsError(pinField);
-      return;
-    }
-
-    if (!validatePIN(pinField.value)) {
-      showFluentFormsError(pinField, pinValidationStrings.invalidPin);
-    } else {
-      clearFluentFormsError(pinField);
-      pinField.value = formatPIN(pinField.value);
-    }
-  });
-
-  const form = pinField.closest("form.frm-fluent-form");
-  if (form) {
-    form.addEventListener("submit", (e) => {
-      if (pinField.value.trim() !== "" && !validatePIN(pinField.value)) {
-        e.preventDefault();
-        showFluentFormsError(pinField, pinValidationStrings.invalidPin);
-        pinField.focus();
+    input.addEventListener("blur", () => {
+      if (input.value.trim() === "") {
+        clearFluentFormsError(input);
+      } else if (!validatePIN(input.value)) {
+        showFluentFormsError(input, pinValidationStrings.invalidPin);
+      } else {
+        clearFluentFormsError(input);
+        input.value = formatPIN(input.value);
       }
     });
-  }
+  });
+
+  const forms = new Set(
+    [...pinInputs].map((input) => input.closest("form.frm-fluent-form"))
+  );
+
+  forms.forEach((form) => {
+    form.addEventListener("submit", (e) => {
+      const invalid = [
+        ...form.querySelectorAll(".ff-personnummer input.ff-el-form-control"),
+      ].filter(isInvalidPinInput);
+
+      if (invalid.length === 0) return;
+
+      // Fluent Forms submits via a jQuery handler delegated to document;
+      // stopping propagation here keeps that handler from firing.
+      e.preventDefault();
+      e.stopPropagation();
+      invalid.forEach((input) =>
+        showFluentFormsError(input, pinValidationStrings.invalidPin)
+      );
+      invalid[0].focus();
+    });
+  });
 };
 
 document.addEventListener("DOMContentLoaded", () => {

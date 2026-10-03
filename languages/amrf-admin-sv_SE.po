@@ -103,6 +103,7 @@ msgid "Blank or 0 = keep forever."
 msgstr "Tomt eller 0 = spara för alltid."
 
 #: includes/FluentFormValidation/Provider.php:62
+#: assets/js/amrf-fluentform-validation.js:6
 msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)."
 msgstr "Ange ett giltigt svenskt personnummer (ÅÅMMDD-XXXX)."
 
@@ -461,7 +462,7 @@ msgstr "Umami-sajt"
 msgid "Umami ID"
 msgstr "Umami-ID"
 
-#: includes/Utilities/SettingsRenderer.php:101
+#: includes/Utilities/SettingsRenderer.php:103
 msgid "Reset to Defaults"
 msgstr "Återställ till standardvärden"
 
@@ -510,14 +511,6 @@ msgstr "Tomt = inget belopp förifyllt."
 #: includes/Swish/Provider.php:144
 msgid "Editable by the payer after scanning"
 msgstr "Redigerbart av betalaren efter skanning"
-
-#: assets/js/amrf-fluentform-validation.js:6
-msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)"
-msgstr "Fyll i ett giltigt svenskt personnummer (ÅÅMMDD-XXXX)"
-
-#: assets/js/amrf-fluentform-validation.js:10
-msgid "Personal Identity Number is required"
-msgstr "Personnummer är obligatoriskt"
 
 #: includes/Settings/Manager.php:560
 msgid "Form Entries Access"

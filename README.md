@@ -228,6 +228,22 @@ Some texts in both plugins are hard-coded in their JavaScript (for example
 FluentCRM's email editor sidebar and style panel, and Fluent Forms'
 pagination and relative times) and stay in English.
 
+### Updating the plugin's own translations
+
+After adding, changing or removing strings, run from the plugin folder:
+
+```sh
+wp i18n make-pot . languages/amrf-admin.pot --domain=amrf-admin
+wp i18n update-po languages/amrf-admin.pot languages/amrf-admin-sv_SE.po
+# translate the new entries in the .po file, then:
+wp i18n make-mo languages/amrf-admin-sv_SE.po
+wp i18n make-json languages/amrf-admin-sv_SE.po --no-purge
+```
+
+`make-json` builds the `.json` files that JavaScript strings are translated
+from. `--no-purge` keeps those strings in the `.po` file, so the next
+`update-po` doesn't drop their translations.
+
 ## Releases
 
 Releases are cut from `main` with one command, which needs the [GitHub CLI](https://cli.github.com/), logged in:

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-03T12:34:13+00:00\n"
+"POT-Creation-Date: 2026-10-03T13:00:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -229,6 +229,7 @@ msgid "The newsletter register keeps the email address and the consent and unsub
 msgstr ""
 
 #: includes/FluentFormValidation/Provider.php:62
+#: assets/js/amrf-fluentform-validation.js:6
 msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)."
 msgstr ""
 
@@ -784,14 +785,6 @@ msgstr ""
 msgid "One CSS selector per line. Matched elements are tracked automatically, named after their own visible text. Leave empty to use the built-in defaults."
 msgstr ""
 
-#: includes/Utilities/SettingsRenderer.php:101
+#: includes/Utilities/SettingsRenderer.php:103
 msgid "Reset to Defaults"
-msgstr ""
-
-#: assets/js/amrf-fluentform-validation.js:6
-msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)"
-msgstr ""
-
-#: assets/js/amrf-fluentform-validation.js:10
-msgid "Personal Identity Number is required"
 msgstr ""
