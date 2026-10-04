@@ -46,6 +46,8 @@ class Provider
 			'page_slug' => self::CONTACT_PAGE_SLUG,
 			'show_reset' => false,
 			'register' => [$this, 'registerContactFormsFields'],
+			// Site-wide form, spam and FluentForm baseline settings: administrators only.
+			'capability' => 'manage_options',
 		];
 
 		$tabs['gdpr'] = [

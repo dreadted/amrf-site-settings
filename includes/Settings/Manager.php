@@ -559,14 +559,14 @@ class Manager
 		// Only shown on a site that actually has FluentForm.
 		if (shortcode_exists('fluentform')) {
 			echo '<div class="setting-row"><h4>' . esc_html__('Form Entries Access', 'amrf-admin') . '</h4>';
-			$this->renderCheckbox('fluentform_entries_access', esc_html__('Enable to allow this user role to view and manage Fluent Forms entries (view, delete, mark read/unread, favorite) — not forms themselves or site-wide Fluent Forms settings.', 'amrf-admin'), ['user_group_settings', $role]);
+			$this->renderCheckbox('fluentform_entries_access', esc_html__('Enable to allow this user role to view and manage Fluent Forms entries (view, delete, mark read/unread, favorite) on the Entries page of Fluent Forms\' own menu — not forms themselves, site-wide Fluent Forms settings, or Site Settings → Forms, which comes with Site Settings Access.', 'amrf-admin'), ['user_group_settings', $role]);
 			echo '</div>';
 		}
 
 		// Stored/keyed as site_menus_cap; grants edit_theme_options, which
 		// also gates native theme menu/design editing.
 		echo '<div class="setting-row"><h4>' . esc_html__('Site Settings Access', 'amrf-admin') . '</h4>';
-		$this->renderCheckbox('site_menus_cap', esc_html__('Enable to give this user role access to the Site Settings menu (Business & Contact, Address, Social Media, Forms/GDPR/Swish; the SEO tab is for administrators only) and to native theme menu/design editing (Appearance → Menus/Customize on a classic theme, or the Site Editor on a block theme).', 'amrf-admin'), ['user_group_settings', $role]);
+		$this->renderCheckbox('site_menus_cap', esc_html__('Enable to give this user role access to the Site Settings menu (Business & Contact, Address, Social Media, and the GDPR and Swish tabs under Forms; the SEO and Contact Forms tabs are for administrators only) and to native theme menu/design editing (Appearance → Menus/Customize on a classic theme, or the Site Editor on a block theme).', 'amrf-admin'), ['user_group_settings', $role]);
 		echo '</div>';
 
 		// Only shown on a site that actually has The SEO Framework.
