@@ -11,8 +11,6 @@ use Antropomorf\Forms\Menu as FormsMenu;
 use Antropomorf\Utilities\MenuScanner;
 
 /**
- * Class Manager
- *
  * Handles registration, sanitization, and rendering callbacks for plugin settings.
  *
  * @package Antropomorf\Settings
@@ -259,11 +257,7 @@ class Manager
 	}
 
 	/**
-	 * The "Page Editor" menu item's slug IS its target URL
-	 * (RolePolicy::addCustomPageToMenu()), so each role's
-	 * allowed_menu_items must contain that exact URL to keep it visible.
-	 * Runs on every General tab save: drops any previous target's URL, adds
-	 * the current one only while the feature is enabled.
+	 * The Page Editor item's slug is its target URL, so allowed_menu_items must swap the old URL for the current one.
 	 *
 	 * @param array $current Settings array being built, modified in place.
 	 * @return void
@@ -299,11 +293,7 @@ class Manager
 	}
 
 	/**
-	 * Keeps the "Site Settings" and "Forms" submenu pages in sync with the
-	 * site_menus_cap toggle for the role being saved — both pages require
-	 * edit_theme_options, so without this a role just granted the
-	 * capability would still get 403'd by this plugin's own
-	 * allowed_menu_items filter.
+	 * Syncs the Site Settings and Forms submenus with site_menus_cap, or allowed_menu_items 403s a role just granted it.
 	 *
 	 * @param array  $current Settings array being built, modified in place.
 	 * @param string $role    Role slug whose tab was just submitted.
@@ -324,10 +314,7 @@ class Manager
 	}
 
 	/**
-	 * Applies (or revokes) edit_theme_options on every existing account in
-	 * $role immediately — RolePolicy::setCapabilities()'s lazy per-
-	 * request re-sync alone leaves a stale-capability window right after a
-	 * toggle-OFF. New accounts are still covered by that lazy sync.
+	 * Applies the change to existing users now; RolePolicy's lazy re-sync leaves stale capabilities after a toggle-off.
 	 *
 	 * @param string $role    Role slug whose tab was just submitted.
 	 * @param bool   $enabled Whether site_menus_cap is now on.
@@ -346,11 +333,7 @@ class Manager
 	}
 
 	/**
-	 * Keeps the "Entries" admin submenu (fluent_forms_all_entries) in sync
-	 * with the fluentform_entries_access toggle — granting the capability
-	 * alone isn't enough, since RolePolicy's allowed_menu_items filter
-	 * would otherwise 403 the role right back out of that page. The parent
-	 * "Forms" menu stays visible on its own once a child is allowed.
+	 * Syncs the Entries submenu with fluentform_entries_access, or allowed_menu_items 403s a role just granted it.
 	 *
 	 * @param array  $current Settings array being built, modified in place.
 	 * @param string $role    Role slug whose tab was just submitted.
@@ -373,12 +356,7 @@ class Manager
 	}
 
 	/**
-	 * Applies (or revokes) fluentform_entries_access capabilities on every
-	 * existing account in $role immediately. RolePolicy's lazy per-
-	 * request re-sync alone leaves a window on toggle-OFF where a stale-
-	 * capability account briefly falls back to the parent menu's
-	 * capability and gets a broken render instead of a clean "not
-	 * allowed". New accounts are still covered by that lazy sync.
+	 * Applies the change to existing users now; a stale capability after toggle-off renders a broken page.
 	 *
 	 * @param string $role    Role slug whose tab was just submitted.
 	 * @param bool   $enabled Whether fluentform_entries_access is now on.
@@ -437,11 +415,7 @@ class Manager
 	}
 
 	/**
-	 * Callback to render the page editor link target field — the URL (relative
-	 * to the site root) that the "Page Editor" admin menu item points to.
-	 * Defaults to the front-end page builder's own activation fragment
-	 * (Repository::getDefaultSettings()'s '/#builder_active'), but any link
-	 * on the site can be substituted here instead.
+	 * Page Editor link target, relative to the site root; defaults to the page builder's '/#builder_active'.
 	 *
 	 * @return void
 	 */

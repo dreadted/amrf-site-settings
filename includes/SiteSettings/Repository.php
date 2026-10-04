@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Repository
- *
  * Storage, defaults, and sanitization for one site's business/contact info.
  *
  * @package Antropomorf\SiteSettings
@@ -85,13 +83,7 @@ class Repository
 	}
 
 	/**
-	 * Used whenever theme_color/background_color is stored empty, which
-	 * sanitize() does for a value equal to this default so it keeps
-	 * following the theme. The theme's --amrf-theme-color/
-	 * --amrf-background-color CSS properties win; theme.json is the fallback.
-	 *
-	 * WP_Theme_JSON_Resolver needs WP 5.8+, past this plugin's 5.6 floor —
-	 * class_exists guards it.
+	 * Used when theme_color/background_color is stored empty: the theme's --amrf-* properties win, theme.json is the fallback.
 	 *
 	 * @return array{theme_color: string, background_color: string}
 	 */
@@ -107,10 +99,6 @@ class Repository
 	 */
 	private static function resolveThemeDefaultColors(): array
 	{
-		if (!class_exists('WP_Theme_JSON_Resolver')) {
-			return ['theme_color' => '#000000', 'background_color' => '#ffffff'];
-		}
-
 		$settings = \WP_Theme_JSON_Resolver::get_merged_data()->get_settings();
 		$palette = $settings['color']['palette']['theme'] ?? [];
 		$by_slug = array_column($palette, 'color', 'slug');
@@ -251,10 +239,7 @@ class Repository
 	}
 
 	/**
-	 * All four tabs share this one option but each submits only its own
-	 * fields — start from current stored values and only touch keys this
-	 * submission actually included, or every other tab's fields get
-	 * silently blanked.
+	 * Each tab submits only its own fields, so keys it didn't send keep their stored values.
 	 *
 	 * @param mixed $input Raw POSTed value for this option.
 	 * @return array<string, string>

@@ -7,12 +7,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class FrontendProvider
- *
- * Sitewide "#swish" link handling — scans the rendered page for plain
- * `<a href="#swish">` anywhere in content/menus/widgets and swaps those.
- * One global config object, not per-element attributes — there's only ever
- * one Swish account per site.
+ * Sitewide "#swish" links, configured by one global object since a site has one Swish account.
  *
  * @package Antropomorf\Swish
  */

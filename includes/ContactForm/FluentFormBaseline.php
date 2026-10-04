@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class FluentFormBaseline
- *
  * The site's one-shot FluentForm, FluentSMTP and FluentCRM baseline, applied
  * from the "Apply Recommended FluentForm Settings" toggle on the Contact Forms tab.
  *
@@ -438,10 +436,7 @@ class FluentFormBaseline
 	];
 
 	/**
-	 * Overwrites FluentForm's own misc settings with this site's fixed
-	 * baseline, regardless of their current values — a different option
-	 * than Repository::OPTION_NAME, so this never re-enters
-	 * Repository::sanitize().
+	 * Overwrites FluentForm's misc settings with the fixed baseline; a separate option, so sanitize() isn't re-entered.
 	 *
 	 * @return void
 	 */

@@ -1,9 +1,5 @@
 /**
- * Expands a FluentForm textarea that starts collapsed to one row
- * (rows="1") once the visitor has typed enough to suggest a longer
- * message, and collapses it back if they clear it. Pairs with the
- * .fluentform textarea.ff-el-form-control transition in
- * amrf-contact-form-styling.css.
+ * Grows a one-row FluentForm textarea once the visitor types a longer message, and shrinks it when cleared.
  */
 (function () {
 	// Browsers without field-sizing (e.g. iOS < 26.2) need the height set from scrollHeight.

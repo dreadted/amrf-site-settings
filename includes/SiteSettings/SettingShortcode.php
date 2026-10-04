@@ -7,16 +7,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class SettingShortcode
- *
- * [amrf_site_setting field="email"] — quotes one Site Settings field
- * inline in a page's own content, so text like a Privacy Policy page's
- * contact details stays in sync with the admin-configured value instead
- * of a hand-typed copy that silently drifts whenever the setting changes.
- * Restricted to the identity/contact fields a page's body content would
- * plausibly reference — never the SEO/social fields (getFields()'s "seo"/
- * "social" sections), which aren't meant to appear as inline prose.
- * field="domain" gives the site's own host name (e.g. "example.se").
+ * [amrf_site_setting field="email"]: an identity or contact field in page content, so it can't drift from the setting.
+ * SEO and social fields are excluded; field="domain" gives the site's host name.
  *
  * @package Antropomorf\SiteSettings
  */

@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Provider
- *
  * Serves this plugin's own translations for third-party plugins from its
  * languages/ folder, taking precedence over wordpress.org language packs.
  * Covers PHP (.mo) and script (.json) translations.

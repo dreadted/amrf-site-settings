@@ -7,11 +7,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Replaces the WordPress logo on wp-login.php with the site's own
- * logo (BrandImages, else the Site Icon), and removes the link back
- * to wordpress.org. Also pins the admin theme-color CSS variables to
- * the default blue on the login page, since they're only otherwise
- * set from the logged-in user's own color-scheme preference.
+ * Site logo instead of the WordPress logo on wp-login.php, without the wordpress.org link.
+ * Pins the admin color variables to the default scheme, otherwise set from the logged-in user's preference.
  *
  * @package Antropomorf\SiteSettings
  */
@@ -33,22 +30,9 @@ class LoginBranding
 	}
 
 	/**
-	 * Attached via wp_add_inline_style() rather than a raw <style> echo,
-	 * so it prints right after WP core's own login.css and reliably wins
-	 * the cascade instead of flashing the WordPress logo first.
-	 *
-	 * The theme-color variables are set on 'body.login' rather than
-	 * ':root' — wp-login.php always hardcodes an 'admin-color-modern'
-	 * body class (core's default scheme, regardless of login state),
-	 * and 'body.admin-color-modern' in admin-schemes.css has higher
-	 * specificity than ':root' so it would otherwise always win.
-	 * 'body.login' matches that specificity and comes later in the
-	 * cascade, since wp-base-styles (admin-schemes.css) is a dependency
-	 * of the 'login' handle this is attached to.
-	 *
-	 * Both '.login h1' and '.login h1 a' are targeted identically since
-	 * stripHeaderLink() removes the <a> — the rule needs to still apply
-	 * once that wrapper is gone.
+	 * Inline after login.css so the logo wins without a flash. Variables sit on body.login
+	 * to override wp-login.php's hardcoded admin-color-modern class.
+	 * '.login h1' is targeted too, since stripHeaderLink() removes the link.
 	 *
 	 * @return void
 	 */

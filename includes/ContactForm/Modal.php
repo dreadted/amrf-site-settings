@@ -7,15 +7,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Modal
- *
- * Wires any `<a href="#contact">` (or element with data-contact-trigger,
- * see assets/js/amrf-contact-modal.js) sitewide to a lightbox containing a
- * FluentForm. Which form: the 'amrf_contact_modal_form_id' filter, seeded
- * with Repository::getDefaultContactFormId() as the fallback when nothing
- * filters it (e.g. a theme showing its own page-specific form there
- * instead). No-ops entirely if FluentForm is inactive or the resolved form
- * doesn't exist.
+ * Sitewide lightbox with a FluentForm for <a href="#contact"> and [data-contact-trigger].
+ * The form comes from the amrf_contact_modal_form_id filter, defaulting to the Default Contact Form.
  *
  * @package Antropomorf\ContactForm
  */
@@ -35,12 +28,8 @@ class Modal
 	}
 
 	/**
-	 * The editor iframe only auto-copies stylesheets whose rules mention
-	 * .wp-block or .editor-styles-wrapper (Gutenberg's own "compatibility
-	 * styles" heuristic) — amrf-contact-form-styling.css matches neither, so
-	 * enqueue_block_assets alone never reached it. Appending raw CSS to
-	 * $settings['styles'] is the same channel WordPress itself uses to get
-	 * theme.json's global styles into that iframe, and isn't selector-gated.
+	 * The editor iframe only copies stylesheets that mention .wp-block or .editor-styles-wrapper;
+	 * $settings['styles'] isn't selector-gated.
 	 *
 	 * @param array $settings
 	 * @return array
@@ -58,10 +47,7 @@ class Modal
 	}
 
 	/**
-	 * Renders the form shortcode early (wp_enqueue_scripts) and caches it for
-	 * renderContactModal() to echo — FluentForm enqueues its CSS/JS as a side
-	 * effect of rendering, which would be too late for wp_head if done from
-	 * wp_footer directly.
+	 * Renders early and caches: FluentForm enqueues its assets while rendering, too late for wp_head from wp_footer.
 	 *
 	 * @return void
 	 */
@@ -71,11 +57,7 @@ class Modal
 			return;
 		}
 
-		// do_shortcode() below enqueues FluentForm's own default stylesheet as a
-		// side effect — resolved and rendered *before* enqueueConsistentStyling()
-		// so ours always queues after (and therefore overrides) FluentForm's,
-		// instead of depending on some other FluentForm block on the page having
-		// already triggered that enqueue earlier in the request.
+		// Rendered before enqueueConsistentStyling() so our CSS always queues after FluentForm's.
 		$form_id = apply_filters('amrf_contact_modal_form_id', Repository::getDefaultContactFormId());
 		$this->formHtml = $form_id > 0 ? do_shortcode('[fluentform id="' . $form_id . '"]') : '';
 

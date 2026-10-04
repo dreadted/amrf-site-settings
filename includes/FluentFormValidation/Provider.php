@@ -7,23 +7,15 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Provider
- *
- * Swedish Personal Identity Number (personnummer) validation/formatting for
- * FluentForm text fields. Identifies the field by a CSS class
- * (self::CONTAINER_CLASS) on its container, not by field name/label —
- * matching on a name like "personnummer" would be language-fragile and
- * risks false positives on unrelated text fields.
+ * Personnummer validation and formatting for FluentForm text fields.
+ * Matched by a container class, not by field name, which would be language-fragile.
  *
  * @package Antropomorf\FluentFormValidation
  */
 class Provider
 {
 	/**
-	 * CSS class a form's PIN field must carry (FluentForm's own "Container
-	 * Class" field setting) for this module to touch it. Undocumented
-	 * outside this code and the plan — whoever builds a form with a
-	 * personnummer field needs to know to set it.
+	 * Set as the field's "Container Class" in FluentForm; documented only here.
 	 */
 	private const CONTAINER_CLASS = 'ff-personnummer';
 

@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Provider
- *
  * Prints a stylized console.log badge on every front-end page load, colored
  * with the theme's --amrf-primary-color, --amrf-secondary-color and
  * --amrf-text-color.

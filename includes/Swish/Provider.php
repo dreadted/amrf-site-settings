@@ -7,12 +7,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Provider
- *
- * Registers the "Swish" tab onto amrf_forms_tabs (see Forms\Menu, the
- * shared "Forms" page these tabs live under) — number/amount/message plus
- * an "editable after scanning" toggle for each of the latter two. Same
- * mechanism as ContactForm\Provider's own tabs on the same filter.
+ * The Swish tab on the Forms page: number, amount, message, and "editable after scanning" toggles for the last two.
  *
  * @package Antropomorf\Swish
  */

@@ -15,8 +15,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class AdminHooks
- *
  * Sets up activation hook and admin-specific WordPress hooks for menu and settings integration.
  *
  * @package Antropomorf\Hooks
@@ -61,10 +59,7 @@ class AdminHooks
 
 		$renderer = new SettingsRenderer('amrf_admin_settings_tabs', 'amrf-admin-settings', fn() => __('Admin Panel Settings', 'amrf-admin'));
 
-		// Must instantiate before SettingsPage: its add_menu_page() call
-		// populates $admin_page_hooks for 'amrf-site-settings', which
-		// SettingsPage's add_submenu_page() needs to compute the right hook
-		// suffix.
+		// Before SettingsPage, whose add_submenu_page() needs the hook suffix from this add_menu_page().
 		new SiteSettingsMenu();
 		new SettingsPage($renderer);
 	}

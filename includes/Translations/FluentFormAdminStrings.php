@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class FluentFormAdminStrings
- *
  * Fluent Forms' admin scripts translate through a server-built key map
  * (admin_i18n) and fall back to English for keys missing from it. Adds the
  * keys its entries page uses, translated from Fluent Forms' own catalogue.

@@ -1,17 +1,6 @@
 /**
- * FluentForm consistency styling — enqueued only when the "Contact Forms"
- * Site Settings page's "Apply Consistent Contact Form Styling" toggle
- * (Repository::isConsistentStylingEnabled()) is on. Maps FluentForm's own
- * palette/border-radius custom properties onto this site's theme tokens,
- * plus the same field-level fixes amrf-theme's own assets/fluentform.css
- * already applied — ported here so every FluentForm on the site gets them
- * consistently, opt-in per site rather than baked into one theme.
- *
- * The button-specific rules below prefer the --amrf-button-* variables
- * (declared by the active theme itself, e.g. ptsussis-theme's tokens.css)
- * over the generic preset-color fallbacks — a theme's actual button design
- * and its abstract "primary" color are two different things, and a theme
- * that declares the former should win.
+ * FluentForm styling mapped onto the theme's tokens; enqueued only when the "consistent styling" toggle is on.
+ * Button rules prefer the theme's --amrf-button-* variables over generic preset colors.
  */
 :root {
 	--fluentform-primary: var(--amrf-form-primary);
@@ -23,14 +12,7 @@
 }
 
 /**
- * FluentForm's own input styling hardcodes a system-font stack
- * (.ff-el-form-control) instead of inheriting the page's font like the
- * rest of the form wrapper already does (.ff-default itself is already
- * font-family: inherit) — without this, the theme's body font never
- * reaches the actual input/select/textarea fields. font-size isn't set at
- * all by FluentForm's own CSS, so it falls back to the browser's own
- * built-in default for form controls (not the page's font-size) unless
- * told to inherit too.
+ * FluentForm hardcodes a system font on its controls and sets no font-size, so both inherit explicitly.
  */
 .fluentform .ff-el-form-control {
 	background: var(--amrf-input-background);
@@ -78,13 +60,7 @@ select.ff-el-form-control option:hover {
 }
 
 /**
- * FluentForm's own default stylesheet hardcodes .ff_btn_style's
- * border-radius (7px) and font-size (16px) rather than using
- * --fluentform-border-radius/inheriting, and form controls don't inherit
- * font-family from an ancestor's `inherit` the way normal elements do —
- * all three apply to every button variant, not just the primary one. Font
- * falls back to the same `inherit` as every other field when the theme
- * doesn't declare its own button font.
+ * FluentForm hardcodes .ff_btn_style's radius and font-size, and controls don't inherit font-family; applies to every button.
  */
 .ff-default .ff_btn_style {
 	border-radius: var(--fluentform-border-radius);
@@ -94,13 +70,7 @@ select.ff-el-form-control option:hover {
 }
 
 /**
- * FluentForm's own default stylesheet reads --fluentform-primary for the
- * input focus border, but hardcodes its submit button color (#007bff)
- * rather than using the variable — without this, the button never
- * reflects the theme's own button design at all. Both .ff-btn-primary
- * (a generic style variant, e.g. multi-step "next") and .ff-btn-submit
- * (what FluentForm's own default single-page submit button actually
- * carries — confirmed live, it does NOT get .ff-btn-primary) need this.
+ * FluentForm hardcodes its submit color, and its default submit button has .ff-btn-submit, not .ff-btn-primary.
  */
 .ff-default .ff-btn-primary:not(.ff_btn_no_style),
 .ff-default .ff-btn-submit:not(.ff_btn_no_style) {
@@ -127,10 +97,7 @@ select.ff-el-form-control option:hover {
 }
 
 /**
- * box-shadow and padding come from FluentForm's own fluent-forms-public.css
- * (not fluentform-public-default.css), stripped here rather than just left
- * unset so the success message sits flush with the modal instead of
- * looking like a separate card inside it.
+ * Strips fluent-forms-public.css's card look so the success message sits flush with the modal.
  */
 .ff-message-success {
 	border: none;
@@ -209,10 +176,7 @@ select.ff-el-form-control option:hover {
 }
 
 /**
- * min-height matches the collapsed one-row height amrf-contact-form-styling.js
- * sets inline; the transition is what makes that script's row expansion
- * animate instead of snapping — CSS transitions don't fire on the `rows`
- * attribute itself, only on an explicit pixel height.
+ * Animates amrf-contact-form-styling.js's row expansion: transitions fire on an explicit height, not on `rows`.
  */
 .fluentform textarea.ff-el-form-control {
 	line-height: 1.4;

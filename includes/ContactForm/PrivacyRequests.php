@@ -9,13 +9,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class PrivacyRequests
- *
- * Registers FluentForm submissions with WP's personal-data export/erase
- * tools (Tools > Export/Erase Personal Data) — FluentForm doesn't register
- * these itself. Since forms vary in field names, this dumps every field a
- * submission contains (titleized) and finds the matching email by scanning
- * all values for anything email-shaped, rather than assuming fixed keys.
+ * Adds FluentForm submissions to WP's personal-data export/erase tools, which FluentForm lacks.
+ * Forms vary, so every field is exported and the email is found by scanning all values.
  *
  * @package Antropomorf\ContactForm
  */
@@ -80,10 +75,7 @@ class PrivacyRequests
 	}
 
 	/**
-	 * Turns a decoded response into the {name, value} pairs
-	 * wp_privacy_personal_data_exporters expects, titleizing each raw field
-	 * key ("first_name" -> "First Name") since there's no per-form label
-	 * mapping to draw human-readable names from generically.
+	 * Exporter {name, value} pairs, titleizing raw keys since forms have no generic label map.
 	 *
 	 * @param array<string, mixed> $data
 	 * @return array<int, array{name: string, value: string}>
@@ -152,12 +144,7 @@ class PrivacyRequests
 	}
 
 	/**
-	 * Deletes the matching row outright rather than anonymizing it in place
-	 * — nothing about a private contact-form entry needs a public presence
-	 * to survive an erasure request the way, say, a comment thread might.
-	 *
-	 * Scans every submission in one call: paging with OFFSET while deleting
-	 * would shift rows past the next page's offset and skip them.
+	 * Deletes matching entries outright, in one call: OFFSET paging while deleting would skip rows.
 	 *
 	 * @return array{items_removed: bool, items_retained: bool, messages: array, done: bool}
 	 */

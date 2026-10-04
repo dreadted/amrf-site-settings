@@ -7,15 +7,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Repository
- *
- * Storage/defaults/sanitization for the Contact Forms + GDPR settings:
- * default contact form, consistency CSS, ALTCHA spam protection
- * (ContactForm\Altcha), retention scope/duration, and the ALTCHA HMAC key
- * (getAltchaHmacKey()).
- *
- * OPTION_NAME stays 'amrf_fluentform_privacy' to avoid dropping existing
- * sites' saved settings on upgrade.
+ * Storage, defaults and sanitizing for the Contact Forms and GDPR settings, including the ALTCHA HMAC key.
  *
  * @package Antropomorf\ContactForm
  */

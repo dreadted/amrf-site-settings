@@ -10,14 +10,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class PrivacyEraser
- *
- * Hooks FluentCRM contacts into WP's personal-data erasure (Tools > Erase
- * Personal Data), which FluentCRM doesn't do itself. The contact is reduced
- * (see ContactReducer), taken off its lists and tagged "Do not contact"
- * rather than deleted: that remainder is the proof of consent and blocks
- * further newsletters and confirmation emails.
- * Inert when FluentCRM isn't active.
+ * Adds FluentCRM contacts to WP's personal-data erasure, which FluentCRM lacks.
+ * Reduced and tagged "Do not contact", not deleted: the remainder proves consent and blocks further emails.
  *
  * @package Antropomorf\FluentCrm
  */

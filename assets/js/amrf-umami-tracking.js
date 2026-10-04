@@ -1,15 +1,5 @@
-// Wires matched elements to umami.track() via a real click listener, not
-// Umami's own data-umami-event auto-tracking — for an <a>, that auto-tracking
-// calls preventDefault() and manually navigates to its href once the tracking
-// call resolves, which would hijack any click a theme script already
-// intercepts (a modal trigger, an in-page anchor, etc.). Named after each
-// element's own visible text + the current page title — no per-button setup
-// needed in the theme. amrfUmamiButtonOverrides (from the
-// amrf_umami_tracked_buttons PHP filter, see Umami\Provider) is checked first
-// and wins on a match, letting a theme pin an exact name onto a specific
-// element. Elements that already carry a manual data-umami-event (set
-// directly in markup) are left untouched by both passes, for Umami's own
-// auto-tracking to handle instead.
+// A real click listener, not data-umami-event: on links that calls preventDefault() and hijacks theme click handlers.
+// Named from visible text + page title; amrfUmamiButtonOverrides wins, and manual data-umami-event elements are skipped.
 const trackButtons = () => {
 	const pageTitle = typeof amrfUmamiPageTitle !== "undefined" ? amrfUmamiPageTitle : "";
 
@@ -46,12 +36,7 @@ const trackButtons = () => {
 	});
 };
 
-// Marks outbound links for umami's own data-umami-event auto-tracking — safe
-// here since these clicks really do leave the site, so Umami's wait-then-
-// navigate behavior only confirms a navigation already under way, never
-// hijacks one a script meant to intercept. Skips elements trackButtons()
-// already wired up (data-amrf-tracked) so a button-styled outbound link keeps
-// its own event name instead of firing twice.
+// Outbound links can use Umami's own auto-tracking, since they leave the site anyway. Skips elements trackButtons() wired.
 const trackOutboundLinks = () => {
 	document.querySelectorAll("a").forEach((a) => {
 		if (

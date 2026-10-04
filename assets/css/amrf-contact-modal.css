@@ -1,16 +1,5 @@
 /**
- * Lightbox shell for the sitewide "#kontakt" contact link (see
- * includes/ContactForm/Modal.php + assets/js/amrf-contact-modal.js).
- * Only the modal chrome lives here — FluentForm's own field/label/button
- * markup keeps its own styling (fluentform-public-default.css, enqueued
- * alongside this by FluentForm's shortcode handler itself); the optional
- * consistency-CSS toggle (assets/css/amrf-contact-form-styling.css) is
- * what maps FluentForm's palette onto the site's own theme colors.
- *
- * Positioning/backdrop/open-close transition ported from ptsussis-theme's
- * assets/css/contact-modal.css — same dialog background/border-radius/
- * box-shadow tokens as this plugin's other frontend-facing modules already
- * assume exist (theme.json-generated --wp--preset--* custom properties).
+ * Lightbox shell for the sitewide "#contact" link (ContactForm\Modal); form fields keep FluentForm\'s own styling.
  */
 .amrf-contact-modal {
 	position: fixed;

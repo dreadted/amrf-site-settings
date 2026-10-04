@@ -9,8 +9,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class RetentionCron
- *
  * Daily cleanup of old FluentForm submissions and form-view statistics — FluentForm's free tier
  * saves its own per-form "auto_delete_days" setting but never acts on it.
  * Newsletter consent is logged in FluentCRM, so opt-in submissions expire too.

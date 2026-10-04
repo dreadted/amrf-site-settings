@@ -7,14 +7,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class QrCodeGenerator
- *
- * Creates the Swish QR code via Swish's QR API after each save, in uploads/
- * under a name derived from the settings, so nothing else is stored.
- *
- * Requested as SVG, not PNG/JPG: recoloring is then a plain DOM edit (see
- * applyBlackStyle()) instead of a pixel operation that depends on the
- * server's ImageMagick version.
+ * Swish QR code from Swish's API after each save, stored in uploads/ under a settings-derived name.
+ * SVG, not PNG, so recoloring is a DOM edit (applyBlackStyle()) independent of ImageMagick.
  *
  * @package Antropomorf\Swish
  */
@@ -147,14 +141,8 @@ class QrCodeGenerator
 	}
 
 	/**
-	 * Swish's API always returns its own brand gradient, with no request
-	 * parameter to change it. The returned SVG separates its logo artwork
-	 * (many gradients, an Illustrator export) from the scannable QR pattern,
-	 * which shares one simple two-stop gradient, `id="grad"` — blacking out
-	 * just those two stops recolors the QR pattern without touching the logo.
-	 *
-	 * Falls back to the original colored markup if the response isn't
-	 * parseable XML or Swish ever renames that gradient.
+	 * Swish always returns its brand gradient; only the QR pattern uses `id="grad"`, so blacking it out keeps the logo.
+	 * Returns the original markup if the SVG doesn't parse or the gradient is renamed.
 	 *
 	 * @param string $svg
 	 * @return string SVG markup, restyled if possible.

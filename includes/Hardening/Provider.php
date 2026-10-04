@@ -7,17 +7,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Provider
- *
- * Security/performance hardening. Applied here, unconditionally: XML-RPC
- * blocking, generic login error message, hiding the WP version generator
- * tag and RSD link, blocking ?username= at login, removing the /wp/v2/users
- * REST endpoint, and disabling core's emoji fallback. Near-universal, no
- * downside.
- *
- * The toggles on the "Hardening" page (SettingsPage, manage_options) are
- * applied by Uploads and Frontend. They change behavior some sites rely on,
- * so each defaults to true but stays a per-site opt-out.
+ * Always-on hardening: XML-RPC, login errors, version tag, RSD link, ?username=, /wp/v2/users and emoji.
+ * The Hardening page's toggles (Uploads, Frontend) change behavior some sites rely on, so each is an opt-out.
  *
  * @package Antropomorf\Hardening
  */

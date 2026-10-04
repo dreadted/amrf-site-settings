@@ -7,29 +7,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Provider
- *
- * Wraps the third-party Support Genix Lite plugin (its own admin pages/
- * tables/hooks, prefixed apbd_wps_/apbd-wps/support-genix, untouched here):
- *
- * - A "Support Tickets" page — an iframe onto the front-end /ticket page —
- *   as its own top-level add_menu_page(), capability 'edit_posts'.
- *   Deliberately NOT nested under Admin\SiteSettingsMenu's "Site Settings":
- *   that menu's capability is 'edit_theme_options', and an Editor with only
- *   this one page allowed would need the submenu individually allow-listed
- *   for the parent menu to show at all. A separate top-level menu at
- *   'edit_posts' sidesteps that.
- * - An "Apply Defaults" button on Support Genix Lite's OWN settings page
- *   (Defaults).
- * - Ticket page lockdown for non-administrators: hidden from the Pages list,
- *   no edit/delete, and left out of the sitemap. The page is the one in
- *   Support Genix Lite's own "Ticket Page" setting (ticketPageId()).
- * - Dequeues the docs/knowledge-base styles and script Support Genix Lite
- *   always loads on the front end, even though this site never shows that
- *   content to logged-out visitors.
- * - Brand-color shadowing on the plugin's portal header output via
- *   apply_filters('amrf_site_colors', [...]) — named generally since other
- *   consumers may want the same site colors.
+ * Support Genix Lite: Support Tickets page, Apply Defaults, ticket page lockdown, guest docs assets and brand colors.
+ * Its own top-level menu at edit_posts: under Site Settings an Editor would need it allow-listed separately.
  *
  * @package Antropomorf\SupportGenix
  */
@@ -39,10 +18,7 @@ class Provider
 	private const MENU_SLUG = 'support-tickets';
 
 	/**
-	 * Docs-related style handles Support Genix Lite always enqueues on the
-	 * front end even though logged-out visitors never see any Support Genix
-	 * content — Chrome DevTools CSS Coverage confirms 100% unused bytes for
-	 * each of these on the public site.
+	 * Docs styles Support Genix loads on every front-end page, unused for logged-out visitors.
 	 */
 	private const UNUSED_DOCS_STYLE_HANDLES = [
 		'support-genix-docs-modern-category',
@@ -52,12 +28,7 @@ class Provider
 	];
 
 	/**
-	 * The docs/knowledge-base script handle — registered as
-	 * "{$assetsSlug}-docs-modern" (modules/Apbd_wps_knowledge_base.php:793),
-	 * confusingly inside that module's ClientStyle() method alongside the
-	 * style handles above, not a separate ClientScript() method. It's a
-	 * SCRIPT handle, so it needs wp_dequeue_script(), not wp_dequeue_style()
-	 * — see dequeueGuestDocsScript().
+	 * Registered in the knowledge-base module's ClientStyle() but a script, so it needs wp_dequeue_script().
 	 */
 	private const UNUSED_DOCS_SCRIPT_HANDLE = 'support-genix-docs-modern';
 
@@ -67,12 +38,7 @@ class Provider
 
 		new Defaults();
 
-		// Support Genix Lite registers these styles (and, confusingly, the docs
-		// script below) on its own 'wp_print_styles' callback at priority 998
-		// (core/secondary_helper.php), not on 'wp_enqueue_scripts' — a dequeue
-		// on wp_enqueue_scripts, however late, would run before they exist and
-		// silently do nothing. Priority 999 on the same action, front-end only,
-		// guarantees it runs right after.
+		// Support Genix registers these on wp_print_styles at 998, after wp_enqueue_scripts, so they can only be dequeued here.
 		add_action('wp_print_styles', [$this, 'dequeueUnusedDocsStyles'], 999);
 		add_action('wp_print_styles', [$this, 'dequeueGuestDocsScript'], 999);
 
@@ -106,12 +72,7 @@ class Provider
 	}
 
 	/**
-	 * The ticket portal (Apbd_wps_settings::portal_templates(), also what
-	 * our own "Support Tickets" admin iframe points at) prints its own raw
-	 * <html> document and never calls wp_head() — so amrf-support-genix.css,
-	 * enqueued above via admin_enqueue_scripts, never reaches it on either
-	 * surface. Link the same stylesheet directly into its one <head>
-	 * extension point instead.
+	 * The ticket portal prints its own <html> without wp_head(), so the stylesheet is linked into its head hook.
 	 *
 	 * @return void
 	 */
@@ -198,10 +159,7 @@ class Provider
 	}
 
 	/**
-	 * Replicates Support Genix Lite's own language-key resolution so writes
-	 * land under the same key its GetOption()/AddOption() reads back.
-	 * WPML/Polylang-gated, not locale-gated — always 'en' without either
-	 * active, regardless of site language.
+	 * Mirrors Support Genix's language key so writes land where it reads; 'en' unless WPML or Polylang is active.
 	 *
 	 * @return string
 	 */

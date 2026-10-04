@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class AnalyticsExclusion
- *
  * Keeps Umami off FluentCRM's public pages (unsubscribe, manage subscription,
  * double opt-in confirmation, view in browser). Inert when FluentCRM isn't active.
  *

@@ -9,8 +9,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class SettingsPage
- *
  * Registers the "Admin Panel Settings" page. Tabs register
  * themselves onto the amrf_admin_settings_tabs filter; this class just
  * renders whatever's there.

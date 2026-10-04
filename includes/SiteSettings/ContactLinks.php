@@ -7,16 +7,9 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class ContactLinks
- *
- * Email links with a client-side-assembled address and phone/Swish links that
- * become copy buttons on desktop: [amrf_email_link], [amrf_phone_link] and the
- * script and styles a theme can reuse via amrf_enqueue_contact_links().
- *
- * Markup contract:
- * - `a.amrf-email-link[hidden][data-user][data-domain]` with ROT13-encoded parts
- *   and a `.amrf-email-link-text` child that receives the address.
- * - `a.amrf-copy-link[data-copy-value]` with a `.amrf-copy-text` child.
+ * [amrf_email_link], [amrf_phone_link]: JS-assembled email links and desktop copy buttons (amrf_enqueue_contact_links()).
+ * Markup: a.amrf-email-link[hidden][data-user][data-domain] (ROT13) with .amrf-email-link-text,
+ * and a.amrf-copy-link[data-copy-value] with .amrf-copy-text.
  *
  * @package Antropomorf\SiteSettings
  */

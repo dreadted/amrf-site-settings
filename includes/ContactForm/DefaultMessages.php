@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class DefaultMessages
- *
  * Falls back to FluentForm's own translated default for any global
  * validation message saved blank in Global Settings → Miscellaneous.
  *

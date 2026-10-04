@@ -7,13 +7,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Favicons
- *
- * Favicon <link> tags + /site.webmanifest. Unconditional, independent of
- * enable_seo_output — these are core site identity, not optional SEO
- * output, so they still need to render even with that toggle off.
- *
- * Icons come from BrandImages; a missing one is left out.
+ * Favicon links and /site.webmanifest from BrandImages; always output, since they're site identity, not SEO.
  *
  * @package Antropomorf\SiteSettings
  */

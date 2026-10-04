@@ -9,8 +9,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Menu
- *
  * Registers the "Forms" page shell onto amrf_site_settings_pages (see
  * Admin\SiteSettingsMenu) — knows nothing about Swish or Contact Forms
  * specifically, only that some tabs exist on amrf_forms_tabs.

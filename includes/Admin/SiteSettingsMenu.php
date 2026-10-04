@@ -9,17 +9,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class SiteSettingsMenu
- *
- * Owns the plugin's top-level "Site Settings" admin menu. Tabs registered on
- * amrf_site_settings_tabs share one page via a nav-tab-wrapper (see
- * SiteSettings\Provider); modules on amrf_site_settings_pages each get their
- * own add_submenu_page() when they need their own capability or full-custom
- * markup.
- *
- * Capability: edit_theme_options, not manage_options — matches what
- * Settings\RolePolicy grants via a role's "site_menus_cap" toggle, so
- * non-admin roles can reach this menu without a separate capability.
+ * The top-level "Site Settings" menu: tabs share one page, amrf_site_settings_pages entries get their own submenus.
+ * edit_theme_options, not manage_options, so roles granted site_menus_cap in RolePolicy can reach it.
  *
  * @package Antropomorf\Admin
  */
@@ -88,10 +79,7 @@ class SiteSettingsMenu
 	}
 
 	/**
-	 * Generic render callback for an amrf_site_settings_pages entry — a plain
-	 * heading plus the same Settings API form glue the tabbed page uses. A
-	 * module needing fully custom markup passes its own 'render' callback
-	 * instead of 'option_group'/'page_slug' to bypass this.
+	 * Default renderer for an amrf_site_settings_pages entry; a module with custom markup passes its own 'render'.
 	 *
 	 * @param array $page One amrf_site_settings_pages entry.
 	 * @return void

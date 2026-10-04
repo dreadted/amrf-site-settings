@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class SiteLocale
- *
  * Contact notes are stored as text, so they're written in the site's
  * language rather than that of whichever user triggers them.
  *

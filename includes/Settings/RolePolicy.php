@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class RolePolicy
- *
  * Applies the per-role policy saved on "Admin Panel Settings": menu allow-lists,
  * capabilities, login redirects, password rules and admin bar cleanup.
  *
@@ -399,17 +397,8 @@ class RolePolicy
 	}
 
 	/**
-	 * FluentForm registers its top-level "Fluent Forms" menu item and its
-	 * own "Forms" submenu under the exact same slug (fluent_forms) and
-	 * capability (fluentform_dashboard_access) — hiding "Forms" from the
-	 * visible menu (allowed_menu_items) doesn't stop a user who only has
-	 * entries access from reaching it directly, since clicking the
-	 * top-level sidebar label — or just typing the URL — lands on that
-	 * same page. fluentform_dashboard_access itself can't be revoked
-	 * either: FluentForm's own menu registration bails out entirely
-	 * without it, taking the (wanted) Entries page down with it. Redirect
-	 * away from this one specific page instead, for anyone who can see it
-	 * but isn't an actual form manager.
+	 * Fluent Forms' top-level item and its Forms submenu share one slug, so hiding Forms doesn't stop entries-only users.
+	 * The capability can't be revoked without losing Entries too, so non-managers are redirected away instead.
 	 *
 	 * @return void
 	 */

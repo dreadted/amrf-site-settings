@@ -7,14 +7,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Provider
- *
- * Registers the SEO/Business & Contact/Address/Social Media tabs onto the
- * amrf_site_settings_tabs registry (see Admin\SiteSettingsMenu). All four
- * tabs save into the same option (Repository::OPTION_NAME) via one
- * option_group, each with its own page_slug so do_settings_sections() only
- * pulls that tab's section. The SEO tab, including core's blog_public
- * toggle, is for administrators only.
+ * The SEO, Business & Contact, Address and Social Media tabs: one shared option, one page_slug per tab.
+ * The SEO tab, including core's blog_public toggle, is for administrators only.
  *
  * @package Antropomorf\SiteSettings
  */
@@ -69,10 +63,7 @@ class Provider
 	}
 
 	/**
-	 * Called via each tab's 'register' callback from the tabs registry
-	 * (Admin\SiteSettingsMenu::registerSettings(), on admin_init) — registers
-	 * everything in one pass regardless of which tab triggered it first, then
-	 * no-ops on the remaining 3 calls.
+	 * Called by every tab's 'register' callback; registers everything on the first call.
 	 *
 	 * @return void
 	 */
@@ -154,10 +145,7 @@ class Provider
 	}
 
 	/**
-	 * Renders one field by its declared type. "url" fields render as plain
-	 * text inputs, not <input type="url"> — an HTML5 url input silently
-	 * blocks the whole form's submission on one malformed value with no
-	 * visible error. esc_url_raw() (Repository::sanitize()) still sanitizes.
+	 * "url" fields are text inputs: type="url" silently blocks the whole form on one bad value. sanitize() still cleans them.
 	 *
 	 * @param string $key  Field key, matches a Repository::getFields() entry.
 	 * @param string $type Field type, matches a Repository::getFields() entry.
@@ -268,10 +256,7 @@ class Provider
 	}
 
 	/**
-	 * Renders a toggle checkbox, same .switch/.slider markup as
-	 * Settings\Manager::renderCheckbox(). Also emits a "{$key}_submitted"
-	 * hidden marker so Repository::sanitize() can tell "submitted unchecked"
-	 * apart from "a different tab was submitted".
+	 * The "{$key}_submitted" marker lets sanitize() tell an unchecked toggle from another tab's save.
 	 *
 	 * @param string $key   Field key.
 	 * @param string $field_name Full input name (OPTION_NAME[key]).
@@ -329,10 +314,7 @@ class Provider
 	}
 
 	/**
-	 * Enqueued unconditionally on the "Site Settings" page rather than
-	 * tracking which tab actually has the media field. Hook suffix is
-	 * "toplevel_page_amrf-site-settings" since this page shares its slug
-	 * with the top-level menu (Admin\SiteSettingsMenu::addMenu()).
+	 * Loaded on the whole Site Settings page; toplevel_page_ because it shares the top-level menu's slug.
 	 *
 	 * @param string $hook Current admin page hook suffix.
 	 * @return void

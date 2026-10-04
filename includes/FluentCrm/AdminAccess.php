@@ -9,8 +9,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class AdminAccess
- *
  * Grants FluentCRM permissions per role in code, instead of FluentCRM's
  * per-user Managers setting stored in the database, and trims FluentCRM's
  * admin UI for non-administrators. Inert when FluentCRM isn't active.

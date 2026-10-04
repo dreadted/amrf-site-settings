@@ -7,13 +7,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Provider
- *
- * Registers "Umami Settings" onto the amrf_site_settings_pages registry
- * (manage_options), enqueues the front-end tracking script with the
- * umami_site value + button-tracking config injected, and registers the
- * "Analytics" iframe page as its own top-level menu (same
- * edit_posts-vs-parent-capability reasoning as SupportGenix's ticket page).
+ * Umami Settings page, the front-end tracking script with its config, and the Analytics iframe page.
+ * Analytics is a top-level menu for the same capability reason as SupportGenix's ticket page.
  *
  * @package Antropomorf\Umami
  */
@@ -178,10 +173,7 @@ class Provider
 	}
 
 	/**
-	 * One CSS selector per line, auto-tracked and named after each matched
-	 * element's own visible text. Always shows the effective list (stored
-	 * override, or DEFAULT_BUTTON_SELECTORS when empty) — clearing the field
-	 * and saving reverts to the defaults rather than disabling tracking.
+	 * One selector per line, showing the effective list; an empty field reverts to the defaults.
 	 *
 	 * @return void
 	 */

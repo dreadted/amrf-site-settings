@@ -9,8 +9,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Defaults
- *
  * An "Apply Defaults" button injected onto Support Genix Lite's OWN settings
  * page that seeds its ticket categories, assignment rule, settings and
  * ticket page once.
@@ -237,9 +235,7 @@ class Defaults
 			'disable_guest_email_to_ticket_creation' => 'Y',
 			'footer_cp_text' => [$lang => ''],
 			'ticket_page' => [$lang => $this->ensureTicketPage($lang)],
-			// Step 4 is Support Genix Lite's current wizard-completed value
-			// (confirmed by running its wizard by hand) — may need bumping
-			// if that plugin adds wizard steps in a future update.
+			// Support Genix Lite's wizard-completed step; may need bumping if it adds steps.
 			'setup_wizard_step' => 4,
 			'setup_wizard_finished' => true,
 		];
@@ -256,11 +252,7 @@ class Defaults
 		$merged_settings = array_merge($current_settings, $updated_settings);
 		update_option('support-genix_o_Apbd_wps_settings', $merged_settings, true);
 
-		// update_option() returns false both on a real failure AND when the
-		// new value is identical to what's already stored (a documented WP
-		// quirk) — re-running this once ticket_page/wizard state already
-		// match would otherwise always look like a failure. Verify what's
-		// actually persisted instead of trusting the return value.
+		// update_option() also returns false when the value is unchanged, so check what's stored.
 		$stored = get_option('support-genix_o_Apbd_wps_settings', []);
 		foreach ($updated_settings as $key => $value) {
 			if (($stored[$key] ?? null) !== $value) {

@@ -1,8 +1,6 @@
 /**
- * Sitewide "#swish" link handling — scans the page for `<a href="#swish">`
- * and swaps each for either a deep link (mobile) or a QR code (desktop).
- * Config comes from one global object, amrfSwish (Swish\FrontendProvider);
- * device detection and the copy button come from amrf-contact-links.js.
+ * Swaps each <a href="#swish"> for a deep link on mobile or a QR code on desktop.
+ * Config: amrfSwish (Swish\FrontendProvider); device detection and copy button: amrf-contact-links.js.
  */
 
 function setupSwishLink(link) {

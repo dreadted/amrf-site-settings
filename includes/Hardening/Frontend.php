@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Frontend
- *
  * The Frontend tab's hardening: author archives, blog posts, comments and
  * site search off, 404s redirected home, jQuery Migrate removed, and the
  * logged-in-only lock.
@@ -79,11 +77,7 @@ class Frontend
 	}
 
 	/**
-	 * Returning anything that isn't a WP_Sitemaps_Provider instance drops
-	 * the provider entirely (see WP_Sitemaps_Registry::add_provider()) —
-	 * /wp-sitemap-users-1.xml becomes a genuine 404 rather than just being
-	 * hidden from the index, so there's nothing left to find by guessing
-	 * the URL either.
+	 * Dropping the provider makes /wp-sitemap-users-1.xml a real 404, not just hidden from the index.
 	 *
 	 * @param \WP_Sitemaps_Provider|null $provider
 	 * @param string $name

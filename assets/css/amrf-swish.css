@@ -1,10 +1,6 @@
 /**
- * Replaces a "#swish" link entirely on devices unlikely to run the Swish
- * app (see amrf-swish.js). background/border-radius/box-shadow read the
- * active theme's own color.background / custom.borderRadius /
- * shadow.presets "card" tokens when it declares them (see ptsussis-theme's
- * theme.json) — the literal fallbacks are only for a theme that doesn't,
- * not this plugin's own preferred values.
+ * QR code that replaces a "#swish" link on devices unlikely to run the Swish app (see amrf-swish.js).
+ * Theme tokens win; the literal fallbacks are only for themes that don't declare them.
  */
 .amrf-swish-qr-wrap {
 	display: block;

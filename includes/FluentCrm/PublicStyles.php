@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class PublicStyles
- *
  * Layout adjustments for FluentCRM's public unsubscribe/preference pages.
  *
  * @package Antropomorf\FluentCrm

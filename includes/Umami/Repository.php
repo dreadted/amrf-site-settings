@@ -51,10 +51,7 @@ class Repository
 	}
 
 	/**
-	 * Effective button-tracking selector list: the stored override if the
-	 * admin has set one, otherwise DEFAULT_BUTTON_SELECTORS. Clearing the
-	 * admin field back to empty reverts to the defaults, it does not disable
-	 * auto-discovery.
+	 * The stored selector override, or DEFAULT_BUTTON_SELECTORS when empty; empty never disables tracking.
 	 *
 	 * @return string[]
 	 */

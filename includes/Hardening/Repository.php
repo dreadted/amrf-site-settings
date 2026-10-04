@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Repository
- *
  * Storage/defaults/sanitization for the behavior-changing hardening toggles
  * (see Provider). Most default to true — opt-out, not opt-in; see getDefaults().
  *

@@ -10,12 +10,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class DefaultCampaignTemplate
- *
- * Fills every new campaign with FluentCRM's default campaign template
- * (the `default_campaign_template_id` option). FluentCRM stores that
- * option but ships its apply-on-create step disabled. Inert when
- * FluentCRM isn't active or no default is set.
+ * Applies FluentCRM's default campaign template to new campaigns; FluentCRM stores the option but never applies it.
  *
  * @package Antropomorf\FluentCrm
  */

@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class EmailSignoff
- *
  * Personalizes WP core's privacy-request emails with Site Settings'
  * person_name instead of core's default "All at ###SITENAME###".
  *
@@ -23,10 +21,7 @@ class EmailSignoff
 	}
 
 	/**
-	 * Runs before WP core substitutes ###SITENAME###/###SITEURL### into the
-	 * content, so both the English source and the real Swedish core
-	 * translation are matched literally rather than trying to match against
-	 * a sitename that hasn't been substituted in yet.
+	 * Runs before core substitutes ###SITENAME###, so the English and Swedish texts match literally.
 	 */
 	public function personalize(string $content): string
 	{

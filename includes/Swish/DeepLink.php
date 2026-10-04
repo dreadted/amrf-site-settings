@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class DeepLink
- *
  * Builds Swish's documented "open the app with these details prefilled"
  * deep-link URL.
  *

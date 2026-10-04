@@ -7,13 +7,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class RetentionShortcode
- *
- * [amrf_contact_retention] — the "Delete submissions after this many days"
- * GDPR setting (Repository::getRetentionDays()), rendered as a
- * grammatically correct noun phrase for use in a Privacy Policy page's own
- * content, so that copy can never drift out of sync with the
- * admin-configured value the way a hand-typed number would.
+ * [amrf_contact_retention]: the GDPR retention setting as a noun phrase, so a privacy policy can't drift from it.
  *
  * @package Antropomorf\ContactForm
  */

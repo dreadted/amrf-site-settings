@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Provider
- *
  * Keeps FluentCRM from setting its contact/campaign identification cookies
  * on visitors. Inert when FluentCRM isn't active.
  *

@@ -9,8 +9,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Uploads
- *
  * The Images tab's hardening: WebP output and conversion with duplicate
  * blocking, sanitized SVG uploads for administrators, restricted media
  * deletion, and no core default image sizes.
@@ -76,13 +74,8 @@ class Uploads
 	}
 
 	/**
-	 * SVGs can carry <script>, event-handler attributes, and external
-	 * references — treated as active content, not a plain image format, so
-	 * this whole feature is gated to administrators (manage_options) and
-	 * every uploaded file is sanitized before WordPress stores it.
-	 * Deliberately not `unfiltered_html`: on a non-multisite install
-	 * WordPress grants that capability to Editors too by default, so it
-	 * doesn't actually distinguish admin from editor.
+	 * SVG is active content, so uploads are sanitized and limited to manage_options;
+	 * unfiltered_html would let Editors in too on single-site installs.
 	 *
 	 * @param array $mimes
 	 * @return array
@@ -245,10 +238,7 @@ class Uploads
 		$this->pendingUploadHash = null;
 	}
 
-	// Full resolution preserved — only the format changes here. The smaller variants
-	// actually served on the front end come from the theme's add_image_size()
-	// registrations, generated via wp_generate_attachment_metadata() (see
-	// forceWebpOutputFormat()/applyWebpQuality() below).
+	// Full resolution; the front-end sizes come from the theme's add_image_size().
 	private function convertToWebp(string $file_path): ?string
 	{
 		$editor = wp_get_image_editor($file_path);

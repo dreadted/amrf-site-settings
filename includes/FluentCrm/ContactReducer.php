@@ -18,12 +18,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class ContactReducer
- *
- * Strips an unsubscribed contact down to what's still needed: the email,
- * status, source, dates, unsubscribe reason, system-log notes (consent and
- * unsubscribe records) and the "Do not contact" tag. Runs on every
- * unsubscribe, and from PrivacyEraser. Inert when FluentCRM isn't active.
+ * Strips an unsubscribed contact to email, status, source, dates, unsubscribe reason, system-log notes and "Do not contact".
+ * Runs on every unsubscribe and from PrivacyEraser.
  *
  * @package Antropomorf\FluentCrm
  */

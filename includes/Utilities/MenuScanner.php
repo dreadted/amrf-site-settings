@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class MenuScanner
- *
  * Scans registered WordPress admin menus and submenus to collect menu item metadata.
  *
  * @package Antropomorf\Utilities

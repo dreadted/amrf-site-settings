@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class MenuOrder
- *
  * For non-administrators, moves FluentCRM and Fluent Forms from the top of
  * the admin menu to right after Pages.
  *

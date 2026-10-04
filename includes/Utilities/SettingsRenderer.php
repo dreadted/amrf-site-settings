@@ -7,10 +7,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Renders one tab-based settings page: a nav-tab-wrapper switched by
- * $_GET['tab'], with each tab's Settings API fields underneath. Instantiated
- * once per tab group (e.g. once for Admin Panel Settings, once for Site
- * Settings) rather than once for the whole plugin.
+ * One tabbed settings page (nav-tab-wrapper switched by $_GET['tab']), instantiated once per tab group.
  *
  * @package Antropomorf\Utilities
  */

@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Repository
- *
  * Manages storage, retrieval, and defaulting of plugin settings.
  *
  * @package Antropomorf\Settings
@@ -37,10 +35,7 @@ class Repository
 					'login_redirect_url' => '/',
 					'admin_default_page' => 'profile.php',
 					'allowed_menu_items' => [
-						// Full URL — the menu slug IS the target URL
-						// (RolePolicy::addCustomPageToMenu()), matched
-						// exactly. Manager::syncPageEditorLinkAllowedMenuItem()
-						// keeps this in sync after activation.
+						// Full URL: the menu slug is the target URL, matched exactly (RolePolicy::addCustomPageToMenu()).
 						home_url('/#builder_active'),
 						'fluent_forms',
 						'fluentcrm-admin',

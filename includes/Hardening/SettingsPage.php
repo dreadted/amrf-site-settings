@@ -9,8 +9,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class SettingsPage
- *
  * The "Hardening" admin page under Site Settings, with its Images and
  * Frontend tabs.
  *

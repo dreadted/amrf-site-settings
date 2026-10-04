@@ -14,17 +14,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Altcha
- *
- * Sitewide, invisible proof-of-work spam protection for every FluentForm,
- * instead of FluentForm's built-in Cloudflare Turnstile field — Turnstile's
- * site key is domain-locked, so a cloned dev/staging DB breaks it. ALTCHA
- * signs/verifies challenges with a local auto-generated HMAC secret
- * (Repository::getAltchaHmacKey()), no external service or config needed.
- *
- * The widget is injected into every form via FluentForm's own render hooks,
- * invisible (display="invisible" auto="onsubmit"), toggled sitewide via
- * Repository::isAltchaEnabled() (on by default).
+ * Invisible proof-of-work spam protection on every FluentForm, signed with a local HMAC key.
+ * Replaces Turnstile, whose domain-locked site key breaks on cloned dev/staging databases.
  *
  * @package Antropomorf\ContactForm
  */
@@ -158,7 +149,7 @@ class Altcha
 	 * broken page.
 	 *
 	 * @param array $fields    Unused — required by the hook signature.
-	 * @param array $formData  The submitted form data, by reference.
+	 * @param array $formData  The submitted form data.
 	 * @return void
 	 */
 	public function validateSubmission($fields, $formData): void

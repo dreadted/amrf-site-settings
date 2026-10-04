@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Provider
- *
  * Registers the "Contact Forms" and "GDPR" tabs onto amrf_forms_tabs (see
  * Forms\Menu, the shared "Forms" page). Both tabs share one option
  * (Repository::OPTION_NAME) via one option_group.

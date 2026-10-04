@@ -10,14 +10,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class ConsentLog
- *
- * Records newsletter opt-ins from Fluent Forms and unsubscribes that
- * FluentCRM doesn't log itself as system-log notes on the contact, so
- * proof of consent outlives the form submission. An opt-in from an
- * unsubscribed contact sends a confirmation email instead of re-subscribing,
- * unless the contact is tagged "Do not contact". Inert when FluentCRM isn't
- * active.
+ * Logs newsletter opt-ins and unsubscribes as notes on the FluentCRM contact, so proof of consent outlives the submission.
+ * An opt-in from an unsubscribed contact sends a confirmation email instead, unless tagged "Do not contact".
  *
  * @package Antropomorf\FluentCrm
  */

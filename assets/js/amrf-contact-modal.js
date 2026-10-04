@@ -1,10 +1,5 @@
 /**
- * Modal for the sitewide "#contact" contact link — opens for any
- * `<a href="#contact">` or `[data-contact-trigger]` element. The form inside
- * is FluentForm's own markup (Modal.php); this manages the modal shell
- * (open/close, focus trapping, auto-close after FluentForm's
- * "fluentform_submission_success" event) and pre-fills the form's Subject
- * field from the trigger element's own data-topic, if it has one.
+ * Modal for <a href="#contact"> and [data-contact-trigger]: focus trap, close after submit, Subject from data-topic.
  */
 (function () {
 	var modal = document.querySelector('[data-contact-modal]');
@@ -16,11 +11,7 @@
 	var backdrop = modal.querySelector('[data-contact-backdrop]');
 	var closeButton = modal.querySelector('[data-contact-close]');
 	var form = modal.querySelector('form');
-	// .ff-el-form-control is FluentForm's class for every visible input/textarea
-	// (not checkboxes/radios/hidden fields) — except its own honeypot field
-	// (.ff-hpsf-container), which carries the same class despite being
-	// display:none, so it has to be excluded explicitly or it wins as the
-	// first match and silently swallows the .focus() call below.
+	// FluentForm's hidden honeypot also has .ff-el-form-control and would swallow the focus.
 	var firstTextField = form
 		? Array.prototype.find.call(
 				form.querySelectorAll('input.ff-el-form-control, textarea.ff-el-form-control'),

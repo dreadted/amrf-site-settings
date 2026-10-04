@@ -11,12 +11,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class DoNotContact
- *
- * The "Do not contact" tag marks contacts who asked never to be contacted
- * again: tagging unsubscribes them, no status change can subscribe them
- * while tagged, and a newsletter opt-in on the site sends them no
- * confirmation email. Inert when FluentCRM isn't active.
+ * "Do not contact": tagging unsubscribes, no status change re-subscribes while tagged, and opt-ins send no confirmation.
  *
  * @package Antropomorf\FluentCrm
  */

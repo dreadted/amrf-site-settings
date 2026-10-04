@@ -7,8 +7,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Class Repository
- *
  * Storage, defaults, and sanitization for the Swish tab's settings. The QR
  * code is derived from them by QrCodeGenerator and is not stored here.
  *
@@ -64,10 +62,8 @@ class Repository
 	}
 
 	/**
-	 * "125,50" / "125.50" / "125" -> "125.50" / "125" ; blank stays blank.
-	 * Swish amounts are decimal, and a Swedish keyboard's numeric input
-	 * naturally produces a comma decimal separator, which the QR API (and a
-	 * plain (float) cast) both need as a period instead.
+	 * "125,50" / "125.50" / "125" -> "125.50" / "125"; blank stays blank.
+	 * A Swedish keyboard types a decimal comma, which the QR API and a (float) cast both need as a period.
 	 *
 	 * @param string $raw
 	 */
