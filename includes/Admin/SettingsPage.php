@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
 /**
  * Class SettingsPage
  *
- * Registers the "Admin Panel Settings" page and its assets. Tabs register
+ * Registers the "Admin Panel Settings" page. Tabs register
  * themselves onto the amrf_admin_settings_tabs filter; this class just
  * renders whatever's there.
  *
@@ -20,9 +20,6 @@ if (!defined('ABSPATH')) {
 class SettingsPage
 {
 	private $renderer;
-
-	/** Hook suffix returned by add_submenu_page(), used to scope asset loading. */
-	private $hookSuffix;
 
 	/**
 	 * SettingsPage constructor.
@@ -34,7 +31,6 @@ class SettingsPage
 		$this->renderer = $renderer;
 		add_action('admin_menu', [$this, 'addAdminMenu']);
 		add_action('admin_init', fn() => SettingsRenderer::registerSettings('amrf_admin_settings_tabs'));
-		add_action('admin_enqueue_scripts', [$this, 'enqueueAssets']);
 	}
 
 	/**
@@ -45,31 +41,13 @@ class SettingsPage
 	 */
 	public function addAdminMenu()
 	{
-		$this->hookSuffix = add_submenu_page(
+		add_submenu_page(
 			SiteSettingsMenu::MENU_SLUG,
 			__('Admin Panel Settings', 'amrf-admin'),
 			__('Admin Panel Settings', 'amrf-admin'),
 			'manage_options',
 			'amrf-admin-settings',
 			[$this->renderer, 'render']
-		);
-	}
-
-	/**
-	 * Enqueue styles and scripts for the admin settings page.
-	 *
-	 * @param string $hook Current admin page hook suffix.
-	 * @return void
-	 */
-	public function enqueueAssets($hook)
-	{
-		if ($this->hookSuffix !== $hook) {
-			return;
-		}
-
-		wp_enqueue_style(
-			'amrf-admin-settings',
-			AMRF_ADMIN_PLUGIN_URL . 'assets/css/amrf-admin-settings.css'
 		);
 	}
 }

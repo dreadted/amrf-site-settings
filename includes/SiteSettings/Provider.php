@@ -38,7 +38,6 @@ class Provider
 		add_filter('amrf_site_settings_tabs', [$this, 'registerTabs']);
 		add_action('admin_enqueue_scripts', [$this, 'enqueueMediaScript']);
 		add_action('admin_enqueue_scripts', [$this, 'enqueueColorFieldScript']);
-		add_action('admin_enqueue_scripts', [$this, 'enqueueSwitchStyles']);
 		add_action('admin_enqueue_scripts', [$this, 'enqueueSearchVisibilityScript']);
 		add_action('wp_ajax_' . self::AJAX_ACTION, [$this, 'ajaxToggleSearchEngineVisibility']);
 
@@ -371,20 +370,6 @@ class Provider
 			[],
 			filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/js/amrf-color-field.js'),
 			true
-		);
-	}
-
-	/**
-	 * Shared .switch/.slider styles, enqueued unconditionally here too so
-	 * this tab's toggles render correctly.
-	 *
-	 * @return void
-	 */
-	public function enqueueSwitchStyles(): void
-	{
-		wp_enqueue_style(
-			'amrf-admin-settings',
-			AMRF_ADMIN_PLUGIN_URL . 'assets/css/amrf-admin-settings.css'
 		);
 	}
 

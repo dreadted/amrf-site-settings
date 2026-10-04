@@ -30,8 +30,6 @@ class Provider
 		add_filter('option_page_capability_' . self::OPTION_GROUP, function () {
 			return 'edit_theme_options';
 		});
-
-		add_action('admin_enqueue_scripts', [$this, 'enqueueSwitchStyles']);
 	}
 
 	/**
@@ -143,15 +141,5 @@ class Provider
 			checked($checked, true, false),
 			esc_html__('Editable by the payer after scanning', 'amrf-admin')
 		);
-	}
-
-	/**
-	 * Shared .switch/.slider styles, enqueued unconditionally.
-	 *
-	 * @return void
-	 */
-	public function enqueueSwitchStyles(): void
-	{
-		wp_enqueue_style('amrf-admin-settings', AMRF_ADMIN_PLUGIN_URL . 'assets/css/amrf-admin-settings.css');
 	}
 }

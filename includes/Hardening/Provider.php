@@ -52,7 +52,6 @@ class Provider
 
 		add_filter('amrf_site_settings_pages', [$this, 'registerPages']);
 		add_filter(self::TABS_FILTER, [$this, 'registerTabs']);
-		add_action('admin_enqueue_scripts', [$this, 'enqueueSwitchStyles']);
 	}
 
 	/**
@@ -810,20 +809,6 @@ class Provider
 			esc_attr(Repository::OPTION_NAME),
 			(int) $settings['webp_quality'],
 			esc_html__('Applies to both the WebP format conversion above and every automatically generated responsive image size (1–100).', 'amrf-admin')
-		);
-	}
-
-	/**
-	 * Shared .switch/.slider styles, enqueued unconditionally — cheap, scoped
-	 * class names.
-	 *
-	 * @return void
-	 */
-	public function enqueueSwitchStyles(): void
-	{
-		wp_enqueue_style(
-			'amrf-admin-settings',
-			AMRF_ADMIN_PLUGIN_URL . 'assets/css/amrf-admin-settings.css'
 		);
 	}
 }

@@ -32,22 +32,6 @@ class Provider
 		add_filter('option_page_capability_' . self::OPTION_GROUP, function () {
 			return 'edit_theme_options';
 		});
-
-		add_action('admin_enqueue_scripts', [$this, 'enqueueSwitchStyles']);
-	}
-
-	/**
-	 * Shared .switch/.slider styles (assets/css/amrf-admin-settings.css),
-	 * enqueued unconditionally — cheap, scoped class names.
-	 *
-	 * @return void
-	 */
-	public function enqueueSwitchStyles(): void
-	{
-		wp_enqueue_style(
-			'amrf-admin-settings',
-			AMRF_ADMIN_PLUGIN_URL . 'assets/css/amrf-admin-settings.css'
-		);
 	}
 
 	/**

@@ -41,6 +41,7 @@ class SiteSettingsMenu
 
 		add_action('admin_menu', [$this, 'addMenu']);
 		add_action('admin_init', [$this, 'registerSettings']);
+		add_action('admin_enqueue_scripts', [$this, 'enqueueStyles']);
 	}
 
 	/**
@@ -107,6 +108,28 @@ class SiteSettingsMenu
 		settings_errors();
 		SettingsRenderer::renderSettingsForm($page['option_group'], $page['page_slug'], !empty($page['show_reset']));
 		echo '</div>';
+	}
+
+	/**
+	 * Loads the switch and role-panel styles on this menu's own pages only; their class names are too generic for anywhere else.
+	 *
+	 * @return void
+	 */
+	public function enqueueStyles(): void
+	{
+		global $plugin_page, $submenu;
+
+		$slugs = wp_list_pluck($submenu[self::MENU_SLUG] ?? [], 2);
+		if (!$plugin_page || !in_array($plugin_page, $slugs, true)) {
+			return;
+		}
+
+		wp_enqueue_style(
+			'amrf-admin-settings',
+			AMRF_ADMIN_PLUGIN_URL . 'assets/css/amrf-admin-settings.css',
+			[],
+			filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/css/amrf-admin-settings.css')
+		);
 	}
 
 	/**
