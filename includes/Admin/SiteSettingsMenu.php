@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
  * markup.
  *
  * Capability: edit_theme_options, not manage_options — matches what
- * Hooks\FrontendHooks grants via a role's "site_menus_cap" toggle, so
+ * Settings\RolePolicy grants via a role's "site_menus_cap" toggle, so
  * non-admin roles can reach this menu without a separate capability.
  *
  * @package Antropomorf\Admin

@@ -19,13 +19,8 @@ if (!defined('ABSPATH')) {
  */
 class Menu
 {
-	/**
-	 * A role's saved allowed_menu_items allow-list matches this slug exactly
-	 * (Hooks\FrontendHooks::init()) — renaming it would silently break access
-	 * for existing sites. Not shown to visitors/editors; only page_title/
-	 * menu_title ("Forms") are.
-	 */
-	public const PAGE_SLUG = 'amrf-site-settings-gdpr';
+	/** Stored in each role's allowed_menu_items, so a rename hides the page until that role's tab is saved again. */
+	public const PAGE_SLUG = 'amrf-site-settings-forms';
 
 	private const TABS_FILTER = 'amrf_forms_tabs';
 

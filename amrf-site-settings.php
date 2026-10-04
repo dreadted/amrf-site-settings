@@ -56,7 +56,7 @@ load_plugin_textdomain(
 require_once __DIR__ . '/includes/functions.php';
 
 use Antropomorf\Hooks\AdminHooks;
-use Antropomorf\Hooks\FrontendHooks;
+use Antropomorf\Settings\RolePolicy;
 use Antropomorf\SiteSettings\Bootstrap as SiteSettingsBootstrap;
 use Antropomorf\ContactForm\Bootstrap as ContactFormBootstrap;
 use Antropomorf\Forms\Bootstrap as FormsBootstrap;
@@ -70,7 +70,7 @@ use Antropomorf\Translations\Bootstrap as TranslationsBootstrap;
 use Antropomorf\Hardening\Bootstrap as HardeningBootstrap;
 
 AdminHooks::register();
-FrontendHooks::register();
+RolePolicy::register();
 SiteSettingsBootstrap::register();
 ContactFormBootstrap::register();
 FormsBootstrap::register();

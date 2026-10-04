@@ -38,7 +38,7 @@ class Repository
 					'admin_default_page' => 'profile.php',
 					'allowed_menu_items' => [
 						// Full URL — the menu slug IS the target URL
-						// (FrontendHooks::addCustomPageToMenu()), matched
+						// (RolePolicy::addCustomPageToMenu()), matched
 						// exactly. Manager::syncPageEditorLinkAllowedMenuItem()
 						// keeps this in sync after activation.
 						home_url('/#builder_active'),

@@ -6,6 +6,8 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
+use Antropomorf\Admin\SiteSettingsMenu;
+use Antropomorf\Forms\Menu as FormsMenu;
 use Antropomorf\Utilities\MenuScanner;
 
 /**
@@ -18,7 +20,7 @@ use Antropomorf\Utilities\MenuScanner;
 class Manager
 {
 	/** Menu slugs added/removed by an access toggle on save, so not offered as checkboxes. */
-	private const SITE_SETTINGS_MENU_SLUGS = ['amrf-site-settings', 'amrf-site-settings-gdpr'];
+	private const SITE_SETTINGS_MENU_SLUGS = [SiteSettingsMenu::MENU_SLUG, FormsMenu::PAGE_SLUG];
 	private const FLUENTFORM_ENTRIES_MENU_SLUG = 'fluent_forms_all_entries';
 
 	private array $roles;
@@ -258,7 +260,7 @@ class Manager
 
 	/**
 	 * The "Page Editor" menu item's slug IS its target URL
-	 * (FrontendHooks::addCustomPageToMenu()), so each role's
+	 * (RolePolicy::addCustomPageToMenu()), so each role's
 	 * allowed_menu_items must contain that exact URL to keep it visible.
 	 * Runs on every General tab save: drops any previous target's URL, adds
 	 * the current one only while the feature is enabled.
@@ -297,8 +299,7 @@ class Manager
 	}
 
 	/**
-	 * Keeps the "Site Settings" (amrf-site-settings) and "Forms"
-	 * (amrf-site-settings-gdpr) submenu pages in sync with the
+	 * Keeps the "Site Settings" and "Forms" submenu pages in sync with the
 	 * site_menus_cap toggle for the role being saved — both pages require
 	 * edit_theme_options, so without this a role just granted the
 	 * capability would still get 403'd by this plugin's own
@@ -324,7 +325,7 @@ class Manager
 
 	/**
 	 * Applies (or revokes) edit_theme_options on every existing account in
-	 * $role immediately — FrontendHooks::setCapabilities()'s lazy per-
+	 * $role immediately — RolePolicy::setCapabilities()'s lazy per-
 	 * request re-sync alone leaves a stale-capability window right after a
 	 * toggle-OFF. New accounts are still covered by that lazy sync.
 	 *
@@ -347,7 +348,7 @@ class Manager
 	/**
 	 * Keeps the "Entries" admin submenu (fluent_forms_all_entries) in sync
 	 * with the fluentform_entries_access toggle — granting the capability
-	 * alone isn't enough, since FrontendHooks's allowed_menu_items filter
+	 * alone isn't enough, since RolePolicy's allowed_menu_items filter
 	 * would otherwise 403 the role right back out of that page. The parent
 	 * "Forms" menu stays visible on its own once a child is allowed.
 	 *
@@ -373,7 +374,7 @@ class Manager
 
 	/**
 	 * Applies (or revokes) fluentform_entries_access capabilities on every
-	 * existing account in $role immediately. FrontendHooks's lazy per-
+	 * existing account in $role immediately. RolePolicy's lazy per-
 	 * request re-sync alone leaves a window on toggle-OFF where a stale-
 	 * capability account briefly falls back to the parent menu's
 	 * capability and gets a broken render instead of a clean "not

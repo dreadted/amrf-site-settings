@@ -1,24 +1,23 @@
 <?php
 
-namespace Antropomorf\Hooks;
-
-use Antropomorf\Settings\Repository;
+namespace Antropomorf\Settings;
 
 if (!defined('ABSPATH')) {
 	exit;
 }
 
 /**
- * Class FrontendHooks
+ * Class RolePolicy
  *
- * Sets up frontend and admin_init hooks to apply role-based settings on pages and dashboards.
+ * Applies the per-role policy saved on "Admin Panel Settings": menu allow-lists,
+ * capabilities, login redirects, password rules and admin bar cleanup.
  *
- * @package Antropomorf\Hooks
+ * @package Antropomorf\Settings
  */
-class FrontendHooks
+class RolePolicy
 {
 	/**
-	 * Register frontend hook to initialize role-based settings on init.
+	 * Applies the policy on init, on every request.
 	 *
 	 * @return void
 	 */
@@ -28,7 +27,7 @@ class FrontendHooks
 	}
 
 	/**
-	 * Initialize frontend hooks based on saved settings.
+	 * Registers the policy's hooks from the saved settings.
 	 *
 	 * @return void
 	 */
