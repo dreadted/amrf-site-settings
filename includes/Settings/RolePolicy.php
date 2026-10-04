@@ -73,7 +73,7 @@ class RolePolicy
 
 		// Unconditional — the selector only matches FluentForm's own admin
 		// pages, so it's a no-op elsewhere.
-		add_action('admin_head', [self::class, 'hideFluentFormsHeaderForNonAdmins']);
+		add_action('admin_enqueue_scripts', [self::class, 'hideFluentFormsHeaderForNonAdmins']);
 
 		// Also unconditional, same reasoning: current_user_can() checks
 		// below make it a no-op for admins/actual form managers.
@@ -395,7 +395,7 @@ class RolePolicy
 			return;
 		}
 
-		echo '<style>#wpbody-content > div.ff_header { display: none; }</style>' . "\n";
+		wp_add_inline_style('common', '#wpbody-content > div.ff_header { display: none; }');
 	}
 
 	/**

@@ -21,7 +21,7 @@ class LoginBranding
 	{
 		add_action('login_enqueue_scripts', [$this, 'renderStyles']);
 		add_filter('login_headertext', [$this, 'headerText']);
-		add_action('login_footer', [$this, 'stripHeaderLink']);
+		add_action('login_enqueue_scripts', [$this, 'stripHeaderLink']);
 	}
 
 	/**
@@ -95,15 +95,15 @@ body.login {
 	 */
 	public function stripHeaderLink(): void
 	{
-?>
-		<script>
-			document.addEventListener('DOMContentLoaded', function() {
-				var link = document.querySelector('.wp-login-logo a');
-				if (link) {
-					link.replaceWith(...link.childNodes);
-				}
-			});
-		</script>
-<?php
+		wp_register_script('amrf-login-branding', false, [], false, true);
+		wp_enqueue_script('amrf-login-branding');
+		wp_add_inline_script('amrf-login-branding', "
+document.addEventListener('DOMContentLoaded', function() {
+	var link = document.querySelector('.wp-login-logo a');
+	if (link) {
+		link.replaceWith(...link.childNodes);
+	}
+});
+");
 	}
 }
