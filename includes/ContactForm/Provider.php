@@ -217,7 +217,7 @@ class Provider
 	/**
 	 * One-shot action, not a persisted setting — always renders unchecked;
 	 * checking it overwrites FluentForm's own Global Settings on save (see
-	 * Repository::applyFluentFormBaseline()).
+	 * FluentFormBaseline::apply()).
 	 *
 	 * @return void
 	 */
