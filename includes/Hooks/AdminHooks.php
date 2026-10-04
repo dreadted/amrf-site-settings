@@ -31,7 +31,6 @@ class AdminHooks
 	public static function register(): void
 	{
 		register_activation_hook(AMRF_ADMIN_PLUGIN_FILE, [Repository::class, 'activate']);
-		new MenuOrder();
 		add_action('plugins_loaded', [self::class, 'init']);
 		add_filter(
 			'plugin_action_links_' . plugin_basename(AMRF_ADMIN_PLUGIN_FILE),
@@ -44,12 +43,18 @@ class AdminHooks
 	}
 
 	/**
-	 * Set up the settings manager, its renderer and the admin menu pages.
+	 * Set up the settings manager, its renderer and the admin menu pages, in wp-admin only.
 	 *
 	 * @return void
 	 */
 	public static function init(): void
 	{
+		if (!is_admin()) {
+			return;
+		}
+
+		new MenuOrder();
+
 		$settingsManager = new SettingsManager(wp_roles()->roles);
 		// Priority 5 so General/role tabs always sort first.
 		add_filter('amrf_admin_settings_tabs', [$settingsManager, 'registerTabs'], 5);
