@@ -54,7 +54,7 @@ class FrontendProvider
 		);
 
 		wp_localize_script(self::SCRIPT_HANDLE, 'amrfSwish', [
-			'swishUrl' => \Antropomorf\SiteSettings\Swish::buildUrl(
+			'swishUrl' => DeepLink::buildUrl(
 				$settings['number'],
 				$settings['amount'],
 				$settings['amount_editable'] === '1',

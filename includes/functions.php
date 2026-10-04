@@ -58,7 +58,7 @@ function amrf_build_swish_url(
 	string $message = '',
 	bool $message_editable = true
 ): string {
-	return \Antropomorf\SiteSettings\Swish::buildUrl($swish_number, $amount, $amount_editable, $message, $message_editable);
+	return \Antropomorf\Swish\DeepLink::buildUrl($swish_number, $amount, $amount_editable, $message, $message_editable);
 }
 
 /**

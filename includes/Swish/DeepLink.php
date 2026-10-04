@@ -1,23 +1,23 @@
 <?php
 
-namespace Antropomorf\SiteSettings;
+namespace Antropomorf\Swish;
 
 if (!defined('ABSPATH')) {
 	exit;
 }
 
 /**
- * Class Swish
+ * Class DeepLink
  *
  * Builds Swish's documented "open the app with these details prefilled"
  * deep-link URL.
  *
- * @package Antropomorf\SiteSettings
+ * @package Antropomorf\Swish
  */
-class Swish
+class DeepLink
 {
 	/**
-	 * @param string $swishNumber     Swish\Repository's own 'number' field.
+	 * @param string $swishNumber     Repository's own 'number' field.
 	 * @param string $amount          Prefilled amount, or '' for none.
 	 * @param bool   $amountEditable  Whether the payer can change $amount after scanning.
 	 * @param string $message         Prefilled message, or '' for none.
