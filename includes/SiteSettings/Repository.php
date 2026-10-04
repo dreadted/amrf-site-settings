@@ -96,6 +96,16 @@ class Repository
 	 */
 	public static function getThemeDefaultColors(): array
 	{
+		// get_merged_data() rebuilds the merged theme.json on every call.
+		static $colors = null;
+		return $colors ??= self::resolveThemeDefaultColors();
+	}
+
+	/**
+	 * @return array{theme_color: string, background_color: string}
+	 */
+	private static function resolveThemeDefaultColors(): array
+	{
 		if (!class_exists('WP_Theme_JSON_Resolver')) {
 			return ['theme_color' => '#000000', 'background_color' => '#ffffff'];
 		}
