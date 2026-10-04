@@ -1,2 +1,5 @@
 /.vscode
 *.log
+*.zip
+.DS_Store
+node_modules/
