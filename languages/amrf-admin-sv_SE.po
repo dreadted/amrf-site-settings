@@ -331,16 +331,16 @@ msgstr "Verksamhetstyp (schema.org)"
 msgid "Person name"
 msgstr "Personnamn"
 
-#: includes/SiteSettings/Repository.php:40
+#: includes/SiteSettings/Repository.php:41
 msgid "Job title"
 msgstr "Titel"
 
 #: includes/SiteSettings/ContactLinks.php:88
-#: includes/SiteSettings/Repository.php:41
+#: includes/SiteSettings/Repository.php:42
 msgid "Email"
 msgstr "E-post"
 
-#: includes/SiteSettings/Repository.php:42
+#: includes/SiteSettings/Repository.php:43
 msgid "Phone"
 msgstr "Telefon"
 
@@ -348,59 +348,59 @@ msgstr "Telefon"
 msgid "Swish number"
 msgstr "Swish-nummer"
 
-#: includes/SiteSettings/Repository.php:47
+#: includes/SiteSettings/Repository.php:48
 msgid "Street address"
 msgstr "Gatuadress"
 
-#: includes/SiteSettings/Repository.php:48
+#: includes/SiteSettings/Repository.php:49
 msgid "Postal code"
 msgstr "Postnummer"
 
-#: includes/SiteSettings/Repository.php:49
+#: includes/SiteSettings/Repository.php:50
 msgid "City"
 msgstr "Ort"
 
-#: includes/SiteSettings/Repository.php:50
+#: includes/SiteSettings/Repository.php:51
 msgid "Region"
 msgstr "Region"
 
-#: includes/SiteSettings/Repository.php:51
+#: includes/SiteSettings/Repository.php:52
 msgid "Country"
 msgstr "Land"
 
-#: includes/SiteSettings/Repository.php:52
+#: includes/SiteSettings/Repository.php:53
 msgid "Latitude"
 msgstr "Latitud"
 
-#: includes/SiteSettings/Repository.php:53
+#: includes/SiteSettings/Repository.php:54
 msgid "Longitude"
 msgstr "Longitud"
 
-#: includes/SiteSettings/Repository.php:55
+#: includes/SiteSettings/Repository.php:56
 msgid "Facebook URL"
 msgstr "Facebook-URL"
 
-#: includes/SiteSettings/Repository.php:56
+#: includes/SiteSettings/Repository.php:57
 msgid "Instagram URL"
 msgstr "Instagram-URL"
 
-#: includes/SiteSettings/Repository.php:57
+#: includes/SiteSettings/Repository.php:58
 msgid "X (Twitter) URL"
 msgstr "X (Twitter)-URL"
 
-#: includes/SiteSettings/Repository.php:67
+#: includes/SiteSettings/Repository.php:68
 msgid "SEO"
 msgstr "SEO"
 
-#: includes/SiteSettings/Repository.php:68
+#: includes/SiteSettings/Repository.php:69
 msgid "Business & Contact"
 msgstr "Företag & Kontakt"
 
-#: includes/SiteSettings/Repository.php:69
+#: includes/SiteSettings/Repository.php:70
 msgid "Address"
 msgstr "Adress"
 
-#: includes/SiteSettings/Repository.php:70
+#: includes/SiteSettings/Repository.php:71
 msgid "Social Media"
 msgstr "Sociala medier"
 
@@ -628,10 +628,6 @@ msgstr ""
 msgid "Umami Server"
 msgstr "Umami-server"
 
-#: includes/Umami/Provider.php:154
-msgid "Egen installation (umami.antropomorf.se)"
-msgstr "Egen installation (umami.antropomorf.se)"
-
 #: includes/Umami/Provider.php:155
 msgid "Umami Cloud (eu.umami.is)"
 msgstr "Umami Cloud (eu.umami.is)"
@@ -787,3 +783,11 @@ msgstr "Aktivera för att låta den här användarrollen se och hantera Fluent F
 #: includes/Settings/Manager.php:569
 msgid "Enable to give this user role access to the Site Settings menu (Business & Contact, Address, Social Media, and the GDPR and Swish tabs under Forms; the SEO and Contact Forms tabs are for administrators only) and to native theme menu/design editing (Appearance → Menus/Customize on a classic theme, or the Site Editor on a block theme)."
 msgstr "Aktivera för att ge den här användarrollen åtkomst till menyn Webbplatsinställningar (Företag & Kontakt, Adress, Sociala medier samt flikarna GDPR och Swish under Formulär; flikarna SEO och Kontaktformulär är bara för administratörer) samt till WordPress egen temameny-/designredigering (Utseende → Menyer/Anpassa i ett klassiskt tema, eller webbplatsredigeraren i ett blocktema)."
+
+#: includes/Umami/Provider.php:154
+msgid "Self-hosted (umami.antropomorf.se)"
+msgstr "Egen installation (umami.antropomorf.se)"
+
+#: includes/SiteSettings/Repository.php:40
+msgid "Signature"
+msgstr "Signatur"

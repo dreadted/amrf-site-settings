@@ -151,7 +151,7 @@ class Provider
 		$name = Repository::OPTION_NAME . '[host]';
 
 		$labels = [
-			'umami.antropomorf.se' => __('Egen installation (umami.antropomorf.se)', 'amrf-admin'),
+			'umami.antropomorf.se' => __('Self-hosted (umami.antropomorf.se)', 'amrf-admin'),
 			'eu.umami.is' => __('Umami Cloud (eu.umami.is)', 'amrf-admin'),
 		];
 

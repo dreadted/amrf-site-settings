@@ -37,6 +37,7 @@ class Repository
 			'business_name' => [__('Business name', 'amrf-admin'), 'text', 'business'],
 			'business_type' => [__('Business type (schema.org)', 'amrf-admin'), 'text', 'business'],
 			'person_name' => [__('Person name', 'amrf-admin'), 'text', 'business'],
+			'signature' => [__('Signature', 'amrf-admin'), 'text', 'business'],
 			'job_title' => [__('Job title', 'amrf-admin'), 'text', 'business'],
 			'email' => [__('Email', 'amrf-admin'), 'email', 'business'],
 			'phone' => [__('Phone', 'amrf-admin'), 'text', 'business'],
