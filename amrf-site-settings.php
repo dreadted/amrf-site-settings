@@ -8,6 +8,8 @@
  * Requires PHP:      8.3
  * Author:            Christofer Laurin
  * Author URI:        https://github.com/dreadted/
+ * License:           GPLv2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       amrf-admin
  * Domain Path:       /languages
  */

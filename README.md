@@ -102,7 +102,7 @@ The `/favicon.ico` and `/apple-touch-icon.png` rewrites are written to `.htacces
 
 #### Contact Forms
 
-- Default Contact Form: Select one of the pre-existing [Fluent Forms](https://fluentforms.com/) to open sitewide with links pointing to the `#kontakt` anchor
+- Default Contact Form: Select one of the pre-existing [Fluent Forms](https://fluentforms.com/) to open sitewide with links pointing to the `#contact` anchor
 - A toggle that overrides Fluent Forms' colors/border-radius/fonts with the site's own `theme.json` tokens
 - Enable/disable [ALTCHA](https://altcha.org/) proof-of-work spam protection on every Fluent Form on the site — a self-hosted alternative honeypot with no settings, no external account, and no site key tied to a specific domain: the signing secret is generated and stored automatically the first time it's needed, so it works unchanged across dev/staging/production clones of a site.
 
@@ -144,13 +144,24 @@ All links can be customized with a pre-filled amount or message.
 ### Hardening
 
 A handful of always-on, no-downside protections
-(blocking XML-RPC, a generic login error message instead of "unknown username", hiding the WordPress version tag, blocking `?username=` probing, removing the `/wp/v2/users` REST endpoint, and disabling WordPress's emoji fallback, which loads images from `s.w.org`), plus four
-behavior changes that default to _on_ but can be switched off per site:
+(blocking XML-RPC, a generic login error message instead of "unknown username", hiding the WordPress version tag, blocking `?username=` probing, removing the `/wp/v2/users` REST endpoint, and disabling WordPress's emoji fallback, which loads images from `s.w.org`), plus switches on the **Site Settings → Hardening** page. Default in parentheses:
 
-- Disable author archives
-- Redirect logged-out 404s to the homepage
-- Remove jQuery Migrate
-- Disable WordPress's generated/responsive image sizes
+**Images tab**
+
+- Convert uploads to WebP (off), with a WebP quality (82) that also applies to every generated image size; exact duplicates of an uploaded image are blocked
+- Restrict media deletion: non-administrators can only delete media they uploaded themselves (off)
+- Allow SVG uploads for administrators, sanitized before they're stored (on)
+- Disable WordPress's generated image sizes; sizes a theme registers are unaffected (on)
+
+**Frontend tab**
+
+- Restrict site to logged-in users: a blank placeholder page for logged-out visitors, for a private preview before launch (off)
+- Disable author archives (on)
+- Disable blog posts: posts, their archives and feeds return a 404, and posts leave the sitemap (on)
+- Disable comments, pingbacks and trackbacks everywhere, and hide approved comments (on)
+- Redirect logged-out 404s to the homepage (on)
+- Disable site search (off)
+- Remove jQuery Migrate (on)
 
 ### Per-role admin panel control
 
@@ -205,7 +216,7 @@ otherwise they're inert:
 
 1. Upload the `amrf-site-settings` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the **Plugins** screen in WordPress.
-3. Navigate to **Settings → Admin Panel Settings** to configure per-role access, and **Settings → Site Settings** for the optional modules above.
+3. Open the top-level **Site Settings** menu for the modules above, and **Site Settings → Admin Panel Settings** to configure per-role access.
 
 ### With wp-cli
 
