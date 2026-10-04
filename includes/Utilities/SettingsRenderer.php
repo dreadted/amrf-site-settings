@@ -81,6 +81,21 @@ class SettingsRenderer
 	}
 
 	/**
+	 * Runs each entry's 'register' callback from a tabs or pages filter, on admin_init.
+	 *
+	 * @param string $filter Filter whose entries may carry a 'register' callable.
+	 * @return void
+	 */
+	public static function registerSettings(string $filter): void
+	{
+		foreach (apply_filters($filter, []) as $entry) {
+			if (!empty($entry['register']) && is_callable($entry['register'])) {
+				call_user_func($entry['register']);
+			}
+		}
+	}
+
+	/**
 	 * Shared Settings API form glue, also used by standalone pages with no tab
 	 * strip of their own.
 	 *

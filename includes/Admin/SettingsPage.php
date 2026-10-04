@@ -33,24 +33,8 @@ class SettingsPage
 	{
 		$this->renderer = $renderer;
 		add_action('admin_menu', [$this, 'addAdminMenu']);
-		add_action('admin_init', [$this, 'registerTabSettings']);
+		add_action('admin_init', fn() => SettingsRenderer::registerSettings('amrf_admin_settings_tabs'));
 		add_action('admin_enqueue_scripts', [$this, 'enqueueAssets']);
-	}
-
-	/**
-	 * Calls every registered tab's own 'register' callback (register_setting/
-	 * add_settings_section/add_settings_field for that tab) — the admin_init-
-	 * timed counterpart to SettingsRenderer::render()'s tab-list read.
-	 *
-	 * @return void
-	 */
-	public function registerTabSettings(): void
-	{
-		foreach (apply_filters('amrf_admin_settings_tabs', []) as $tab) {
-			if (!empty($tab['register']) && is_callable($tab['register'])) {
-				call_user_func($tab['register']);
-			}
-		}
 	}
 
 	/**

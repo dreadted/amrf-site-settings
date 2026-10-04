@@ -46,25 +46,10 @@ class Menu
 			'capability' => 'edit_theme_options',
 			'menu_slug' => self::PAGE_SLUG,
 			'render' => [$this, 'render'],
-			'register' => [$this, 'registerTabSettings'],
+			'register' => fn() => SettingsRenderer::registerSettings(self::TABS_FILTER),
 		];
 
 		return $pages;
-	}
-
-	/**
-	 * Called via this page's 'register' key (Admin\SiteSettingsMenu::registerSettings()),
-	 * on admin_init.
-	 *
-	 * @return void
-	 */
-	public function registerTabSettings(): void
-	{
-		foreach (apply_filters(self::TABS_FILTER, []) as $tab) {
-			if (!empty($tab['register']) && is_callable($tab['register'])) {
-				call_user_func($tab['register']);
-			}
-		}
 	}
 
 	/**

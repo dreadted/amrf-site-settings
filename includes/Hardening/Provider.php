@@ -614,7 +614,7 @@ class Provider
 			'menu_title' => __('Hardening', 'amrf-admin'),
 			'capability' => 'manage_options',
 			'menu_slug' => self::PAGE_SLUG,
-			'register' => [$this, 'registerHardeningPage'],
+			'register' => fn() => SettingsRenderer::registerSettings(self::TABS_FILTER),
 			'render' => [$this->renderer, 'render'],
 		];
 
@@ -640,16 +640,6 @@ class Provider
 		];
 
 		return $tabs;
-	}
-
-	// Dispatches to each tab's own 'register' callback — same pattern as SiteSettingsMenu::registerSettings().
-	public function registerHardeningPage(): void
-	{
-		foreach (apply_filters(self::TABS_FILTER, []) as $tab) {
-			if (!empty($tab['register']) && is_callable($tab['register'])) {
-				call_user_func($tab['register']);
-			}
-		}
 	}
 
 	/**

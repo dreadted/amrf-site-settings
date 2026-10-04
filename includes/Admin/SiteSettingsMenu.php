@@ -117,16 +117,7 @@ class SiteSettingsMenu
 	 */
 	public function registerSettings(): void
 	{
-		foreach (apply_filters(self::TABS_FILTER, []) as $tab) {
-			if (!empty($tab['register']) && is_callable($tab['register'])) {
-				call_user_func($tab['register']);
-			}
-		}
-
-		foreach (apply_filters(self::PAGES_FILTER, []) as $page) {
-			if (!empty($page['register']) && is_callable($page['register'])) {
-				call_user_func($page['register']);
-			}
-		}
+		SettingsRenderer::registerSettings(self::TABS_FILTER);
+		SettingsRenderer::registerSettings(self::PAGES_FILTER);
 	}
 }
