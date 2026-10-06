@@ -35,7 +35,7 @@
 	background: var(--amrf-modal-background);
 	border-radius: var(--wp--custom--radius-sm, 6px);
 	box-shadow: var(--wp--preset--shadow--card);
-	padding: 2rem;
+	padding: var(--amrf-modal-padding);
 	transform: translateY(-0.75rem) scale(0.98);
 	transition: transform 0.25s ease;
 }
