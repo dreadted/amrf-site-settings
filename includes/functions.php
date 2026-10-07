@@ -81,3 +81,15 @@ function amrf_get_ticket_page_id(): int
 {
 	return \Antropomorf\SupportGenix\Provider::ticketPageId();
 }
+
+/**
+ * The contact shortcut's address, which opens the front page with the contact modal.
+ *
+ * @return string Empty when no shortcut is set.
+ */
+function amrf_get_contact_shortcut_url(): string
+{
+	$slug = \Antropomorf\ContactForm\Shortcut::slug();
+
+	return $slug !== '' ? \Antropomorf\ContactForm\Shortcut::url($slug) : '';
+}
