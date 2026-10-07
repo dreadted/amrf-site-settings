@@ -61,7 +61,7 @@ class Repository
 
 		$output = [
 			'default_contact_form_id' => (string) absint($input['default_contact_form_id'] ?? $current['default_contact_form_id']),
-			'retention_days' => (string) absint($input['retention_days'] ?? ''),
+			'retention_days' => (string) absint($input['retention_days'] ?? $current['retention_days']),
 			'contact_shortcut_slug' => array_key_exists('contact_shortcut_slug', $input)
 				? Shortcut::validateSlug((string) $input['contact_shortcut_slug'], $current['contact_shortcut_slug'])
 				: $current['contact_shortcut_slug'],
