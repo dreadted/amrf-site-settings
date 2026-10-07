@@ -163,4 +163,10 @@
 			autoCloseTimer = setTimeout(closeModal, 5000);
 		}
 	});
+
+	// Where the contact shortcut lands (ContactForm\Shortcut); the fragment is dropped so a reload doesn't reopen it.
+	if (window.location.hash === '#contact-modal') {
+		history.replaceState(null, '', window.location.pathname + window.location.search);
+		openModal(null);
+	}
 })();

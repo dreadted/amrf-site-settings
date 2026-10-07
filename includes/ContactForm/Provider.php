@@ -2,6 +2,9 @@
 
 namespace Antropomorf\ContactForm;
 
+use Antropomorf\Forms\Menu;
+use Antropomorf\PageQr\AdminColumn;
+
 if (!defined('ABSPATH')) {
 	exit;
 }
@@ -24,6 +27,7 @@ class Provider
 	public function __construct()
 	{
 		add_filter('amrf_forms_tabs', [$this, 'registerTabs']);
+		add_action('admin_enqueue_scripts', [$this, 'enqueueQrStyle']);
 
 		// wp-admin/options.php hardcodes manage_options to save any Settings
 		// API form, regardless of what capability reached the page.
@@ -78,6 +82,14 @@ class Provider
 			[$this, 'renderDefaultContactFormField'],
 			self::CONTACT_PAGE_SLUG,
 			'contact_form_section'
+		);
+		add_settings_field(
+			'contact_shortcut_slug',
+			__('Contact Shortcut', 'amrf-admin'),
+			[$this, 'renderContactShortcutField'],
+			self::CONTACT_PAGE_SLUG,
+			'contact_form_section',
+			['label_for' => Repository::OPTION_NAME . '_contact_shortcut_slug']
 		);
 		add_settings_field(
 			'enable_consistent_styling',
@@ -171,6 +183,36 @@ class Provider
 		}
 		echo '</select>';
 		echo '<p class="description">' . esc_html__('The form the sitewide "#contact" link/button opens in a lightbox, on any page the active theme doesn\'t choose one for itself. "None" disables the lightbox on pages without such a choice.', 'amrf-admin') . '</p>';
+	}
+
+	public function renderContactShortcutField(): void
+	{
+		// Also catches what no save reports, such as a new domain.
+		Shortcut::syncQr();
+
+		$slug = Shortcut::slug();
+		printf(
+			'<code>%1$s</code><input type="text" id="%2$s" name="%3$s" value="%4$s" class="regular-text" />',
+			esc_html(trailingslashit(home_url())),
+			esc_attr(Repository::OPTION_NAME . '_contact_shortcut_slug'),
+			esc_attr(Repository::OPTION_NAME . '[contact_shortcut_slug]'),
+			esc_attr($slug)
+		);
+		echo '<p class="description">' . esc_html__('An address that opens the front page with the contact form in a lightbox, e.g. for print. Like a page slug, it must not be used by any page or post, and new pages can\'t take it. Needs a Default Contact Form. Leave empty to turn off.', 'amrf-admin') . '</p>';
+
+		$file = Shortcut::qrFile();
+		if ($file !== '') {
+			echo '<p>' . AdminColumn::thumbnail($file, Shortcut::url($slug)) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in thumbnail().
+		}
+	}
+
+	public function enqueueQrStyle(): void
+	{
+		global $plugin_page;
+
+		if ($plugin_page === Menu::PAGE_SLUG) {
+			AdminColumn::enqueueStyle();
+		}
 	}
 
 	/**

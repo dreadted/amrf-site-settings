@@ -27,5 +27,6 @@ class Bootstrap
 		new EmailSignoff();
 		new RetentionShortcode();
 		new DefaultMessages();
+		new Shortcut();
 	}
 }

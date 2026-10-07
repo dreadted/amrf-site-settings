@@ -21,6 +21,7 @@ $options = [
 	'amrf_hardening',
 	'amrf_umami',
 	'amrf_support_genix_defaults_applied',
+	'amrf_contact_shortcut_qr',
 ];
 foreach ($options as $option) {
 	delete_option($option);

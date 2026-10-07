@@ -20,13 +20,14 @@ class Repository
 	public const NEWSLETTER_OPTIN_VALUE = 'yes';
 
 	/**
-	 * @return array{default_contact_form_id: string, enable_consistent_styling: bool, altcha_enabled: bool, contact_form_ids: int[], retention_days: string}
+	 * @return array{default_contact_form_id: string, contact_shortcut_slug: string, enable_consistent_styling: bool, altcha_enabled: bool, contact_form_ids: int[], retention_days: string}
 	 */
 	public static function getDefaults(): array
 	{
 		return [
 			// '0' = "None" — Modal no-ops sitewide (see getDefaultContactFormId()).
 			'default_contact_form_id' => '0',
+			'contact_shortcut_slug' => '',
 			'enable_consistent_styling' => false,
 			// On by default; a site can opt out for its own spam protection.
 			'altcha_enabled' => true,
@@ -36,7 +37,7 @@ class Repository
 	}
 
 	/**
-	 * @return array{default_contact_form_id: string, enable_consistent_styling: bool, altcha_enabled: bool, contact_form_ids: int[], retention_days: string}
+	 * @return array{default_contact_form_id: string, contact_shortcut_slug: string, enable_consistent_styling: bool, altcha_enabled: bool, contact_form_ids: int[], retention_days: string}
 	 */
 	public static function getSettings(): array
 	{
@@ -46,7 +47,7 @@ class Repository
 
 	/**
 	 * @param mixed $input Raw POSTed value for this option.
-	 * @return array{default_contact_form_id: string, enable_consistent_styling: bool, altcha_enabled: bool, contact_form_ids: int[], retention_days: string}
+	 * @return array{default_contact_form_id: string, contact_shortcut_slug: string, enable_consistent_styling: bool, altcha_enabled: bool, contact_form_ids: int[], retention_days: string}
 	 */
 	public static function sanitize($input): array
 	{
@@ -61,6 +62,9 @@ class Repository
 		$output = [
 			'default_contact_form_id' => (string) absint($input['default_contact_form_id'] ?? $current['default_contact_form_id']),
 			'retention_days' => (string) absint($input['retention_days'] ?? ''),
+			'contact_shortcut_slug' => array_key_exists('contact_shortcut_slug', $input)
+				? Shortcut::validateSlug((string) $input['contact_shortcut_slug'], $current['contact_shortcut_slug'])
+				: $current['contact_shortcut_slug'],
 		];
 
 		// "_submitted" marker disambiguates "not submitted" from "submitted, all unchecked".

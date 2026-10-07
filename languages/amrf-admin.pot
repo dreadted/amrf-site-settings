@@ -1,5 +1,5 @@
 # Copyright (C) 2026 Christofer Laurin
-# This file is distributed under the same license as the AMRF Site Settings plugin.
+# This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
 "Project-Id-Version: AMRF Site Settings 0.3.3\n"
@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-04T09:48:12+00:00\n"
+"POT-Creation-Date: 2026-10-07T16:39:02+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: amrf-admin\n"
@@ -34,760 +34,784 @@ msgstr ""
 msgid "https://github.com/dreadted/"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:46
-#: includes/Admin/SettingsPage.php:47
-#: includes/Hooks/AdminHooks.php:62
+#: includes/Admin/SettingsPage.php:44
+#: includes/Admin/SettingsPage.php:45
+#: includes/Hooks/AdminHooks.php:60
 msgid "Admin Panel Settings"
 msgstr ""
 
-#: includes/Admin/SiteSettingsMenu.php:40
-#: includes/Admin/SiteSettingsMenu.php:56
-#: includes/Admin/SiteSettingsMenu.php:57
-#: includes/Admin/SiteSettingsMenu.php:69
-#: includes/Admin/SiteSettingsMenu.php:70
-#: includes/Hooks/AdminHooks.php:107
+#: includes/Admin/SiteSettingsMenu.php:31
+#: includes/Admin/SiteSettingsMenu.php:47
+#: includes/Admin/SiteSettingsMenu.php:48
+#: includes/Admin/SiteSettingsMenu.php:60
+#: includes/Admin/SiteSettingsMenu.php:61
+#: includes/Hooks/AdminHooks.php:102
 msgid "Site Settings"
 msgstr ""
 
-#: includes/ContactForm/Altcha.php:172
+#: includes/ContactForm/Altcha.php:163
 msgid "Spam verification failed, please reload the page and try again."
 msgstr ""
 
-#: includes/ContactForm/Modal.php:143
+#: includes/ContactForm/Modal.php:125
 msgid "Contact"
 msgstr ""
 
-#: includes/ContactForm/Modal.php:144
+#: includes/ContactForm/Modal.php:126
 msgid "Close"
 msgstr ""
 
-#: includes/ContactForm/PrivacyRequests.php:36
-#: includes/ContactForm/PrivacyRequests.php:45
-#: includes/ContactForm/PrivacyRequests.php:142
+#: includes/ContactForm/PrivacyRequests.php:31
+#: includes/ContactForm/PrivacyRequests.php:40
+#: includes/ContactForm/PrivacyRequests.php:134
 msgid "Contact form submissions"
 msgstr ""
 
-#: includes/ContactForm/PrivacyRequests.php:137
+#: includes/ContactForm/PrivacyRequests.php:129
 msgid "IP address"
 msgstr ""
 
-#: includes/ContactForm/PrivacyRequests.php:138
+#: includes/ContactForm/PrivacyRequests.php:130
 msgid "Submitted"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:44
+#: includes/ContactForm/Provider.php:46
 msgid "Contact Forms"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:54
+#: includes/ContactForm/Provider.php:56
 msgid "GDPR"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:79
+#: includes/ContactForm/Provider.php:81
 msgid "Default Contact Form"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:86
+#: includes/ContactForm/Provider.php:88
+msgid "Contact Shortcut"
+msgstr ""
+
+#: includes/ContactForm/Provider.php:96
 msgid "Apply Consistent Contact Form Styling"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:93
+#: includes/ContactForm/Provider.php:103
 msgid "Enable ALTCHA Spam Protection"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:100
+#: includes/ContactForm/Provider.php:110
 msgid "Apply Recommended FluentForm Settings"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:121
+#: includes/ContactForm/Provider.php:131
 msgid "Contact Forms Subject to Retention"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:128
+#: includes/ContactForm/Provider.php:138
 msgid "Delete submissions after this many days"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:160
-#: includes/ContactForm/Provider.php:260
+#: includes/ContactForm/Provider.php:170
+#: includes/ContactForm/Provider.php:300
 msgid "No FluentForm forms found."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:165
+#: includes/ContactForm/Provider.php:175
 msgid "None"
 msgstr ""
 
-#: includes/ContactForm/Provider.php:175
+#: includes/ContactForm/Provider.php:185
 msgid "The form the sitewide \"#contact\" link/button opens in a lightbox, on any page the active theme doesn't choose one for itself. \"None\" disables the lightbox on pages without such a choice."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:194
+#: includes/ContactForm/Provider.php:201
+msgid "An address that opens the front page with the contact form in a lightbox, e.g. for print. Like a page slug, it must not be used by any page or post, and new pages can't take it. Needs a Default Contact Form. Leave empty to turn off."
+msgstr ""
+
+#: includes/ContactForm/Provider.php:234
 msgid "Maps FluentForm's own color/border-radius variables to this site's theme colors and applies additional styling fixes, on every FluentForm on the site."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:215
+#: includes/ContactForm/Provider.php:255
 msgid "Adds invisible, no-configuration spam protection to every FluentForm on the site. Turn off if this site already handles spam protection another way (e.g. its own plugin)."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:229
+#: includes/ContactForm/Provider.php:269
 msgid "FluentForm is not active."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:240
+#: includes/ContactForm/Provider.php:280
 msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: enables IP logging (as proof of consent), turns form view analytics off, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. Also writes FluentForm's default validation messages (e.g. \"This field is required\") in the site language, so they no longer follow the saving admin's own language. Also renames form ID 1 to \"Kontaktformulär\", replaces its fields with this site's baseline set (name, email, a required message field), and applies this site's baseline confirmation message and email notification to it. On a local site (WP_ENVIRONMENT_TYPE \"local\") where FluentSMTP is active but has no connections yet, also adds an SMTP connection to Mailhog (port 1025) using this site's own domain as the sender address, and sets it as the default connection. Existing FluentSMTP connections are never changed. A one-time action, not a saved setting — resets to off after saving."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:275
+#: includes/ContactForm/Provider.php:315
 msgid "The daily retention cleanup and personal-data export/erase requests only ever touch these forms."
 msgstr ""
 
-#: includes/ContactForm/Provider.php:291
+#: includes/ContactForm/Provider.php:331
 msgid "Blank or 0 = keep forever."
 msgstr ""
 
-#: includes/ContactForm/RetentionShortcode.php:37
+#: includes/ContactForm/RetentionShortcode.php:31
 msgid "until further notice"
 msgstr ""
 
 #. translators: %d: number of days
-#: includes/ContactForm/RetentionShortcode.php:42
+#: includes/ContactForm/RetentionShortcode.php:36
 #, php-format
 msgid "for up to %d day"
 msgid_plural "for up to %d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/FluentCrm/ConsentLog.php:57
+#. translators: 1: the rejected slug, 2: what already uses it
+#: includes/ContactForm/Shortcut.php:65
+#, php-format
+msgid "The contact shortcut \"%1$s\" is already in use (%2$s). The previous value was kept."
+msgstr ""
+
+#: includes/ContactForm/Shortcut.php:156
+msgid "reserved by WordPress"
+msgstr ""
+
+#. translators: %s: title of the page that used to have this slug
+#: includes/ContactForm/Shortcut.php:171
+#, php-format
+msgid "a former address of \"%s\""
+msgstr ""
+
+#: includes/FluentCrm/ConsentLog.php:51
 msgid "Newsletter opt-in ignored"
 msgstr ""
 
-#: includes/FluentCrm/ConsentLog.php:57
+#: includes/FluentCrm/ConsentLog.php:51
 msgid "The contact is tagged \"Do not contact\", so no confirmation email was sent."
 msgstr ""
 
-#: includes/FluentCrm/ConsentLog.php:62
+#: includes/FluentCrm/ConsentLog.php:56
 msgid "Newsletter consent"
 msgstr ""
 
-#: includes/FluentCrm/ConsentLog.php:72
+#: includes/FluentCrm/ConsentLog.php:66
 msgid "A confirmation email was sent; the contact is subscribed again only after clicking its link."
 msgstr ""
 
-#: includes/FluentCrm/ConsentLog.php:73
+#: includes/FluentCrm/ConsentLog.php:67
 msgid "No confirmation email was sent (one was sent less than 150 seconds ago, or the double opt-in email isn't configured)."
 msgstr ""
 
-#: includes/FluentCrm/ConsentLog.php:75
+#: includes/FluentCrm/ConsentLog.php:69
 msgid "Newsletter re-subscription requested"
 msgstr ""
 
 #. translators: %s: name of the logged-in user who changed the status
-#: includes/FluentCrm/ConsentLog.php:95
+#: includes/FluentCrm/ConsentLog.php:89
 #, php-format
 msgid "Unsubscribed manually by %s."
 msgstr ""
 
-#: includes/FluentCrm/ConsentLog.php:96
+#: includes/FluentCrm/ConsentLog.php:90
 msgid "Unsubscribed without the unsubscribe page, e.g. by one-click unsubscribe in the email client."
 msgstr ""
 
-#: includes/FluentCrm/ConsentLog.php:98
+#: includes/FluentCrm/ConsentLog.php:92
 msgid "Unsubscribed"
 msgstr ""
 
 #. translators: 1: form title, 2: page URL, 3: IP address, 4: opt-in checkbox label
-#: includes/FluentCrm/ConsentLog.php:117
+#: includes/FluentCrm/ConsentLog.php:111
 #, php-format
 msgid "Opted in via the form \"%1$s\" on %2$s from IP address %3$s.<br>Consent text: \"%4$s\""
 msgstr ""
 
-#: includes/FluentCrm/DoNotContact.php:52
+#: includes/FluentCrm/DoNotContact.php:47
 msgid "Do not contact"
 msgstr ""
 
-#: includes/FluentCrm/DoNotContact.php:102
+#: includes/FluentCrm/DoNotContact.php:97
 msgid "Subscription blocked"
 msgstr ""
 
-#: includes/FluentCrm/DoNotContact.php:103
+#: includes/FluentCrm/DoNotContact.php:98
 msgid "The contact is tagged \"Do not contact\", so its status was set back to unsubscribed. Remove the tag first to subscribe the contact again."
 msgstr ""
 
-#: includes/FluentCrm/PrivacyEraser.php:45
+#: includes/FluentCrm/PrivacyEraser.php:39
 msgid "Newsletter subscriber"
 msgstr ""
 
-#: includes/FluentCrm/PrivacyEraser.php:68
+#: includes/FluentCrm/PrivacyEraser.php:62
 msgid "Personal data erased"
 msgstr ""
 
-#: includes/FluentCrm/PrivacyEraser.php:69
+#: includes/FluentCrm/PrivacyEraser.php:63
 msgid "Personal data erased on request. The email address and the consent and unsubscribe records are kept, to block further newsletters and as proof of consent."
 msgstr ""
 
-#: includes/FluentCrm/PrivacyEraser.php:75
+#: includes/FluentCrm/PrivacyEraser.php:69
 msgid "The newsletter register keeps the email address and the consent and unsubscribe records, to block further newsletters and as proof of consent."
 msgstr ""
 
-#: includes/FluentFormValidation/Provider.php:62
+#: includes/FluentFormValidation/Provider.php:54
 #: assets/js/amrf-fluentform-validation.js:6
 msgid "Please enter a valid Swedish Personal Identity Number (YYMMDD-XXXX)."
 msgstr ""
 
-#: includes/Forms/Menu.php:39
-#: includes/Forms/Menu.php:40
-#: includes/Forms/Menu.php:58
+#: includes/Forms/Menu.php:37
+#: includes/Forms/Menu.php:38
+#: includes/Forms/Menu.php:56
 msgid "Forms"
 msgstr ""
 
-#: includes/Hardening/Provider.php:44
+#: includes/Hardening/Provider.php:35
 msgid "There is an error."
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:30
-#: includes/Hardening/SettingsPage.php:43
-#: includes/Hardening/SettingsPage.php:44
+#: includes/Hardening/SettingsPage.php:28
+#: includes/Hardening/SettingsPage.php:41
+#: includes/Hardening/SettingsPage.php:42
 msgid "Hardening"
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:57
+#: includes/Hardening/SettingsPage.php:55
 msgid "Images"
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:65
+#: includes/Hardening/SettingsPage.php:63
 msgid "Frontend"
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:92
+#: includes/Hardening/SettingsPage.php:90
 msgid "Convert uploads to WebP"
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:96
+#: includes/Hardening/SettingsPage.php:94
 msgid "Automatically converts every non-WebP image upload to WebP at the quality below, and blocks exact duplicates of an already-uploaded image."
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:105
+#: includes/Hardening/SettingsPage.php:103
 msgid "WebP quality"
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:115
+#: includes/Hardening/SettingsPage.php:113
 msgid "Restrict media deletion"
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:116
+#: includes/Hardening/SettingsPage.php:114
 msgid "Non-administrators can only delete media library items they uploaded themselves. Without this, WordPress lets anyone who can upload files delete any attachment, regardless of who uploaded it."
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:119
+#: includes/Hardening/SettingsPage.php:117
 msgid "Allow SVG uploads"
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:120
+#: includes/Hardening/SettingsPage.php:118
 msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:123
+#: includes/Hardening/SettingsPage.php:121
 msgid "Disable generated image sizes"
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:124
+#: includes/Hardening/SettingsPage.php:122
 msgid "Stops WordPress from generating its own default image sizes (thumbnail, medium, medium_large, large, 1536x1536, 2048x2048). Sizes a theme registers itself are unaffected."
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:149
+#: includes/Hardening/SettingsPage.php:147
 msgid "Restrict site to logged-in users"
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:153
+#: includes/Hardening/SettingsPage.php:151
 msgid "Blocks every front-end page for logged-out visitors with a blank placeholder page — the WordPress admin and login screen stay reachable. Use this to preview a site privately before launch."
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:163
+#: includes/Hardening/SettingsPage.php:161
 msgid "Disable author archives"
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:164
+#: includes/Hardening/SettingsPage.php:162
 msgid "Redirects author archive pages to the homepage — mainly useful on single-author sites, or to avoid leaking usernames via author URLs."
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:167
+#: includes/Hardening/SettingsPage.php:165
 msgid "Disable blog posts"
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:168
+#: includes/Hardening/SettingsPage.php:166
 msgid "For sites built from pages only. Posts, category, tag and date archives, and the RSS feeds return a 404 (then redirect to the homepage if \"Redirect 404 pages to the homepage\" is on), and posts are left out of the WordPress sitemap. Existing posts and the admin are unaffected."
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:171
+#: includes/Hardening/SettingsPage.php:169
 msgid "Disable comments"
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:172
+#: includes/Hardening/SettingsPage.php:170
 msgid "Closes comments, pingbacks and trackbacks on all content regardless of each page's discussion settings, hides already approved comments, and turns the comment feeds into a 404."
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:175
+#: includes/Hardening/SettingsPage.php:173
 msgid "Redirect 404 pages to the homepage"
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:176
+#: includes/Hardening/SettingsPage.php:174
 msgid "Applies to logged-out visitors only. Turn off if this site should show a real 404 page instead."
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:179
+#: includes/Hardening/SettingsPage.php:177
 msgid "Disable site search"
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:180
+#: includes/Hardening/SettingsPage.php:178
 msgid "Turns the built-in WordPress search into a 404 for every visitor — useful while a site is still under construction and shouldn't expose a working search box yet."
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:183
+#: includes/Hardening/SettingsPage.php:181
 msgid "Remove jQuery Migrate"
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:184
+#: includes/Hardening/SettingsPage.php:182
 msgid "Turn off if an older plugin or theme on this site depends on jQuery Migrate's compatibility shims."
 msgstr ""
 
-#: includes/Hardening/SettingsPage.php:242
+#: includes/Hardening/SettingsPage.php:240
 msgid "Applies to both the WebP format conversion above and every automatically generated responsive image size (1–100)."
 msgstr ""
 
-#: includes/Hardening/Uploads.php:133
+#: includes/Hardening/Uploads.php:126
 msgid "You are not allowed to upload SVG files."
 msgstr ""
 
-#: includes/Hardening/Uploads.php:140
+#: includes/Hardening/Uploads.php:133
 msgid "This file does not look like a valid SVG."
 msgstr ""
 
-#: includes/Hardening/Uploads.php:147
+#: includes/Hardening/Uploads.php:140
 msgid "This SVG could not be sanitized and was rejected."
 msgstr ""
 
 #. translators: %d is the existing attachment's post ID.
-#: includes/Hardening/Uploads.php:193
+#: includes/Hardening/Uploads.php:186
 #, php-format
 msgid "This image is identical to an existing upload (attachment #%d) and was not saved again."
 msgstr ""
 
-#: includes/Hooks/AdminHooks.php:86
+#: includes/Hooks/AdminHooks.php:81
 msgid "Settings"
 msgstr ""
 
-#: includes/Settings/Manager.php:64
+#: includes/Settings/Manager.php:62
 msgid "General"
 msgstr ""
 
-#: includes/Settings/Manager.php:101
+#: includes/Settings/Manager.php:99
 msgid "General Settings"
 msgstr ""
 
-#: includes/Settings/Manager.php:107
+#: includes/Settings/Manager.php:105
 msgid "Add Page Editor Link"
 msgstr ""
 
-#: includes/Settings/Manager.php:114
+#: includes/Settings/Manager.php:112
 msgid "Page Editor Link Target"
 msgstr ""
 
-#: includes/Settings/Manager.php:121
+#: includes/Settings/Manager.php:119
 msgid "Minimum Password Length"
 msgstr ""
 
-#: includes/Settings/Manager.php:128
+#: includes/Settings/Manager.php:126
 msgid "Prevent Non-Admins from Changing Passwords"
 msgstr ""
 
-#: includes/Settings/Manager.php:135
+#: includes/Settings/Manager.php:133
 msgid "Hide Application Passwords for Non-Admins"
 msgstr ""
 
-#: includes/Settings/Manager.php:142
+#: includes/Settings/Manager.php:140
 msgid "Remove Admin Bar Items for Non-Admins"
 msgstr ""
 
-#: includes/Settings/Manager.php:149
+#: includes/Settings/Manager.php:147
 msgid "Remove Default Dashboard Widgets"
 msgstr ""
 
 #. translators: %s is the user role name (e.g. "Editor").
-#: includes/Settings/Manager.php:171
-#: includes/Settings/Manager.php:178
+#: includes/Settings/Manager.php:169
+#: includes/Settings/Manager.php:176
 #, php-format
 msgid "%s Settings"
 msgstr ""
 
-#: includes/Settings/Manager.php:198
+#: includes/Settings/Manager.php:196
 msgid "Settings have been reset to defaults."
 msgstr ""
 
-#: includes/Settings/Manager.php:414
+#: includes/Settings/Manager.php:392
 msgid "Configure general admin panel settings."
 msgstr ""
 
-#: includes/Settings/Manager.php:424
+#: includes/Settings/Manager.php:402
 msgid "Configure settings for each user role."
 msgstr ""
 
-#: includes/Settings/Manager.php:436
+#: includes/Settings/Manager.php:414
 msgid "Adds a link to the front page editor in the admin menu."
 msgstr ""
 
-#: includes/Settings/Manager.php:457
+#: includes/Settings/Manager.php:431
 msgid "The link the \"Page Editor\" admin menu item points to, relative to the site root."
 msgstr ""
 
-#: includes/Settings/Manager.php:475
+#: includes/Settings/Manager.php:449
 msgid "Minimum required characters for user passwords."
 msgstr ""
 
-#: includes/Settings/Manager.php:486
+#: includes/Settings/Manager.php:460
 msgid "Prevents non-admin users from changing their passwords."
 msgstr ""
 
-#: includes/Settings/Manager.php:496
+#: includes/Settings/Manager.php:470
 msgid "Hides application passwords section for non-admin users."
 msgstr ""
 
-#: includes/Settings/Manager.php:506
+#: includes/Settings/Manager.php:480
 msgid "Removes comments and new content links from admin bar for non-admins."
 msgstr ""
 
-#: includes/Settings/Manager.php:516
+#: includes/Settings/Manager.php:490
 msgid "Removes default dashboard widgets (Activity, Quick Draft, etc.)."
 msgstr ""
 
-#: includes/Settings/Manager.php:535
+#: includes/Settings/Manager.php:509
 msgid "Login Redirect"
 msgstr ""
 
-#: includes/Settings/Manager.php:538
+#: includes/Settings/Manager.php:512
 msgid "-- Select Redirect URL --"
 msgstr ""
 
-#: includes/Settings/Manager.php:539
+#: includes/Settings/Manager.php:513
 msgid "-- Front Page --"
 msgstr ""
 
-#: includes/Settings/Manager.php:544
+#: includes/Settings/Manager.php:518
 msgid "URL to redirect this user role to after login."
 msgstr ""
 
-#: includes/Settings/Manager.php:547
+#: includes/Settings/Manager.php:521
 msgid "Default Admin Page"
 msgstr ""
 
-#: includes/Settings/Manager.php:552
+#: includes/Settings/Manager.php:526
 msgid "-- Select Default Page --"
 msgstr ""
 
-#: includes/Settings/Manager.php:557
+#: includes/Settings/Manager.php:531
 msgid "Default page this user role sees when accessing /wp-admin/ (must be one of the allowed menu items below)."
 msgstr ""
 
-#: includes/Settings/Manager.php:561
+#: includes/Settings/Manager.php:535
 msgid "Form Entries Access"
 msgstr ""
 
-#: includes/Settings/Manager.php:562
+#: includes/Settings/Manager.php:536
 msgid "Enable to allow this user role to view and manage Fluent Forms entries (view, delete, mark read/unread, favorite) on the Entries page of Fluent Forms' own menu — not forms themselves, site-wide Fluent Forms settings, or Site Settings → Forms, which comes with Site Settings Access."
 msgstr ""
 
-#: includes/Settings/Manager.php:568
+#: includes/Settings/Manager.php:542
 msgid "Site Settings Access"
 msgstr ""
 
-#: includes/Settings/Manager.php:569
+#: includes/Settings/Manager.php:543
 msgid "Enable to give this user role access to the Site Settings menu (Business & Contact, Address, Social Media, and the GDPR and Swish tabs under Forms; the SEO and Contact Forms tabs are for administrators only) and to native theme menu/design editing (Appearance → Menus/Customize on a classic theme, or the Site Editor on a block theme)."
 msgstr ""
 
-#: includes/Settings/Manager.php:574
+#: includes/Settings/Manager.php:548
 msgid "SEO Framework Access"
 msgstr ""
 
-#: includes/Settings/Manager.php:575
+#: includes/Settings/Manager.php:549
 msgid "Enable to give this user role access to The SEO Framework's meta box on posts/pages and its SEO column in the post/page list."
 msgstr ""
 
-#: includes/Settings/Manager.php:580
+#: includes/Settings/Manager.php:554
 msgid "Allowed Menu Items"
 msgstr ""
 
-#: includes/Settings/Manager.php:596
+#: includes/Settings/Manager.php:570
 msgid "Select which admin menu items should be visible to this user role."
 msgstr ""
 
-#: includes/Settings/RolePolicy.php:216
+#: includes/Settings/RolePolicy.php:214
 msgid "Page Editor"
 msgstr ""
 
 #. translators: %d is the number indicating minimum password length
-#: includes/Settings/RolePolicy.php:268
-#: includes/Settings/RolePolicy.php:300
+#: includes/Settings/RolePolicy.php:266
+#: includes/Settings/RolePolicy.php:298
 #, php-format
 msgid "ERROR: Password must be at least %d characters long."
 msgstr ""
 
-#: includes/SiteSettings/ContactLinks.php:58
+#: includes/SiteSettings/ContactLinks.php:51
 msgid "Copied!"
 msgstr ""
 
-#: includes/SiteSettings/ContactLinks.php:88
-#: includes/SiteSettings/Repository.php:42
+#: includes/SiteSettings/ContactLinks.php:81
+#: includes/SiteSettings/Repository.php:40
 msgid "Email"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:101
+#: includes/SiteSettings/Provider.php:92
 msgid "Discourage search engines from indexing this site"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:228
+#: includes/SiteSettings/Provider.php:216
 msgid "Reset to theme default"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:244
+#: includes/SiteSettings/Provider.php:232
 msgid "Mirrors the \"Discourage search engines from indexing this site\" setting under Settings → Reading and applies immediately. It only asks search engines not to index the site; the rest of this tab still applies, e.g. to link previews when the site is shared."
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:261
+#: includes/SiteSettings/Provider.php:249
 msgid "You are not allowed to change this setting."
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:318
+#: includes/SiteSettings/Provider.php:303
 msgid "Select image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:319
+#: includes/SiteSettings/Provider.php:304
 msgid "Use this image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:320
+#: includes/SiteSettings/Provider.php:305
 msgid "Choose image"
 msgstr ""
 
-#: includes/SiteSettings/Provider.php:325
+#: includes/SiteSettings/Provider.php:310
 msgid "Remove image"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:30
+#: includes/SiteSettings/Repository.php:28
 msgid "Enable SEO Output"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:31
+#: includes/SiteSettings/Repository.php:29
 msgid "SEO title"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:32
+#: includes/SiteSettings/Repository.php:30
 msgid "Meta description"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:33
+#: includes/SiteSettings/Repository.php:31
 msgid "Share image"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:34
+#: includes/SiteSettings/Repository.php:32
 msgid "Theme color"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:35
+#: includes/SiteSettings/Repository.php:33
 msgid "Background color"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:37
+#: includes/SiteSettings/Repository.php:35
 msgid "Business name"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:38
+#: includes/SiteSettings/Repository.php:36
 msgid "Business type (schema.org)"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:39
+#: includes/SiteSettings/Repository.php:37
 msgid "Person name"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:40
+#: includes/SiteSettings/Repository.php:38
 msgid "Signature"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:41
+#: includes/SiteSettings/Repository.php:39
 msgid "Job title"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:43
+#: includes/SiteSettings/Repository.php:41
 msgid "Phone"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:48
+#: includes/SiteSettings/Repository.php:46
 msgid "Street address"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:49
+#: includes/SiteSettings/Repository.php:47
 msgid "Postal code"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:50
+#: includes/SiteSettings/Repository.php:48
 msgid "City"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:51
+#: includes/SiteSettings/Repository.php:49
 msgid "Region"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:52
+#: includes/SiteSettings/Repository.php:50
 msgid "Country"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:53
+#: includes/SiteSettings/Repository.php:51
 msgid "Latitude"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:54
+#: includes/SiteSettings/Repository.php:52
 msgid "Longitude"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:56
+#: includes/SiteSettings/Repository.php:54
 msgid "Facebook URL"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:57
+#: includes/SiteSettings/Repository.php:55
 msgid "Instagram URL"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:58
+#: includes/SiteSettings/Repository.php:56
 msgid "X (Twitter) URL"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:68
+#: includes/SiteSettings/Repository.php:66
 msgid "SEO"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:69
+#: includes/SiteSettings/Repository.php:67
 msgid "Business & Contact"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:70
+#: includes/SiteSettings/Repository.php:68
 msgid "Address"
 msgstr ""
 
-#: includes/SiteSettings/Repository.php:71
+#: includes/SiteSettings/Repository.php:69
 msgid "Social Media"
 msgstr ""
 
-#: includes/SupportGenix/Defaults.php:63
+#: includes/SupportGenix/Defaults.php:61
 msgid "Apply this site's default settings for Support Genix."
 msgstr ""
 
-#: includes/SupportGenix/Defaults.php:68
+#: includes/SupportGenix/Defaults.php:66
 msgid "Apply Defaults"
 msgstr ""
 
-#: includes/SupportGenix/Defaults.php:86
+#: includes/SupportGenix/Defaults.php:84
 msgid "Security check failed"
 msgstr ""
 
-#: includes/SupportGenix/Defaults.php:108
+#: includes/SupportGenix/Defaults.php:106
 msgid "Support Genix defaults applied successfully!"
 msgstr ""
 
-#: includes/SupportGenix/Defaults.php:110
+#: includes/SupportGenix/Defaults.php:108
 msgid "There was an error applying the Support Genix defaults."
 msgstr ""
 
-#: includes/SupportGenix/Defaults.php:296
+#: includes/SupportGenix/Defaults.php:288
 msgid "Ticket"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:164
-#: includes/SupportGenix/Provider.php:165
+#: includes/SupportGenix/Provider.php:125
+#: includes/SupportGenix/Provider.php:126
 msgid "Support Tickets"
 msgstr ""
 
-#: includes/SupportGenix/Provider.php:187
+#: includes/SupportGenix/Provider.php:148
 msgid "Support Genix has no ticket page yet."
 msgstr ""
 
-#: includes/Swish/Provider.php:42
+#: includes/Swish/Provider.php:37
 msgid "Swish"
 msgstr ""
 
-#: includes/Swish/Provider.php:64
+#: includes/Swish/Provider.php:59
 msgid "Swish number"
 msgstr ""
 
-#: includes/Swish/Provider.php:65
+#: includes/Swish/Provider.php:60
 msgid "Prefilled amount"
 msgstr ""
 
-#: includes/Swish/Provider.php:66
+#: includes/Swish/Provider.php:61
 msgid "Prefilled message"
 msgstr ""
 
-#: includes/Swish/Provider.php:71
+#: includes/Swish/Provider.php:66
 msgid "Any link with the address \"#swish\" anywhere on the site opens this directly in the Swish app on a phone, or shows this QR code on a device that can't run it."
 msgstr ""
 
-#: includes/Swish/Provider.php:92
+#: includes/Swish/Provider.php:87
 msgid "The Swish QR code could not be created. Reload this page to try again."
 msgstr ""
 
-#: includes/Swish/Provider.php:99
+#: includes/Swish/Provider.php:94
 msgid "Current Swish QR code"
 msgstr ""
 
-#: includes/Swish/Provider.php:117
+#: includes/Swish/Provider.php:112
 msgid "Blank = no amount prefilled."
 msgstr ""
 
-#: includes/Swish/Provider.php:142
+#: includes/Swish/Provider.php:137
 msgid "Editable by the payer after scanning"
 msgstr ""
 
-#: includes/Umami/Provider.php:44
-#: includes/Umami/Provider.php:45
+#: includes/Umami/Provider.php:39
+#: includes/Umami/Provider.php:40
 msgid "Analytics"
 msgstr ""
 
-#: includes/Umami/Provider.php:66
+#: includes/Umami/Provider.php:61
 msgid "Umami ID is not set. Please configure it in the settings."
 msgstr ""
 
-#: includes/Umami/Provider.php:88
+#: includes/Umami/Provider.php:83
 msgid "Umami Settings"
 msgstr ""
 
-#: includes/Umami/Provider.php:89
+#: includes/Umami/Provider.php:84
 msgid "Umami"
 msgstr ""
 
-#: includes/Umami/Provider.php:119
+#: includes/Umami/Provider.php:114
 msgid "Umami Server"
 msgstr ""
 
-#: includes/Umami/Provider.php:126
+#: includes/Umami/Provider.php:121
 msgid "Umami Site"
 msgstr ""
 
-#: includes/Umami/Provider.php:133
+#: includes/Umami/Provider.php:128
 msgid "Umami ID"
 msgstr ""
 
-#: includes/Umami/Provider.php:140
+#: includes/Umami/Provider.php:135
 msgid "Button Selectors"
 msgstr ""
 
-#: includes/Umami/Provider.php:154
+#: includes/Umami/Provider.php:149
 msgid "Self-hosted (umami.antropomorf.se)"
 msgstr ""
 
-#: includes/Umami/Provider.php:155
+#: includes/Umami/Provider.php:150
 msgid "Umami Cloud (eu.umami.is)"
 msgstr ""
 
-#: includes/Umami/Provider.php:200
+#: includes/Umami/Provider.php:192
 msgid "One CSS selector per line. Matched elements are tracked automatically, named after their own visible text. Leave empty to use the built-in defaults."
 msgstr ""
 
-#: includes/Utilities/SettingsRenderer.php:118
+#: includes/Utilities/SettingsRenderer.php:115
 msgid "Reset to Defaults"
 msgstr ""

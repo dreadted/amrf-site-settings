@@ -42,34 +42,15 @@ class Generator
 			return;
 		}
 
-		$meta = self::meta($page->ID);
-		$url = self::targetUrl($page);
-		$file = self::filename($url);
-		$logo = self::logoPath();
-		$signature = md5(implode('|', [$url, self::RENDER_VERSION, $logo, $logo !== '' ? filemtime($logo) : 0]));
-
-		if ($meta['file'] === $file && $meta['signature'] === $signature && file_exists(self::dir() . '/' . $file)) {
-			return;
+		$record = self::ensure(self::targetUrl($page), self::meta($page->ID));
+		if ($record !== null) {
+			update_post_meta($page->ID, self::META_KEY, $record);
 		}
-
-		if (!self::render($url, $logo, self::dir() . '/' . $file)) {
-			return;
-		}
-
-		if ($meta['file'] !== '' && $meta['file'] !== $file) {
-			wp_delete_file(self::dir() . '/' . $meta['file']);
-		}
-
-		update_post_meta($page->ID, self::META_KEY, ['file' => $file, 'signature' => $signature]);
 	}
 
 	public static function remove(int $pageId): void
 	{
-		$meta = self::meta($pageId);
-		if ($meta['file'] !== '') {
-			wp_delete_file(self::dir() . '/' . $meta['file']);
-		}
-
+		self::deleteFile(self::meta($pageId)['file']);
 		delete_post_meta($pageId, self::META_KEY);
 	}
 
@@ -80,7 +61,50 @@ class Generator
 	{
 		$file = self::meta($pageId)['file'];
 
-		return $file !== '' && file_exists(self::dir() . '/' . $file) ? $file : '';
+		return self::exists($file) ? $file : '';
+	}
+
+	/**
+	 * Creates the code for any URL unless an up-to-date one exists, and removes the previous file if it was renamed.
+	 *
+	 * @param string                                 $url
+	 * @param array{file: string, signature: string} $previous
+	 * @return array{file: string, signature: string}|null Null if the code could not be created.
+	 */
+	public static function ensure(string $url, array $previous): ?array
+	{
+		$file = self::filename($url);
+		$logo = self::logoPath();
+		$record = [
+			'file' => $file,
+			'signature' => md5(implode('|', [$url, self::RENDER_VERSION, $logo, $logo !== '' ? filemtime($logo) : 0])),
+		];
+
+		if ($previous === $record && self::exists($file)) {
+			return $record;
+		}
+
+		if (!self::render($url, $logo, self::filePath($file))) {
+			return null;
+		}
+
+		if ($previous['file'] !== $file) {
+			self::deleteFile($previous['file']);
+		}
+
+		return $record;
+	}
+
+	public static function exists(string $file): bool
+	{
+		return $file !== '' && file_exists(self::filePath($file));
+	}
+
+	public static function deleteFile(string $file): void
+	{
+		if ($file !== '') {
+			wp_delete_file(self::filePath($file));
+		}
 	}
 
 	public static function fileUrl(string $file): string
