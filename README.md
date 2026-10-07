@@ -103,11 +103,23 @@ The `/favicon.ico` and `/apple-touch-icon.png` rewrites are written to `.htacces
 
 #### Contact Forms
 
-- Default Contact Form: Select one of the pre-existing [Fluent Forms](https://fluentforms.com/) to open sitewide with links pointing to the `#contact` anchor
-- Contact Shortcut: a slug such as `kontakt` that redirects `example.com/kontakt` to the front page with the contact form open, keeping any query string. Like a page slug it can't collide with an existing page or post, and new pages can't take it. The tab offers its QR code for download, encoding `?utm_source=qr&utm_content=<slug>` so Umami can tell scans apart.
+- **Default Contact Form:** one of the site's [Fluent Forms](https://fluentforms.com/), opened sitewide in a contact modal (see below). "None" turns the modal off.
+- **Contact Shortcut:** a slug such as `kontakt`, so `example.com/kontakt` opens the front page with the contact modal (see below). Like a page slug it can't be saved while a page or post (or a page's former address) uses it, and new pages and posts that try it get `kontakt-2`. The tab shows the shortcut's QR code as a thumbnail that downloads it.
 - A toggle that overrides Fluent Forms' colors/border-radius/fonts with the site's own `theme.json` tokens
 - Enable/disable [ALTCHA](https://altcha.org/) proof-of-work spam protection on every Fluent Form on the site — a self-hosted alternative honeypot with no settings, no external account, and no site key tied to a specific domain: the signing secret is generated and stored automatically the first time it's needed, so it works unchanged across dev/staging/production clones of a site.
-- Fluent Forms' script, the ALTCHA widget and jQuery (when nothing else on the page needs it) load on demand: once a form comes within one screen height of the viewport, or a visitor hovers, taps or focuses a `#contact` link or a form. The form HTML is still rendered server-side. The `amrf_on_demand_script_handles` filter changes which script handles are held back (return `[]` to turn it off).
+
+##### Contact modal
+
+- Any `<a href="#contact">` or element with `data-contact-trigger` opens the form in a modal instead of jumping to an anchor. A `data-topic` attribute on the trigger pre-fills the form's `subject` field.
+- The modal traps focus, makes the rest of the page `inert`, closes on Escape, the close button or the backdrop, and closes itself five seconds after a successful submit. It keeps the visitor's scroll position.
+- A theme can choose another form per page with the `amrf_contact_modal_form_id` filter (`int $form_id`), e.g. a page's own form; it defaults to the Default Contact Form. `amrf_get_default_contact_form_id()` returns the setting itself.
+- **Loaded on demand:** the form HTML is rendered server-side, but Fluent Forms' script, the ALTCHA widget and jQuery (when nothing else on the page needs it) are held back until a form comes within one screen height of the viewport, or a visitor hovers, taps or focuses a `#contact` link, a `data-contact-trigger` or a form. A submit before then is held back instead of sent as a plain POST, so the page doesn't reload and lose the input, and starts loading the scripts. The `amrf_on_demand_script_handles` filter changes which script handles are held back (return `[]` to turn it off).
+
+##### Contact shortcut
+
+- `/<slug>` and `/<slug>/` redirect (302, never cached, also not by LiteSpeed) to the front page with `#contact-modal`, keeping any query string. The modal opens with the page at the top, removes the fragment so a reload doesn't reopen it, and loads the form scripts right away.
+- Its QR code (`uploads/qr-links/qr-<host>-<slug>.png`, same format as the [page QR codes](#page-qr-codes)) encodes `/<slug>/?utm_source=qr&utm_content=<slug>`, so Umami can tell scans from visitors typing the address. It is created on save, checked again whenever the tab is opened (so a new domain or logo gets a new code), and removed when the field is emptied.
+- `amrf_get_contact_shortcut_url()` returns the shortcut's address, or `''` when none is set, e.g. for a theme's `llms.txt`.
 
 #### GDPR
 
