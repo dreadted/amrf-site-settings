@@ -105,6 +105,7 @@ The `/favicon.ico` and `/apple-touch-icon.png` rewrites are written to `.htacces
 - Default Contact Form: Select one of the pre-existing [Fluent Forms](https://fluentforms.com/) to open sitewide with links pointing to the `#contact` anchor
 - A toggle that overrides Fluent Forms' colors/border-radius/fonts with the site's own `theme.json` tokens
 - Enable/disable [ALTCHA](https://altcha.org/) proof-of-work spam protection on every Fluent Form on the site — a self-hosted alternative honeypot with no settings, no external account, and no site key tied to a specific domain: the signing secret is generated and stored automatically the first time it's needed, so it works unchanged across dev/staging/production clones of a site.
+- Fluent Forms' script, the ALTCHA widget and jQuery (when nothing else on the page needs it) load on demand: once a form comes within one screen height of the viewport, or a visitor hovers, taps or focuses a `#contact` link or a form. The form HTML is still rendered server-side. The `amrf_on_demand_script_handles` filter changes which script handles are held back (return `[]` to turn it off).
 
 #### GDPR
 

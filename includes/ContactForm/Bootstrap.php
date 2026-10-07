@@ -21,6 +21,7 @@ class Bootstrap
 		// filters 'amrf_contact_modal_form_id' to a real form ID either.
 		new Modal();
 		new Altcha();
+		new OnDemandScripts();
 		new RetentionCron();
 		new PrivacyRequests();
 		new EmailSignoff();
