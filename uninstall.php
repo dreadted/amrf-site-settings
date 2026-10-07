@@ -30,6 +30,7 @@ delete_transient('amrf_theme_css_tokens');
 delete_transient('amrf_support_genix_defaults_processed');
 
 delete_post_meta_by_key('_amrf_upload_hash');
+delete_post_meta_by_key('_amrf_page_qr');
 
 // Granted per user by the admin panel's role settings; administrators never get them from this plugin.
 $granted_caps = [
@@ -53,10 +54,12 @@ foreach (get_users(['fields' => 'ID']) as $user_id) {
 }
 
 $uploads = wp_upload_dir(null, false);
-$qr_dir = trailingslashit($uploads['basedir']) . 'amrf-swish';
-if (is_dir($qr_dir)) {
-	foreach (glob($qr_dir . '/*') ?: [] as $file) {
-		wp_delete_file($file);
+foreach (['amrf-swish', 'qr-links'] as $subdir) {
+	$qr_dir = trailingslashit($uploads['basedir']) . $subdir;
+	if (is_dir($qr_dir)) {
+		foreach (glob($qr_dir . '/*') ?: [] as $file) {
+			wp_delete_file($file);
+		}
+		rmdir($qr_dir);
 	}
-	rmdir($qr_dir);
 }

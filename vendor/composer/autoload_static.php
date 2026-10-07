@@ -11,6 +11,11 @@ class ComposerStaticInitea29e4152bd93dd6e4eec68a583ec52b
         array (
             'enshrined\\svgSanitize\\' => 22,
         ),
+        'c' =>
+        array (
+            'chillerlan\\Settings\\' => 20,
+            'chillerlan\\QRCode\\' => 18,
+        ),
         'A' =>
         array (
             'AltchaOrg\\Altcha\\' => 17,
@@ -21,6 +26,14 @@ class ComposerStaticInitea29e4152bd93dd6e4eec68a583ec52b
         'enshrined\\svgSanitize\\' =>
         array (
             0 => __DIR__ . '/..' . '/enshrined/svg-sanitize/src',
+        ),
+        'chillerlan\\Settings\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/chillerlan/php-settings-container/src',
+        ),
+        'chillerlan\\QRCode\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/chillerlan/php-qrcode/src',
         ),
         'AltchaOrg\\Altcha\\' =>
         array (

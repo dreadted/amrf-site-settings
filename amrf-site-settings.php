@@ -70,6 +70,7 @@ use Antropomorf\FluentFormValidation\Bootstrap as FluentFormValidationBootstrap;
 use Antropomorf\FluentCrm\Bootstrap as FluentCrmBootstrap;
 use Antropomorf\Translations\Bootstrap as TranslationsBootstrap;
 use Antropomorf\Hardening\Bootstrap as HardeningBootstrap;
+use Antropomorf\PageQr\Bootstrap as PageQrBootstrap;
 
 AdminHooks::register();
 RolePolicy::register();
@@ -84,3 +85,4 @@ FluentFormValidationBootstrap::register();
 FluentCrmBootstrap::register();
 TranslationsBootstrap::register();
 HardeningBootstrap::register();
+PageQrBootstrap::register();

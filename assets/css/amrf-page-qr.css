@@ -1,0 +1,14 @@
+.wp-list-table .column-amrf_qr {
+	width: 3.5rem;
+}
+
+.amrf-page-qr {
+	display: inline-block;
+	line-height: 0;
+}
+
+.amrf-page-qr img {
+	width: 40px;
+	height: 40px;
+	border: 1px solid #dcdcde;
+}

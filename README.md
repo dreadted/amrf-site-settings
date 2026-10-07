@@ -15,6 +15,7 @@ A WordPress plugin with general site settings for
 - [GDPR tools](#gdpr)
 - [Analytics tracking with Umami](#umami-settings)
 - [Security hardening](#hardening)
+- [QR codes for every page](#page-qr-codes)
 - [Customizing admin panels for user roles](#per-role-admin-panel-control)
 - [Optional integrations for Fluent Forms, FluentCRM & Support Genix Lite](#optional-integrations)
 
@@ -121,6 +122,14 @@ Generate a [Swish](https://www.swish.nu/) payment link to every link sitewide po
 - **Other devices**: On devices lacking the ability to install the app, the link is replaced by a dynamically generated QR code.
 
 All links can be customized with a pre-filled amount or message.
+
+### Page QR codes
+
+Every published page gets a 1197 × 1197 px PNG QR code in `uploads/qr-links/`, named after its address (`qr-example.com-about.png`, `qr-example.com.png` for the front page). The code encodes the page's permalink with `?utm_source=qr`, so Umami can count scans, and has the theme's `icon_512` brand image in a white circle in the middle. Codes are created, renamed and removed automatically when a page is published, renamed, unpublished or deleted, and never appear in the Media Library.
+
+The Pages list replaces its Comments column with a QR column at the end: a thumbnail that downloads the code, with the page's address as tooltip.
+
+The ticket page never gets a code. A theme can leave out more pages, or turn the feature off, with the `amrf_page_qr_eligible` filter (`bool $eligible, WP_Post $page`).
 
 ### Umami Settings
 
