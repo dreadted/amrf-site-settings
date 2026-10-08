@@ -17,6 +17,8 @@ class Favicons
 	private const MANIFEST_QUERY_VAR = 'amrf_webmanifest';
 	private const TOUCH_ICON_QUERY_VAR = 'amrf_touch_icon';
 	private const CACHE_SECONDS = WEEK_IN_SECONDS;
+	private const FAVICON_REGEX = 'favicon\\.ico$';
+	private const HTACCESS_RETRY_TRANSIENT = 'amrf_favicon_htaccess_retry';
 
 	public function __construct()
 	{
@@ -31,6 +33,7 @@ class Favicons
 		add_action('parse_request', [$this, 'renderManifest']);
 		add_action('parse_request', [$this, 'renderTouchIcon']);
 		add_action('do_faviconico', [$this, 'renderFaviconIco']);
+		add_action('admin_init', [$this, 'ensureHtaccessRule']);
 	}
 
 	/**
@@ -54,7 +57,7 @@ class Favicons
 		global $wp_rewrite;
 
 		foreach (array_keys(self::rewriteRules()) as $regex) {
-			unset($wp_rewrite->extra_rules_top[$regex]);
+			unset($wp_rewrite->extra_rules_top[$regex], $wp_rewrite->non_wp_rules[$regex]);
 		}
 		flush_rewrite_rules();
 	}
@@ -143,16 +146,67 @@ class Favicons
 	}
 
 	/**
-	 * /favicon.ico needs no rule of its own: core routes it to do_favicon().
+	 * /favicon.ico is a static .htaccess rule, since LiteSpeed answers a missing /favicon.ico
+	 * itself without reaching index.php. Elsewhere core routes it to do_favicon().
 	 *
 	 * @return array<string, string> Regex => target.
 	 */
 	private static function rewriteRules(): array
 	{
-		return [
+		$rules = [
 			'^site\.webmanifest$' => 'index.php?' . self::MANIFEST_QUERY_VAR . '=1',
 			'^apple-touch-icon(-precomposed)?\.png$' => 'index.php?' . self::TOUCH_ICON_QUERY_VAR . '=1',
 		];
+
+		$url = self::faviconIcoUrl();
+		$path = BrandImages::homePath($url);
+		if ($path && BrandImages::localPath($url)) {
+			$rules[self::FAVICON_REGEX] = $path;
+		}
+
+		return $rules;
+	}
+
+	/**
+	 * Rewrites .htaccess on an admin's page load when its /favicon.ico rule is missing or stale,
+	 * e.g. after a deploy, a clone or a Site Icon change. A failed write is retried hourly.
+	 *
+	 * @return void
+	 */
+	public function ensureHtaccessRule(): void
+	{
+		global $wp_rewrite;
+
+		if (is_multisite() || !current_user_can('manage_options') || get_transient(self::HTACCESS_RETRY_TRANSIENT) || !function_exists('save_mod_rewrite_rules')) {
+			return;
+		}
+
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		$file = get_home_path() . '.htaccess';
+		$written = is_readable($file) ? extract_from_markers($file, 'WordPress') : [];
+		if (!$written || !got_mod_rewrite()) {
+			return;
+		}
+
+		$expected = explode("\n", $wp_rewrite->mod_rewrite_rules());
+		if (self::faviconLines($written) === self::faviconLines($expected)) {
+			return;
+		}
+
+		if (!save_mod_rewrite_rules()) {
+			set_transient(self::HTACCESS_RETRY_TRANSIENT, 1, HOUR_IN_SECONDS);
+		}
+	}
+
+	/**
+	 * @param array<int, string> $lines
+	 * @return array<int, string>
+	 */
+	private static function faviconLines(array $lines): array
+	{
+		$prefix = 'RewriteRule ^' . self::FAVICON_REGEX . ' ';
+
+		return array_values(array_filter(array_map('trim', $lines), static fn(string $line): bool => str_starts_with($line, $prefix)));
 	}
 
 	/**
@@ -236,12 +290,21 @@ class Favicons
 	 */
 	public function renderFaviconIco(): void
 	{
-		$url = self::hasCustomSiteIcon() ? get_site_icon_url(32) : BrandImages::url('icon_ico');
-		$url = $url ?: get_site_icon_url(32);
+		$url = self::faviconIcoUrl();
 
 		if ($url) {
 			self::serve($url);
 		}
+	}
+
+	/**
+	 * @return string
+	 */
+	private static function faviconIcoUrl(): string
+	{
+		$url = self::hasCustomSiteIcon() ? get_site_icon_url(32) : BrandImages::url('icon_ico');
+
+		return $url ?: get_site_icon_url(32);
 	}
 
 	/**

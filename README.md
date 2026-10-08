@@ -97,7 +97,7 @@ add_filter('amrf_brand_images', function (): array {
 });
 ```
 
-The touch icon is never linked in `<head>`, since Chrome on Android would use the opaque square as its tab icon; iOS fetches `/apple-touch-icon.png` from the site root on its own. Both root files are served by PHP, so they work on any web server. The login logo falls back to the Site Icon. The portal's favicon and logo are copied into Support Genix's own settings when its "Apply Defaults" button is used.
+The touch icon is never linked in `<head>`, since Chrome on Android would use the opaque square as its tab icon; iOS fetches `/apple-touch-icon.png` from the site root on its own. `/apple-touch-icon.png` is served by PHP. `/favicon.ico` is also a static rule in `.htaccess`, since LiteSpeed answers a missing `/favicon.ico` itself without reaching WordPress; the plugin rewrites `.htaccess` on an administrator's next admin page load whenever that rule is missing or stale, so no Permalinks save is needed. The login logo falls back to the Site Icon. The portal's favicon and logo are copied into Support Genix's own settings when its "Apply Defaults" button is used.
 
 ### Forms
 

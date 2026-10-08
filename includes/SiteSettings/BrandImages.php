@@ -55,6 +55,25 @@ class BrandImages
 	}
 
 	/**
+	 * @param string $url
+	 * @return string Path relative to the site root, or empty when the URL is on another host or outside it.
+	 */
+	public static function homePath(string $url): string
+	{
+		$parts = wp_parse_url($url) ?: [];
+		$home = wp_parse_url(home_url()) ?: [];
+		$homePath = trailingslashit($home['path'] ?? '');
+		$path = $parts['path'] ?? '';
+
+		// Scheme is ignored: under wp-cli, theme URLs can be http while home_url() is https.
+		if ($url === '' || ($parts['host'] ?? '') !== ($home['host'] ?? '') || !str_starts_with($path, $homePath)) {
+			return '';
+		}
+
+		return substr($path, strlen($homePath));
+	}
+
+	/**
 	 * @param string $url An uploads or wp-content URL.
 	 * @return string Existing file on disk, or empty when the URL points elsewhere.
 	 */
