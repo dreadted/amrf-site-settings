@@ -20,12 +20,12 @@ class RetentionShortcode
 
 	/**
 	 * "for up to 90 days" / "for up to 1 day" / "until further notice" (0 =
-	 * keep forever, see Repository::getRetentionDays()'s own doc comment —
+	 * keep forever, see GdprRepository::getRetentionDays()'s own doc comment —
 	 * a plain "%d days" would misleadingly read "for up to 0 days" there).
 	 */
 	public function render(): string
 	{
-		$days = Repository::getRetentionDays();
+		$days = GdprRepository::getRetentionDays();
 
 		if ($days < 1) {
 			return esc_html__('until further notice', 'amrf-admin');

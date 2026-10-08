@@ -11,14 +11,15 @@ if (!defined('ABSPATH')) {
 
 /**
  * Registers the "Contact Forms" and "GDPR" tabs onto amrf_forms_tabs (see
- * Forms\Menu, the shared "Forms" page). Both tabs share one option
- * (Repository::OPTION_NAME) via one option_group.
+ * Forms\Menu, the shared "Forms" page). Each tab has its own option and
+ * option group, so the save capability can differ per tab.
  *
  * @package Antropomorf\ContactForm
  */
 class Provider
 {
 	private const OPTION_GROUP = 'amrf_contact_form_group';
+	private const GDPR_OPTION_GROUP = 'amrf_gdpr_group';
 
 	/** Internal Settings API page slugs — never shown as an admin menu item. */
 	private const CONTACT_PAGE_SLUG = 'amrf-forms-contact';
@@ -29,9 +30,8 @@ class Provider
 		add_filter('amrf_forms_tabs', [$this, 'registerTabs']);
 		add_action('admin_enqueue_scripts', [$this, 'enqueueQrStyle']);
 
-		// wp-admin/options.php hardcodes manage_options to save any Settings
-		// API form, regardless of what capability reached the page.
-		add_filter('option_page_capability_' . self::OPTION_GROUP, function () {
+		// wp-admin/options.php requires manage_options unless a group lowers it; only the GDPR tab is for editors.
+		add_filter('option_page_capability_' . self::GDPR_OPTION_GROUP, function () {
 			return 'edit_theme_options';
 		});
 	}
@@ -54,7 +54,7 @@ class Provider
 
 		$tabs['gdpr'] = [
 			'label' => __('GDPR', 'amrf-admin'),
-			'option_group' => self::OPTION_GROUP,
+			'option_group' => self::GDPR_OPTION_GROUP,
 			'page_slug' => self::GDPR_PAGE_SLUG,
 			'show_reset' => false,
 			'register' => [$this, 'registerGdprFields'],
@@ -65,8 +65,6 @@ class Provider
 
 	/**
 	 * Called via the 'contact-forms' tab's 'register' callback, on admin_init.
-	 * register_setting() is repeated in registerGdprFields() too — a harmless
-	 * repeat call, and either tab can load first.
 	 *
 	 * @return void
 	 */
@@ -121,7 +119,7 @@ class Provider
 	 */
 	public function registerGdprFields(): void
 	{
-		register_setting(self::OPTION_GROUP, Repository::OPTION_NAME, [Repository::class, 'sanitize']);
+		register_setting(self::GDPR_OPTION_GROUP, GdprRepository::OPTION_NAME, [GdprRepository::class, 'sanitize']);
 
 		// No section title needed — the tab itself is already labeled "GDPR".
 		add_settings_section('gdpr_section', '', '__return_false', self::GDPR_PAGE_SLUG);
@@ -294,9 +292,9 @@ class Provider
 	public function renderContactFormIdsField(): void
 	{
 		$forms = $this->getPublishedForms();
-		$selected = Repository::getContactFormIds();
-		$field_name = Repository::OPTION_NAME . '[contact_form_ids]';
-		$submitted_name = Repository::OPTION_NAME . '[contact_form_ids_submitted]';
+		$selected = GdprRepository::getContactFormIds();
+		$field_name = GdprRepository::OPTION_NAME . '[contact_form_ids]';
+		$submitted_name = GdprRepository::OPTION_NAME . '[contact_form_ids_submitted]';
 
 		printf('<input type="hidden" name="%s" value="1" />', esc_attr($submitted_name));
 
@@ -323,9 +321,9 @@ class Provider
 	{
 		// Raw string, not getRetentionDays()'s absint() — unset must render
 		// blank, not "0".
-		$days = Repository::getSettings()['retention_days'];
-		$id = Repository::OPTION_NAME . '_retention_days';
-		$name = Repository::OPTION_NAME . '[retention_days]';
+		$days = GdprRepository::getSettings()['retention_days'];
+		$id = GdprRepository::OPTION_NAME . '_retention_days';
+		$name = GdprRepository::OPTION_NAME . '[retention_days]';
 
 		printf(
 			'<input type="number" id="%1$s" name="%2$s" value="%3$s" min="0" class="small-text" /><p class="description">%4$s</p>',

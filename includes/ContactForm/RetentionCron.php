@@ -55,12 +55,12 @@ class RetentionCron
 			return;
 		}
 
-		$days = Repository::getRetentionDays();
+		$days = GdprRepository::getRetentionDays();
 		if ($days < 1) {
 			return;
 		}
 
-		$form_ids = Repository::getContactFormIds();
+		$form_ids = GdprRepository::getContactFormIds();
 		if (empty($form_ids)) {
 			return;
 		}

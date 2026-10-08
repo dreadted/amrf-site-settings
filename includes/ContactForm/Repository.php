@@ -7,20 +7,20 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Storage, defaults and sanitizing for the Contact Forms and GDPR settings, including the ALTCHA HMAC key.
+ * Storage, defaults and sanitizing for the Contact Forms tab's settings, including the ALTCHA HMAC key.
  *
  * @package Antropomorf\ContactForm
  */
 class Repository
 {
-	public const OPTION_NAME = 'amrf_fluentform_privacy';
+	public const OPTION_NAME = 'amrf_contact_forms';
 
 	public const NEWSLETTER_OPTIN_FIELD_NAME = 'newsletter_optin';
 
 	public const NEWSLETTER_OPTIN_VALUE = 'yes';
 
 	/**
-	 * @return array{default_contact_form_id: string, contact_shortcut_slug: string, enable_consistent_styling: bool, altcha_enabled: bool, contact_form_ids: int[], retention_days: string}
+	 * @return array{default_contact_form_id: string, contact_shortcut_slug: string, enable_consistent_styling: bool, altcha_enabled: bool}
 	 */
 	public static function getDefaults(): array
 	{
@@ -31,13 +31,11 @@ class Repository
 			'enable_consistent_styling' => false,
 			// On by default; a site can opt out for its own spam protection.
 			'altcha_enabled' => true,
-			'contact_form_ids' => [],
-			'retention_days' => '',
 		];
 	}
 
 	/**
-	 * @return array{default_contact_form_id: string, contact_shortcut_slug: string, enable_consistent_styling: bool, altcha_enabled: bool, contact_form_ids: int[], retention_days: string}
+	 * @return array{default_contact_form_id: string, contact_shortcut_slug: string, enable_consistent_styling: bool, altcha_enabled: bool}
 	 */
 	public static function getSettings(): array
 	{
@@ -47,7 +45,7 @@ class Repository
 
 	/**
 	 * @param mixed $input Raw POSTed value for this option.
-	 * @return array{default_contact_form_id: string, contact_shortcut_slug: string, enable_consistent_styling: bool, altcha_enabled: bool, contact_form_ids: int[], retention_days: string}
+	 * @return array{default_contact_form_id: string, contact_shortcut_slug: string, enable_consistent_styling: bool, altcha_enabled: bool}
 	 */
 	public static function sanitize($input): array
 	{
@@ -55,14 +53,13 @@ class Repository
 		$current = self::getSettings();
 
 		// One-shot action, not a stored setting — deliberately absent from $output below.
-		$optinFormIds = [];
 		if (array_key_exists('apply_fluentform_baseline_submitted', $input) && !empty($input['apply_fluentform_baseline'])) {
-			$optinFormIds = FluentFormBaseline::apply();
+			// Opt-in submissions hold personal data, so every form the baseline gave the opt-in expires too.
+			GdprRepository::addContactFormIds(FluentFormBaseline::apply());
 		}
 
 		$output = [
 			'default_contact_form_id' => (string) absint($input['default_contact_form_id'] ?? $current['default_contact_form_id']),
-			'retention_days' => (string) absint($input['retention_days'] ?? $current['retention_days']),
 			'contact_shortcut_slug' => array_key_exists('contact_shortcut_slug', $input)
 				? Shortcut::validateSlug((string) $input['contact_shortcut_slug'], $current['contact_shortcut_slug'])
 				: $current['contact_shortcut_slug'],
@@ -77,17 +74,10 @@ class Repository
 			? !empty($input['altcha_enabled'])
 			: $current['altcha_enabled'];
 
-		if (array_key_exists('contact_form_ids_submitted', $input)) {
-			$ids = isset($input['contact_form_ids']) && is_array($input['contact_form_ids'])
-				? array_map('absint', $input['contact_form_ids'])
-				: [];
-			$output['contact_form_ids'] = array_values(array_unique(array_filter($ids)));
-		} else {
-			$output['contact_form_ids'] = $current['contact_form_ids'];
+		// Not a form field, so a save would otherwise drop it and void open ALTCHA challenges.
+		if (!empty($current['altcha_hmac_key'])) {
+			$output['altcha_hmac_key'] = $current['altcha_hmac_key'];
 		}
-
-		// Opt-in submissions hold personal data, so every form the baseline gave the opt-in expires too.
-		$output['contact_form_ids'] = array_values(array_unique(array_merge($output['contact_form_ids'], $optinFormIds)));
 
 		return $output;
 	}
@@ -128,19 +118,5 @@ class Repository
 		}
 
 		return $stored['altcha_hmac_key'];
-	}
-
-	/**
-	 * @return int[] Form IDs the retention cron and personal-data export/
-	 *               erase requests apply to.
-	 */
-	public static function getContactFormIds(): array
-	{
-		return self::getSettings()['contact_form_ids'];
-	}
-
-	public static function getRetentionDays(): int
-	{
-		return absint(self::getSettings()['retention_days']);
 	}
 }

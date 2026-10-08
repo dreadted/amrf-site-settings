@@ -17,6 +17,7 @@ $options = [
 	'amrf_admin_settings',
 	'amrf_site_settings',
 	'amrf_swish_settings',
+	'amrf_contact_forms',
 	'amrf_fluentform_privacy',
 	'amrf_hardening',
 	'amrf_umami',

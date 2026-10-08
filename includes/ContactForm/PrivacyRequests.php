@@ -99,7 +99,7 @@ class PrivacyRequests
 	 */
 	public function exportPersonalData(string $email_address, int $page = 1): array
 	{
-		$form_ids = Repository::getContactFormIds();
+		$form_ids = GdprRepository::getContactFormIds();
 		if (empty($form_ids)) {
 			return ['data' => [], 'done' => true];
 		}
@@ -150,7 +150,7 @@ class PrivacyRequests
 	 */
 	public function erasePersonalData(string $email_address, int $page = 1): array
 	{
-		$form_ids = Repository::getContactFormIds();
+		$form_ids = GdprRepository::getContactFormIds();
 		if (empty($form_ids) || !class_exists(SubmissionService::class)) {
 			return ['items_removed' => false, 'items_retained' => false, 'messages' => [], 'done' => true];
 		}
