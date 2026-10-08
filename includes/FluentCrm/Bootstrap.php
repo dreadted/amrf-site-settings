@@ -20,6 +20,7 @@ class Bootstrap
 		new AnalyticsExclusion();
 		new AdminAccess();
 		new ConsentLog();
+		new ForceSubscribeGuard();
 		new ContactReducer();
 		new DefaultCampaignTemplate();
 		new DoNotContact();
