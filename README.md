@@ -82,7 +82,7 @@ These feed the SEO structured data above and are reused wherever the site needs 
 
 #### Icons & logo
 
-The theme supplies the site's icons and logo through the `amrf_brand_images` filter, and the plugin feeds them to WordPress's own Site Icon (`get_site_icon_url()`). Everything that shows a site icon follows: the favicon tags on the frontend, login and admin, the oEmbed card, the admin bar, feeds, the editor, `/site.webmanifest`, the root `/favicon.ico` and `/apple-touch-icon.png`, the page QR codes and the Support Genix portal. A Site Icon set under **Settings → General** overrides the theme's icons everywhere; without either, WordPress's defaults apply. The plugin ships no images of its own.
+The theme supplies the site's icons and logo through the `amrf_brand_images` filter, and the plugin feeds them to WordPress's own Site Icon (`get_site_icon_url()`). Everything that shows a site icon follows: the favicon tags on the frontend, login and admin, the oEmbed card, the admin bar (where it replaces the WordPress logo), feeds, the editor, `/site.webmanifest`, the root `/favicon.ico` and `/apple-touch-icon.png`, the page QR codes and the Support Genix portal. A Site Icon set under **Settings → General** overrides the theme's icons everywhere; without either, WordPress's defaults apply. The plugin ships no images of its own.
 
 ```php
 add_filter('amrf_brand_images', function (): array {

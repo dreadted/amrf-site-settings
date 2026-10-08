@@ -28,6 +28,7 @@ class Favicons
 		add_filter('get_site_icon_url', [$this, 'siteIconUrl'], 10, 2);
 		add_filter('site_icon_meta_tags', [$this, 'iconTags']);
 		add_action('wp_head', [$this, 'renderHeadTags']);
+		add_action('admin_bar_menu', [$this, 'removeWordPressLogo'], 11);
 		add_action('init', [self::class, 'registerRewriteRules']);
 		add_filter('query_vars', [$this, 'registerQueryVars']);
 		add_action('parse_request', [$this, 'renderManifest']);
@@ -118,6 +119,19 @@ class Favicons
 		}
 
 		return $tags;
+	}
+
+	/**
+	 * Core puts the site icon in the site-name node, so the WordPress logo would be a second icon.
+	 *
+	 * @param \WP_Admin_Bar $adminBar
+	 * @return void
+	 */
+	public function removeWordPressLogo(\WP_Admin_Bar $adminBar): void
+	{
+		if (has_site_icon()) {
+			$adminBar->remove_node('wp-logo');
+		}
 	}
 
 	/**
