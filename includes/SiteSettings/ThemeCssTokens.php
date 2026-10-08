@@ -100,7 +100,10 @@ class ThemeCssTokens
 
 		$paths = [];
 		foreach (new \RecursiveIteratorIterator($filter) as $file) {
-			$paths[] = $file->getPathname();
+			// A symlinked directory isn't descended into, so it arrives here as a leaf.
+			if ($file->isFile()) {
+				$paths[] = $file->getPathname();
+			}
 		}
 		sort($paths);
 
