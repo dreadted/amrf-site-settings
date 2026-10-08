@@ -55,8 +55,9 @@ class Repository
 		$current = self::getSettings();
 
 		// One-shot action, not a stored setting — deliberately absent from $output below.
+		$optinFormIds = [];
 		if (array_key_exists('apply_fluentform_baseline_submitted', $input) && !empty($input['apply_fluentform_baseline'])) {
-			FluentFormBaseline::apply();
+			$optinFormIds = FluentFormBaseline::apply();
 		}
 
 		$output = [
@@ -84,6 +85,9 @@ class Repository
 		} else {
 			$output['contact_form_ids'] = $current['contact_form_ids'];
 		}
+
+		// Opt-in submissions hold personal data, so every form the baseline gave the opt-in expires too.
+		$output['contact_form_ids'] = array_values(array_unique(array_merge($output['contact_form_ids'], $optinFormIds)));
 
 		return $output;
 	}

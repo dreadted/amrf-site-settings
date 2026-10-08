@@ -107,6 +107,7 @@ The `/favicon.ico` and `/apple-touch-icon.png` rewrites are written to `.htacces
 - **Contact Shortcut:** a slug such as `kontakt`, so `example.com/kontakt` opens the front page with the contact modal (see below). Like a page slug it can't be saved while a page or post (or a page's former address) uses it, and new pages and posts that try it get `kontakt-2`. The tab shows the shortcut's QR code as a thumbnail that downloads it.
 - A toggle that overrides Fluent Forms' colors/border-radius/fonts with the site's own `theme.json` tokens
 - Enable/disable [ALTCHA](https://altcha.org/) proof-of-work spam protection on every Fluent Form on the site — a self-hosted alternative honeypot with no settings, no external account, and no site key tied to a specific domain: the signing secret is generated and stored automatically the first time it's needed, so it works unchanged across dev/staging/production clones of a site.
+- **Apply Recommended FluentForm Settings** (one-time, for a first setup): writes Fluent Forms' global spam, privacy and message settings, and rebuilds form 1 as the site's contact form. With FluentCRM active, every other published form also gets the newsletter checkbox and its FluentCRM feed (plus name and email fields if missing; its own fields stay), and every form with the checkbox is added to the GDPR tab's retention list.
 
 ##### Contact modal
 
@@ -217,9 +218,9 @@ otherwise they're inert:
 
 #### FluentCRM
 
-- Blocks FluentCRM's visitor identification cookies (`fc_hash_secure`, `fc_cid`), including the ones its unsubscribe, confirmation and manage-subscription pages set regardless of its own `fluent_crm/will_use_cookie` filter.
 - Newsletter consent: a first opt-in through a form's newsletter checkbox subscribes directly (single opt-in) and logs the form, page, IP address and checkbox text as a note on the contact. Unsubscribing strips the contact down to its email address, status, lists and those notes. A later opt-in from the same address sends FluentCRM's double opt-in email instead, and only the click in it subscribes again. This relies on the feed's "Force Subscribe" being off, so the plugin keeps it off on every FluentCRM feed, both when a feed is saved and when it runs.
 - A "Do not contact" tag unsubscribes the contact, blocks any later subscription and makes the site ignore opt-ins for that address. Tools → Erase Personal Data reduces the contact to that tagged consent record instead of deleting it.
+- Blocks FluentCRM's visitor identification cookies (`fc_hash_secure`, `fc_cid`), including the ones its unsubscribe, confirmation and manage-subscription pages set regardless of its own `fluent_crm/will_use_cookie` filter.
 - Gives the Editor role FluentCRM access in code — contacts, lists, tags, campaigns and email templates, but not automations, forms, settings or exports — so it survives a fresh database without FluentCRM's per-user Managers setting.
 - Hides FluentCRM's in-app top bar (navigation, search, "Upgrade to Pro"), Pro upsell cards (dashboard, campaign link activity), the campaign recipient step's "Excluded contacts" section and the dashboard's "Getting started" checklist, "Active automations" card and quick links to pages they can't open for non-administrators; they navigate via the WordPress admin menu instead.
 

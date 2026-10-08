@@ -279,6 +279,10 @@ class Provider
 			esc_attr($name),
 			esc_html__('Overwrites FluentForm\'s own Global Settings → Miscellaneous on save, regardless of their current values: enables IP logging (as proof of consent), turns form view analytics off, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. Also writes FluentForm\'s default validation messages (e.g. "This field is required") in the site language, so they no longer follow the saving admin\'s own language. Also renames form ID 1 to "Kontaktformulär", replaces its fields with this site\'s baseline set (name, email, a required message field), and applies this site\'s baseline confirmation message and email notification to it. On a local site (WP_ENVIRONMENT_TYPE "local") where FluentSMTP is active but has no connections yet, also adds an SMTP connection to Mailhog (port 1025) using this site\'s own domain as the sender address, and sets it as the default connection. Existing FluentSMTP connections are never changed. A one-time action, not a saved setting — resets to off after saving.', 'amrf-admin')
 		);
+		printf(
+			'<p class="description">%s</p>',
+			esc_html__('With FluentCRM active, every published form also gets the newsletter checkbox and a FluentCRM feed to the "Nyhetsbrev" list (single opt-in, never force-subscribing), plus name and email fields if it lacks them, and is added to the forms subject to retention. Other forms keep their own fields. Meant for a first setup, before the forms are customized.', 'amrf-admin')
+		);
 	}
 
 	/**

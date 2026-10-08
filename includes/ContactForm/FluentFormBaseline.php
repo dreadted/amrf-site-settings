@@ -345,7 +345,10 @@ class FluentFormBaseline
 
 	private const NEWSLETTER_LIST_TITLE = 'Nyhetsbrev';
 
-	/** Site baseline for CONTACT_FORM_ID's FluentCRM feed, minus list_id (resolved per site). */
+	/** Fields the FluentCRM feed below maps; other forms get them from FLUENTFORM_CONTACT_FORM_FIELDS when missing. */
+	private const FEED_REQUIRED_FIELD_NAMES = ['names', 'email'];
+
+	/** Newsletter feed baseline for every form with the opt-in checkbox, minus list_id (resolved per site). */
 	private const FLUENTCRM_FEED_BASELINE = [
 		'name' => 'FluentCRM Integration Feed',
 		'first_name' => '{inputs.names.first_name}',
@@ -438,9 +441,9 @@ class FluentFormBaseline
 	/**
 	 * Overwrites FluentForm's misc settings with the fixed baseline; a separate option, so sanitize() isn't re-entered.
 	 *
-	 * @return void
+	 * @return int[] Forms that now have the newsletter opt-in, for the caller to put under retention.
 	 */
-	public static function apply(): void
+	public static function apply(): array
 	{
 		$settings = get_option('_fluentform_global_form_settings', []);
 		$settings = is_array($settings) ? $settings : [];
@@ -451,11 +454,16 @@ class FluentFormBaseline
 		}
 		update_option('_fluentform_global_form_settings', $settings);
 
-		self::applyContactFormBaseline();
+		$optinFormIds = array_merge(
+			self::applyContactFormBaseline(),
+			self::applyNewsletterToOtherForms()
+		);
 
 		if (defined('FLUENTMAIL')) {
 			self::applyFluentSmtpBaseline();
 		}
+
+		return $optinFormIds;
 	}
 
 	/**
@@ -591,8 +599,12 @@ class FluentFormBaseline
 		}
 	}
 
-	/** Same one-shot, overwrite-regardless-of-current-values contract as apply(); no-ops if the form doesn't exist. */
-	private static function applyContactFormBaseline(): void
+	/**
+	 * Same one-shot, overwrite-regardless-of-current-values contract as apply(); no-ops if the form doesn't exist.
+	 *
+	 * @return int[] CONTACT_FORM_ID if it got the newsletter opt-in, else empty.
+	 */
+	private static function applyContactFormBaseline(): array
 	{
 		global $wpdb;
 		$formsTable = $wpdb->prefix . 'fluentform_forms';
@@ -600,7 +612,7 @@ class FluentFormBaseline
 		$formId = self::CONTACT_FORM_ID;
 
 		if (!$wpdb->get_var($wpdb->prepare("SELECT id FROM {$formsTable} WHERE id = %d", $formId))) {
-			return;
+			return [];
 		}
 
 		$fields = self::FLUENTFORM_CONTACT_FORM_FIELDS;
@@ -631,9 +643,142 @@ class FluentFormBaseline
 
 		self::upsertFormMeta($formId, 'notifications', wp_json_encode(self::FLUENTFORM_NOTIFICATION_BASELINE));
 
-		if ($newsletterListId) {
-			$feed = array_merge(self::FLUENTCRM_FEED_BASELINE, ['list_id' => (string) $newsletterListId]);
-			self::upsertFormMeta($formId, 'fluentcrm_feeds', wp_json_encode($feed));
+		if (!$newsletterListId) {
+			return [];
 		}
+
+		$feed = array_merge(self::FLUENTCRM_FEED_BASELINE, ['list_id' => (string) $newsletterListId]);
+		self::upsertFormMeta($formId, 'fluentcrm_feeds', wp_json_encode($feed));
+
+		return [$formId];
+	}
+
+	/**
+	 * Every other published form gets the newsletter opt-in and its feed, plus the name and email fields
+	 * the feed maps if missing; its own fields and settings otherwise stay.
+	 *
+	 * @return int[] Forms that now have the newsletter opt-in.
+	 */
+	private static function applyNewsletterToOtherForms(): array
+	{
+		global $wpdb;
+		$newsletterListId = self::getNewsletterListId();
+		if (!$newsletterListId) {
+			return [];
+		}
+
+		$forms = $wpdb->get_results($wpdb->prepare(
+			"SELECT id, form_fields FROM {$wpdb->prefix}fluentform_forms WHERE status = 'published' AND id != %d",
+			self::CONTACT_FORM_ID
+		));
+
+		$formIds = [];
+		foreach ($forms as $form) {
+			$structure = json_decode((string) $form->form_fields, true);
+			if (!is_array($structure)) {
+				continue;
+			}
+
+			$fields = self::withNewsletterFields($structure['fields'] ?? [], (int) $form->id);
+			if ($fields !== ($structure['fields'] ?? [])) {
+				$structure['fields'] = $fields;
+				$wpdb->update(
+					$wpdb->prefix . 'fluentform_forms',
+					['form_fields' => wp_json_encode($structure), 'updated_at' => current_time('mysql')],
+					['id' => (int) $form->id]
+				);
+			}
+
+			self::applyNewsletterFeed((int) $form->id, $newsletterListId);
+			$formIds[] = (int) $form->id;
+		}
+
+		return $formIds;
+	}
+
+	/**
+	 * Name and email first, the opt-in last before a custom submit button; fields already there are kept as they are.
+	 *
+	 * @param array $fields A form's top-level field list.
+	 * @return array
+	 */
+	private static function withNewsletterFields(array $fields, int $formId): array
+	{
+		$leading = [];
+		foreach (self::FLUENTFORM_CONTACT_FORM_FIELDS['fields'] as $field) {
+			$name = $field['attributes']['name'];
+			if (in_array($name, self::FEED_REQUIRED_FIELD_NAMES, true) && !self::hasField($fields, $name)) {
+				$leading[] = self::withFreshKey($field, $formId, count($leading));
+			}
+		}
+		$fields = array_merge($leading, $fields);
+
+		if (!self::hasField($fields, Repository::NEWSLETTER_OPTIN_FIELD_NAME)) {
+			$submit = array_search('custom_submit_button', array_column($fields, 'element'), true);
+			$position = $submit === false ? count($fields) : $submit;
+			array_splice($fields, $position, 0, [self::withFreshKey(self::getNewsletterOptinField(), $formId, count($leading))]);
+		}
+
+		return $fields;
+	}
+
+	/** Recurses into containers, whose columns nest their own field lists. */
+	private static function hasField(array $node, string $name): bool
+	{
+		if (($node['attributes']['name'] ?? null) === $name) {
+			return true;
+		}
+
+		foreach ($node as $child) {
+			if (is_array($child) && self::hasField($child, $name)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/** FluentForm's editor tells fields apart by uniqElKey, so a copied field needs its own. */
+	private static function withFreshKey(array $field, int $formId, int $offset): array
+	{
+		$field['uniqElKey'] = 'el_' . (int) (microtime(true) * 1000) . $formId . $offset;
+
+		return $field;
+	}
+
+	/**
+	 * Corrects the consent settings of the form's feed for the newsletter list, or adds the baseline feed;
+	 * feeds for other lists and the feed's own field mapping are left alone.
+	 */
+	private static function applyNewsletterFeed(int $formId, int $newsletterListId): void
+	{
+		global $wpdb;
+		$metaTable = $wpdb->prefix . 'fluentform_form_meta';
+
+		$rows = $wpdb->get_results($wpdb->prepare(
+			"SELECT id, value FROM {$metaTable} WHERE form_id = %d AND meta_key = 'fluentcrm_feeds' ORDER BY id",
+			$formId
+		));
+
+		foreach ($rows as $row) {
+			$feed = json_decode((string) $row->value, true);
+			if (!is_array($feed) || (string) ($feed['list_id'] ?? '') !== (string) $newsletterListId) {
+				continue;
+			}
+
+			$feed = array_merge($feed, array_intersect_key(
+				self::FLUENTCRM_FEED_BASELINE,
+				array_flip(['double_opt_in', 'force_subscribe', 'conditionals', 'enabled'])
+			));
+			$wpdb->update($metaTable, ['value' => wp_json_encode($feed)], ['id' => (int) $row->id]);
+
+			return;
+		}
+
+		$wpdb->insert($metaTable, [
+			'form_id' => $formId,
+			'meta_key' => 'fluentcrm_feeds',
+			'value' => wp_json_encode(array_merge(self::FLUENTCRM_FEED_BASELINE, ['list_id' => (string) $newsletterListId])),
+		]);
 	}
 }

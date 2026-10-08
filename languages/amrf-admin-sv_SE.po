@@ -86,7 +86,7 @@ msgid "Delete submissions after this many days"
 msgstr "Radera inskickade formulär efter så här många dagar"
 
 #: includes/ContactForm/Provider.php:170
-#: includes/ContactForm/Provider.php:300
+#: includes/ContactForm/Provider.php:304
 msgid "No FluentForm forms found."
 msgstr "Inga FluentForm-formulär hittades."
 
@@ -94,11 +94,11 @@ msgstr "Inga FluentForm-formulär hittades."
 msgid "Maps FluentForm's own color/border-radius variables to this site's theme colors and applies additional styling fixes, on every FluentForm on the site."
 msgstr "Kopplar FluentForms egna färg-/hörnradievariabler till sajtens temafärger och tillämpar ytterligare stiljusteringar, på samtliga FluentForm-formulär på sajten."
 
-#: includes/ContactForm/Provider.php:315
+#: includes/ContactForm/Provider.php:319
 msgid "The daily retention cleanup and personal-data export/erase requests only ever touch these forms."
 msgstr "Den dagliga rensningen och begäranden om export/radering av personuppgifter rör bara dessa formulär."
 
-#: includes/ContactForm/Provider.php:331
+#: includes/ContactForm/Provider.php:335
 msgid "Blank or 0 = keep forever."
 msgstr "Tomt eller 0 = spara för alltid."
 
@@ -815,3 +815,7 @@ msgstr "reserverad av WordPress"
 #, php-format
 msgid "a former address of \"%s\""
 msgstr "en tidigare adress till \"%s\""
+
+#: includes/ContactForm/Provider.php:284
+msgid "With FluentCRM active, every published form also gets the newsletter checkbox and a FluentCRM feed to the \"Nyhetsbrev\" list (single opt-in, never force-subscribing), plus name and email fields if it lacks them, and is added to the forms subject to retention. Other forms keep their own fields. Meant for a first setup, before the forms are customized."
+msgstr "När FluentCRM är aktivt får också alla publicerade formulär kryssrutan för nyhetsbrevet och ett FluentCRM-flöde till listan \"Nyhetsbrev\" (enkel opt-in, aldrig tvingad prenumeration), samt namn- och e-postfält om de saknas, och läggs till bland formulären som omfattas av rensningen. Övriga formulär behåller sina egna fält. Avsett för en första installation, innan formulären anpassas."
