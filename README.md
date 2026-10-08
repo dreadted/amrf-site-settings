@@ -82,7 +82,7 @@ These feed the SEO structured data above and are reused wherever the site needs 
 
 #### Icons & logo
 
-Favicon tags, `/site.webmanifest`, the root `/favicon.ico` and `/apple-touch-icon.png`, the login page logo and the Support Genix portal's favicon and logo all come from the `amrf_brand_images` filter. The plugin ships no images of its own: an icon the theme leaves out is not output, and the login logo falls back to the WordPress Site Icon.
+The theme supplies the site's icons and logo through the `amrf_brand_images` filter, and the plugin feeds them to WordPress's own Site Icon (`get_site_icon_url()`). Everything that shows a site icon follows: the favicon tags on the frontend, login and admin, the oEmbed card, the admin bar, feeds, the editor, `/site.webmanifest`, the root `/favicon.ico` and `/apple-touch-icon.png`, the page QR codes and the Support Genix portal. A Site Icon set under **Settings → General** overrides the theme's icons everywhere; without either, WordPress's defaults apply. The plugin ships no images of its own.
 
 ```php
 add_filter('amrf_brand_images', function (): array {
@@ -97,7 +97,7 @@ add_filter('amrf_brand_images', function (): array {
 });
 ```
 
-The `/favicon.ico` and `/apple-touch-icon.png` rewrites are written to `.htaccess` when rewrite rules are flushed, so re-save **Settings → Permalinks** after changing those two. The portal's favicon and logo are copied into Support Genix's own settings when its "Apply Defaults" button is used.
+The touch icon is never linked in `<head>`, since Chrome on Android would use the opaque square as its tab icon; iOS fetches `/apple-touch-icon.png` from the site root on its own. Both root files are served by PHP, so they work on any web server. The login logo falls back to the Site Icon. The portal's favicon and logo are copied into Support Genix's own settings when its "Apply Defaults" button is used.
 
 ### Forms
 
@@ -139,7 +139,7 @@ All links can be customized with a pre-filled amount or message.
 
 ### Page QR codes
 
-Every published page gets a 1197 × 1197 px PNG QR code in `uploads/qr-links/`, named after its address (`qr-example.com-about.png`, `qr-example.com.png` for the front page). The code encodes the page's permalink with `?utm_source=qr`, so Umami can count scans, and has the theme's `icon_512` brand image in a white circle in the middle. Codes are created, renamed and removed automatically when a page is published, renamed, unpublished or deleted, and never appear in the Media Library.
+Every published page gets a 1197 × 1197 px PNG QR code in `uploads/qr-links/`, named after its address (`qr-example.com-about.png`, `qr-example.com.png` for the front page). The code encodes the page's permalink with `?utm_source=qr`, so Umami can count scans, and has the site icon (512 px, raster only) in a white circle in the middle. Codes are created, renamed and removed automatically when a page is published, renamed, unpublished or deleted, and never appear in the Media Library.
 
 The Pages list replaces its Comments column with a QR column at the end: a thumbnail that downloads the code, with the page's address as tooltip.
 

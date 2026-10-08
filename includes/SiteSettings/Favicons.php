@@ -7,23 +7,30 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Favicon links and /site.webmanifest from BrandImages; always output, since they're site identity, not SEO.
+ * Site icon from the theme's BrandImages, unless a core Site Icon is set: feeds core's
+ * get_site_icon_url() and icon tags, /site.webmanifest, /favicon.ico and /apple-touch-icon.png.
  *
  * @package Antropomorf\SiteSettings
  */
 class Favicons
 {
-	private const QUERY_VAR = 'amrf_webmanifest';
+	private const MANIFEST_QUERY_VAR = 'amrf_webmanifest';
+	private const TOUCH_ICON_QUERY_VAR = 'amrf_touch_icon';
+	private const CACHE_SECONDS = WEEK_IN_SECONDS;
 
 	public function __construct()
 	{
 		register_activation_hook(AMRF_ADMIN_PLUGIN_FILE, [self::class, 'flushRewriteRulesOnActivation']);
 		register_deactivation_hook(AMRF_ADMIN_PLUGIN_FILE, [self::class, 'flushRewriteRulesOnDeactivation']);
 
-		add_action('wp_head', [$this, 'renderLinkTags']);
+		add_filter('get_site_icon_url', [$this, 'siteIconUrl'], 10, 2);
+		add_filter('site_icon_meta_tags', [$this, 'iconTags']);
+		add_action('wp_head', [$this, 'renderHeadTags']);
 		add_action('init', [self::class, 'registerRewriteRules']);
-		add_filter('query_vars', [$this, 'registerQueryVar']);
+		add_filter('query_vars', [$this, 'registerQueryVars']);
 		add_action('parse_request', [$this, 'renderManifest']);
+		add_action('parse_request', [$this, 'renderTouchIcon']);
+		add_action('do_faviconico', [$this, 'renderFaviconIco']);
 	}
 
 	/**
@@ -47,31 +54,77 @@ class Favicons
 		global $wp_rewrite;
 
 		foreach (array_keys(self::rewriteRules()) as $regex) {
-			unset($wp_rewrite->extra_rules_top[$regex], $wp_rewrite->non_wp_rules[$regex]);
+			unset($wp_rewrite->extra_rules_top[$regex]);
 		}
 		flush_rewrite_rules();
 	}
 
 	/**
-	 * @return void
+	 * @return bool Whether an admin has set a core Site Icon, which overrides the theme's icons.
 	 */
-	public function renderLinkTags(): void
+	public static function hasCustomSiteIcon(): bool
 	{
-		$settings = Repository::getSettings();
-		$themeColor = $settings['theme_color'];
-		$shortName = $settings['business_name'] ?: get_bloginfo('name');
+		$id = (int) get_option('site_icon');
+
+		return $id && wp_get_attachment_image_url($id, 'full');
+	}
+
+	/**
+	 * Callers may pass a fallback as $url (the embed passes the WordPress logo), so it can't signal a custom icon.
+	 *
+	 * @param string $url
+	 * @param int    $size
+	 * @return string
+	 */
+	public function siteIconUrl($url, $size): string
+	{
+		if (self::hasCustomSiteIcon()) {
+			return (string) $url;
+		}
+
+		return BrandImages::forSize((int) $size) ?: (string) $url;
+	}
+
+	/**
+	 * The touch icon is never linked: Chrome on Android would pick the opaque square as tab icon.
+	 * iOS fetches /apple-touch-icon.png on its own.
+	 *
+	 * @param array<int, string> $tags
+	 * @return array<int, string>
+	 */
+	public function iconTags($tags): array
+	{
+		if (self::hasCustomSiteIcon()) {
+			return array_values(array_filter((array) $tags, static function ($tag): bool {
+				return !str_contains($tag, 'apple-touch-icon') && !str_contains($tag, 'msapplication-TileImage');
+			}));
+		}
+
 		$icons = [
 			'icon_svg' => ' type="image/svg+xml"',
 			'icon_ico' => '',
 			'icon_192' => ' type="image/png" sizes="192x192"',
 		];
+		$tags = [];
 
 		foreach ($icons as $key => $attributes) {
 			$url = BrandImages::url($key);
 			if ($url) {
-				printf("<link rel=\"icon\"%s href=\"%s\" />\n", $attributes, esc_url($url));
+				$tags[] = sprintf('<link rel="icon"%s href="%s" />', $attributes, esc_url($url));
 			}
 		}
+
+		return $tags;
+	}
+
+	/**
+	 * @return void
+	 */
+	public function renderHeadTags(): void
+	{
+		$settings = Repository::getSettings();
+		$themeColor = $settings['theme_color'];
+		$shortName = $settings['business_name'] ?: get_bloginfo('name');
 		?>
 <link rel="manifest" href="<?php echo esc_url(home_url('/site.webmanifest')); ?>" />
 <meta name="theme-color" content="<?php echo esc_attr($themeColor); ?>" />
@@ -90,36 +143,26 @@ class Favicons
 	}
 
 	/**
-	 * Non-index.php targets go to .htaccess, served without PHP. The touch icon
-	 * is root-only: linked in <head>, Android picks it as the tab icon.
+	 * /favicon.ico needs no rule of its own: core routes it to do_favicon().
 	 *
 	 * @return array<string, string> Regex => target.
 	 */
 	private static function rewriteRules(): array
 	{
-		$rules = ['^site\.webmanifest$' => 'index.php?' . self::QUERY_VAR . '=1'];
-		$files = [
-			'favicon\.ico$' => 'icon_ico',
-			'apple-touch-icon(-precomposed)?\.png$' => 'apple_touch_icon',
+		return [
+			'^site\.webmanifest$' => 'index.php?' . self::MANIFEST_QUERY_VAR . '=1',
+			'^apple-touch-icon(-precomposed)?\.png$' => 'index.php?' . self::TOUCH_ICON_QUERY_VAR . '=1',
 		];
-
-		foreach ($files as $regex => $key) {
-			$path = BrandImages::homePath($key);
-			if ($path) {
-				$rules[$regex] = $path;
-			}
-		}
-
-		return $rules;
 	}
 
 	/**
 	 * @param array<int, string> $vars
 	 * @return array<int, string>
 	 */
-	public function registerQueryVar(array $vars): array
+	public function registerQueryVars(array $vars): array
 	{
-		$vars[] = self::QUERY_VAR;
+		$vars[] = self::MANIFEST_QUERY_VAR;
+		$vars[] = self::TOUCH_ICON_QUERY_VAR;
 		return $vars;
 	}
 
@@ -131,22 +174,20 @@ class Favicons
 	 */
 	public function renderManifest(\WP $wp): void
 	{
-		if (empty($wp->query_vars[self::QUERY_VAR])) {
+		if (empty($wp->query_vars[self::MANIFEST_QUERY_VAR])) {
 			return;
 		}
 
 		$settings = Repository::getSettings();
-		$icons = [
-			'icon_svg' => ['sizes' => 'any', 'type' => 'image/svg+xml'],
-			'icon_192' => ['sizes' => '192x192', 'type' => 'image/png'],
-			'icon_512' => ['sizes' => '512x512', 'type' => 'image/png'],
-		];
 		$manifestIcons = [];
 
-		foreach ($icons as $key => $icon) {
-			$url = BrandImages::url($key);
-			if ($url) {
-				$manifestIcons[] = ['src' => $url] + $icon;
+		if (!self::hasCustomSiteIcon() && BrandImages::url('icon_svg')) {
+			$manifestIcons[] = ['src' => BrandImages::url('icon_svg'), 'sizes' => 'any', 'type' => 'image/svg+xml'];
+		}
+		foreach ([192, 512] as $size) {
+			$url = get_site_icon_url($size);
+			if ($url && !in_array($url, array_column($manifestIcons, 'src'), true)) {
+				$manifestIcons[] = ['src' => $url, 'sizes' => "{$size}x{$size}", 'type' => self::mimeType($url)];
 			}
 		}
 
@@ -166,5 +207,72 @@ class Favicons
 		header('Content-Type: application/manifest+json');
 		echo wp_json_encode($manifest, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 		exit;
+	}
+
+	/**
+	 * @param \WP $wp
+	 * @return void
+	 */
+	public function renderTouchIcon(\WP $wp): void
+	{
+		if (empty($wp->query_vars[self::TOUCH_ICON_QUERY_VAR])) {
+			return;
+		}
+
+		$url = self::hasCustomSiteIcon() ? get_site_icon_url(180) : BrandImages::url('apple_touch_icon');
+		if (!$url) {
+			status_header(404);
+			nocache_headers();
+			exit;
+		}
+
+		self::serve($url);
+	}
+
+	/**
+	 * Without an icon this returns, and core redirects to the WordPress logo.
+	 *
+	 * @return void
+	 */
+	public function renderFaviconIco(): void
+	{
+		$url = self::hasCustomSiteIcon() ? get_site_icon_url(32) : BrandImages::url('icon_ico');
+		$url = $url ?: get_site_icon_url(32);
+
+		if ($url) {
+			self::serve($url);
+		}
+	}
+
+	/**
+	 * Sends the file itself rather than a redirect, which not every client probing the site root follows.
+	 *
+	 * @param string $url
+	 * @return never
+	 */
+	private static function serve(string $url): never
+	{
+		$path = BrandImages::localPath($url);
+		if (!$path) {
+			wp_redirect($url);
+			exit;
+		}
+
+		header('Content-Type: ' . self::mimeType($path));
+		header('Content-Length: ' . filesize($path));
+		header('Cache-Control: public, max-age=' . self::CACHE_SECONDS);
+		readfile($path); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_readfile -- streams a local image file.
+		exit;
+	}
+
+	/**
+	 * @param string $file URL or path.
+	 * @return string
+	 */
+	private static function mimeType(string $file): string
+	{
+		$types = ['ico' => 'image/x-icon', 'svg' => 'image/svg+xml', 'png' => 'image/png', 'jpg|jpeg|jpe' => 'image/jpeg', 'webp' => 'image/webp'];
+
+		return wp_check_filetype((string) strtok($file, '?#'), $types)['type'] ?: 'application/octet-stream';
 	}
 }

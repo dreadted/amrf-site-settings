@@ -240,7 +240,7 @@ class Defaults
 			'setup_wizard_finished' => true,
 		];
 
-		$favicon = BrandImages::url('icon_svg');
+		$favicon = get_site_icon_url(64);
 		if ($favicon) {
 			$updated_settings['app_favicon'] = $favicon;
 		}

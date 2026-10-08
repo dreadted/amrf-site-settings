@@ -171,23 +171,16 @@ class Generator
 	}
 
 	/**
-	 * The theme's 512 px icon on disk, or '' if it has none under wp-content.
+	 * The site icon's raster file on disk, or '' if there is none.
 	 */
 	private static function logoPath(): string
 	{
-		$url = BrandImages::url('icon_512');
-		$content = content_url();
-
-		// Scheme is ignored: under wp-cli, theme URLs can be http while content_url() is https.
-		$relative = preg_replace('#^https?:#', '', $url);
-		$base = preg_replace('#^https?:#', '', $content);
-		if ($url === '' || !str_starts_with($relative, $base . '/')) {
+		$url = get_site_icon_url(512);
+		if (str_ends_with(strtolower((string) strtok($url, '?#')), '.svg')) {
 			return '';
 		}
 
-		$path = WP_CONTENT_DIR . substr($relative, strlen($base));
-
-		return is_file($path) ? $path : '';
+		return BrandImages::localPath($url);
 	}
 
 	private static function render(string $url, string $logo, string $path): bool

@@ -27,21 +27,59 @@ class BrandImages
 	}
 
 	/**
-	 * @param string $key One of self::KEYS.
-	 * @return string Path relative to the site root, or empty when the image is elsewhere.
+	 * The theme icon best suited to a core Site Icon size, falling back to the next one supplied.
+	 *
+	 * @param int $size Pixels, as passed to get_site_icon_url().
+	 * @return string Empty when the theme supplies no icon.
 	 */
-	public static function homePath(string $key): string
+	public static function forSize(int $size): string
 	{
-		$url = wp_parse_url(self::url($key)) ?: [];
-		$home = wp_parse_url(home_url()) ?: [];
-		$homePath = trailingslashit($home['path'] ?? '');
-		$path = $url['path'] ?? '';
-
-		// Scheme is ignored: under wp-cli, theme URLs can be http while home_url() is https.
-		if (($url['host'] ?? '') !== ($home['host'] ?? '') || !str_starts_with($path, $homePath)) {
-			return '';
+		if ($size <= 64) {
+			$keys = ['icon_svg', 'icon_192', 'icon_512'];
+		} elseif ($size === 180) {
+			$keys = ['apple_touch_icon', 'icon_192', 'icon_512'];
+		} elseif ($size <= 192) {
+			$keys = ['icon_192', 'icon_512', 'icon_svg'];
+		} else {
+			$keys = ['icon_512', 'icon_192', 'icon_svg'];
 		}
 
-		return substr($path, strlen($homePath));
+		foreach ($keys as $key) {
+			$url = self::url($key);
+			if ($url) {
+				return $url;
+			}
+		}
+
+		return '';
+	}
+
+	/**
+	 * @param string $url An uploads or wp-content URL.
+	 * @return string Existing file on disk, or empty when the URL points elsewhere.
+	 */
+	public static function localPath(string $url): string
+	{
+		$uploads = wp_upload_dir(null, false);
+		$roots = [
+			$uploads['baseurl'] => $uploads['basedir'],
+			content_url() => WP_CONTENT_DIR,
+		];
+		// Scheme is ignored: under wp-cli, theme URLs can be http while home_url() is https.
+		$target = preg_replace('#^https?:#', '', (string) strtok($url, '?#'));
+
+		foreach ($roots as $baseUrl => $baseDir) {
+			$base = trailingslashit(preg_replace('#^https?:#', '', $baseUrl));
+			if ($url === '' || !str_starts_with($target, $base)) {
+				continue;
+			}
+
+			$relative = rawurldecode(substr($target, strlen($base)));
+			$path = trailingslashit($baseDir) . $relative;
+
+			return !str_contains($relative, '..') && is_file($path) ? $path : '';
+		}
+
+		return '';
 	}
 }
