@@ -16,25 +16,14 @@ class SettingsRenderer
 	private string $tabsFilter;
 	private string $menuSlug;
 
-	/** @var callable Resolved in render(), not in the constructor — see $pageTitle param doc. */
+	/** @var callable Called in render() so __() follows the viewing user's locale. */
 	private $pageTitle;
 
 	/**
-	 * @param string   $tabsFilter Filter to read this page's tabs from — each
-	 *                              entry shaped like ['label', 'option_group',
-	 *                              'page_slug', 'show_reset', 'register'], plus
-	 *                              an optional 'capability' that hides the tab.
-	 * @param string   $menuSlug   This page's own admin menu slug.
-	 * @param callable $pageTitle  Returns the heading shown above the tab strip.
-	 *                              A callable, not a plain string: constructors
-	 *                              across this plugin run once per request
-	 *                              (some as early as plugin bootstrap), well
-	 *                              before WordPress can resolve the logged-in
-	 *                              user's own locale — an __() call made there
-	 *                              gets cached in the site's default locale.
-	 *                              Deferring the call to render() time, when
-	 *                              this page is actually being displayed, is
-	 *                              what lets it follow the viewing user.
+	 * @param string   $tabsFilter Filter returning the tabs, each ['label', 'option_group',
+	 *                              'page_slug', 'show_reset', 'register'] plus optional 'capability'.
+	 * @param string   $menuSlug   This page's admin menu slug.
+	 * @param callable $pageTitle  Returns the page heading; called late so it follows the user's locale.
 	 */
 	public function __construct(string $tabsFilter, string $menuSlug, callable $pageTitle)
 	{
