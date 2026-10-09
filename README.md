@@ -137,6 +137,12 @@ Generate a [Swish](https://www.swish.nu/) payment link to every link sitewide po
 
 All links can be customized with a pre-filled amount or message.
 
+A theme can give a single link its own amount and message with `amrf_swish_link_attributes(string $amount, string $message, bool $amount_editable = true, bool $message_editable = true)`, which returns `data-swish-url` and `data-swish-qr` to print on the `<a href="#swish">` (escaped). Such a link never falls back to the site's own QR code.
+
+- The message is cleaned up to Swish's limits: plain text in a conservative character set, at most 50 characters.
+- Each combination gets its own SVG in `uploads/amrf-swish/` (`swish-qr-link-<hash>.svg`), created by Swish's API the first time a desktop visitor loads it, through a signed `/?amrf_swish_qr=…` URL that redirects to the file.
+- Saving a new Swish number deletes every link code, so each is created again with the new number. Changing the default amount or message only replaces the site's own code.
+
 ### Page QR codes
 
 Every published page gets a 1197 × 1197 px PNG QR code in `uploads/qr-links/`, named after its address (`qr-example.com-about.png`, `qr-example.com.png` for the front page). The code encodes the page's permalink with `?utm_source=qr`, so Umami can count scans, and has the site icon (512 px, raster only) in a white circle in the middle. Codes are created, renamed and removed automatically when a page is published, renamed, unpublished or deleted, and never appear in the Media Library.

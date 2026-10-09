@@ -1,20 +1,31 @@
 /**
  * Swaps each <a href="#swish"> for a deep link on mobile or a QR code on desktop.
- * Config: amrfSwish (Swish\FrontendProvider); device detection and copy button: amrf-contact-links.js.
+ * Config: the link's data-swish-url/-qr (Swish\LinkQr), else amrfSwish (Swish\FrontendProvider);
+ * device detection and copy button: amrf-contact-links.js.
  */
+
+// A link with its own details never falls back to the site's code, which has another amount.
+function swishConfig(link) {
+	if ('swishQr' in link.dataset) {
+		return { swishUrl: link.dataset.swishUrl, qrSrc: link.dataset.swishQr };
+	}
+
+	return { swishUrl: window.amrfSwish?.swishUrl, qrSrc: window.amrfSwish?.qrSrc };
+}
 
 function setupSwishLink(link) {
 	if (link.dataset.swishReady) return;
 	link.dataset.swishReady = 'true';
 
 	const { isMobileDevice, setupCopyButton } = window.amrfContactLinks;
+	const { swishUrl, qrSrc } = swishConfig(link);
 
-	if (isMobileDevice() && window.amrfSwish?.swishUrl) {
-		link.href = window.amrfSwish.swishUrl;
+	if (isMobileDevice() && swishUrl) {
+		link.href = swishUrl;
 		return;
 	}
 
-	if (!window.amrfSwish?.qrSrc) return;
+	if (!qrSrc) return;
 
 	const number = window.amrfSwish.qrAlt || '';
 
@@ -22,10 +33,11 @@ function setupSwishLink(link) {
 	wrap.className = 'amrf-swish-qr-wrap';
 
 	const img = document.createElement('img');
-	img.src = window.amrfSwish.qrSrc;
+	img.src = qrSrc;
 	img.alt = number;
 	img.loading = 'lazy';
 	img.className = 'amrf-swish-qr';
+	img.addEventListener('error', () => img.remove(), { once: true });
 	wrap.appendChild(img);
 
 	if (number) {

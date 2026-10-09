@@ -7,7 +7,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Swish QR code from Swish's API after each save, stored in uploads/ under a settings-derived name.
+ * Swish QR codes from Swish's API, stored in uploads/ under a settings-derived name: the site's own code
+ * after each save, and per-link codes (LinkQr) on first request.
  * SVG, not PNG, so recoloring is a DOM edit (applyBlackStyle()) independent of ImageMagick.
  *
  * @package Antropomorf\Swish
@@ -18,22 +19,39 @@ class QrCodeGenerator
 
 	private const UPLOAD_SUBDIR = 'amrf-swish';
 	private const FILENAME_PREFIX = 'swish-qr-';
+	private const LINK_FILENAME_PREFIX = 'swish-qr-link-';
 
 	public static function register(): void
 	{
 		// Both fire once per save, after the value is stored; update only when it changed.
-		add_action('add_option_' . Repository::OPTION_NAME, [self::class, 'onSave']);
-		add_action('update_option_' . Repository::OPTION_NAME, [self::class, 'onSave']);
+		add_action('add_option_' . Repository::OPTION_NAME, [self::class, 'onAdd']);
+		add_action('update_option_' . Repository::OPTION_NAME, [self::class, 'onUpdate']);
 	}
 
-	public static function onSave(): void
+	public static function onAdd(): void
 	{
 		self::ensure(Repository::getSettings());
 	}
 
 	/**
-	 * Creates the QR code for these settings unless it already exists, and
-	 * removes codes for earlier settings.
+	 * Link codes embed the number, so a new number makes them all stale.
+	 *
+	 * @param mixed $oldValue The option's previous value.
+	 */
+	public static function onUpdate($oldValue): void
+	{
+		$settings = Repository::getSettings();
+
+		if ((is_array($oldValue) ? (string) ($oldValue['number'] ?? '') : '') !== $settings['number']) {
+			self::deleteFiles(self::LINK_FILENAME_PREFIX);
+		}
+
+		self::ensure($settings);
+	}
+
+	/**
+	 * Creates the site's own QR code for these settings unless it already exists, and
+	 * removes its codes for earlier settings.
 	 *
 	 * @param array<string, string> $settings
 	 * @return bool False if the code could not be created.
@@ -41,31 +59,64 @@ class QrCodeGenerator
 	public static function ensure(array $settings): bool
 	{
 		if ($settings['number'] === '') {
-			self::deleteFiles();
+			self::deleteFiles(self::FILENAME_PREFIX);
 			return true;
 		}
 
-		$path = self::path($settings);
+		$path = self::path(self::FILENAME_PREFIX, $settings);
 		if (file_exists($path)) {
 			return true;
 		}
 
-		$svg = self::fetch($settings);
-		if ($svg === null || !wp_mkdir_p(dirname($path)) || file_put_contents($path, $svg) === false) {
+		if (!self::create($settings, $path)) {
 			return false;
 		}
 
-		self::deleteFiles(basename($path));
+		self::deleteFiles(self::FILENAME_PREFIX, basename($path));
 		return true;
 	}
 
 	/**
+	 * Creates a link's QR code unless it already exists; other codes are left alone.
+	 *
+	 * @param array<string, string> $params Same keys as Repository::getSettings().
+	 * @return bool False if the code could not be created.
+	 */
+	public static function ensureLink(array $params): bool
+	{
+		if ($params['number'] === '') {
+			return false;
+		}
+
+		$path = self::path(self::LINK_FILENAME_PREFIX, $params);
+
+		return file_exists($path) || self::create($params, $path);
+	}
+
+	/**
 	 * @param array<string, string> $settings
-	 * @return string The QR code's URL, or '' if there is none for these settings.
+	 * @return string The site's QR code's URL, or '' if there is none for these settings.
 	 */
 	public static function url(array $settings): string
 	{
-		$path = self::path($settings);
+		return self::fileUrl(self::FILENAME_PREFIX, $settings);
+	}
+
+	/**
+	 * @param array<string, string> $params Same keys as Repository::getSettings().
+	 * @return string The link's QR code's URL, or '' if it hasn't been created yet.
+	 */
+	public static function linkUrl(array $params): string
+	{
+		return self::fileUrl(self::LINK_FILENAME_PREFIX, $params);
+	}
+
+	/**
+	 * @param array<string, string> $settings
+	 */
+	private static function fileUrl(string $prefix, array $settings): string
+	{
+		$path = self::path($prefix, $settings);
 		if ($settings['number'] === '' || !file_exists($path)) {
 			return '';
 		}
@@ -75,11 +126,32 @@ class QrCodeGenerator
 	}
 
 	/**
+	 * Written under a temporary name first, so a concurrent request never serves a partial file.
+	 *
 	 * @param array<string, string> $settings
 	 */
-	private static function path(array $settings): string
+	private static function create(array $settings, string $path): bool
 	{
-		return self::dir() . '/' . self::FILENAME_PREFIX . self::hash($settings) . '.svg';
+		$svg = self::fetch($settings);
+		if ($svg === null || !wp_mkdir_p(dirname($path))) {
+			return false;
+		}
+
+		$temp = $path . '.' . wp_generate_password(8, false) . '.tmp';
+		if (file_put_contents($temp, $svg) === false || !rename($temp, $path)) {
+			wp_delete_file($temp);
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param array<string, string> $settings
+	 */
+	private static function path(string $prefix, array $settings): string
+	{
+		return self::dir() . '/' . $prefix . self::hash($settings) . '.svg';
 	}
 
 	private static function dir(): string
@@ -89,11 +161,16 @@ class QrCodeGenerator
 	}
 
 	/**
-	 * @param string|null $keep File name to leave in place.
+	 * The site's codes start with a hex hash, which never matches LINK_FILENAME_PREFIX.
+	 *
+	 * @param string      $prefix FILENAME_PREFIX or LINK_FILENAME_PREFIX.
+	 * @param string|null $keep   File name to leave in place.
 	 */
-	private static function deleteFiles(?string $keep = null): void
+	private static function deleteFiles(string $prefix, ?string $keep = null): void
 	{
-		foreach (glob(self::dir() . '/' . self::FILENAME_PREFIX . '*.svg') ?: [] as $file) {
+		$pattern = $prefix === self::FILENAME_PREFIX ? $prefix . '[0-9a-f]*.svg' : $prefix . '*.svg';
+
+		foreach (glob(self::dir() . '/' . $pattern) ?: [] as $file) {
 			if (basename($file) !== $keep) {
 				wp_delete_file($file);
 			}

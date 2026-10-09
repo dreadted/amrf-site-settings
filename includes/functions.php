@@ -62,6 +62,24 @@ function amrf_build_swish_url(
 }
 
 /**
+ * Data attributes that give one "#swish" link its own amount and message, deep link and QR code.
+ *
+ * @param string $amount           Amount in SEK, or '' for none.
+ * @param string $message          Message (HTML entities allowed, cleaned up to Swish's limits), or '' for none.
+ * @param bool   $amount_editable  Whether the payer can change the amount after scanning.
+ * @param bool   $message_editable Whether the payer can change the message after scanning.
+ * @return array<string, string> Attribute name => unescaped value, empty if no Swish number is set.
+ */
+function amrf_swish_link_attributes(
+	string $amount,
+	string $message,
+	bool $amount_editable = true,
+	bool $message_editable = true
+): array {
+	return \Antropomorf\Swish\LinkQr::attributes($amount, $message, $amount_editable, $message_editable);
+}
+
+/**
  * Loads the script and styles behind the ContactLinks markup contract
  * (ROT13 email links, desktop copy buttons) on the current page.
  *

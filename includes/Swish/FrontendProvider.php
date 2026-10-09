@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Sitewide "#swish" links, configured by one global object since a site has one Swish account.
+ * Sitewide "#swish" links, configured by one global object; a link's own data-swish-* attributes (LinkQr) take precedence.
  *
  * @package Antropomorf\Swish
  */

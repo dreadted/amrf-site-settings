@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
 /**
  * Entry point for the Swish module — the "Swish" tab on the Forms page
  * (Provider), QR generation after each save (QrCodeGenerator),
- * and sitewide "#swish" link handling (FrontendProvider).
+ * sitewide "#swish" link handling (FrontendProvider) and per-link details (LinkQr).
  *
  * @package Antropomorf\Swish
  */
@@ -22,6 +22,7 @@ class Bootstrap
 		new Provider();
 		new FrontendProvider();
 		QrCodeGenerator::register();
+		LinkQr::register();
 
 		CachePurge::onOptionChange(Repository::OPTION_NAME);
 	}
