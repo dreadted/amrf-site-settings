@@ -41,13 +41,10 @@ This plugin adds an admin panel menu item named **"Site Settings"** with the fol
 - Document title
 - Meta description
 - Share image
-- Open Graph locale
 - Theme/background color
 
-All rendered as **meta tags**, plus an
-Organization+Person **JSON-LD block**. Also lets you restrict WordPress's own
-XML sitemap to a hand-picked list of published pages instead of listing
-everything.
+All rendered as **meta tags** (with the Open Graph locale taken from the site language), plus an
+Organization+Person **JSON-LD block**. With [The SEO Framework](https://wordpress.org/plugins/autodescription/) active, the title, description and share image are used on the front page wherever TSF's own fields are empty, and the JSON-LD is added to TSF's schema graph instead of TSF's own duplicate Organization node.
 
 These feed the SEO structured data above and are reused wherever the site needs the business's own details:
 
@@ -56,6 +53,7 @@ These feed the SEO structured data above and are reused wherever the site needs 
 - Business name and type (schema.org)
 - Contact person
 - Signature: how the contact person signs off, e.g. a first name under a newsletter
+- Job title
 - Email
 - Phone number
 - **Contact links:** `[amrf_email_link]` prints the email as a link whose address is assembled in the browser (ROT13 in the HTML, so scrapers don't see it), and `[amrf_phone_link]` prints a `tel:` link that becomes a copy button on desktop. A theme can reuse the same behavior for its own markup by calling `amrf_enqueue_contact_links()` and using these classes:
@@ -69,9 +67,11 @@ These feed the SEO structured data above and are reused wherever the site needs 
   </a>
   ```
 
+- **Settings in page content:** `[amrf_site_setting field="email"]` prints a Business & Contact or Address field (`field="domain"` gives the site's host name), so text such as a privacy policy can't drift from the settings.
+
 #### Address
 
-- Physical address
+- Street address, postal code, city, region and country
 - Latitude & longitude
 
 #### Social Media
@@ -97,7 +97,7 @@ add_filter('amrf_brand_images', function (): array {
 });
 ```
 
-The touch icon is never linked in `<head>`, since Chrome on Android would use the opaque square as its tab icon; iOS fetches `/apple-touch-icon.png` from the site root on its own. `/apple-touch-icon.png` is served by PHP. `/favicon.ico` is also a static rule in `.htaccess`, since LiteSpeed answers a missing `/favicon.ico` itself without reaching WordPress; the plugin rewrites `.htaccess` on an administrator's next admin page load whenever that rule is missing or stale, so no Permalinks save is needed. The login logo falls back to the Site Icon. The portal's favicon and logo are copied into Support Genix's own settings when its "Apply Defaults" button is used.
+The touch icon is never linked in `<head>`, since Chrome on Android would use the opaque square as its tab icon; iOS fetches `/apple-touch-icon.png` from the site root on its own. `/apple-touch-icon.png` is served by PHP. `/favicon.ico` is also a static rule in `.htaccess`, since LiteSpeed answers a missing `/favicon.ico` itself without reaching WordPress; the plugin rewrites `.htaccess` on an administrator's next admin page load whenever that rule is missing or stale, so no Permalinks save is needed. The login page shows the logo instead of the WordPress logo, falling back to the Site Icon. The portal's favicon and logo are copied into Support Genix's own settings when its "Apply Defaults" button is used.
 
 ### Forms
 
@@ -106,6 +106,7 @@ The touch icon is never linked in `<head>`, since Chrome on Android would use th
 - **Default Contact Form:** one of the site's [Fluent Forms](https://fluentforms.com/), opened sitewide in a contact modal (see below). "None" turns the modal off.
 - **Contact Shortcut:** a slug such as `kontakt`, so `example.com/kontakt` opens the front page with the contact modal (see below). Like a page slug it can't be saved while a page or post (or a page's former address) uses it, and new pages and posts that try it get `kontakt-2`. The tab shows the shortcut's QR code as a thumbnail that downloads it.
 - A toggle that overrides Fluent Forms' colors/border-radius/fonts with the site's own `theme.json` tokens
+- Global validation messages saved blank under Fluent Forms' **Global Settings → Miscellaneous** fall back to Fluent Forms' own translated defaults instead of an empty error
 - Enable/disable [ALTCHA](https://altcha.org/) proof-of-work spam protection on every Fluent Form on the site — a self-hosted alternative honeypot with no settings, no external account, and no site key tied to a specific domain: the signing secret is generated and stored automatically the first time it's needed, so it works unchanged across dev/staging/production clones of a site.
 - **Apply Recommended FluentForm Settings** (one-time, for a first setup): writes Fluent Forms' global spam, privacy and message settings, and rebuilds form 1 as the site's contact form. With FluentCRM active, every other published form also gets the newsletter checkbox and its FluentCRM feed (plus name and email fields if missing; its own fields stay), and every form with the checkbox is added to the GDPR tab's retention list.
 
@@ -126,6 +127,8 @@ The touch icon is never linked in `<head>`, since Chrome on Android would use th
 
 - Registers form submissions with WordPress's own **Tools → Export/Erase Personal Data** tools
 - A daily cron that deletes submissions past a configurable retention period for a chosen subset of forms
+- `[amrf_contact_retention]` prints that period as a phrase ("for up to 90 days", "until further notice") for the privacy policy
+- WordPress's privacy request emails are signed with the contact person's name instead of "All at <site name>"
 
 #### Swish
 
@@ -209,9 +212,17 @@ A handful of always-on, no-downside protections
 - Where that role lands after login
 - Which admin page it sees by default when opening `/wp-admin/`
 - A checklist of exactly which menu items the role is allowed to see
+- **Site Settings Access:** the Business & Contact, Address and Social Media tabs, the GDPR and Swish tabs under Forms, and the theme's menu/design editing (the SEO and Contact Forms tabs stay admin-only)
+- **Form Entries Access:** view and manage Fluent Forms entries, but not the forms or Fluent Forms' settings
+- **SEO Framework Access:** The SEO Framework's meta box and SEO column on posts and pages
 
 For non-administrators, FluentCRM and Fluent Forms are moved from the top of
 the admin menu to right after Pages.
+
+### Other
+
+- Every front-end page prints a small styled badge in the browser console with the site's host name and the active theme's version and author, colored with the theme's `--amrf-primary-color`, `--amrf-secondary-color` and `--amrf-text-color`.
+- With [LiteSpeed Cache](https://wordpress.org/plugins/litespeed-cache/) active, saving Site Settings, Swish or Umami settings purges the page cache.
 
 ### Optional integrations
 
@@ -227,6 +238,8 @@ otherwise they're inert:
 - Newsletter consent: a first opt-in through a form's newsletter checkbox subscribes directly (single opt-in) and logs the form, page, IP address and checkbox text as a note on the contact. Unsubscribing strips the contact down to its email address, status, lists and those notes. A later opt-in from the same address sends FluentCRM's double opt-in email instead, and only the click in it subscribes again. This relies on the feed's "Force Subscribe" being off, so the plugin keeps it off on every FluentCRM feed, both when a feed is saved and when it runs.
 - A "Do not contact" tag unsubscribes the contact, blocks any later subscription and makes the site ignore opt-ins for that address. Tools → Erase Personal Data reduces the contact to that tagged consent record instead of deleting it.
 - Blocks FluentCRM's visitor identification cookies (`fc_hash_secure`, `fc_cid`), including the ones its unsubscribe, confirmation and manage-subscription pages set regardless of its own `fluent_crm/will_use_cookie` filter.
+- New campaigns start from the template chosen as FluentCRM's default campaign template, which FluentCRM itself stores but never applies.
+- Consent notes are written in the site's language, whoever triggers them. FluentCRM's public unsubscribe and preference pages get layout fixes.
 - Gives the Editor role FluentCRM access in code — contacts, lists, tags, campaigns and email templates, but not automations, forms, settings or exports — so it survives a fresh database without FluentCRM's per-user Managers setting.
 - Hides FluentCRM's in-app top bar (navigation, search, "Upgrade to Pro"), Pro upsell cards (dashboard, campaign link activity), the campaign recipient step's "Excluded contacts" section and the dashboard's "Getting started" checklist, "Active automations" card and quick links to pages they can't open for non-administrators; they navigate via the WordPress admin menu instead.
 
@@ -240,7 +253,7 @@ otherwise they're inert:
 
 - [WordPress](https://wordpress.org/) 6.6 or later
 - [PHP](https://www.php.net/) 8.3 or later
-- [Fluent Forms](https://wordpress.org/plugins/fluentform/), [FluentCRM](https://wordpress.org/plugins/fluent-crm/) and/or [Support Genix Lite](https://wordpress.org/plugins/support-genix-lite/), only if you want the optional integrations above — the plugin works fully without them.
+- [Fluent Forms](https://wordpress.org/plugins/fluentform/), [FluentCRM](https://wordpress.org/plugins/fluent-crm/) and/or [Support Genix Lite](https://wordpress.org/plugins/support-genix-lite/), only if you want the optional integrations above — the plugin works fully without them. The same goes for [The SEO Framework](https://wordpress.org/plugins/autodescription/) and [LiteSpeed Cache](https://wordpress.org/plugins/litespeed-cache/).
 
 ## Installation
 
