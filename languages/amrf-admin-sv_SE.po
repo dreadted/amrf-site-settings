@@ -65,11 +65,11 @@ msgstr "Skickat"
 msgid "Contact Forms"
 msgstr "Kontaktformulär"
 
-#: includes/ContactForm/Provider.php:81
+#: includes/ContactForm/Provider.php:79
 msgid "Default Contact Form"
 msgstr "Standardkontaktformulär"
 
-#: includes/ContactForm/Provider.php:96
+#: includes/ContactForm/Provider.php:94
 msgid "Apply Consistent Contact Form Styling"
 msgstr "Tillämpa enhetlig formulärstil"
 
@@ -77,28 +77,28 @@ msgstr "Tillämpa enhetlig formulärstil"
 msgid "GDPR"
 msgstr "GDPR"
 
-#: includes/ContactForm/Provider.php:131
+#: includes/ContactForm/Provider.php:129
 msgid "Contact Forms Subject to Retention"
 msgstr "Formulär som omfattas av rensningen"
 
-#: includes/ContactForm/Provider.php:138
+#: includes/ContactForm/Provider.php:136
 msgid "Delete submissions after this many days"
 msgstr "Radera inskickade formulär efter så här många dagar"
 
-#: includes/ContactForm/Provider.php:170
-#: includes/ContactForm/Provider.php:304
+#: includes/ContactForm/Provider.php:168
+#: includes/ContactForm/Provider.php:302
 msgid "No FluentForm forms found."
 msgstr "Inga FluentForm-formulär hittades."
 
-#: includes/ContactForm/Provider.php:234
+#: includes/ContactForm/Provider.php:232
 msgid "Maps FluentForm's own color/border-radius variables to this site's theme colors and applies additional styling fixes, on every FluentForm on the site."
 msgstr "Kopplar FluentForms egna färg-/hörnradievariabler till sajtens temafärger och tillämpar ytterligare stiljusteringar, på samtliga FluentForm-formulär på sajten."
 
-#: includes/ContactForm/Provider.php:319
+#: includes/ContactForm/Provider.php:317
 msgid "The daily retention cleanup and personal-data export/erase requests only ever touch these forms."
 msgstr "Den dagliga rensningen och begäranden om export/radering av personuppgifter rör bara dessa formulär."
 
-#: includes/ContactForm/Provider.php:335
+#: includes/ContactForm/Provider.php:333
 msgid "Blank or 0 = keep forever."
 msgstr "Tomt eller 0 = spara för alltid."
 
@@ -458,19 +458,15 @@ msgstr "Umami-sajt"
 msgid "Umami ID"
 msgstr "Umami-ID"
 
-#: includes/Utilities/SettingsRenderer.php:115
+#: includes/Utilities/SettingsRenderer.php:104
 msgid "Reset to Defaults"
 msgstr "Återställ till standardvärden"
 
-#: includes/ContactForm/Altcha.php:163
-msgid "Spam verification failed, please reload the page and try again."
-msgstr "Spamverifieringen misslyckades, ladda om sidan och försök igen."
-
-#: includes/ContactForm/Provider.php:103
+#: includes/ContactForm/Provider.php:101
 msgid "Enable ALTCHA Spam Protection"
 msgstr "Aktivera ALTCHA-spamskydd"
 
-#: includes/ContactForm/Provider.php:255
+#: includes/ContactForm/Provider.php:253
 msgid "Adds invisible, no-configuration spam protection to every FluentForm on the site. Turn off if this site already handles spam protection another way (e.g. its own plugin)."
 msgstr "Lägger till osynligt spamskydd utan konfiguration på samtliga FluentForm-formulär på sajten. Stäng av om sajten redan hanterar spamskydd på annat sätt (t.ex. med ett eget plugin)."
 
@@ -565,15 +561,15 @@ msgstr "Tillåt SVG-uppladdning"
 msgid "Lets administrators upload SVG files through the Media Library — every file is sanitized (scripts, event handlers, and embedded HTML stripped) before it's stored."
 msgstr "Låter administratörer ladda upp SVG-filer via Mediabiblioteket — varje fil saneras (skript, händelsehanterare och inbäddad HTML tas bort) innan den sparas."
 
-#: includes/ContactForm/Provider.php:110
+#: includes/ContactForm/Provider.php:108
 msgid "Apply Recommended FluentForm Settings"
 msgstr "Tillämpa rekommenderade FluentForm-inställningar"
 
-#: includes/ContactForm/Provider.php:269
+#: includes/ContactForm/Provider.php:267
 msgid "FluentForm is not active."
 msgstr "FluentForm är inte aktivt."
 
-#: includes/ContactForm/Provider.php:175
+#: includes/ContactForm/Provider.php:173
 msgid "None"
 msgstr "Ingen"
 
@@ -615,7 +611,7 @@ msgstr "Begränsa borttagning av media"
 msgid "Non-administrators can only delete media library items they uploaded themselves. Without this, WordPress lets anyone who can upload files delete any attachment, regardless of who uploaded it."
 msgstr "Icke-administratörer kan bara ta bort mediefiler de själva har laddat upp. Utan detta låter WordPress alla som kan ladda upp filer ta bort vilken bilaga som helst, oavsett vem som laddade upp den."
 
-#: includes/ContactForm/Provider.php:185
+#: includes/ContactForm/Provider.php:183
 msgid "The form the sitewide \"#contact\" link/button opens in a lightbox, on any page the active theme doesn't choose one for itself. \"None\" disables the lightbox on pages without such a choice."
 msgstr "Formuläret som sajtens länkar/knappar mot ankaret \"#contact\" öppnar i en lightbox, på sidor där det aktiva temat inte väljer ett eget. \"Ingen\" stänger av lightboxen på sidor utan ett sådant val."
 
@@ -764,7 +760,7 @@ msgstr "Speglar inställningen \"Avskräck sökmotorer från att indexera den h�
 msgid "Reset to theme default"
 msgstr "Återställ till temats standard"
 
-#: includes/ContactForm/Provider.php:280
+#: includes/ContactForm/Provider.php:278
 msgid "Overwrites FluentForm's own Global Settings → Miscellaneous on save, regardless of their current values: enables IP logging (as proof of consent), turns form view analytics off, enables honeypot and token-based spam protection, disables the classic-editor button and auto tab-index, and enables no-conflict mode. Also writes FluentForm's default validation messages (e.g. \"This field is required\") in the site language, so they no longer follow the saving admin's own language. Also renames form ID 1 to \"Kontaktformulär\", replaces its fields with this site's baseline set (name, email, a required message field), and applies this site's baseline confirmation message and email notification to it. On a local site (WP_ENVIRONMENT_TYPE \"local\") where FluentSMTP is active but has no connections yet, also adds an SMTP connection to Mailhog (port 1025) using this site's own domain as the sender address, and sets it as the default connection. Existing FluentSMTP connections are never changed. A one-time action, not a saved setting — resets to off after saving."
 msgstr "Skriver vid sparning över FluentForms egna Global Settings → Miscellaneous, oavsett nuvarande värden: aktiverar IP-loggning (som bevis på samtycke), stänger av statistik över formulärvisningar, aktiverar honeypot och tokenbaserat spamskydd, stänger av klassiska redigerarknappen och automatisk tabbordning, samt aktiverar no-conflict-läge. Skriver också FluentForms standardmeddelanden för validering (t.ex. \"Detta fält är obligatoriskt\") på sajtens språk, så att de inte längre följer admin-språket hos den som sparar. Byter också namn på formulär-ID 1 till \"Kontaktformulär\", ersätter dess fält med sajtens standarduppsättning (namn, e-post, ett obligatoriskt meddelandefält), och tillämpar sajtens standardbekräftelsemeddelande och e-postnotifiering på det. På en lokal sajt (WP_ENVIRONMENT_TYPE \"local\") där FluentSMTP är aktivt men ännu saknar anslutningar läggs även en SMTP-anslutning till Mailhog (port 1025) till, med sajtens egen domän som avsändaradress, och sätts som standardanslutning. Befintliga FluentSMTP-anslutningar ändras aldrig. En engångsåtgärd, inte en sparad inställning — återgår till avstängd efter sparning."
 
@@ -792,11 +788,11 @@ msgstr "Egen installation (umami.antropomorf.se)"
 msgid "Signature"
 msgstr "Signatur"
 
-#: includes/ContactForm/Provider.php:88
+#: includes/ContactForm/Provider.php:86
 msgid "Contact Shortcut"
 msgstr "Kontaktgenväg"
 
-#: includes/ContactForm/Provider.php:201
+#: includes/ContactForm/Provider.php:199
 msgid "An address that opens the front page with the contact form in a lightbox, e.g. for print. Like a page slug, it must not be used by any page or post, and new pages can't take it. Needs a Default Contact Form. Leave empty to turn off."
 msgstr "En adress som öppnar startsidan med kontaktformuläret i en lightbox, t.ex. för trycksaker. Precis som en sidas slug får den inte användas av någon sida eller något inlägg, och nya sidor kan inte ta den. Kräver ett standardkontaktformulär. Lämna tomt för att stänga av."
 
@@ -816,6 +812,10 @@ msgstr "reserverad av WordPress"
 msgid "a former address of \"%s\""
 msgstr "en tidigare adress till \"%s\""
 
-#: includes/ContactForm/Provider.php:284
+#: includes/ContactForm/Provider.php:282
 msgid "With FluentCRM active, every published form also gets the newsletter checkbox and a FluentCRM feed to the \"Nyhetsbrev\" list (single opt-in, never force-subscribing), plus name and email fields if it lacks them, and is added to the forms subject to retention. Other forms keep their own fields. Meant for a first setup, before the forms are customized."
 msgstr "När FluentCRM är aktivt får också alla publicerade formulär kryssrutan för nyhetsbrevet och ett FluentCRM-flöde till listan \"Nyhetsbrev\" (enkel opt-in, aldrig tvingad prenumeration), samt namn- och e-postfält om de saknas, och läggs till bland formulären som omfattas av rensningen. Övriga formulär behåller sina egna fält. Avsett för en första installation, innan formulären anpassas."
+
+#: includes/ContactForm/Altcha.php:179
+msgid "Spam verification failed, please try again."
+msgstr "Spamverifieringen misslyckades, försök igen."

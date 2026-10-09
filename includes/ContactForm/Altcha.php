@@ -24,6 +24,7 @@ class Altcha
 	private const REST_NAMESPACE = 'amrf-admin/v1';
 	private const REST_ROUTE = '/altcha-challenge';
 	private const SCRIPT_HANDLE = 'amrf-altcha-widget';
+	private const RESET_SCRIPT_HANDLE = 'amrf-altcha-reset';
 
 	/**
 	 * Matches the hidden input name the altcha-widget custom element
@@ -32,7 +33,7 @@ class Altcha
 	 */
 	private const FIELD_NAME = 'altcha';
 
-	/** Matches no input, so FluentForm shows the error in the form's error stack, not inside the hidden input. */
+	/** Matches no input, so FluentForm shows the error in the form's error stack; amrf-altcha-reset.js keys on it too. */
 	private const ERROR_KEY = 'amrf_spam_check';
 
 	public function __construct()
@@ -133,6 +134,15 @@ class Altcha
 			filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/js/altcha-widget.min.js'),
 			true
 		);
+
+		// A separate file, not inline: inline data would make OnDemandScripts load the widget eagerly.
+		wp_enqueue_script(
+			self::RESET_SCRIPT_HANDLE,
+			AMRF_ADMIN_PLUGIN_URL . 'assets/js/amrf-altcha-reset.js',
+			[self::SCRIPT_HANDLE],
+			filemtime(AMRF_ADMIN_PLUGIN_DIR . '/assets/js/amrf-altcha-reset.js'),
+			true
+		);
 	}
 
 	/**
@@ -166,7 +176,7 @@ class Altcha
 			throw new ValidationException('', 422, null, [
 				'errors' => [
 					self::ERROR_KEY => [
-						__('Spam verification failed, please reload the page and try again.', 'amrf-admin'),
+						__('Spam verification failed, please try again.', 'amrf-admin'),
 					],
 				],
 			]);

@@ -222,3 +222,7 @@ input.ff_gdpr_field:focus {
 		justify-content: flex-start;
 	}
 }
+
+.ff-errors-in-stack .error-clear {
+	display: none;
+}
