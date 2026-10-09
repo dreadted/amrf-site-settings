@@ -32,6 +32,9 @@ class Altcha
 	 */
 	private const FIELD_NAME = 'altcha';
 
+	/** Matches no input, so FluentForm shows the error in the form's error stack, not inside the hidden input. */
+	private const ERROR_KEY = 'amrf_spam_check';
+
 	public function __construct()
 	{
 		if (!Repository::isAltchaEnabled()) {
@@ -162,7 +165,7 @@ class Altcha
 		if ($payload === '' || !$this->isSolutionValid($payload)) {
 			throw new ValidationException('', 422, null, [
 				'errors' => [
-					self::FIELD_NAME => [
+					self::ERROR_KEY => [
 						__('Spam verification failed, please reload the page and try again.', 'amrf-admin'),
 					],
 				],
