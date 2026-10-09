@@ -420,7 +420,7 @@ class FluentFormBaseline
 		],
 		'fromName' => '',
 		'fromEmail' => '',
-		'replyTo' => '',
+		'replyTo' => '{inputs.email}',
 		'bcc' => '',
 		'subject' => 'Nytt meddelande från {inputs.email}',
 		'message' => '<p>{all_data}</p>',
