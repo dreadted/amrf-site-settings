@@ -107,6 +107,9 @@ class Altcha
 			expiresAt: time() + 600,
 		));
 
+		// LiteSpeed ignores Cache-Control on REST; a cached challenge expires and fails every submit.
+		do_action('litespeed_control_set_nocache', 'amrf altcha challenge');
+
 		$response = new \WP_REST_Response($challenge->toArray());
 		$response->header('Cache-Control', 'no-store');
 
