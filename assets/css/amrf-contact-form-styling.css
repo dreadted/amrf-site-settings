@@ -42,17 +42,9 @@ select.ff-el-form-control option:hover {
 	background-color: var(--fluentform-hover-surface);
 }
 
-/**
- * FluentForm's own default stylesheet only gives .ff-el-group a
- * margin-bottom (20px) — even spacing above and below reads better
- * between fields.
- */
+/** Bottom margin only: a top margin wouldn't collapse with the one above inside .ff-t-container's flex cells. */
 .fluentform .ff-el-group {
-	margin-block: 2rem;
-}
-
-.ff-t-container > div > .ff-el-group:first-child {
-	margin-top: 0;
+	margin-block: 0 2rem;
 }
 
 .fluentform .ff-el-group.ff_submit_btn_wrapper {
