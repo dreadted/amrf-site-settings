@@ -1,7 +1,7 @@
 # AMRF Site Settings
 
 <!-- badges:start -->
-[![Plugin Version](https://img.shields.io/badge/Plugin_Version-0.3.3-3d444d?style=for-the-badge&labelColor=1f2328)](https://github.com/dreadted/amrf-site-settings/releases/latest)
+[![Plugin Version](https://img.shields.io/badge/Plugin_Version-1.0.0-3d444d?style=for-the-badge&labelColor=1f2328)](https://github.com/dreadted/amrf-site-settings/releases/latest)
 [![Requires WP](https://img.shields.io/badge/Requires_WP-6.6-3d444d?style=for-the-badge&labelColor=1f2328&logo=wordpress&logoColor=white)](https://wordpress.org/)
 [![Tested WP](https://img.shields.io/badge/Tested_WP-7.1-3d444d?style=for-the-badge&labelColor=1f2328&logo=wordpress&logoColor=white)](https://wordpress.org/)
 [![License](https://img.shields.io/badge/License-GPLv2%2B-3d444d?style=for-the-badge&labelColor=1f2328&logo=gnu&logoColor=white)](https://www.gnu.org/licenses/gpl-2.0.html)

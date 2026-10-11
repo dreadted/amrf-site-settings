@@ -3,6 +3,130 @@ Changelog
 
 All notable changes to this project will be documented in this file.
 
+1.0.0
+------
+- contact-form-styling: size multi-row textareas from rows and animate the one-row expansion
+- contact-form-styling: give field groups a bottom margin only, so the name row doesn't double the gap
+- contact-form-styling: size buttons from --amrf-button-padding and --amrf-button-min-height
+- altcha: renew the widget after a failed spam check instead of asking for a reload
+- altcha: show the spam-check error in the form's error stack
+- altcha: keep LiteSpeed from caching the challenge
+- fluentform-baseline: set the contact notification's reply-to to the sender's email
+- readme: document current features and correct outdated claims
+- swish: give a #swish link its own amount, message and QR code
+- favicons: drop the WordPress logo from the admin bar when a site icon exists
+- favicons: write a static /favicon.ico rule to .htaccess and heal it on admin load
+- favicons: feed core's Site Icon from BrandImages and serve root icons via PHP
+- settings-renderer: shorten constructor docblock
+- contact-form: give the GDPR tab its own option and option group
+- contact-form: give every published form the newsletter opt-in in the baseline
+- fluentcrm: keep force-subscribe off on every FluentCRM feed
+- theme-css-tokens: skip non-file entries such as symlinked directories
+- readme: document the contact modal, its on-demand loading and the contact shortcut
+- contact-form: expose the contact shortcut URL to themes
+- contact-form: keep the retention period when saving the Contact Forms tab
+- contact-form: add a contact shortcut slug that opens the modal on the front page
+- page-qr: generate per-page QR codes and show them in the Pages list
+- contact-form: load form scripts on demand
+- contact-modal: adjust padding
+- gitignore: ignore zips, .DS_Store and node_modules
+- readme: fix contact anchor, menu paths and hardening switches
+- plugin: require PHP 8.3
+- comments: trim long and historical comments to a short why
+- inline-assets: print login script and Fluent Forms CSS through the enqueue API
+- i18n: add a Signature setting and an English msgid for the Umami label
+- site-settings: memoize theme default colors per request
+- contact-form: hide the Contact Forms tab from non-administrators
+- swish: move the deep-link builder into the Swish module
+- role-policy: rename FrontendHooks and the Forms page slug
+- support-genix: move the defaults flow into its own class
+- hardening: split uploads, frontend and settings page out of the provider
+- contact-form: move the FluentForm baseline into its own class
+- admin: load the settings stylesheet only on the plugin's own pages
+- settings-renderer: share the tab settings registration loop
+- admin-hooks: build the settings admin objects only in wp-admin
+- support-genix: identify the ticket page by its Support Genix setting
+- umami: keep already-split button selectors on the second sanitize pass
+- umami: skip tracking on FluentCRM's public pages
+- contact-links: own the email and copy-link script, styles and markup
+- umami: preconnect from the plugin and load nothing when not tracking
+- brand-images: take icons and logos from the theme via a filter
+- blame: ignore the NAME-02 formatting commit
+- format: indent PHP, JS, CSS and shell with tabs per WPCS
+- fluentform-validation: only treat Simple Text fields as PIN fields
+- fluentform-validation: validate every PIN input inside its container and translate the client-side error
+- settings-renderer: show settings notices on the plugin's own pages
+- swish: derive the QR code from the settings instead of storing it
+- migrations: remove one-time migrations from older themes
+- dead-code: remove unused helpers and MenuManager
+- site-settings: restrict the SEO tab to administrators
+- fluentform-validation: enqueue the PIN script only for forms with a PIN field
+- branding: color the console badge from the theme's amrf tokens
+- hardening: disable core's emoji fallback
+- favicons: serve site.webmanifest before the main query
+- lifecycle: clean up on deactivation and uninstall, fix activation rewrite flush
+- contact-form: seed Mailhog SMTP only on a local site without connections
+- plugin-header: raise the WordPress requirement to 6.6
+- login: close the unterminated message border rule
+- input: unslash and sanitize tab and password values
+- support-genix: restrict Apply Defaults to admins and make it rollback-safe
+- hardening: sanitize SVG uploads with enshrined/svg-sanitize
+- plugin-header: lower the PHP requirement to 8.2
+- release: replace workflows and gist badges with a local release script
+- shortcodes: keep person name and phone number on one line
+- email-link: match theme's hidden + ROT13 markup, drop noscript fallback
+- site-settings: decouple SEO output from discourage toggle, default colors from theme CSS
+- cache-purge: purge LiteSpeed Cache when site, Swish or Umami settings change
+- contact-form: grow textarea via scrollHeight where field-sizing is missing
+- fluentcrm: apply the default campaign template to new campaigns
+- fluentcrm: record newsletter consent and keep a do-not-contact register
+- fluentcrm: stop editors from deleting contacts
+- site-settings: add domain field to amrf_site_setting shortcode
+- fluentform-access: let editors open single entries
+- contact-form: log IP on submit only and stop force-subscribing in baseline
+- privacy-requests: erase submissions via FluentForm in a single pass
+- retention: delete expired submissions and form-view statistics via FluentForm
+- contact-modal: remove privacy policy statement
+- contact-form: add newsletter opt-in and FluentCRM feed to baseline
+- admin-menu: move FluentCRM and Fluent Forms after Pages for non-admins
+- fluentcrm: hide link activity upsell, onboarding and automations cards for non-admins
+- translations: rename FluentCRM and Fluent Forms menus to Nyhetsbrev and Formulär
+- fluentcrm: hide Pro upsell card and excluded contacts for non-admins
+- translations: cover FluentCRM campaign flow, email editor and Fluent Forms entries page
+- fluentcrm: grant editor role CRM access in code, hide top bar for non-admins
+- menu-scanner: list third-party submenu items per role
+- contact-form: add checkbox styling
+- fluentcrm: adjust unsubscribe page spacing
+- translations: load bundled fluentform and fluent-crm sv_SE files
+- fluentcrm: block visitor identification cookies
+- litespeed: hide metabox for non-admins
+- colours: adjust button background, login page colours
+- hardening: add disable posts and disable comments toggles
+- functions: add amrf_get_default_contact_form_id()
+- hardening: 302 the 404 redirect and leave /.well-known/ out of it
+- contact-modal: add bottom padding
+- admin-bar: add amrf_admin_bar_allowed_nodes filter
+- contact-from: refactor css variables
+- swish: add contrasting text colour
+- seo: use site settings as front-page fallback instead of syncing to TSF
+- contact-modal: adjust padding on mobile
+- favicons: add apple-mobile-web-app-title meta tag
+- favicons: serve root icons via .htaccess, stop linking apple-touch-icon
+- contact-form: adjust submit button border
+- fluent-forms: change default alignment of submit button
+- buttons, contact-form: add background gradients
+- contact-form: fall back to translated defaults for blank FluentForm messages
+- contact-form: write site-locale default messages in FluentForm baseline
+- languages: add Swedish FluentForm 6.2.13 translation
+- Umami: pin data-host-url so /api/send target survives src rewrites
+- refactor: streamline Umami tracking script loading for logged-out visitors
+- support-genix: dequeue the docs script for logged-out visitors
+- support-genix: dequeue unused docs stylesheets on frontend
+- hardening: make disable_generated_image_sizes target only WP's own defaults
+- hardening: replace fixed-size non-admin webp optimization with format-only conversion
+- umami-tracking: track buttons via umami.track() instead of data-umami-event
+- contact-modal: enhance openModal function with error handling and return value
+
 0.3.3
 ------
 - login: fix theme-color variables losing to core's admin-color-modern
