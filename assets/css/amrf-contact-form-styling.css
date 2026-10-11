@@ -169,23 +169,24 @@ select.ff-el-form-control option:hover {
 	}
 }
 
-/**
- * Animates amrf-contact-form-styling.js's row expansion: transitions fire on an explicit height, not on `rows`.
- */
 .fluentform textarea.ff-el-form-control {
 	line-height: 1.4;
-	min-height: 48px;
-	field-sizing: content;
 	resize: vertical;
-	transition: height 0.25s ease-in-out;
 }
 
-.fluentform textarea.ff-el-form-control.is-expanded {
+/* field-sizing ignores rows, so multi-row fields are grown by amrf-contact-form-styling.js instead. */
+.fluentform textarea.ff-el-form-control[rows="1"] {
+	min-height: 48px;
+	field-sizing: content;
+	transition: min-height 0.25s ease-in-out;
+}
+
+.fluentform textarea.ff-el-form-control[rows="1"].is-expanded {
 	min-height: 90px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.fluentform textarea.ff-el-form-control {
+	.fluentform textarea.ff-el-form-control[rows="1"] {
 		transition: none;
 	}
 }
