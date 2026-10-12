@@ -52,10 +52,12 @@ select.ff-el-form-control option:hover {
 }
 
 /**
- * FluentForm hardcodes .ff_btn_style's radius, font-size and padding, and controls don't inherit font-family; applies to every button.
+ * FluentForm hardcodes .ff_btn_style's radius, font-size, padding, line-height and border, and controls don't inherit font-family; applies to every button.
  */
 .ff-default .ff_btn_style {
+	border-width: var(--amrf-button-border-width, 1px);
 	border-radius: var(--fluentform-border-radius);
+	line-height: inherit;
 	font-family: var(--amrf-button-font-family, inherit);
 	font-weight: var(--amrf-button-font-weight, inherit);
 	font-size: var(--amrf-button-font-size, inherit);
